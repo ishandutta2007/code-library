@@ -6,9 +6,10 @@
 #define PRI 1
 using namespace std;
 vector<bool> a(110000001, 0);
+// takes 0.3s for n = 1e8
 
 int primes[9000001];
-void sieve()
+void segmented_sieve()
 {
     int i, j, ctr;
     for (i = 6; i <= 100000000; i += 6) {
