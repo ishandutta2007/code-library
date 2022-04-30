@@ -2,7 +2,7 @@
 using namespace std;
 
 // credit: min_25
-// takes 0.5s for n = 1e9
+// takes 0.6s for n = 1e9
 vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
   static const int rs[] = {1, 7, 11, 13, 17, 19, 23, 29};
   struct P { 
