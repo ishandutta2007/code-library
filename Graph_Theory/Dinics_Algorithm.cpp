@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 5010;
@@ -22,7 +22,8 @@ struct Dinic {
   }
   void add_edge(int u, int v, long long w, int id = -1) {
     edge a = {v, (int)g[v].size(), 0, w, id};
-    edge b = {u, (int)g[u].size(), 0, 0, -2};//for bidirectional edges cap(b) = w
+    edge b = {u, (int)g[u].size(), 0, 0,
+              -2}; // for bidirectional edges cap(b) = w
     g[u].emplace_back(a);
     g[v].emplace_back(b);
     mxid = max(mxid, id);
@@ -37,16 +38,19 @@ struct Dinic {
       q.pop();
       for (auto &e : g[u]) {
         int v = e.to;
-        if (d[v] == -1 && e.flow < e.w) d[v] = d[u] + 1, q.push(v);
+        if (d[v] == -1 && e.flow < e.w)
+          d[v] = d[u] + 1, q.push(v);
       }
     }
     return d[t] != -1;
   }
   long long dfs(int u, long long flow) {
-    if (u == t) return flow;
+    if (u == t)
+      return flow;
     for (int &i = done[u]; i < (int)g[u].size(); i++) {
       edge &e = g[u][i];
-      if (e.w <= e.flow) continue;
+      if (e.w <= e.flow)
+        continue;
       int v = e.to;
       if (d[v] == d[u] + 1) {
         long long nw = dfs(v, min(flow, e.w - e.flow));
@@ -65,10 +69,14 @@ struct Dinic {
     long long flow = 0;
     while (bfs()) {
       done.assign(n, 0);
-      while (long long nw = dfs(s, inf)) flow += nw;
+      while (long long nw = dfs(s, inf))
+        flow += nw;
     }
     flow_through.assign(mxid + 10, 0);
-    for(int i = 0; i < n; i++) for(auto e : g[i]) if(e.id >= 0) flow_through[e.id] = e.flow;
+    for (int i = 0; i < n; i++)
+      for (auto e : g[i])
+        if (e.id >= 0)
+          flow_through[e.id] = e.flow;
     return flow;
   }
 };

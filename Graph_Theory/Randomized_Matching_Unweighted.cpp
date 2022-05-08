@@ -1,10 +1,10 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 510;
 
-//maximum matching on a general graph
-//O(n * m * it) but faster
+// maximum matching on a general graph
+// O(n * m * it) but faster
 mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
 struct RandomizedMatching {
   vector<int> g[N];
@@ -23,15 +23,17 @@ struct RandomizedMatching {
     g[v].push_back(u);
   }
   bool dfs(int x) {
-    if(x == 0) return true;
+    if (x == 0)
+      return true;
     vis[x] = T;
     auto it = g[x].begin();
     shuffle(g[x].begin(), g[x].end(), rnd);
-    for(; it != g[x].end(); it++) {
+    for (; it != g[x].end(); it++) {
       int u = *it, v = match[u];
       if (vis[v] < T) {
         match[x] = u, match[u] = x, match[v] = 0;
-        if (dfs(v)) return true;
+        if (dfs(v))
+          return true;
         match[u] = v, match[v] = u, match[x] = 0;
       }
     }
@@ -40,9 +42,10 @@ struct RandomizedMatching {
   int maximum_matching() {
     memset(match, 0, sizeof match);
     int ans = 0;
-    for(int it = 5; it; it--) { //increase the iteration value for higher probability
-      for(int i = 1; i <= n; i++) {
-        if(!match[i]) {
+    for (int it = 5; it;
+         it--) { // increase the iteration value for higher probability
+      for (int i = 1; i <= n; i++) {
+        if (!match[i]) {
           T++, ans += dfs(i);
         }
       }
@@ -62,7 +65,8 @@ int32_t main() {
     M.add_edge(u, v);
   }
   cout << M.maximum_matching() << '\n';
-  for (int i = 1; i <= n; i++) cout << M.match[i] << ' ';
+  for (int i = 1; i <= n; i++)
+    cout << M.match[i] << ' ';
   cout << '\n';
   return 0;
 }

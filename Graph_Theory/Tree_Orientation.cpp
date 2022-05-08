@@ -1,5 +1,5 @@
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9;
@@ -8,17 +8,21 @@ vector<int> g[N];
 int sz[N];
 int tot, done[N];
 void calc_sz(int u, int p) {
-  tot ++; sz[u] = 1;
-  for (auto v: g[u]) {
-    if(v == p || done[v]) continue;
+  tot++;
+  sz[u] = 1;
+  for (auto v : g[u]) {
+    if (v == p || done[v])
+      continue;
     calc_sz(v, u);
     sz[u] += sz[v];
   }
 }
 int find_cen(int u, int p) {
-  for (auto v: g[u]) {
-    if(v == p || done[v]) continue;
-    else if(sz[v] > tot / 2) return find_cen(v, u);
+  for (auto v : g[u]) {
+    if (v == p || done[v])
+      continue;
+    else if (sz[v] > tot / 2)
+      return find_cen(v, u);
   }
   return u;
 }
@@ -26,7 +30,7 @@ int find_cen(int u, int p) {
 // if sum of the array values = x, then complexity is O(x sqrt(x))
 vector<int> subset_sum(vector<int> a) {
   int s = 0;
-  for (auto x: a) {
+  for (auto x : a) {
     s += x;
   }
   vector<int> cnt(s + 1, 0), dp(s + 1, 0);
@@ -43,8 +47,7 @@ vector<int> subset_sum(vector<int> a) {
       for (int k = j; k <= s; k += i) {
         if (dp[k]) {
           c = cnt[i];
-        }
-        else if (c) {
+        } else if (c) {
           dp[k] = 1;
           c--;
         }
@@ -57,7 +60,7 @@ vector<int> subset_sum(vector<int> a) {
 long long cur;
 void dfs(int u, int p = 0) {
   sz[u] = 1;
-  for (auto v: g[u]) {
+  for (auto v : g[u]) {
     if (v ^ p) {
       dfs(v, u);
       sz[u] += sz[v];
@@ -69,9 +72,11 @@ void dfs(int u, int p = 0) {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   for (int i = 1; i < n; i++) {
-    int u, v; cin >> u >> v;
+    int u, v;
+    cin >> u >> v;
     g[u].push_back(v);
     g[v].push_back(u);
   }
@@ -80,7 +85,7 @@ int32_t main() {
   dfs(r);
   vector<int> v;
   long long ans = 0;
-  for (auto u: g[r]) {
+  for (auto u : g[r]) {
     v.push_back(sz[u]);
   }
   auto dp = subset_sum(v);

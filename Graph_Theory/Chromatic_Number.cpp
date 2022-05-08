@@ -1,8 +1,8 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 vector<int> g[20];
-//O(n*2^n)
+// O(n*2^n)
 int chromatic_number(int n) {
   const int N = 1 << n;
   vector<int> adj(n);
@@ -26,7 +26,8 @@ int chromatic_number(int n) {
         aux[S] = (aux[S] * ind[S]) % mod;
         w += (i & 1) ? aux[S] : -aux[S];
       }
-      if (w % mod) ans = min(ans, k);
+      if (w % mod)
+        ans = min(ans, k);
     }
   }
   return ans;
@@ -34,11 +35,13 @@ int chromatic_number(int n) {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   cin.ignore();
   for (int u = 0; u < n; u++) {
-    string s, x; getline(cin, s);
-    stringstream ss(s); 
+    string s, x;
+    getline(cin, s);
+    stringstream ss(s);
     while (ss >> x) {
       int v = atoi(x.c_str());
       g[u].push_back(v);

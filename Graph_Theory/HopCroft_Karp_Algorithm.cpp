@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9;
@@ -17,13 +17,15 @@ struct HopcroftKarp {
     d.resize(p, 0);
   }
   void add_edge(int u, int v) {
-    g[u].push_back(v + n); //right id is increased by n, so is l[u]
+    g[u].push_back(v + n); // right id is increased by n, so is l[u]
   }
   bool bfs() {
     queue<int> q;
     for (int u = 1; u <= n; u++) {
-      if (!l[u]) d[u] = 0, q.push(u);
-      else d[u] = inf;
+      if (!l[u])
+        d[u] = 0, q.push(u);
+      else
+        d[u] = inf;
     }
     d[0] = inf;
     while (!q.empty()) {
@@ -39,9 +41,10 @@ struct HopcroftKarp {
     return d[0] != inf;
   }
   bool dfs(int u) {
-    if (!u) return true;
+    if (!u)
+      return true;
     for (auto v : g[u]) {
-      if(d[r[v]] == d[u] + 1 && dfs(r[v])) {
+      if (d[r[v]] == d[u] + 1 && dfs(r[v])) {
         l[u] = v;
         r[v] = u;
         return true;
@@ -53,7 +56,9 @@ struct HopcroftKarp {
   int maximum_matching() {
     int ans = 0;
     while (bfs()) {
-      for(int u = 1; u <= n; u++) if (!l[u] && dfs(u)) ans++;
+      for (int u = 1; u <= n; u++)
+        if (!l[u] && dfs(u))
+          ans++;
     }
     return ans;
   }

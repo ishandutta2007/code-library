@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 205, inf = 1e9;
@@ -8,17 +8,21 @@ int g[N][N], ans[N * N], last[N], dp[N * N], id[N][N], W[N * N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int t, cs = 0; cin >> t;
+  int t, cs = 0;
+  cin >> t;
   while (t--) {
-    int n, m; cin >> n >> m;
+    int n, m;
+    cin >> n >> m;
     for (int i = 1; i <= n; i++) {
       for (int j = 1; j <= n; j++) {
         g[i][j] = inf;
       }
     }
     for (int i = 1; i <= m; i++) {
-      int u, v, w; cin >> u >> v >> w;
-      ++u; ++v;
+      int u, v, w;
+      cin >> u >> v >> w;
+      ++u;
+      ++v;
       g[u][v] = g[v][u] = w;
       id[u][v] = id[v][u] = i;
       ans[i] = inf;
@@ -27,7 +31,9 @@ int32_t main() {
     for (int u = 1; u <= n; u++) {
       memset(vis, 0, sizeof vis);
       for (int i = 0; i <= n; i++) {
-        d[i] = inf; par[i] = i; last[i] = -1;
+        d[i] = inf;
+        par[i] = i;
+        last[i] = -1;
       }
       for (int i = 1; i <= m; i++) {
         dp[i] = inf;
@@ -42,11 +48,14 @@ int32_t main() {
             cur = i;
           }
         }
-        if (cur == 0) break;
-        if (vis[cur]) break;
+        if (cur == 0)
+          break;
+        if (vis[cur])
+          break;
         vis[cur] = 1;
         if (par[cur] != cur) {
-          dp[id[last[cur]][cur]] = min(dp[id[last[cur]][cur]], d[cur] + g[cur][u]);
+          dp[id[last[cur]][cur]] =
+              min(dp[id[last[cur]][cur]], d[cur] + g[cur][u]);
           ans[id[cur][u]] = min(ans[id[cur][u]], d[cur] + g[cur][u]);
           ans[id[u][cur]] = min(ans[id[u][cur]], d[cur] + g[cur][u]);
         }
@@ -54,19 +63,21 @@ int32_t main() {
           if (i != u) {
             if (vis[i]) {
               if (par[i] != par[cur]) {
-                dp[id[last[cur]][cur]] = min(dp[id[last[cur]][cur]], d[cur] + d[i] + g[cur][i]);
-                dp[id[last[i]][i]] = min(dp[id[last[i]][i]], d[cur] + d[i] + g[cur][i]);
-                ans[id[cur][i]] = min(ans[id[cur][i]], d[cur] + d[i] + g[cur][i]);
-                ans[id[i][cur]] = min(ans[id[i][cur]], d[cur] + d[i] + g[cur][i]);
+                dp[id[last[cur]][cur]] =
+                    min(dp[id[last[cur]][cur]], d[cur] + d[i] + g[cur][i]);
+                dp[id[last[i]][i]] =
+                    min(dp[id[last[i]][i]], d[cur] + d[i] + g[cur][i]);
+                ans[id[cur][i]] =
+                    min(ans[id[cur][i]], d[cur] + d[i] + g[cur][i]);
+                ans[id[i][cur]] =
+                    min(ans[id[i][cur]], d[cur] + d[i] + g[cur][i]);
               }
-            }
-            else if (d[cur] + g[cur][i] < d[i]) {
+            } else if (d[cur] + g[cur][i] < d[i]) {
               d[i] = d[cur] + g[cur][i];
               last[i] = cur;
               if (cur == u) {
                 par[i] = i;
-              }
-              else {
+              } else {
                 par[i] = par[cur];
               }
             }
@@ -74,7 +85,8 @@ int32_t main() {
         }
       }
       for (int i = 1; i <= n; i++) {
-        if (last[i] == -1) continue;
+        if (last[i] == -1)
+          continue;
         int x = dp[id[last[i]][i]];
         for (int cur = i; cur; cur = last[cur]) {
           if (last[cur]) {
@@ -88,8 +100,10 @@ int32_t main() {
     }
     cout << "Case " << ++cs << ":\n";
     for (int i = 1; i <= m; i++) {
-      if (ans[i] == inf) cout << "impossible\n";
-      else cout << ans[i] - W[i] + 1 << '\n';
+      if (ans[i] == inf)
+        cout << "impossible\n";
+      else
+        cout << ans[i] - W[i] + 1 << '\n';
     }
   }
   return 0;

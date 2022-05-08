@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1010;
@@ -22,7 +22,8 @@ struct Dinic {
   }
   void add_edge(int u, int v, double w, int id = -1) {
     edge a = {v, (int)g[v].size(), 0, w, id};
-    edge b = {u, (int)g[u].size(), 0, 0, -2};//for bidirectional edges cap(b) = w
+    edge b = {u, (int)g[u].size(), 0, 0,
+              -2}; // for bidirectional edges cap(b) = w
     g[u].emplace_back(a);
     g[v].emplace_back(b);
     mxid = max(mxid, id);
@@ -37,13 +38,15 @@ struct Dinic {
       q.pop();
       for (auto &e : g[u]) {
         int v = e.to;
-        if (d[v] == -1 && e.w - e.flow > eps) d[v] = d[u] + 1, q.push(v);
+        if (d[v] == -1 && e.w - e.flow > eps)
+          d[v] = d[u] + 1, q.push(v);
       }
     }
     return d[t] != -1;
   }
   double dfs(int u, double flow) {
-    if (u == t) return flow;
+    if (u == t)
+      return flow;
     for (int &i = done[u]; i < (int)g[u].size(); i++) {
       edge &e = g[u][i];
       if (e.w - e.flow > eps) {
@@ -68,7 +71,8 @@ struct Dinic {
       done.assign(n, 0);
       while (1) {
         double nw = dfs(s, inf);
-        if (nw < eps) break;
+        if (nw < eps)
+          break;
         flow += nw;
       }
     }
@@ -79,10 +83,12 @@ int s, t, n, m, u[N], v[N], deg[N];
 const double M = 1e9;
 bool vis[N];
 void dfs(int u) {
-  if (vis[u]) return;
+  if (vis[u])
+    return;
   vis[u] = 1;
   for (auto e : F.g[u]) {
-    if (e.w - e.flow > eps) dfs(e.to);
+    if (e.w - e.flow > eps)
+      dfs(e.to);
   }
 }
 bool yo(double g) {
@@ -95,15 +101,17 @@ bool yo(double g) {
     F.add_edge(s, i, m);
     F.add_edge(i, t, m + 2.0 * g - deg[i]);
   }
-  double flow = F.max_flow(s, t); //flow = m * n + 2 * |nodes in s part without s in the mincut| * (g - density)
+  double flow = F.max_flow(s, t); // flow = m * n + 2 * |nodes in s part without
+                                  // s in the mincut| * (g - density)
   return (1.0 * m * n - flow) > eps;
 }
 int32_t main() {
-  //ios_base::sync_with_stdio(0);
-  //cin.tie(0);
+  // ios_base::sync_with_stdio(0);
+  // cin.tie(0);
   bool ff = 0;
   while (~scanf("%d %d", &n, &m)) {
-    if (ff) cout << '\n';
+    if (ff)
+      cout << '\n';
     ff = 1;
     if (!m) {
       cout << 1 << '\n' << 1 << '\n';
@@ -121,18 +129,23 @@ int32_t main() {
     vector<int> ans;
     while (r - l >= f) {
       double mid = (l + r) * 0.5;
-      int ok = yo(mid); //just check ok if you don't need to extract the nodes
+      int ok = yo(mid); // just check ok if you don't need to extract the nodes
       memset(vis, 0, sizeof vis);
       dfs(s);
       vector<int> nw;
-      for (int i = 1; i <= n; i++) if (vis[i]) nw.push_back(i);
-      if (!nw.empty()) l = mid, ans = nw;
-      else r = mid;
+      for (int i = 1; i <= n; i++)
+        if (vis[i])
+          nw.push_back(i);
+      if (!nw.empty())
+        l = mid, ans = nw;
+      else
+        r = mid;
     }
     sort(ans.begin(), ans.end()); //(l + r) * 0.5 is the maximum density
-    cout << ans.size() << '\n'; //all nodes of the subgraph
-    for (auto x : ans) cout << x << '\n';
+    cout << ans.size() << '\n';   // all nodes of the subgraph
+    for (auto x : ans)
+      cout << x << '\n';
   }
   return 0;
 }
-//https://vjudge.net/problem/UVA-1389
+// https://vjudge.net/problem/UVA-1389
