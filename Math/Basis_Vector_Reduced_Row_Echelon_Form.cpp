@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9;
@@ -6,13 +6,12 @@ const int N = 1e5 + 9;
 struct Basis {
   static const int B = 30;
   int a[B];
-  Basis() {
-    memset(a, 0, sizeof a);
-  }
-  void insert(int x){
+  Basis() { memset(a, 0, sizeof a); }
+  void insert(int x) {
     for (int i = B - 1; i >= 0; i--) {
       if (x >> i & 1) {
-        if (a[i]) x ^= a[i];
+        if (a[i])
+          x ^= a[i];
         else {
           a[i] = x;
           break;
@@ -21,7 +20,7 @@ struct Basis {
     }
   }
   int max_xor(int ans = 0) {
-    for(int i = B - 1; i >= 0; i--) {
+    for (int i = B - 1; i >= 0; i--) {
       ans = max(ans, ans ^ a[i]);
     }
     return ans;
@@ -29,9 +28,11 @@ struct Basis {
   // https://en.wikipedia.org/wiki/Row_echelon_form#Reduced_row_echelon_form
   void reduced_row_echelon_form() {
     for (int i = 0; i < B; i++) {
-      if (!a[i]) continue;
+      if (!a[i])
+        continue;
       for (int j = i + 1; j < B; j++) {
-        if (a[j] >> i & 1) a[j] ^= a[i];
+        if (a[j] >> i & 1)
+          a[j] ^= a[i];
       }
     }
   }
@@ -45,18 +46,17 @@ struct Basis {
     }
     return ans;
   }
-}t;
+} t;
 vector<pair<int, int>> g[N];
 bool vis[N];
 int a[N], p[N];
 void dfs(int u) {
   vis[u] = true;
-  for (auto [v, w]: g[u]) {
+  for (auto[v, w] : g[u]) {
     if (!vis[v]) {
       a[v] = a[u] ^ w;
       dfs(v);
-    }
-    else {
+    } else {
       t.insert(a[u] ^ a[v] ^ w);
     }
   }
@@ -65,9 +65,11 @@ int cnt[30][N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, m, q; cin >> n >> m >> q;
+  int n, m, q;
+  cin >> n >> m >> q;
   for (int i = 1; i <= m; i++) {
-    int u, v, w; cin >> u >> v >> w;
+    int u, v, w;
+    cin >> u >> v >> w;
     g[u].push_back({v, w});
     g[v].push_back({u, w});
   }
@@ -80,7 +82,8 @@ int32_t main() {
     }
   }
   while (q--) {
-    int l, r; cin >> l >> r;
+    int l, r;
+    cin >> l >> r;
     int ans = (r - l) % 2 * (p[r] ^ p[l - 1]);
     for (int k = 0; k < 30; k++) {
       if (t.a[k]) {

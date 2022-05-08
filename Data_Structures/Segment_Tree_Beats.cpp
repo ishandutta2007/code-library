@@ -44,7 +44,8 @@ struct SGTBeats {
     }
   }
   void push(int k) {
-    if (n0 - 1 <= k) return;
+    if (n0 - 1 <= k)
+      return;
     if (lval[k] != inf) {
       updateall(2 * k + 1, lval[k]);
       updateall(2 * k + 2, lval[k]);
@@ -71,7 +72,7 @@ struct SGTBeats {
     }
   }
   void update(int k) {
-    sum[k] = sum[2 * k + 1]  +  sum[2 * k + 2];
+    sum[k] = sum[2 * k + 1] + sum[2 * k + 2];
 
     if (max_v[2 * k + 1] < max_v[2 * k + 2]) {
       max_v[k] = max_v[2 * k + 2];
@@ -83,7 +84,7 @@ struct SGTBeats {
       smax_v[k] = max(smax_v[2 * k + 1], max_v[2 * k + 2]);
     } else {
       max_v[k] = max_v[2 * k + 1];
-      max_c[k] = max_c[2 * k + 1]  +  max_c[2 * k + 2];
+      max_c[k] = max_c[2 * k + 1] + max_c[2 * k + 2];
       smax_v[k] = max(smax_v[2 * k + 1], smax_v[2 * k + 2]);
     }
 
@@ -97,7 +98,7 @@ struct SGTBeats {
       smin_v[k] = min(min_v[2 * k + 1], smin_v[2 * k + 2]);
     } else {
       min_v[k] = min_v[2 * k + 1];
-      min_c[k] = min_c[2 * k + 1]  +  min_c[2 * k + 2];
+      min_c[k] = min_c[2 * k + 1] + min_c[2 * k + 2];
       smin_v[k] = min(smin_v[2 * k + 1], smin_v[2 * k + 2]);
     }
   }
@@ -129,9 +130,11 @@ struct SGTBeats {
   }
   void addall(int k, ll x) {
     max_v[k] += x;
-    if (smax_v[k] != -inf) smax_v[k] += x;
+    if (smax_v[k] != -inf)
+      smax_v[k] += x;
     min_v[k] += x;
-    if (smin_v[k] != inf) smin_v[k] += x;
+    if (smin_v[k] != inf)
+      smin_v[k] += x;
 
     sum[k] += len[k] * x;
     if (lval[k] != inf) {
@@ -141,12 +144,15 @@ struct SGTBeats {
     }
   }
   void updateall(int k, ll x) {
-    max_v[k] = x; smax_v[k] = -inf;
-    min_v[k] = x; smin_v[k] = inf;
+    max_v[k] = x;
+    smax_v[k] = -inf;
+    min_v[k] = x;
+    smin_v[k] = inf;
     max_c[k] = min_c[k] = len[k];
 
     sum[k] = x * len[k];
-    lval[k] = x; ladd[k] = 0;
+    lval[k] = x;
+    ladd[k] = 0;
   }
   void _add_val(ll x, int a, int b, int k, int l, int r) {
     if (b <= l || r <= a) {
@@ -214,25 +220,27 @@ struct SGTBeats {
     return lv + rv;
   }
 
-  SGTBeats(int n) {
-    SGTBeats(n, nullptr);
-  }
+  SGTBeats(int n) { SGTBeats(n, nullptr); }
 
   SGTBeats(int n, ll *a) : n(n) {
     n0 = 1;
-    while (n0 < n) n0 <<= 1;
-    for (int i = 0; i < 2 * n0; ++i) ladd[i] = 0, lval[i] = inf;
+    while (n0 < n)
+      n0 <<= 1;
+    for (int i = 0; i < 2 * n0; ++i)
+      ladd[i] = 0, lval[i] = inf;
     len[0] = n0;
-    for (int i = 0; i < n0 - 1; ++i) len[2 * i + 1] = len[2 * i + 2] = (len[i] >> 1);
+    for (int i = 0; i < n0 - 1; ++i)
+      len[2 * i + 1] = len[2 * i + 2] = (len[i] >> 1);
 
     for (int i = 0; i < n; ++i) {
-      max_v[n0 - 1 + i] = min_v[n0 - 1 + i] = sum[n0 - 1 + i] = (a != nullptr ? a[i] : 0);
-      smax_v[n0 - 1 + i] =  -inf;
+      max_v[n0 - 1 + i] = min_v[n0 - 1 + i] = sum[n0 - 1 + i] =
+          (a != nullptr ? a[i] : 0);
+      smax_v[n0 - 1 + i] = -inf;
       smin_v[n0 - 1 + i] = inf;
       max_c[n0 - 1 + i] = min_c[n0 - 1 + i] = 1;
     }
     for (int i = n; i < n0; ++i) {
-      max_v[n0 - 1 + i] = smax_v[n0 - 1 + i] =  -inf;
+      max_v[n0 - 1 + i] = smax_v[n0 - 1 + i] = -inf;
       min_v[n0 - 1 + i] = smin_v[n0 - 1 + i] = inf;
       max_c[n0 - 1 + i] = min_c[n0 - 1 + i] = 0;
     }
@@ -244,57 +252,44 @@ struct SGTBeats {
   // all queries are performed on [l, r) segment
 
   // range minimize query
-  void update_min(int a, int b, ll x) {
-    _update_min(x, a, b, 0, 0, n0);
-  }
+  void update_min(int a, int b, ll x) { _update_min(x, a, b, 0, 0, n0); }
   // range maximize query
-  void update_max(int a, int b, ll x) {
-    _update_max(x, a, b, 0, 0, n0);
-  }
+  void update_max(int a, int b, ll x) { _update_max(x, a, b, 0, 0, n0); }
   // range add query
-  void add_val(int a, int b, ll x) {
-    _add_val(x, a, b, 0, 0, n0);
-  }
+  void add_val(int a, int b, ll x) { _add_val(x, a, b, 0, 0, n0); }
   // range update query
-  void update_val(int a, int b, ll x) {
-    _update_val(x, a, b, 0, 0, n0);
-  }
+  void update_val(int a, int b, ll x) { _update_val(x, a, b, 0, 0, n0); }
   // range minimum query
-  ll query_max(int a, int b) {
-    return _query_max(a, b, 0, 0, n0);
-  }
+  ll query_max(int a, int b) { return _query_max(a, b, 0, 0, n0); }
   // range maximum query
-  ll query_min(int a, int b) {
-    return _query_min(a, b, 0, 0, n0);
-  }
+  ll query_min(int a, int b) { return _query_min(a, b, 0, 0, n0); }
   // range sum query
-  ll query_sum(int a, int b) {
-    return _query_sum(a, b, 0, 0, n0);
-  }
+  ll query_sum(int a, int b) { return _query_sum(a, b, 0, 0, n0); }
 };
 
 ll a[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, q; cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
   for (int i = 0; i < n; i++) {
     cin >> a[i];
   }
   SGTBeats t(n, a);
   while (q--) {
-    int ty, l, r; cin >> ty >> l >> r;
-    ll x; if (ty < 3) cin >> x;
+    int ty, l, r;
+    cin >> ty >> l >> r;
+    ll x;
+    if (ty < 3)
+      cin >> x;
     if (ty == 0) {
       t.update_min(l, r, x);
-    }    
-    else if (ty == 1) {
+    } else if (ty == 1) {
       t.update_max(l, r, x);
-    }    
-    else if (ty == 2) {
+    } else if (ty == 2) {
       t.add_val(l, r, x);
-    }
-    else {
+    } else {
       cout << t.query_sum(l, r) << '\n';
     }
   }

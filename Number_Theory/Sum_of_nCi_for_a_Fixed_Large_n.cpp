@@ -1,5 +1,5 @@
-#pragma GCC optimize ("O3")
-#pragma GCC target ("avx")
+#pragma GCC optimize("O3")
+#pragma GCC target("avx")
 
 #include <cstdio>
 #include <cassert>
@@ -31,20 +31,20 @@ using f80 = long double;
 namespace ntt {
 
 #ifdef NTT64
-  using word_t = u64;
-  using dword_t = __uint128_t;
+using word_t = u64;
+using dword_t = __uint128_t;
 #else
-  using word_t = u32;
-  using dword_t = u64;
+using word_t = u32;
+using dword_t = u64;
 #endif
 static const int word_bits = 8 * sizeof(word_t);
 
-template <word_t mod, word_t prim_root>
-class Mod {
+template <word_t mod, word_t prim_root> class Mod {
 private:
-  static constexpr word_t mul_inv(word_t n, int e=6, word_t x=1) {
-    return e == 0 ? x : mul_inv(n, e-1, x*(2-x*n));
+  static constexpr word_t mul_inv(word_t n, int e = 6, word_t x = 1) {
+    return e == 0 ? x : mul_inv(n, e - 1, x * (2 - x * n));
   }
+
 public:
   static constexpr word_t inv = mul_inv(mod);
   static constexpr word_t r2 = -dword_t(mod) % mod;
@@ -52,26 +52,42 @@ public:
   static_assert(inv * mod == 1, "invalid 1/M modulo 2^@.");
 
   Mod() {}
-  Mod(word_t n) : x(init(n)) {};
+  Mod(word_t n) : x(init(n)){};
   static word_t modulus() { return mod; }
   static word_t init(word_t w) { return reduce(dword_t(w) * r2); }
-  static word_t reduce(const dword_t w) { return word_t(w >> word_bits) + mod - word_t((dword_t(word_t(w) * inv) * mod) >> word_bits); }
+  static word_t reduce(const dword_t w) {
+    return word_t(w >> word_bits) + mod -
+           word_t((dword_t(word_t(w) * inv) * mod) >> word_bits);
+  }
   static Mod omega() { return Mod(prim_root).pow((mod - 1) >> level); }
-  Mod& operator += (Mod rhs) { this->x += rhs.x; return *this; }
-  Mod& operator -= (Mod rhs) { this->x += 3 * mod - rhs.x; return *this; }
-  Mod& operator *= (Mod rhs) { this->x = reduce(dword_t(this->x) * rhs.x); return *this; }
-  Mod operator + (Mod rhs) const { return Mod(*this) += rhs; }
-  Mod operator - (Mod rhs) const { return Mod(*this) -= rhs; }
-  Mod operator * (Mod rhs) const { return Mod(*this) *= rhs; }
+  Mod &operator+=(Mod rhs) {
+    this->x += rhs.x;
+    return *this;
+  }
+  Mod &operator-=(Mod rhs) {
+    this->x += 3 * mod - rhs.x;
+    return *this;
+  }
+  Mod &operator*=(Mod rhs) {
+    this->x = reduce(dword_t(this->x) * rhs.x);
+    return *this;
+  }
+  Mod operator+(Mod rhs) const { return Mod(*this) += rhs; }
+  Mod operator-(Mod rhs) const { return Mod(*this) -= rhs; }
+  Mod operator*(Mod rhs) const { return Mod(*this) *= rhs; }
   word_t get() const { return reduce(this->x) % mod; }
   void set(word_t n) const { this->x = n; }
   Mod pow(word_t exp) const {
     Mod ret = Mod(1);
-    for (Mod base = *this; exp; exp >>= 1, base *= base) if (exp & 1) ret *= base;
+    for (Mod base = *this; exp; exp >>= 1, base *= base)
+      if (exp & 1)
+        ret *= base;
     return ret;
   }
   Mod inverse() const { return pow(mod - 2); }
-  friend ostream& operator << (ostream& os, const Mod& m) { return os << m.get(); }
+  friend ostream &operator<<(ostream &os, const Mod &m) {
+    return os << m.get();
+  }
   static void debug() {
     printf("%llu %llu %llu %llu\n", mod, inv, r2, omega().get());
   }
@@ -81,31 +97,34 @@ public:
 const int size = 1 << 16;
 
 #ifdef NTT64
-  using m64_1 = ntt::Mod<709143768229478401, 31>;
-  using m64_2 = ntt::Mod<711416664922521601, 19>; // <= 712e15 (sub.D = 3)
-  m64_1 f1[size], g1[size];
-  m64_2 f2[size], g2[size];
+using m64_1 = ntt::Mod<709143768229478401, 31>;
+using m64_2 = ntt::Mod<711416664922521601, 19>; // <= 712e15 (sub.D = 3)
+m64_1 f1[size], g1[size];
+m64_2 f2[size], g2[size];
 #else
-  using m32_1 = ntt::Mod<138412033, 5>;
-  using m32_2 = ntt::Mod<155189249, 6>;
-  using m32_3 = ntt::Mod<163577857, 23>; // <=  16579e4 (sub.D = 3)
-  m32_1 f1[size], g1[size];
-  m32_2 f2[size], g2[size];
-  m32_3 f3[size], g3[size];
+using m32_1 = ntt::Mod<138412033, 5>;
+using m32_2 = ntt::Mod<155189249, 6>;
+using m32_3 = ntt::Mod<163577857, 23>; // <=  16579e4 (sub.D = 3)
+m32_1 f1[size], g1[size];
+m32_2 f2[size], g2[size];
+m32_3 f3[size], g3[size];
 #endif
 
 template <typename mod_t>
-void convolve(mod_t* A, int s1, mod_t* B, int s2, bool cyclic=false) {
+void convolve(mod_t *A, int s1, mod_t *B, int s2, bool cyclic = false) {
   int s = (cyclic ? max(s1, s2) : s1 + s2 - 1);
   int size = 1;
-  while (size < s) size <<= 1;
-  mod_t roots[mod_t::level] = { mod_t::omega() };
+  while (size < s)
+    size <<= 1;
+  mod_t roots[mod_t::level] = {mod_t::omega()};
   rep(i, 1, mod_t::level) roots[i] = roots[i - 1] * roots[i - 1];
-  fill(A + s1, A + size, 0); ntt_dit4(A, size, 1, roots);
+  fill(A + s1, A + size, 0);
+  ntt_dit4(A, size, 1, roots);
   if (A == B && s1 == s2) {
     rep(i, size) A[i] *= A[i];
   } else {
-    fill(B + s2, B + size, 0); ntt_dit4(B, size, 1, roots);
+    fill(B + s2, B + size, 0);
+    ntt_dit4(B, size, 1, roots);
     rep(i, size) A[i] *= B[i];
   }
   ntt_dit4(A, size, -1, roots);
@@ -113,34 +132,39 @@ void convolve(mod_t* A, int s1, mod_t* B, int s2, bool cyclic=false) {
   rep(i, cyclic ? size : s) A[i] *= inv;
 }
 
-template <typename mod_t>
-void rev_permute(mod_t* A, int n) {
+template <typename mod_t> void rev_permute(mod_t *A, int n) {
   int r = 0, nh = n >> 1;
   rep(i, 1, n) {
-    for (int h = nh; !((r ^= h) & h); h >>= 1);
-    if (r > i) swap(A[i], A[r]);
+    for (int h = nh; !((r ^= h) & h); h >>= 1)
+      ;
+    if (r > i)
+      swap(A[i], A[r]);
   }
 }
 
 template <typename mod_t>
-void ntt_dit4(mod_t* A, int n, int sign, mod_t* roots) {
+void ntt_dit4(mod_t *A, int n, int sign, mod_t *roots) {
   rev_permute(A, n);
   int logn = __builtin_ctz(n);
   assert(logn <= mod_t::level);
 
-  if (logn & 1) rep(i, 0, n, 2) {
-    mod_t a = A[i], b = A[i + 1];
-    A[i] = a + b; A[i + 1] = a - b;
-  }
+  if (logn & 1)
+    rep(i, 0, n, 2) {
+      mod_t a = A[i], b = A[i + 1];
+      A[i] = a + b;
+      A[i + 1] = a - b;
+    }
   mod_t imag = roots[mod_t::level - 2];
-  if (sign < 0) imag = imag.inverse();
+  if (sign < 0)
+    imag = imag.inverse();
 
   mod_t one = mod_t(1);
   rep(e, 2 + (logn & 1), logn + 1, 2) {
     const int m = 1 << e;
     const int m4 = m >> 2;
     mod_t dw = roots[mod_t::level - e];
-    if (sign < 0) dw = dw.inverse();
+    if (sign < 0)
+      dw = dw.inverse();
 
     const int block_size = min(n, max(m, (1 << 15) / int(sizeof(A[0]))));
     rep(k, 0, n, block_size) {
@@ -148,13 +172,17 @@ void ntt_dit4(mod_t* A, int n, int sign, mod_t* roots) {
       rep(j, m4) {
         rep(i, k + j, k + block_size, m) {
           mod_t a0 = A[i + m4 * 0] * one, a2 = A[i + m4 * 1] * w2;
-          mod_t a1 = A[i + m4 * 2] * w,   a3 = A[i + m4 * 3] * w3;
+          mod_t a1 = A[i + m4 * 2] * w, a3 = A[i + m4 * 3] * w3;
           mod_t t02 = a0 + a2, t13 = a1 + a3;
-          A[i + m4 * 0] = t02 + t13; A[i + m4 * 2] = t02 - t13;
+          A[i + m4 * 0] = t02 + t13;
+          A[i + m4 * 2] = t02 - t13;
           t02 = a0 - a2, t13 = (a1 - a3) * imag;
-          A[i + m4 * 1] = t02 + t13; A[i + m4 * 3] = t02 - t13;
+          A[i + m4 * 1] = t02 + t13;
+          A[i + m4 * 3] = t02 - t13;
         }
-        w *= dw; w2 = w * w; w3 = w2 * w;
+        w *= dw;
+        w2 = w * w;
+        w3 = w2 * w;
       }
     }
   }
@@ -183,7 +211,8 @@ public:
   static R pow_mod(R a, int e) {
     R ret = 1 % fast_mod;
     for (; e; e >>= 1, a = mul_mod(a, a)) {
-      if (e & 1) ret = mul_mod(ret, a);
+      if (e & 1)
+        ret = mul_mod(ret, a);
     }
     return ret;
   }
@@ -193,13 +222,16 @@ public:
       swap(s -= t * (a / b), t);
       swap(a %= b, b);
     }
-    if (a > 1) { fprintf(stderr, "Error: invalid modular inverse\n"); exit(1); };
+    if (a > 1) {
+      fprintf(stderr, "Error: invalid modular inverse\n");
+      exit(1);
+    };
     return int(s) < 0 ? s + mod : s;
   }
-  inline static void vec_add(R64* res, int s, const R* f, R c) {
+  inline static void vec_add(R64 *res, int s, const R *f, R c) {
     rep(i, s) res[i] = sub_mul_mod(res[i], mod - c, f[i]);
   }
-  inline static void vec_sub(R64* res, int s, const R* f, R c) {
+  inline static void vec_sub(R64 *res, int s, const R *f, R c) {
     rep(i, s) res[i] = sub_mul_mod(res[i], c, f[i]);
   }
 
@@ -211,15 +243,15 @@ public:
       s = (n == 1) ? 0 : 127 - __builtin_clzll(n - 1);
       x = ((u128(1) << s) + n - 1) / n;
     }
-    friend u64 operator / (u64 n, fast_div d) { return u128(n) * d.x >> d.s; }
-    friend u64 operator % (u64 n, fast_div d) { return n - n / d * d.m; }
+    friend u64 operator/(u64 n, fast_div d) { return u128(n) * d.x >> d.s; }
+    friend u64 operator%(u64 n, fast_div d) { return n - n / d * d.m; }
     u64 m, s, x;
   };
 #else
   struct fast_div {
     fast_div() {}
     fast_div(u32 n) : m(n) {}
-    friend u32 operator % (u64 n, fast_div d) { return n % d.m; }
+    friend u32 operator%(u64 n, fast_div d) { return n % d.m; }
     u32 m;
   };
 #endif
@@ -228,62 +260,63 @@ public:
   poly() {}
   poly(int n) : coefs(n) {}
   poly(int n, int c) : coefs(n, c % mod) {}
-  poly(const R* ar, int s) : coefs(ar, ar + s) {}
-  poly(const vector<R>& v) : coefs(v) {}
-  poly(const poly& f, int beg, int end=-1) {
-    if (end < 0) end = beg, beg = 0;
+  poly(const R *ar, int s) : coefs(ar, ar + s) {}
+  poly(const vector<R> &v) : coefs(v) {}
+  poly(const poly &f, int beg, int end = -1) {
+    if (end < 0)
+      end = beg, beg = 0;
     resize(end - beg);
     rep(i, beg, end) if (i < f.size()) coefs[i - beg] = f[i];
   }
 
-  static int ilog2(u64 n) {
-    return 63 - __builtin_clzll(n);
-  }
+  static int ilog2(u64 n) { return 63 - __builtin_clzll(n); }
   int size() const { return coefs.size(); }
   void resize(int s) { coefs.resize(s); }
   void push_back(R c) { coefs.push_back(c); }
 
-  const R* data() const { return coefs.data(); }
-  R* data() { return coefs.data(); }
-  const R& operator [] (int i) const { return coefs[i]; }
-  R& operator [] (int i) { return coefs[i]; }
+  const R *data() const { return coefs.data(); }
+  R *data() { return coefs.data(); }
+  const R &operator[](int i) const { return coefs[i]; }
+  R &operator[](int i) { return coefs[i]; }
 
   void reverse() { std::reverse(coefs.begin(), coefs.end()); }
 
-  poly operator - () {
+  poly operator-() {
     poly ret = *this;
     rep(i, ret.size()) ret[i] = (ret[i] == 0 ? 0 : mod - ret[i]);
     return ret;
   }
-  poly& operator += (const poly& rhs) {
-    if (size() < rhs.size()) resize(rhs.size());
+  poly &operator+=(const poly &rhs) {
+    if (size() < rhs.size())
+      resize(rhs.size());
     rep(i, rhs.size()) coefs[i] = add_mod(coefs[i], rhs[i]);
     return *this;
   }
-  poly& operator -= (const poly& rhs) {
-    if (size() < rhs.size()) resize(rhs.size());
+  poly &operator-=(const poly &rhs) {
+    if (size() < rhs.size())
+      resize(rhs.size());
     rep(i, rhs.size()) coefs[i] = sub_mod(coefs[i], rhs[i]);
     return *this;
   }
-  poly& operator *= (const poly& rhs) { return *this = *this * rhs; }
+  poly &operator*=(const poly &rhs) { return *this = *this * rhs; }
 
-  poly& rev_add(const poly& rhs) {
+  poly &rev_add(const poly &rhs) {
     if (size() < rhs.size()) {
       int s = size();
       resize(rhs.size());
       rep(i, s) coefs[size() - 1 - i] = coefs[s - 1 - i];
       rep(i, size() - s) coefs[i] = 0;
     }
-    rep(i, rhs.size()) coefs[size() - 1 - i] = \
-      add_mod(coefs[size() - 1 - i], rhs.coefs[rhs.size() - 1 - i]);
+    rep(i, rhs.size()) coefs[size() - 1 - i] =
+        add_mod(coefs[size() - 1 - i], rhs.coefs[rhs.size() - 1 - i]);
     return *this;
   }
 
-  poly operator + (const poly& rhs) const { return poly(*this) += rhs; }
-  poly operator - (const poly& rhs) const { return poly(*this) -= rhs; }
-  poly operator * (const poly& rhs) const { return this->mul(rhs); }
+  poly operator+(const poly &rhs) const { return poly(*this) += rhs; }
+  poly operator-(const poly &rhs) const { return poly(*this) -= rhs; }
+  poly operator*(const poly &rhs) const { return this->mul(rhs); }
 
-  static void set_mod(R m, int N=2) {
+  static void set_mod(R m, int N = 2) {
     mod = m;
     lmod = R64(m) << 32;
     N = max(2, N);
@@ -300,7 +333,6 @@ public:
   }
 
 private:
-
 #ifdef NTT64
   static poly mul_crt(int beg, int end) {
     using namespace ntt;
@@ -309,12 +341,15 @@ private:
     poly ret(end - beg);
     rep(i, ret.size()) {
       u64 r1 = f1[i + beg].get(), r2 = f2[i + beg].get();
-      ret[i] = (r1 + (m64_2(r2 + m64_2::modulus() - r1) * inv).get() % fast_mod * mod1) % fast_mod;
+      ret[i] =
+          (r1 +
+           (m64_2(r2 + m64_2::modulus() - r1) * inv).get() % fast_mod * mod1) %
+          fast_mod;
     }
     return ret;
   }
 
-  static void mul2(const poly& f, const poly& g, bool cyclic=false) {
+  static void mul2(const poly &f, const poly &g, bool cyclic = false) {
     using namespace ntt;
     if (&f == &g) {
       rep(i, f.size()) f1[i] = f[i];
@@ -322,9 +357,11 @@ private:
       rep(i, f.size()) f2[i] = f[i];
       convolve(f2, f.size(), f2, f.size(), cyclic);
     } else {
-      rep(i, f.size()) f1[i] = f[i]; rep(i, g.size()) g1[i] = g[i];
+      rep(i, f.size()) f1[i] = f[i];
+      rep(i, g.size()) g1[i] = g[i];
       convolve(f1, f.size(), g1, g.size(), cyclic);
-      rep(i, f.size()) f2[i] = f[i]; rep(i, g.size()) g2[i] = g[i];
+      rep(i, f.size()) f2[i] = f[i];
+      rep(i, g.size()) g2[i] = g[i];
       convolve(f2, f.size(), g2, g.size(), cyclic);
     }
   }
@@ -342,14 +379,15 @@ private:
     u32 inv12 = m32_3(m12 % m3).inverse().get();
 
     rep(i, ret.size()) {
-      u32 r1 = f1[i + beg].get(), r2 = f2[i + beg].get(), r3 = f3[i + beg].get();
+      u32 r1 = f1[i + beg].get(), r2 = f2[i + beg].get(),
+          r3 = f3[i + beg].get();
       u64 r = r1 + u64(r2 + m2 - r1) * inv1 % m2 * m1;
       ret[i] = (r + u64(r3 + m3 - r % m3) * inv12 % m3 * m12m) % mod;
     }
     return ret;
   }
 
-  static void mul2(const poly& f, const poly& g, bool cyclic=false) {
+  static void mul2(const poly &f, const poly &g, bool cyclic = false) {
     using namespace ntt;
     if (&f == &g) {
       rep(i, f.size()) f1[i] = f[i] % m32_1::modulus();
@@ -373,15 +411,15 @@ private:
 #endif
 
 public:
-  static void amul(const R* f, int s1, const R* g, int s2, R* res) {
+  static void amul(const R *f, int s1, const R *g, int s2, R *res) {
     int s = s1 + s2 - 1;
     tmp64.assign(s, 0);
     rep(i, s2) if (g[i]) vec_add(tmp64.data() + i, s1, f, g[i]);
     rep(i, s) res[i] = tmp64[i] % fast_mod;
   }
 
-  poly mul_basecase(const poly& g) const {
-    const auto& f = *this;
+  poly mul_basecase(const poly &g) const {
+    const auto &f = *this;
     int s = size() + g.size() - 1;
     poly ret(s);
     amul(f.data(), f.size(), g.data(), g.size(), ret.data());
@@ -389,9 +427,10 @@ public:
   }
 
   // 1.0 * M(n)
-  poly mul(const poly& g) const {
-    const auto& f = *this;
-    if (f.size() == 0 || g.size() == 0) return poly();
+  poly mul(const poly &g) const {
+    const auto &f = *this;
+    if (f.size() == 0 || g.size() == 0)
+      return poly();
     if (f.size() + g.size() <= ntt_threshold) {
       return f.mul_basecase(g);
     } else {
@@ -401,9 +440,10 @@ public:
   }
 
   // 1.0 * M(n)
-  poly middle_product(const poly& g) const {
-    const poly& f = *this;
-    if (f.size() == 0 || g.size() == 0) return poly();
+  poly middle_product(const poly &g) const {
+    const poly &f = *this;
+    if (f.size() == 0 || g.size() == 0)
+      return poly();
     mul2(f, g, true);
     return mul_crt(f.size(), g.size());
   }
@@ -436,23 +476,28 @@ vector<R> poly::invs, poly::facts, poly::ifacts;
 int pow_mod(int b, int e, int mod) {
   int ret = 1;
   for (; e; e >>= 1, b = i64(b) * b % mod) {
-    if (e & 1) ret = i64(ret) * b % mod;
+    if (e & 1)
+      ret = i64(ret) * b % mod;
   }
   return ret;
 }
 
 int binomial_sum_mod_p(int N, int K, int mod) {
-  if (K == 0) return 1 % mod;
-  if (N <= K) return pow_mod(2, N, mod);
+  if (K == 0)
+    return 1 % mod;
+  if (N <= K)
+    return pow_mod(2, N, mod);
   if (i64(K) * 2 > N) {
-    return (pow_mod(2, N, mod) + i64(mod) - binomial_sum_mod_p(N, N - K - 1, mod)) % mod;
+    return (pow_mod(2, N, mod) + i64(mod) -
+            binomial_sum_mod_p(N, N - K - 1, mod)) %
+           mod;
   }
   assert(N < mod);
 
   const int sqrt_K = sqrt(K);
   poly::set_mod(mod, sqrt_K);
 
-  auto mod_invs = [&] (vector<int>& f) {
+  auto mod_invs = [&](vector<int> &f) {
     int n = f.size();
     vector<int> ret(f);
     if (n > 0) {
@@ -467,20 +512,22 @@ int binomial_sum_mod_p(int N, int K, int mod) {
     return ret;
   };
 
-  auto conv = [&] (vector<int>& f) -> poly {
+  auto conv = [&](vector<int> &f) -> poly {
     int n = f.size();
-    const auto& ifacts = poly::ifacts;
+    const auto &ifacts = poly::ifacts;
     auto g = poly(f);
     rep(i, n) {
       int d = i64(ifacts[i]) * ifacts[(n - 1) - i] % mod;
-      if ((n - 1 - i) & 1) d = mod - d;
+      if ((n - 1 - i) & 1)
+        d = mod - d;
       g[i] = i64(g[i]) * d % mod;
     }
     return g;
   };
 
-  auto shift = [&] (const poly& cf, const poly& f, i64 dx) {
-    if ((dx %= mod) < 0) dx += mod;
+  auto shift = [&](const poly &cf, const poly &f, i64 dx) {
+    if ((dx %= mod) < 0)
+      dx += mod;
     const int n = f.size();
     const int a = i64(dx) * poly::mod_inv(sqrt_K) % mod;
 
@@ -503,14 +550,14 @@ int binomial_sum_mod_p(int N, int K, int mod) {
     return ret.coefs;
   };
 
-  using Pair = pair< vector<int>, vector<int> >;
-  function< Pair(int) > rec = [&] (int n) -> Pair {
+  using Pair = pair<vector<int>, vector<int>>;
+  function<Pair(int)> rec = [&](int n) -> Pair {
     if (n == 1) {
       return Pair({N, N - sqrt_K}, {1, sqrt_K + 1});
     }
     int nh = n >> 1;
     auto res = rec(nh);
-    auto& f11 = res.first, &g11 = res.second;
+    auto &f11 = res.first, &g11 = res.second;
 
     auto f = conv(f11), g = conv(g11);
     auto g12 = shift(g, g11, nh);
@@ -524,7 +571,7 @@ int binomial_sum_mod_p(int N, int K, int mod) {
       g11[i] = (i64(g11[i]) * f12[nh - i] + i64(g12[i]) * f11[i]) % mod;
     }
     rep(i, 1, nh + 1) {
-      g11.push_back( (i64(g21[i]) * f22[nh - i] + i64(g22[i]) * f21[i]) % mod );
+      g11.push_back((i64(g21[i]) * f22[nh - i] + i64(g22[i]) * f21[i]) % mod);
     }
 
     f12 = shift(f, f11, nh);
@@ -549,7 +596,8 @@ int binomial_sum_mod_p(int N, int K, int mod) {
         i64 s = 0;
         rep(i, n) {
           s += prod;
-          prod = i64(prod) * invs[i] % mod * (i64(N) + mod - i64(sqrt_K) * n - i) % mod;
+          prod = i64(prod) * invs[i] % mod *
+                 (i64(N) + mod - i64(sqrt_K) * n - i) % mod;
         }
         g11.push_back(s % mod);
         f11.push_back(prod);
@@ -575,9 +623,7 @@ int binomial_sum_mod_p(int N, int K, int mod) {
   }
 
   int prod = 1;
-  rep(i, sqrt_K) {
-    prod = i64(prod) * f1[i] % mod * f2[i] % mod;
-  }
+  rep(i, sqrt_K) { prod = i64(prod) * f1[i] % mod * f2[i] % mod; }
 
   const int rest = max(0, K - sqrt_K * sqrt_K);
   ret += prod;
@@ -599,11 +645,10 @@ void solve() {
 }
 
 int main() {
-  //clock_t beg = clock();
+  // clock_t beg = clock();
   solve();
-  //clock_t end = clock();
-  //fprintf(stderr, "%.3f sec\n", double(end - beg) / CLOCKS_PER_SEC);
+  // clock_t end = clock();
+  // fprintf(stderr, "%.3f sec\n", double(end - beg) / CLOCKS_PER_SEC);
   return 0;
 }
 // https://discuss.codechef.com/t/how-to-calculate-sum-of-binomial-coefficients-efficiently/12846/4
-

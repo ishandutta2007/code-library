@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1010;
@@ -8,7 +8,8 @@ int b[N], c[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   int tot = 0;
   for (int i = 1; i <= n; i++) {
     cin >> b[i];
@@ -32,8 +33,7 @@ int32_t main() {
     }
     if (sum <= 1) {
       r = mid;
-    }
-    else {
+    } else {
       l = mid;
     }
   }

@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9;
@@ -30,12 +30,7 @@ struct BIT {
     }
     return (mul * st + add);
   }
-  long long query(int l, int r) {
-    return query(r) - query(l - 1);
-  }
+  long long query(int l, int r) { return query(r) - query(l - 1); }
 } t;
 
-int32_t main() {
-
-  return 0;
-}
+int32_t main() { return 0; }

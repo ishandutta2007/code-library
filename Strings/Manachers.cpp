@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
@@ -6,7 +6,7 @@ int main() {
   string s;
   cin >> s;
   n = s.size();
-  vector<int> d1(n);  // maximum odd length palindrome centered at i
+  vector<int> d1(n); // maximum odd length palindrome centered at i
   // here d1[i]=the palindrome has d1[i]-1 right characters from i
   // e.g. for aba, d1[1]=2;
   for (int i = 0, l = 0, r = -1; i < n; i++) {
@@ -20,7 +20,7 @@ int main() {
       r = i + k;
     }
   }
-  vector<int> d2(n);  // maximum even length palindrome centered at i
+  vector<int> d2(n); // maximum even length palindrome centered at i
   // here d2[i]=the palindrome has d2[i]-1 right characters from i
   // e.g. for abba, d2[2]=2;
   for (int i = 0, l = 0, r = -1; i < n; i++) {
@@ -31,16 +31,18 @@ int main() {
     d2[i] = k--;
     if (i + k > r) {
       l = i - k - 1;
-      r = i + k ;
+      r = i + k;
     }
   }
-  for(i = 0; i < n; i++) cout << d1[i] << ' ';
+  for (i = 0; i < n; i++)
+    cout << d1[i] << ' ';
   cout << endl;
-  for(i = 0; i < n; i++) cout << d2[i] << ' ';
+  for (i = 0; i < n; i++)
+    cout << d2[i] << ' ';
   cout << endl;
   // number of palindromes
   long long ans = 0;
-  for(i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     ans += 1LL * d1[i];
     ans += 1LL * d2[i];
   }

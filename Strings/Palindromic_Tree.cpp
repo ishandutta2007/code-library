@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9;
@@ -35,7 +35,8 @@ struct PalindromicTree {
     int ch = s[pos] - 'a';
     while (1) {
       curlen = t[cur].len;
-      if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) break;
+      if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos])
+        break;
       cur = t[cur].link;
     }
     if (t[cur].nxt[ch]) {
@@ -67,12 +68,15 @@ struct PalindromicTree {
     }
     t[sz].cnt = 1 + t[t[sz].link].cnt;
     t[sz].diff = t[sz].len - t[t[sz].link].len;
-    if (t[sz].diff == t[t[sz].link].diff) t[sz].slink = t[t[sz].link].slink;
-    else t[sz].slink = t[sz].link;
+    if (t[sz].diff == t[t[sz].link].diff)
+      t[sz].slink = t[t[sz].link].slink;
+    else
+      t[sz].slink = t[sz].link;
     return 1;
   }
   void calc_occurrences() {
-    for (int i = sz; i >= 3; i--) t[t[i].link].oc += t[i].oc;
+    for (int i = sz; i >= 3; i--)
+      t[t[i].link].oc += t[i].oc;
   }
   vector<array<int, 2>> minimum_partition() { //(even, odd), 1 indexed
     int n = s.size();
@@ -84,7 +88,9 @@ struct PalindromicTree {
         ans[i][k] = 1e9;
         for (int v = last; t[v].len > 0; v = t[v].slink) {
           series_ans[v][!k] = ans[i - (t[t[v].slink].len + t[v].diff)][!k];
-          if (t[v].diff == t[t[v].link].diff) series_ans[v][!k] = min(series_ans[v][!k], series_ans[t[v].link][!k]);
+          if (t[v].diff == t[t[v].link].diff)
+            series_ans[v][!k] =
+                min(series_ans[v][!k], series_ans[t[v].link][!k]);
           ans[i][k] = min(ans[i][k], series_ans[v][!k] + 1);
         }
       }
@@ -99,13 +105,15 @@ int32_t main() {
   string s;
   cin >> s;
   PalindromicTree t(s);
-  for (int i = 0; i < s.size(); i++) t.extend(i);
+  for (int i = 0; i < s.size(); i++)
+    t.extend(i);
   t.calc_occurrences();
   long long ans = 0;
-  for (int i = 3; i <= t.sz; i++) ans += t.t[i].oc;
+  for (int i = 3; i <= t.sz; i++)
+    ans += t.t[i].oc;
   cout << ans << '\n';
   return 0;
-  //auto ans = t.minimum_partition();
+  // auto ans = t.minimum_partition();
   // for (int i = 1; i <= s.size(); i++) {
   //     cout << (ans[i][1] == 1e9 ? -1 : ans[i][1]) << ' ';
   //     cout << (ans[i][0] == 1e9 ? -2 : ans[i][0]) << '\n';

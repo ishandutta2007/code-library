@@ -1,16 +1,16 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9;
 
-//credit: Alpha_Q
+// credit: Alpha_Q
 struct AC {
   int N, P;
   const int A = 26;
-  vector <vector <int>> next;
-  vector <int> link, out_link;
-  vector <vector <int>> out;
-  AC(): N(0), P(0) {node();}
+  vector<vector<int>> next;
+  vector<int> link, out_link;
+  vector<vector<int>> out;
+  AC() : N(0), P(0) { node(); }
   int node() {
     next.emplace_back(A, 0);
     link.emplace_back(0);
@@ -18,25 +18,26 @@ struct AC {
     out.emplace_back(0);
     return N++;
   }
-  inline int get (char c) {
-    return c - 'a';
-  }
-  int add_pattern (const string T) {
+  inline int get(char c) { return c - 'a'; }
+  int add_pattern(const string T) {
     int u = 0;
     for (auto c : T) {
-      if (!next[u][get(c)]) next[u][get(c)] = node();
+      if (!next[u][get(c)])
+        next[u][get(c)] = node();
       u = next[u][get(c)];
     }
     out[u].push_back(P);
     return P++;
   }
   void compute() {
-    queue <int> q;
+    queue<int> q;
     for (q.push(0); !q.empty();) {
-      int u = q.front(); q.pop();
+      int u = q.front();
+      q.pop();
       for (int c = 0; c < A; ++c) {
         int v = next[u][c];
-        if (!v) next[u][c] = next[link[u]][c];
+        if (!v)
+          next[u][c] = next[link[u]][c];
         else {
           link[v] = u ? next[link[u]][c] : 0;
           out_link[v] = out[link[v]].empty() ? out_link[link[v]] : link[v];
@@ -45,8 +46,9 @@ struct AC {
       }
     }
   }
-  int advance (int u, char c) {
-    while (u && !next[u][get(c)]) u = link[u];
+  int advance(int u, char c) {
+    while (u && !next[u][get(c)])
+      u = link[u];
     u = next[u][get(c)];
     return u;
   }
@@ -56,23 +58,27 @@ int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   auto st = clock();
-  int t, cs = 0; cin >> t;
+  int t, cs = 0;
+  cin >> t;
   while (t--) {
-    int n; cin >> n;
+    int n;
+    cin >> n;
     vector<string> v;
     for (int i = 0; i < n; i++) {
-      string s; cin >> s;
+      string s;
+      cin >> s;
       v.push_back(s);
     }
     sort(v.begin(), v.end());
     v.erase(unique(v.begin(), v.end()), v.end());
     AC aho;
     vector<int> len(n + 3, 0);
-    for (auto s: v) {
+    for (auto s : v) {
       len[aho.add_pattern(s)] = s.size();
     }
     aho.compute();
-    string s; cin >> s;
+    string s;
+    cin >> s;
     n = s.size();
     vector<int> dp(n, n + 10);
     int u = 0;
@@ -80,7 +86,7 @@ int32_t main() {
       char c = s[i];
       u = aho.advance(u, c);
       for (int v = u; v; v = aho.out_link[v]) {
-        for (auto p : aho.out[v]) { 
+        for (auto p : aho.out[v]) {
           dp[i] = min(dp[i], (i - len[p] >= 0 ? dp[i - len[p]] : 0) + 1);
         }
       }
@@ -88,8 +94,7 @@ int32_t main() {
     cout << "Case " << ++cs << ": ";
     if (dp[n - 1] == n + 10) {
       cout << "impossible\n";
-    }
-    else {
+    } else {
       cout << dp[n - 1] << '\n';
     }
   }

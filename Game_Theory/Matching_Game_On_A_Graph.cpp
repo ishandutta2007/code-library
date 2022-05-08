@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e3 + 9;
@@ -37,7 +37,8 @@ struct Blossom {
     ++t;
     while (true) {
       if (v) {
-        if (aux[v] == t) return v;
+        if (aux[v] == t)
+          return v;
         aux[v] = t;
         v = orig[par[match[v]]];
       }
@@ -49,16 +50,17 @@ struct Blossom {
       par[v] = w;
       w = match[v];
       ad[v] = true;
-      if (vis[w] == 1) Q.push(w), vis[w] = 0;
+      if (vis[w] == 1)
+        Q.push(w), vis[w] = 0;
       orig[v] = orig[w] = a;
       v = par[w];
     }
   }
-  //it finds an augmented path starting from u
+  // it finds an augmented path starting from u
   bool bfs(int u) {
     fill(vis + 1, vis + n + 1, -1);
     iota(orig + 1, orig + n + 1, 1);
-    Q = queue<int> ();
+    Q = queue<int>();
     Q.push(u);
     vis[u] = 0;
     while (!Q.empty()) {
@@ -69,7 +71,8 @@ struct Blossom {
         if (vis[x] == -1) {
           par[x] = v;
           vis[x] = 1;
-          if (!match[x]) return augment(u, x), true;
+          if (!match[x])
+            return augment(u, x), true;
           Q.push(match[x]);
           vis[match[x]] = 0;
         } else if (vis[x] == 0 && orig[v] != orig[x]) {
@@ -86,10 +89,11 @@ struct Blossom {
     vector<int> p(n - 1);
     iota(p.begin(), p.end(), 1);
     shuffle(p.begin(), p.end(), rnd);
-    for (int i = 1; i <= n; i++) shuffle(g[i].begin(), g[i].end(), rnd);
+    for (int i = 1; i <= n; i++)
+      shuffle(g[i].begin(), g[i].end(), rnd);
     for (auto u : p) {
       if (!match[u]) {
-        for(auto v : g[u]) {
+        for (auto v : g[u]) {
           if (!match[v]) {
             match[u] = v, match[v] = u;
             ++ans;
@@ -98,7 +102,9 @@ struct Blossom {
         }
       }
     }
-    for(int i = 1; i <= n; ++i) if (!match[i] && bfs(i)) ++ans;
+    for (int i = 1; i <= n; ++i)
+      if (!match[i] && bfs(i))
+        ++ans;
     return ans;
   }
 } M;
@@ -110,22 +116,26 @@ int32_t main() {
   while (t--) {
     int n, m;
     cin >> n >> m;
-    M = Blossom (n);
+    M = Blossom(n);
     while (m--) {
       int u, v;
       cin >> u >> v;
       M.add_edge(u, v);
     }
     int ans = M.maximum_matching();
-    if (ans * 2 == n) cout << 0 << '\n';
+    if (ans * 2 == n)
+      cout << 0 << '\n';
     else {
       memset(M.ad, 0, sizeof M.ad);
-      for (int i = 1; i <= n; i++) if (M.match[i] == 0) M.bfs(i);
+      for (int i = 1; i <= n; i++)
+        if (M.match[i] == 0)
+          M.bfs(i);
       int ans = 0;
-      for (int i = 1; i <= n; i++) ans += M.ad[i]; //nodes which are unmatched in some maximum matching
+      for (int i = 1; i <= n; i++)
+        ans += M.ad[i]; // nodes which are unmatched in some maximum matching
       cout << ans << '\n';
     }
   }
   return 0;
 }
-//https://www.codechef.com/problems/HAMILG
+// https://www.codechef.com/problems/HAMILG

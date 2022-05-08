@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9, LG = 18, inf = 1e9 + 9;
@@ -12,22 +12,24 @@ struct ST {
     fill(lazy, lazy + 4 * N, 0);
   }
   inline void push(int n, int b, int e) {
-    if(lazy[n] == 0) return;
+    if (lazy[n] == 0)
+      return;
     t[n] = t[n] + lazy[n];
-    if(b != e) {
+    if (b != e) {
       lazy[lc] = lazy[lc] + lazy[n];
       lazy[rc] = lazy[rc] + lazy[n];
     }
     lazy[n] = 0;
   }
   inline int combine(int a, int b) {
-    return max(a, b); //merge left and right queries
+    return max(a, b); // merge left and right queries
   }
   inline void pull(int n) {
-    t[n] = max(t[lc], t[rc]); //merge lower nodes of the tree to get the parent node
+    t[n] = max(t[lc],
+               t[rc]); // merge lower nodes of the tree to get the parent node
   }
   void build(int n, int b, int e) {
-    if(b == e) {
+    if (b == e) {
       t[n] = 0;
       return;
     }
@@ -38,8 +40,9 @@ struct ST {
   }
   void upd(int n, int b, int e, int i, int j, int v) {
     push(n, b, e);
-    if(j < b || e < i) return;
-    if(i <= b && e <= j) {
+    if (j < b || e < i)
+      return;
+    if (i <= b && e <= j) {
       lazy[n] += v;
       push(n, b, e);
       return;
@@ -51,8 +54,10 @@ struct ST {
   }
   int query(int n, int b, int e, int i, int j) {
     push(n, b, e);
-    if(i > e || b > j) return -inf;
-    if(i <= b && e <= j) return t[n];
+    if (i > e || b > j)
+      return -inf;
+    if (i <= b && e <= j)
+      return t[n];
     int mid = (b + e) >> 1;
     return combine(query(lc, b, mid, i, j), query(rc, mid + 1, e, i, j));
   }
@@ -64,24 +69,36 @@ void dfs(int u, int p = 0) {
   par[u][0] = p;
   dep[u] = dep[p] + 1;
   sz[u] = 1;
-  for (int i = 1; i <= LG; i++) par[u][i] = par[par[u][i - 1]][i - 1];
-  if (p) g[u].erase(find(g[u].begin(), g[u].end(), p));
-  for (auto &v : g[u]) if (v != p) {
+  for (int i = 1; i <= LG; i++)
+    par[u][i] = par[par[u][i - 1]][i - 1];
+  if (p)
+    g[u].erase(find(g[u].begin(), g[u].end(), p));
+  for (auto &v : g[u])
+    if (v != p) {
       dfs(v, u);
       sz[u] += sz[v];
-      if(sz[v] > sz[g[u][0]]) swap(v, g[u][0]);
+      if (sz[v] > sz[g[u][0]])
+        swap(v, g[u][0]);
     }
 }
 int lca(int u, int v) {
-  if (dep[u] < dep[v]) swap(u, v);
-  for (int k = LG; k >= 0; k--) if (dep[par[u][k]] >= dep[v]) u = par[u][k];
-  if (u == v) return u;
-  for (int k = LG; k >= 0; k--) if (par[u][k] != par[v][k]) u = par[u][k], v = par[v][k];
+  if (dep[u] < dep[v])
+    swap(u, v);
+  for (int k = LG; k >= 0; k--)
+    if (dep[par[u][k]] >= dep[v])
+      u = par[u][k];
+  if (u == v)
+    return u;
+  for (int k = LG; k >= 0; k--)
+    if (par[u][k] != par[v][k])
+      u = par[u][k], v = par[v][k];
   return par[u][0];
 }
 int kth(int u, int k) {
   assert(k >= 0);
-  for (int i = 0; i <= LG; i++) if (k & (1 << i)) u = par[u][i];
+  for (int i = 0; i <= LG; i++)
+    if (k & (1 << i))
+      u = par[u][i];
   return u;
 }
 int T, head[N], st[N], en[N];
@@ -96,7 +113,7 @@ void dfs_hld(int u) {
 int n;
 int query_up(int u, int v) {
   int ans = -inf;
-  while(head[u] != head[v]) {
+  while (head[u] != head[v]) {
     ans = max(ans, t.query(1, 1, n, st[head[u]], st[u]));
     u = par[head[u]][0];
   }
@@ -106,7 +123,8 @@ int query_up(int u, int v) {
 int query(int u, int v) {
   int l = lca(u, v);
   int ans = query_up(u, l);
-  if (v != l) ans = max(ans, query_up(v, kth(v, dep[v] - dep[l] - 1)));
+  if (v != l)
+    ans = max(ans, query_up(v, kth(v, dep[v] - dep[l] - 1)));
   return ans;
 }
 int32_t main() {
@@ -138,4 +156,4 @@ int32_t main() {
   }
   return 0;
 }
-//https://www.hackerrank.com/challenges/subtrees-and-paths/problem
+// https://www.hackerrank.com/challenges/subtrees-and-paths/problem

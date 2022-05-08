@@ -1,11 +1,12 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 const int N = (1 << 16) + 9;
 /**
 You have a list of integers, initially the list is empty.
 You have to process  operations of three kinds:
 
- add s: Add integer  to your list, note that an integer can exist more than one time in the list
+ add s: Add integer  to your list, note that an integer can exist more than one
+time in the list
  del s: Delete one copy of integer  from the list,
         it's guaranteed that at least one copy of  will exist in the list.
  cnt s: Count how many integers  are there in the list such that a&s =a
@@ -20,10 +21,12 @@ then i'th bit of B is 1
 
 so if i'th bit of B is 0 , then i'th bit of A must be 0 ,
  but if i'th bit of B is 1 then i'th bit of A can be 0 or 1
-so for a fixed B the number of numbers A which satisify A and B = A is 2^(number of 1 bits in B)
+so for a fixed B the number of numbers A which satisify A and B = A is 2^(number
+of 1 bits in B)
 
 so let's try this solution:
-let's have an array C with indices from 0 to 2^16-1 , initially all values are zero
+let's have an array C with indices from 0 to 2^16-1 , initially all values are
+zero
 whenever we have to add a number S then we increment the value of C[S] by 1
 whenever we have to do cnt operation with the given number S ,
 then generate all numbers X such that X and S = X
@@ -69,8 +72,10 @@ if S have more than 8 1-bits then we need to count numbers that  have more than
 first, the number of numbers that have more than 8 1-bits is just C[S]
 
 second, to count the numbers that have at most 8 1-bits we need to
-count the numbers X in the list that have at most 8 1-bits that doesn't satisfy X and S = X
-then subtract it from total number of numbers in our list that have at most 8 1-bits
+count the numbers X in the list that have at most 8 1-bits that doesn't satisfy
+X and S = X
+then subtract it from total number of numbers in our list that have at most 8
+1-bits
 now to count the numbers X that doesn't satisify X and S = X  we
 flip the digits of S (change every 0 to 1 and every 1 to 0)
 (note that S become to have at most 8 1-bits)
@@ -93,62 +98,76 @@ int main() {
   string s;
   int i, j, k, n, m, q, tot = 0;
   cin >> q;
-  while(q--) {
+  while (q--) {
     cin >> s >> n;
-    if(s[0] == 'a') {
-      if(__builtin_popcount(n) <= 8) {
+    if (s[0] == 'a') {
+      if (__builtin_popcount(n) <= 8) {
         small[n]++;
-        for(i = n; i > 0; i = (i - 1)&n) c[i]++;
+        for (i = n; i > 0; i = (i - 1) & n)
+          c[i]++;
         tot++;
       } else {
         vector<int> v;
-        for(i = 0; i < 16; i++) if(!((n >> i) & 1)) v.push_back(i);
+        for (i = 0; i < 16; i++)
+          if (!((n >> i) & 1))
+            v.push_back(i);
         k = v.size();
-        for(i = 0; i < (1 << k); i++) {
+        for (i = 0; i < (1 << k); i++) {
           int val = n;
-          for(j = 0; j < k; j++) if((i >> j) & 1) {
+          for (j = 0; j < k; j++)
+            if ((i >> j) & 1) {
               val |= (1 << v[j]);
             }
           big[val]++;
         }
       }
-    } else if(s[0] == 'd') {
-      if(__builtin_popcount(n) <= 8) {
+    } else if (s[0] == 'd') {
+      if (__builtin_popcount(n) <= 8) {
         small[n]--;
-        for(i = n; i > 0; i = (i - 1)&n) c[i]--;
+        for (i = n; i > 0; i = (i - 1) & n)
+          c[i]--;
         tot--;
       } else {
         vector<int> v;
-        for(i = 0; i < 16; i++) if(!((n >> i) & 1)) v.push_back(i);
+        for (i = 0; i < 16; i++)
+          if (!((n >> i) & 1))
+            v.push_back(i);
         k = v.size();
-        for(i = 0; i < (1 << k); i++) {
+        for (i = 0; i < (1 << k); i++) {
           int val = n;
-          for(j = 0; j < k; j++) if((i >> j) & 1) {
+          for (j = 0; j < k; j++)
+            if ((i >> j) & 1) {
               val |= (1 << v[j]);
             }
           big[val]--;
         }
       }
     } else {
-      if(__builtin_popcount(n) <= 8) {
+      if (__builtin_popcount(n) <= 8) {
         int ans = 0;
-        for(i = n; i > 0; i = (i - 1)&n) ans += small[i];
+        for (i = n; i > 0; i = (i - 1) & n)
+          ans += small[i];
         ans += small[0];
         cout << ans << endl;
       } else {
         int ans = big[n];
         vector<int> v;
-        for(i = 0; i < 16; i++) if(!((n >> i) & 1)) v.push_back(i);
+        for (i = 0; i < 16; i++)
+          if (!((n >> i) & 1))
+            v.push_back(i);
         k = v.size();
         int nw = 0;
-        for(i = 1; i < (1 << k); i++) {
+        for (i = 1; i < (1 << k); i++) {
           int val = 0, cnt = 0;
-          for(j = 0; j < k; j++) if((i >> j) & 1) {
+          for (j = 0; j < k; j++)
+            if ((i >> j) & 1) {
               val |= (1 << v[j]);
               cnt++;
             }
-          if(cnt & 1) nw += c[val];
-          else nw -= c[val];
+          if (cnt & 1)
+            nw += c[val];
+          else
+            nw -= c[val];
         }
         ans += tot - nw;
         cout << ans << endl;

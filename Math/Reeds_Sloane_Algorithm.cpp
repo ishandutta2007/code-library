@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 using ll = long long;
@@ -10,7 +10,8 @@ using ll = long long;
 struct LinearRecurrence {
   using vec = vector<ll>;
   static void extend(vec &a, size_t d, ll value = 0) {
-    if (d <= a.size()) return;
+    if (d <= a.size())
+      return;
     a.resize(d, value);
   }
   static vec BerlekampMassey(const vec &s, ll mod) {
@@ -24,14 +25,16 @@ struct LinearRecurrence {
       for (size_t j = 0; j < A.size(); ++j) {
         d += A[j] * s[i - j] % mod;
       }
-      if (!(d %= mod)) continue;
+      if (!(d %= mod))
+        continue;
       if (2 * (A.size() - 1) <= i) {
         auto temp = A;
         extend(A, B.size() + m);
         ll coef = d * inverse(b) % mod;
         for (size_t j = 0; j < B.size(); ++j) {
           A[j + m] -= coef * B[j] % mod;
-          if (A[j + m] < 0) A[j + m] += mod;
+          if (A[j + m] < 0)
+            A[j + m] += mod;
         }
         B = temp, b = d, m = 0;
       } else {
@@ -39,14 +42,16 @@ struct LinearRecurrence {
         ll coef = d * inverse(b) % mod;
         for (size_t j = 0; j < B.size(); ++j) {
           A[j + m] -= coef * B[j] % mod;
-          if (A[j + m] < 0) A[j + m] += mod;
+          if (A[j + m] < 0)
+            A[j + m] += mod;
         }
       }
     }
     return A;
   }
   static void exgcd(ll a, ll b, ll &g, ll &x, ll &y) {
-    if (!b) x = 1, y = 0, g = a;
+    if (!b)
+      x = 1, y = 0, g = a;
     else {
       exgcd(b, a % b, g, y, x);
       y -= x * (a / b);
@@ -55,7 +60,8 @@ struct LinearRecurrence {
   static ll crt(const vec &c, const vec &m) {
     int n = c.size();
     ll M = 1, ans = 0;
-    for (int i = 0; i < n; ++i) M *= m[i];
+    for (int i = 0; i < n; ++i)
+      M *= m[i];
     for (int i = 0; i < n; ++i) {
       ll x, y, g, tm = M / m[i];
       exgcd(tm, m[i], g, x, y);
@@ -64,20 +70,23 @@ struct LinearRecurrence {
     return (ans + M) % M;
   }
   static vec ReedsSloane(const vec &s, ll mod) {
-    auto inverse = [] (ll a, ll m) {
+    auto inverse = [](ll a, ll m) {
       ll d, x, y;
       exgcd(a, m, d, x, y);
       return d == 1 ? (x % m + m) % m : -1;
     };
-    auto L = [] (const vec &a, const vec &b) {
-      int da = (a.size() > 1 || (a.size() == 1 && a[0])) ? a.size() - 1 : -40000;
-      int db = (b.size() > 1 || (b.size() == 1 && b[0])) ? b.size() - 1 : -40000;
+    auto L = [](const vec &a, const vec &b) {
+      int da =
+          (a.size() > 1 || (a.size() == 1 && a[0])) ? a.size() - 1 : -40000;
+      int db =
+          (b.size() > 1 || (b.size() == 1 && b[0])) ? b.size() - 1 : -40000;
       return max(da, db + 1);
     };
-    auto prime_power = [&] (const vec &s, ll mod, ll p, ll e) {
+    auto prime_power = [&](const vec &s, ll mod, ll p, ll e) {
       // linear feedback shift register mod p^e, p is prime
       vector<vec> a(e), b(e), an(e), bn(e), ao(e), bo(e);
-      vec t(e), u(e), r(e), to(e, 1), uo(e), pw(e + 1, 1);;
+      vec t(e), u(e), r(e), to(e, 1), uo(e), pw(e + 1, 1);
+      ;
       for (int i = 1; i <= e; ++i) {
         pw[i] = pw[i - 1] * p;
         assert(pw[i] <= mod);
@@ -89,7 +98,8 @@ struct LinearRecurrence {
         if (t[i] == 0) {
           t[i] = 1, u[i] = e;
         } else {
-          for (u[i] = 0; t[i] % p == 0; t[i] /= p, ++u[i]);
+          for (u[i] = 0; t[i] % p == 0; t[i] /= p, ++u[i])
+            ;
         }
       }
       for (size_t k = 1; k < s.size(); ++k) {
@@ -111,27 +121,33 @@ struct LinearRecurrence {
           if (d == 0) {
             t[o] = 1, u[o] = e;
           } else {
-            for (u[o] = 0, t[o] = d; t[o] % p == 0; t[o] /= p, ++u[o]);
+            for (u[o] = 0, t[o] = d; t[o] % p == 0; t[o] /= p, ++u[o])
+              ;
             int g = e - 1 - u[o];
             if (L(a[g], b[g]) == 0) {
               extend(bn[o], k + 1);
               bn[o][k] = (bn[o][k] + d) % mod;
             } else {
-              ll coef = t[o] * inverse(to[g], mod) % mod * pw[u[o] - uo[g]] % mod;
+              ll coef =
+                  t[o] * inverse(to[g], mod) % mod * pw[u[o] - uo[g]] % mod;
               int m = k - r[g];
               assert(m >= 0);
               extend(an[o], ao[g].size() + m);
               extend(bn[o], bo[g].size() + m);
               for (size_t i = 0; i < ao[g].size(); ++i) {
                 an[o][i + m] -= coef * ao[g][i] % mod;
-                if (an[o][i + m] < 0) an[o][i + m] += mod;
+                if (an[o][i + m] < 0)
+                  an[o][i + m] += mod;
               }
-              while (an[o].size() && an[o].back() == 0) an[o].pop_back();
+              while (an[o].size() && an[o].back() == 0)
+                an[o].pop_back();
               for (size_t i = 0; i < bo[g].size(); ++i) {
                 bn[o][i + m] -= coef * bo[g][i] % mod;
-                if (bn[o][i + m] < 0) bn[o][i + m] -= mod;
+                if (bn[o][i + m] < 0)
+                  bn[o][i + m] -= mod;
               }
-              while (bn[o].size() && bn[o].back() == 0) bn[o].pop_back();
+              while (bn[o].size() && bn[o].back() == 0)
+                bn[o].pop_back();
             }
           }
         }
@@ -139,20 +155,24 @@ struct LinearRecurrence {
       return make_pair(an[0], bn[0]);
     };
     vector<tuple<ll, ll, int>> fac;
-    for (ll i = 2; i * i <= mod; ++i) if (mod % i == 0) {
+    for (ll i = 2; i * i <= mod; ++i)
+      if (mod % i == 0) {
         ll cnt = 0, pw = 1;
-        while (mod % i == 0) mod /= i, ++cnt, pw *= i;
+        while (mod % i == 0)
+          mod /= i, ++cnt, pw *= i;
         fac.emplace_back(pw, i, cnt);
       }
-    if (mod > 1) fac.emplace_back(mod, mod, 1);
+    if (mod > 1)
+      fac.emplace_back(mod, mod, 1);
     vector<vec> as;
     size_t n = 0;
-    for (auto &&x: fac) {
+    for (auto &&x : fac) {
       ll mod, p, e;
       vec a, b;
       tie(mod, p, e) = x;
       auto ss = s;
-      for (auto &&x: ss) x %= mod;
+      for (auto &&x : ss)
+        x %= mod;
       tie(a, b) = prime_power(ss, mod, p, e);
       as.emplace_back(a);
       n = max(n, a.size());
@@ -168,35 +188,42 @@ struct LinearRecurrence {
     return a;
   }
 
-  LinearRecurrence(const vec &s, const vec &c, ll mod):
-    init(s), trans(c), mod(mod), m(s.size()) {}
-  LinearRecurrence(const vec &s, ll mod, bool is_prime = true): mod(mod) {
+  LinearRecurrence(const vec &s, const vec &c, ll mod)
+      : init(s), trans(c), mod(mod), m(s.size()) {}
+  LinearRecurrence(const vec &s, ll mod, bool is_prime = true) : mod(mod) {
     assert(s.size() % 2 == 0);
     vec A;
-    if (is_prime) A = BerlekampMassey(s, mod);
-    else A = ReedsSloane(s, mod);
+    if (is_prime)
+      A = BerlekampMassey(s, mod);
+    else
+      A = ReedsSloane(s, mod);
     m = s.size() / 2;
     A.resize(m + 1, 0);
     trans.resize(m);
     for (int i = 0; i < m; ++i) {
       trans[i] = (mod - A[i + 1]) % mod;
     }
-    if (m == 0) m = 1, trans = {1};
+    if (m == 0)
+      m = 1, trans = {1};
     reverse(trans.begin(), trans.end());
     init = {s.begin(), s.begin() + m};
   }
   ll solve(ll n) {
-    if (mod == 1) return 0;
-    if (n < m) return init[n];
+    if (mod == 1)
+      return 0;
+    if (n < m)
+      return init[n];
     vec v(m), u(m << 1);
     ll msk = !!n;
-    for (ll m = n; m > 1; m >>= 1) msk <<= 1;
+    for (ll m = n; m > 1; m >>= 1)
+      msk <<= 1;
     v[0] = 1 % mod;
     for (ll x = 0; msk; msk >>= 1, x <<= 1) {
       fill_n(u.begin(), m * 2, 0);
       x |= !!(n & msk);
-      if (x < m) u[x] = 1 % mod;
-      else {// can be optimized by fft/ntt
+      if (x < m)
+        u[x] = 1 % mod;
+      else { // can be optimized by fft/ntt
         for (int i = 0; i < m; ++i) {
           for (int j = 0, t = i + (x & 1); j < m; ++j, ++t) {
             u[t] = (u[t] + v[i] * v[j]) % mod;
@@ -226,7 +253,8 @@ int main() {
   int t;
   cin >> t;
   while (t--) {
-    ll k, mod; cin >> k >> mod;
+    ll k, mod;
+    cin >> k >> mod;
     vector<ll> v(2 * k);
     for (int i = 0; i < 2 * k; i++) {
       cin >> v[i];
@@ -238,4 +266,4 @@ int main() {
     cout << ans << '\n';
   }
 }
-//https://www.spoj.com/problems/FINDLR/
+// https://www.spoj.com/problems/FINDLR/

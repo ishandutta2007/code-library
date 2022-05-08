@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e5 + 9;
@@ -14,16 +14,15 @@ struct DSU {
     w.resize(n + 1);
     flag = true;
     for (int i = 1; i <= n; i++) {
-      par[i] = i; 
-      sz[i] = 1; w[i] = 0;
+      par[i] = i;
+      sz[i] = 1;
+      w[i] = 0;
     }
   }
-  bool is_bipartite() {
-    return flag;
-  }
+  bool is_bipartite() { return flag; }
   pair<int, int> find(int u) {
     int ans = 0;
-    while (par[u] != u)  {
+    while (par[u] != u) {
       ans ^= w[u];
       u = par[u];
     }
@@ -68,16 +67,15 @@ struct update {
   bool type;
   int x, y;
   update(int _x, int _y) {
-    x = _x; y = _y;
+    x = _x;
+    y = _y;
     type = 0;
   }
 };
 struct DSUQueue {
   DSU D;
   vector<update> S;
-  DSUQueue(int n) {
-    D = DSU(n);
-  }
+  DSUQueue(int n) { D = DSU(n); }
   void push(update u) {
     D.merge(u.x, u.y);
     S.push_back(u);
@@ -95,25 +93,24 @@ struct DSUQueue {
         u.type = 1;
         push(u);
       }
-    } 
-    else {
+    } else {
       for (int i : {0, 1}) {
         reverse(t[i].begin(), t[i].end());
-        for (auto &u : t[i]) push(u);
+        for (auto &u : t[i])
+          push(u);
       }
     }
     S.pop_back();
     D.undo();
   }
-  bool is_bipartite() {
-    return D.is_bipartite();
-  }
+  bool is_bipartite() { return D.is_bipartite(); }
 };
 int u[N], v[N], a[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, m, q; cin >> n >> m >> q;
+  int n, m, q;
+  cin >> n >> m >> q;
   DSU P(n);
   for (int i = 1; i <= m; i++) {
     cin >> u[i] >> v[i];
@@ -127,16 +124,18 @@ int32_t main() {
       D.pop();
       ++r;
     }
-    if (D.is_bipartite()) a[l] = r - 1;
-    else a[l] = m + 1;
+    if (D.is_bipartite())
+      a[l] = r - 1;
+    else
+      a[l] = m + 1;
     D.push(update(u[l], v[l]));
   }
   while (q--) {
-    int l, r; cin >> l >> r;
+    int l, r;
+    cin >> l >> r;
     if (a[l] <= r) {
       cout << "NO\n";
-    }
-    else {
+    } else {
       cout << "YES\n";
     }
   }

@@ -7,16 +7,15 @@ const int N = 1e5 + 100;
 const int K = 15;
 
 struct node_t;
-typedef node_t * pnode;
+typedef node_t *pnode;
 
 struct node_t {
   int time;
   pnode to[2];
-  node_t() : time(0) {
-    to[0] = to[1] = 0;
-  }
+  node_t() : time(0) { to[0] = to[1] = 0; }
   bool go(int l) const {
-    if (!this) return false;
+    if (!this)
+      return false;
     return time >= l;
   }
   pnode clone() {
@@ -48,7 +47,8 @@ int query(pnode v, int x, int l) {
   int ans = 0;
   for (int i = K - 1; i >= 0; --i) {
     int bit = (x >> i) & 1;
-    if (v->to[bit]->go(l)) { // checking if this bit was inserted before the range
+    if (v->to[bit]->go(
+            l)) { // checking if this bit was inserted before the range
       ans |= 1 << i;
       v = v->to[bit];
     } else {

@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9, mod = 1e9 + 7;
@@ -6,8 +6,9 @@ const int N = 1e5 + 9, mod = 1e9 + 7;
 int spf[N];
 vector<int> primes;
 void linear_sieve() {
-  for(int i = 2; i < N; i++) {
-    if (spf[i] == 0) spf[i] = i, primes.push_back(i);
+  for (int i = 2; i < N; i++) {
+    if (spf[i] == 0)
+      spf[i] = i, primes.push_back(i);
     int sz = primes.size();
     for (int j = 0; j < sz && i * primes[j] < N && primes[j] <= spf[i]; j++) {
       spf[i * primes[j]] = primes[j];
@@ -15,13 +16,17 @@ void linear_sieve() {
   }
 }
 int power(long long n, long long k) {
-    int ans = 1 % mod; n %= mod; if (n < 0) n += mod;
-    while (k) {
-        if (k & 1) ans = (long long) ans * n % mod;
-        n = (long long) n * n % mod;
-        k >>= 1;
-    }
-    return ans;
+  int ans = 1 % mod;
+  n %= mod;
+  if (n < 0)
+    n += mod;
+  while (k) {
+    if (k & 1)
+      ans = (long long)ans * n % mod;
+    n = (long long)n * n % mod;
+    k >>= 1;
+  }
+  return ans;
 }
 struct base { // doesn't support zero
   map<int, int> mp;
@@ -36,12 +41,10 @@ struct base { // doesn't support zero
       mp[k] = cnt;
     }
   }
-  base(map<int, int> z) {
-    mp = z;
-  }
+  base(map<int, int> z) { mp = z; }
   int val() {
     int ans = 1;
-    for (auto x: mp) {
+    for (auto x : mp) {
       assert(x.second >= 0);
       ans = 1LL * ans * power(x.first, x.second) % mod;
     }
@@ -49,42 +52,38 @@ struct base { // doesn't support zero
   }
   base pow(int k) {
     map<int, int> ans = mp;
-    for (auto &x: ans) {
+    for (auto &x : ans) {
       x.second *= k;
     }
     return base(ans);
   }
   base sqrt() {
     map<int, int> ans = mp;
-    for (auto &x: ans) {
+    for (auto &x : ans) {
       assert(x.second % 2 == 0);
       x.second /= 2;
     }
     return base(ans);
-  }  
-  base operator * (base p) {
+  }
+  base operator*(base p) {
     map<int, int> ans = mp;
-    for (auto x: p.mp) {
+    for (auto x : p.mp) {
       ans[x.first] += x.second;
     }
     return base(ans);
   }
-  base operator / (base p) {
+  base operator/(base p) {
     map<int, int> ans = mp;
-    for (auto x: p.mp) {
+    for (auto x : p.mp) {
       ans[x.first] -= x.second;
     }
     return base(ans);
   }
-  base& operator *= (base p) {
-    return *this = (*this) * p;
-  }  
-  base& operator /= (base p) {
-    return *this = (*this) / p;
-  }
+  base &operator*=(base p) { return *this = (*this) * p; }
+  base &operator/=(base p) { return *this = (*this) / p; }
   void print() {
     bool f = 0;
-    for (auto x: mp) {
+    for (auto x : mp) {
       if (x.second) {
         f = 1;
         cout << "(" << x.first << ' ' << x.second << ") ";

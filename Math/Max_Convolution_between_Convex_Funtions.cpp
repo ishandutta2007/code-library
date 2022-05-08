@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // a[i + 1] - a[i] >= a[i] - a[i - 1] -> convex
@@ -7,7 +7,8 @@ using namespace std;
 vector<int> multiply(vector<int> a, vector<int> b) {
   int n = a.size() - 1, m = b.size() - 1;
   vector<int> ans(n + m + 1);
-  int sum = a[0] + b[0]; ans[0] = sum;
+  int sum = a[0] + b[0];
+  ans[0] = sum;
   int l = 0, r = 0;
   while (l < n && r < m) {
     if (a[l + 1] - a[l] > b[r + 1] - b[r]) {
@@ -19,8 +20,10 @@ vector<int> multiply(vector<int> a, vector<int> b) {
     }
     ans[l + r] = sum;
   }
-  while (l < n) sum += a[l + 1] - a[l], l++, ans[l + r] = sum;
-  while (r < m) sum += b[r + 1] - b[r], r++, ans[l + r] = sum;
+  while (l < n)
+    sum += a[l + 1] - a[l], l++, ans[l + r] = sum;
+  while (r < m)
+    sum += b[r + 1] - b[r], r++, ans[l + r] = sum;
   return ans;
 }
 int32_t main() {

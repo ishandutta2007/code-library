@@ -1,10 +1,12 @@
-#include<bits/stdc++.h>
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
 using namespace std;
 
-template <typename T> using o_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <typename T>
+using o_set =
+    tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 vector<int> decimal_to_factoradic(int n) {
   vector<int> v;
@@ -23,11 +25,13 @@ int factoradic_to_decimal(vector<int> v) {
   return ans;
 }
 vector<int> get_perm(int n, vector<int> f) {
-  o_set<int>se;
+  o_set<int> se;
   int sz = f.size();
   vector<int> p;
-  for (int i = 0; i < n - sz; i++) p.push_back(i);
-  for (int i = n - sz; i < n; i++) se.insert(i);
+  for (int i = 0; i < n - sz; i++)
+    p.push_back(i);
+  for (int i = n - sz; i < n; i++)
+    se.insert(i);
   for (int i = 0; i < sz; i++) {
     int nw = *se.find_by_order(f[i]);
     p.push_back(nw);
@@ -43,7 +47,8 @@ vector<int> kth_perm(int n, int k) { // k < n!
 vector<int> factoradic_order(vector<int> p) {
   o_set<int> se;
   int n = p.size();
-  for (int i = 0; i < n; i++) se.insert(p[i]);
+  for (int i = 0; i < n; i++)
+    se.insert(p[i]);
   vector<int> fac;
   for (int i = 0; i < n; i++) {
     int x = se.order_of_key(p[i]);
@@ -53,29 +58,31 @@ vector<int> factoradic_order(vector<int> p) {
   return fac;
 }
 // ?-th lexicographically smallest permutation of size n
-int order(vector<int> p) {
-  return factoradic_to_decimal(factoradic_order(p));
-}
+int order(vector<int> p) { return factoradic_to_decimal(factoradic_order(p)); }
 
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   vector<int> p(n);
-  for (int i = 0; i < n; i++) cin >> p[i];
+  for (int i = 0; i < n; i++)
+    cin >> p[i];
   vector<int> q(n);
-  for (int i = 0; i < n; i++) cin >> q[i];
+  for (int i = 0; i < n; i++)
+    cin >> q[i];
   vector<int> ordp = factoradic_order(p);
   vector<int> ordq = factoradic_order(q);
   vector<int> sum = ordp;
   int carry = 0;
-  for (int i = n - 1; i >= 0; i--){
+  for (int i = n - 1; i >= 0; i--) {
     sum[i] += ordq[i] + carry;
-    carry = sum[i] / (n-i);
+    carry = sum[i] / (n - i);
     sum[i] %= n - i;
   }
   vector<int> perm = get_perm(n, sum);
-  for (int i = 0; i < n; i++) cout << perm[i] << ' ';
+  for (int i = 0; i < n; i++)
+    cout << perm[i] << ' ';
   return 0;
 }
 // https://codeforces.com/contest/501/problem/D

@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e5 + 9;
@@ -15,9 +15,7 @@ struct node {
 };
 struct treap {
   node *root;
-  treap() {
-    root = nullptr;
-  }
+  treap() { root = nullptr; }
   void split(node *t, int pos, node *&l, node *&r) {
     if (t == nullptr) {
       l = r = nullptr;
@@ -33,8 +31,9 @@ struct treap {
       r = t;
     }
   }
-  node* merge(node *l, node *r) {
-    if (!l || !r) return l ? l : r;
+  node *merge(node *l, node *r) {
+    if (!l || !r)
+      return l ? l : r;
     if (l->prior < r->prior) {
       l->r = merge(l->r, r);
       return l;
@@ -42,10 +41,13 @@ struct treap {
     r->l = merge(l, r->l);
     return r;
   }
-  node* merge_treap(node *l, node *r) {
-    if(!l) return r;
-    if(!r) return l;
-    if(l->prior < r->prior) swap(l, r);
+  node *merge_treap(node *l, node *r) {
+    if (!l)
+      return r;
+    if (!r)
+      return l;
+    if (l->prior < r->prior)
+      swap(l, r);
     node *L, *R;
     split(r, l->key, L, R);
     l->r = merge_treap(l->r, R);
@@ -57,22 +59,23 @@ struct treap {
     split(root, id, l, r);
     root = merge(merge(l, new node(id)), r);
   }
-  node* erase(int L, int R) {
+  node *erase(int L, int R) {
     node *l, *r, *mid, *mr;
     split(root, L - 1, l, r);
     split(r, R, mid, mr);
     root = merge(l, mr);
     return mid;
   }
-  void combine(node *x) { //combine with another treap
+  void combine(node *x) { // combine with another treap
     root = merge_treap(root, x);
   }
   vector<int> ans;
-  void dfs(node* cur) {
-    if(!cur) return;
-    ans.push_back(cur -> key);
-    dfs(cur -> l);
-    dfs(cur -> r);
+  void dfs(node *cur) {
+    if (!cur)
+      return;
+    ans.push_back(cur->key);
+    dfs(cur->l);
+    dfs(cur->r);
   }
   vector<int> get() {
     ans.clear();
@@ -86,24 +89,26 @@ int32_t main() {
   cin.tie(0);
   int n;
   cin >> n;
-  for(int i = 1; i <= n; i++) {
+  for (int i = 1; i <= n; i++) {
     int k;
     cin >> k;
     t[k].insert(i);
   }
   int q;
   cin >> q;
-  while(q--) {
+  while (q--) {
     int l, r, x, y;
     cin >> l >> r >> x >> y;
     node *p = t[x].erase(l, r);
     t[y].combine(p);
   }
-  for(int i = 1; i < N; i++) {
+  for (int i = 1; i < N; i++) {
     auto p = t[i].get();
-    for(auto x : p) ans[x] = i;
+    for (auto x : p)
+      ans[x] = i;
   }
-  for(int i = 1; i <= n; i++) cout << ans[i] << " \n"[i == n];
+  for (int i = 1; i <= n; i++)
+    cout << ans[i] << " \n"[i == n];
   return 0;
 }
 // https://codeforces.com/problemset/problem/911/G

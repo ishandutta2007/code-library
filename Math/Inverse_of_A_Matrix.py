@@ -15,6 +15,7 @@ mat = [[0] * (n) for i in range(n)]
 for i in range(0, n):
     mat[i] = list(map(int, input().strip().split()))[:n]
 
+
 def identity_matrix(n):
     m = [[0 for x in range(n)] for y in range(n)]
     for i in range(0, n):

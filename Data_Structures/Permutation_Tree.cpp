@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9, inf = 1e9 + 7, LG = 19;
@@ -9,7 +9,8 @@ struct ST {
   int t[4 * N], lazy[4 * N];
   ST() {}
   inline void push(int n, int b, int e) {
-    if (lazy[n] == 0) return;
+    if (lazy[n] == 0)
+      return;
     t[n] = t[n] + lazy[n];
     if (b != e) {
       lazy[lc] = lazy[lc] + lazy[n];
@@ -17,12 +18,8 @@ struct ST {
     }
     lazy[n] = 0;
   }
-  inline int combine(int a, int b) {
-    return min(a, b);
-  }
-  inline void pull(int n) {
-    t[n] = min(t[lc], t[rc]);
-  }
+  inline int combine(int a, int b) { return min(a, b); }
+  inline void pull(int n) { t[n] = min(t[lc], t[rc]); }
   void build(int n, int b, int e) {
     lazy[n] = 0;
     if (b == e) {
@@ -36,7 +33,8 @@ struct ST {
   }
   void upd(int n, int b, int e, int i, int j, int v) {
     push(n, b, e);
-    if (j < b || e < i) return;
+    if (j < b || e < i)
+      return;
     if (i <= b && e <= j) {
       lazy[n] = v;
       push(n, b, e);
@@ -49,8 +47,10 @@ struct ST {
   }
   int query(int n, int b, int e, int i, int j) {
     push(n, b, e);
-    if (i > e || b > j) return inf;
-    if (i <= b && e <= j) return t[n];
+    if (i > e || b > j)
+      return inf;
+    if (i <= b && e <= j)
+      return t[n];
     int mid = (b + e) >> 1;
     return combine(query(lc, b, mid, i, j), query(rc, mid + 1, e, i, j));
   }
@@ -59,26 +59,23 @@ struct ST {
 // id of span {i, i} is i
 int p[N];
 pair<int, int> range[N * 2]; // range of permutation values
-pair<int, int> span[N * 2]; // range of permutation indices
-vector<int> pt[N * 2]; //directed permutation tree
+pair<int, int> span[N * 2];  // range of permutation indices
+vector<int> pt[N * 2]; // directed permutation tree
 int par[N * 2];
-int ty[N * 2]; // 0 if cut node and 1 if increasing join node, 2 if decreasing join node
-int id; //new index to assign to nodes
+int ty[N * 2]; // 0 if cut node and 1 if increasing join node, 2 if decreasing
+               // join node
+int id; // new index to assign to nodes
 pair<int, int> get_range(pair<int, int> x, pair<int, int> y) {
   return pair<int, int>(min(x.first, y.first), max(x.second, y.second));
 }
-void add_edge(int u, int v) { //u is parent of v
+void add_edge(int u, int v) { // u is parent of v
   par[v] = u;
   pt[u].push_back(v);
 }
-bool adjacent(int i, int j) {
-  return range[i].second == range[j].first - 1;
-}
-int length(int i) {
-  return range[i].second - range[i].first + 1;
-}
+bool adjacent(int i, int j) { return range[i].second == range[j].first - 1; }
+int length(int i) { return range[i].second - range[i].first + 1; }
 // leaf node is a cut node
-int build(int n) { //returns root of the tree
+int build(int n) { // returns root of the tree
   for (int i = 1; i <= 2 * n; i++) {
     pt[i].clear();
     ty[i] = 0;
@@ -87,7 +84,7 @@ int build(int n) { //returns root of the tree
   id = n + 1;
   t.build(1, 1, n);
   vector<int> mx = {0}, mn = {0};
-  vector<int> nodes; //stack of cut and join nodes
+  vector<int> nodes; // stack of cut and join nodes
   for (int i = 1; i <= n; i++) {
     while (mx.back() != 0 && p[mx.back()] < p[i]) {
       int r = mx.back();
@@ -109,7 +106,8 @@ int build(int n) { //returns root of the tree
     int cur = i;
 
     while (true) {
-      if (!nodes.empty() && (adjacent(nodes.back(), cur) || adjacent(cur, nodes.back()))) {
+      if (!nodes.empty() &&
+          (adjacent(nodes.back(), cur) || adjacent(cur, nodes.back()))) {
         if ((adjacent(nodes.back(), cur) && ty[nodes.back()] == 1) ||
             (adjacent(cur, nodes.back()) && ty[nodes.back()] == 2)) {
           add_edge(nodes.back(), cur);
@@ -117,7 +115,7 @@ int build(int n) { //returns root of the tree
           span[nodes.back()] = get_range(span[nodes.back()], span[cur]);
           cur = nodes.back();
           nodes.pop_back();
-        } else { //make a new join node
+        } else { // make a new join node
           ty[id] = (adjacent(nodes.back(), cur) ? 1 : 2);
           add_edge(id, nodes.back());
           add_edge(id, cur);
@@ -126,7 +124,8 @@ int build(int n) { //returns root of the tree
           nodes.pop_back();
           cur = id++;
         }
-      } else if (i - (length(cur) - 1) && t.query(1, 1, n, 1, i - length(cur)) == 0) {
+      } else if (i - (length(cur) - 1) &&
+                 t.query(1, 1, n, 1, i - length(cur)) == 0) {
         int len = length(cur);
         pair<int, int> r = range[cur];
         pair<int, int> s = span[cur];
@@ -154,7 +153,8 @@ int build(int n) { //returns root of the tree
   assert(id <= 2 * n);
   int r = 0;
   for (int i = 1; i <= id; i++) {
-    if (par[i] == -1) r = i;
+    if (par[i] == -1)
+      r = i;
   }
   assert(r);
   return r;
@@ -166,7 +166,8 @@ void dfs(int u, int p = 0) {
     P[u][k] = P[P[u][k - 1]][k - 1];
   }
   for (auto v : pt[u]) {
-    if (v == p) continue;
+    if (v == p)
+      continue;
     dfs(v, u);
   }
 }
@@ -175,7 +176,8 @@ int32_t main() {
   cin.tie(0);
   int n;
   cin >> n;
-  for (int i = 1; i <= n; i++) cin >> p[i];
+  for (int i = 1; i <= n; i++)
+    cin >> p[i];
   int r = build(n);
   dfs(r);
   int q;
@@ -189,7 +191,8 @@ int32_t main() {
     }
     int u = l;
     for (int k = LG - 1; k >= 0; k--) {
-      if (P[u][k] && span[P[u][k]].second < r) u = P[u][k];
+      if (P[u][k] && span[P[u][k]].second < r)
+        u = P[u][k];
     }
     u = P[u][0];
     if (ty[u] == 0) {
@@ -198,10 +201,14 @@ int32_t main() {
     }
     int curl = -1, curr = pt[u].size();
     for (int k = LG - 1; k >= 0; k--) {
-      if (curl + (1 << k) < pt[u].size() && span[pt[u][curl + (1 << k)]].second < l) curl += 1 << k;
-      if (curr - (1 << k) >= 0 && r < span[pt[u][curr - (1 << k)]].first) curr -= 1 << k;
+      if (curl + (1 << k) < pt[u].size() &&
+          span[pt[u][curl + (1 << k)]].second < l)
+        curl += 1 << k;
+      if (curr - (1 << k) >= 0 && r < span[pt[u][curr - (1 << k)]].first)
+        curr -= 1 << k;
     }
-    cout << span[pt[u][curl + 1]].first << ' ' << span[pt[u][curr - 1]].second << '\n';
+    cout << span[pt[u][curl + 1]].first << ' ' << span[pt[u][curr - 1]].second
+         << '\n';
   }
   return 0;
 }

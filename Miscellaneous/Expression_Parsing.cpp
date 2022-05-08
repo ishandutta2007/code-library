@@ -1,19 +1,13 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-bool delim(char c) {
-  return c == ' ';
-}
+bool delim(char c) { return c == ' '; }
 
-bool is_op(char c) {
-  return c == '+' || c == '-' || c == '*' || c == '/';
-}
+bool is_op(char c) { return c == '+' || c == '-' || c == '*' || c == '/'; }
 
-bool is_unary(char c) {
-  return c == '+' || c == '-';
-}
+bool is_unary(char c) { return c == '+' || c == '-'; }
 
-int priority (char op) {
+int priority(char op) {
   if (op < 0) // unary operator
     return 3;
   if (op == '+' || op == '-')
@@ -23,7 +17,7 @@ int priority (char op) {
   return -1;
 }
 
-void process_op(stack<int>& st, char op) {
+void process_op(stack<int> &st, char op) {
   if (op < 0) {
     int l = st.top();
     st.pop();
@@ -79,10 +73,9 @@ int evaluate(string s) {
       char cur_op = s[i];
       if (may_be_unary && is_unary(cur_op))
         cur_op = -cur_op;
-      while (!op.empty() && (
-            (cur_op >= 0 && priority(op.top()) >= priority(cur_op)) ||
-            (cur_op < 0 && priority(op.top()) > priority(cur_op))
-          )) {
+      while (!op.empty() &&
+             ((cur_op >= 0 && priority(op.top()) >= priority(cur_op)) ||
+              (cur_op < 0 && priority(op.top()) > priority(cur_op)))) {
         process_op(st, op.top());
         op.pop();
       }

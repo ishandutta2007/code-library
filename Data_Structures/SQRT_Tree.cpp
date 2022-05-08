@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 /*Given an array a that contains n elements and the
@@ -9,10 +9,11 @@ The following implementation of Sqrt Tree can perform the following operations:
 build in O(nloglogn),
 answer queries in O(1) and update an element in O(sqrt(n)).*/
 
-#define SqrtTreeItem int//change for the type you want
+#define SqrtTreeItem int // change for the type you want
 
 SqrtTreeItem op(const SqrtTreeItem &a, const SqrtTreeItem &b) {
-  return a + b; //just change this operation for different problems,no change is required inside the code
+  return a + b; // just change this operation for different problems,no change
+                // is required inside the code
 }
 
 inline int log2Up(int n) {
@@ -22,12 +23,12 @@ inline int log2Up(int n) {
   }
   return res;
 }
-//0-indexed
+// 0-indexed
 struct SqrtTree {
   int n, llg, indexSz;
   vector<SqrtTreeItem> v;
   vector<int> clz, layers, onLayer;
-  vector< vector<SqrtTreeItem> > pref, suf, between;
+  vector<vector<SqrtTreeItem>> pref, suf, between;
 
   inline void buildBlock(int layer, int l, int r) {
     pref[layer][l] = v[l];
@@ -119,28 +120,26 @@ struct SqrtTree {
     int rBlock = ((r - lBound) >> bSzLog) - 1;
     SqrtTreeItem ans = suf[layer][l];
     if (lBlock <= rBlock) {
-      SqrtTreeItem add = (layer == 0) ? (
-                   query(n + lBlock, n + rBlock, (1 << llg) - n, n)
-                 ) : (
-                   between[layer - 1][betweenOffs + lBound + (lBlock << bCntLog) + rBlock]
-                 );
+      SqrtTreeItem add =
+          (layer == 0) ? (query(n + lBlock, n + rBlock, (1 << llg) - n, n))
+                       : (between[layer - 1][betweenOffs + lBound +
+                                             (lBlock << bCntLog) + rBlock]);
       ans = op(ans, add);
     }
     ans = op(ans, pref[layer][r]);
     return ans;
   }
 
-  inline SqrtTreeItem query(int l, int r) {
-    return query(l, r, 0, 0);
-  }
+  inline SqrtTreeItem query(int l, int r) { return query(l, r, 0, 0); }
 
   inline void update(int x, const SqrtTreeItem &item) {
     v[x] = item;
     update(0, 0, n, 0, x);
   }
 
-  SqrtTree(const vector<SqrtTreeItem>& a)
-    : n((int)a.size()), llg(log2Up(n)), v(a), clz(1 << llg), onLayer(llg + 1) {
+  SqrtTree(const vector<SqrtTreeItem> &a)
+      : n((int)a.size()), llg(log2Up(n)), v(a), clz(1 << llg),
+        onLayer(llg + 1) {
     clz[0] = 0;
     for (int i = 1; i < (int)clz.size(); i++) {
       clz[i] = clz[i >> 1] + 1;
@@ -169,10 +168,11 @@ int main() {
   int i, j, k, n, m, q, l, r;
   cin >> n;
   vector<int> v;
-  for(i = 0; i < n; i++) cin >> k, v.push_back(k);
+  for (i = 0; i < n; i++)
+    cin >> k, v.push_back(k);
   SqrtTree t = SqrtTree(v);
   cin >> q;
-  while(q--) {
+  while (q--) {
     cin >> l >> r;
     --l, --r;
     cout << t.query(l, r) << endl;

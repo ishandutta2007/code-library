@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // ps-profits
@@ -18,10 +18,12 @@ int boundedKnapsack(vector<int> ps, vector<int> ws, vector<int> ms, int W) {
         alpha += ps[i];
         int a = dp[i][w] - alpha;
         que.push(a);
-        while (!peek.empty() && peek.back() < a) peek.pop_back();
+        while (!peek.empty() && peek.back() < a)
+          peek.pop_back();
         peek.push_back(a);
         while (que.size() > ms[i] + 1) {
-          if (que.front() == peek.front()) peek.pop_front();
+          if (que.front() == peek.front())
+            peek.pop_front();
           que.pop();
         }
         dp[i + 1][w] = peek.front() + alpha;

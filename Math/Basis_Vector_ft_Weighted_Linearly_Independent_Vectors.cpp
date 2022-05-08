@@ -1,8 +1,7 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-template<typename T>
-struct Basis {
+template <typename T> struct Basis {
   static const int B = 127;
   T a[B];
   long long wt[B];
@@ -39,12 +38,14 @@ Basis<__int128> t;
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, q; cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
   while (q--) {
     int u, v;
-    long long x, w; cin >> u >> v >> x >> w;
+    long long x, w;
+    cin >> u >> v >> x >> w;
     __int128 cur = x, b = 1;
-    cur |= b << (62 + u); 
+    cur |= b << (62 + u);
     cur |= b << (62 + v);
     t.insert(cur, w);
     cout << t.query() << '\n';

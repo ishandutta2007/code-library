@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 using ll = long long;
@@ -7,14 +7,16 @@ using ll = long long;
 // number of nonnegative integer lattice points under or on the line ax + by = c
 ll lattice_cnt(ll a, ll b, ll c) {
   assert(a >= 0 && b >= 0);
-  if (c < 0) return 0;
+  if (c < 0)
+    return 0;
   if (a == 0 or b == 0) {
     // infinite solutions
     assert(0);
     return -1;
   }
   assert(a > 0 && b > 0);
-  if (a > b) swap(a, b);
+  if (a > b)
+    swap(a, b);
   ll ans = 0;
   while (c >= 0) {
     ll k = b / a;

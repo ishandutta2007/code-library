@@ -16,9 +16,9 @@
 #include <cstring>
 #include <map>
 #include <iterator>
-#include<complex>
-#include<iomanip>
-#include<cassert>
+#include <complex>
+#include <iomanip>
+#include <cassert>
 using namespace std;
 
 const int N = 55, mod = 1000000003;
@@ -33,29 +33,30 @@ int yo(int i, int par, int f) {
     return par == Z and f;
   }
   int &ret = dp[i][par][f];
-  if (ret != -1) return ret;
+  if (ret != -1)
+    return ret;
   ret = 0;
   if (A[i] >> k & 1) {
-    ret += 1LL * yo(i - 1, par ^ 1, f) * ((A[i] - (1LL << k) + 1) % mod) % mod; // keep it on
+    ret += 1LL * yo(i - 1, par ^ 1, f) * ((A[i] - (1LL << k) + 1) % mod) %
+           mod; // keep it on
     ret %= mod;
     // make it off
     if (f) {
       ret += 1LL * yo(i - 1, par, 1) * ((1LL << k) % mod) % mod;
       ret %= mod;
-    }
-    else {
+    } else {
       ret += yo(i - 1, par, 1);
       ret %= mod;
     }
-  }
-  else {
+  } else {
     ret += 1LL * yo(i - 1, par, f) * ((A[i] + 1) % mod) % mod;
     ret %= mod;
   }
   return ret;
 }
 
-// number of solutions of the equation x0 xor x1 xor ... x(n - 1) = x s.t. 0 <= xi <= ai
+// number of solutions of the equation x0 xor x1 xor ... x(n - 1) = x s.t. 0 <=
+// xi <= ai
 // O(n * log(MAX))
 int solve(vector<long long> a, long long x, int K) {
   int n = a.size();
@@ -64,7 +65,8 @@ int solve(vector<long long> a, long long x, int K) {
   for (int i = 0; i < n; i++) {
     allzero &= a[i] == 0;
   }
-  if (allzero) return x == 0;
+  if (allzero)
+    return x == 0;
   int cnt = 0;
   for (int i = 0; i < n; i++) {
     long long x = a[i];
@@ -77,9 +79,11 @@ int solve(vector<long long> a, long long x, int K) {
   if (cnt % 2 == Z) {
     for (int i = 0; i < n; i++) {
       long long &x = a[i];
-      if (x >> k & 1) x ^= 1 << k;
+      if (x >> k & 1)
+        x ^= 1 << k;
     }
-    if (x >> k & 1) x ^= 1 << k;
+    if (x >> k & 1)
+      x ^= 1 << k;
     ans += solve(a, x, k - 1);
     ans %= mod;
   }

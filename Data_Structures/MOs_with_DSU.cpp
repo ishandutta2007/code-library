@@ -3,9 +3,10 @@
 
 using namespace std;
 
-//Given n vertices and m edges perform q queries of type (l,r)
-//output the number of connected components if we added edges i such that l<=i<=r
-//This code runs for 1<=n,m,q<=2e5 in 2 second
+// Given n vertices and m edges perform q queries of type (l,r)
+// output the number of connected components if we added edges i such that
+// l<=i<=r
+// This code runs for 1<=n,m,q<=2e5 in 2 second
 const int N = 2e5 + 9;
 struct query {
   int l, r, idx;
@@ -46,46 +47,45 @@ struct persistent_dsu {
     cnt = 0;
     memset(depth, 0, sizeof(depth));
     memset(par, 0, sizeof(par));
-    while(!st.empty()) st.pop();
+    while (!st.empty())
+      st.pop();
   }
 
   void init(int _sz) {
     cnt = _sz;
-    for(int i = 0; i <= _sz; i++)
+    for (int i = 0; i <= _sz; i++)
       par[i] = i, depth[i] = 1;
   }
 
   int root(int x) {
-    if(x == par[x]) return x;
+    if (x == par[x])
+      return x;
     return root(par[x]);
   }
 
-  bool connected(int x, int y) {
-    return root(x) == root(y);
-  }
+  bool connected(int x, int y) { return root(x) == root(y); }
 
   void unite(int x, int y) {
     int rx = root(x), ry = root(y);
-    if(rx == ry) return;
+    if (rx == ry)
+      return;
 
-    if(depth[rx] < depth[ry])
+    if (depth[rx] < depth[ry])
       par[rx] = ry;
-    else if(depth[ry] < depth[rx])
+    else if (depth[ry] < depth[rx])
       par[ry] = rx;
-    else par[rx] = ry, depth[ry]++;
+    else
+      par[rx] = ry, depth[ry]++;
 
     cnt--;
     st.push(state(rx, depth[rx], ry, depth[ry]));
-
   }
 
-  void snapshot() {
-    st.push(state(-1, -1, -1, -1));
-  }
+  void snapshot() { st.push(state(-1, -1, -1, -1)); }
 
   void rollback() {
-    while(!st.empty()) {
-      if(st.top().u == -1)
+    while (!st.empty()) {
+      if (st.top().u == -1)
         return;
 
       ++cnt;
@@ -117,7 +117,7 @@ query q[N];
 void read() {
   cin >> n >> ed >> m;
 
-  for(int i = 1; i <= ed; i++) {
+  for (int i = 1; i <= ed; i++) {
     int u, v;
     cin >> u >> v;
     a[i] = edge(u, v);
@@ -128,14 +128,13 @@ int rt, cnt_q;
 persistent_dsu d;
 
 bool cmp(query fir, query sec) {
-  if(fir.l / rt != sec.l / rt) return fir.l / rt < sec.l / rt;
+  if (fir.l / rt != sec.l / rt)
+    return fir.l / rt < sec.l / rt;
   return fir.r < sec.r;
 }
 
 int answer[N];
-void add(int idx) {
-  d.unite(a[idx].u, a[idx].v);
-}
+void add(int idx) { d.unite(a[idx].u, a[idx].v); }
 
 void solve() {
   d.init(n);
@@ -144,12 +143,13 @@ void solve() {
   cnt_q = 0;
 
   int fm = m;
-  for(int i = 0; i < m; i++) {
+  for (int i = 0; i < m; i++) {
     int l, r;
     cin >> l >> r;
 
-    if(r - l + 1 <= rt) {
-      for(int k = l; k <= r; k++) add(k);
+    if (r - l + 1 <= rt) {
+      for (int k = l; k <= r; k++)
+        add(k);
       answer[i] = d.cnt;
       d.rollback();
       continue;
@@ -162,27 +162,28 @@ void solve() {
   sort(q, q + m, cmp);
   int last, border, last_block = -1, block;
 
-  for(int i = 0; i < m; i++) {
+  for (int i = 0; i < m; i++) {
     block = q[i].l / rt;
-    if(last_block != block) {
+    if (last_block != block) {
       d.init(n);
       border = rt * (block + 1);
       last = border;
     }
 
     last_block = block;
-    for(int k = last + 1; k <= q[i].r; k++) add(k);
+    for (int k = last + 1; k <= q[i].r; k++)
+      add(k);
     d.snapshot();
 
-    for(int k = q[i].l; k <= border; k++) add(k);
+    for (int k = q[i].l; k <= border; k++)
+      add(k);
     answer[q[i].idx] = d.cnt;
     d.rollback();
 
     last = q[i].r;
-
   }
 
-  for(int i = 0; i < fm; i++)
+  for (int i = 0; i < fm; i++)
     cout << answer[i] << endl;
 }
 
@@ -190,7 +191,7 @@ int main() {
   ios_base::sync_with_stdio(false);
   int t;
   cin >> t;
-  while(t--) {
+  while (t--) {
     read();
     solve();
   }

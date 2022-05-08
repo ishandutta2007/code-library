@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9;
@@ -24,8 +24,7 @@ vector<int> subset_sum(vector<int> a, int s) {
       for (int k = j; k <= s; k += i) {
         if (dp[k]) {
           c = cnt[i];
-        }
-        else if (c) {
+        } else if (c) {
           dp[k] = 1;
           c--;
           last[k] = id[i][c];
@@ -40,8 +39,7 @@ vector<int> subset_sum(vector<int> a, int s) {
       s -= a[last[s]];
     }
     return ans;
-  }
-  else {
+  } else {
     return {-1};
   }
 }
@@ -51,7 +49,7 @@ void dfs(int u, int p = 0) {
   dep[u] = dep[p] + 1;
   id[dep[u]].push_back(u);
   sz[u] = 1;
-  for (auto v: g[u]) {
+  for (auto v : g[u]) {
     if (v ^ p) {
       dfs(v, u);
       sz[u] += sz[v];
@@ -61,9 +59,11 @@ void dfs(int u, int p = 0) {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, k; cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
   for (int i = 2; i <= n; i++) {
-    int k; cin >> k;
+    int k;
+    cin >> k;
     g[k].push_back(i);
   }
   dfs(1);
@@ -83,9 +83,8 @@ int32_t main() {
       if (x < y) {
         swap(x, y);
       }
-      sort(id[i].begin(), id[i].end(), [&](int u, int v) {
-        return sz[u] < sz[v];
-      });
+      sort(id[i].begin(), id[i].end(),
+           [&](int u, int v) { return sz[u] < sz[v]; });
       while (!id[i].empty() && x.first) {
         x.first--;
         ans[id[i].back()] = x.second;
@@ -97,11 +96,10 @@ int32_t main() {
         id[i].pop_back();
       }
     }
-  }
-  else {
+  } else {
     cout << mx << '\n';
-    for (auto x: v) {
-      for (auto i: id[x + 1]) {
+    for (auto x : v) {
+      for (auto i : id[x + 1]) {
         ans[i] = 1;
       }
     }

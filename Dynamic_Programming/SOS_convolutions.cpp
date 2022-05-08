@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9, mod = 998244353;
@@ -13,7 +13,9 @@ vector<int> zeta_transform(vector<int> f) {
   for (int i = 0; i < B; i++) {
     for (int mask = 0; mask < (1 << B); mask++) {
       if ((mask & (1 << i)) != 0) {
-        f[mask] += f[mask ^ (1 << i)];// you can change the operator from + to min/gcd to find min/gcd of all f[submasks]
+        f[mask] += f[mask ^ (1 << i)]; // you can change the operator from + to
+                                       // min/gcd to find min/gcd of all
+                                       // f[submasks]
       }
     }
   }
@@ -42,8 +44,9 @@ vector<int> inverse_mobius_transform(vector<int> f) {
 // zeta transform is actually SOS DP
 vector<int> zeta_transform_for_supermasks(vector<int> f) {
   for (int i = 0; i < B; i++) {
-    for (int mask = (1 << B) - 1 ; mask >= 0 ; mask--) {
-      if ((mask & (1 << i)) == 0) f[mask] += f[mask ^ (1 << i)] ;
+    for (int mask = (1 << B) - 1; mask >= 0; mask--) {
+      if ((mask & (1 << i)) == 0)
+        f[mask] += f[mask ^ (1 << i)];
     }
   }
   return f;
@@ -51,8 +54,8 @@ vector<int> zeta_transform_for_supermasks(vector<int> f) {
 // f*g(s)=sum_{s' $ s} {f(s')*g(s\s')}
 // O(B * B * 2 ^ B)
 vector<int> subset_sum_convolution(vector<int> f, vector<int> g) {
-  vector< vector<int> > fhat(B + 1, vector<int> (1 << B, 0));
-  vector< vector<int> > ghat(B + 1, vector<int> (1 << B, 0));
+  vector<vector<int>> fhat(B + 1, vector<int>(1 << B, 0));
+  vector<vector<int>> ghat(B + 1, vector<int>(1 << B, 0));
   // Make fhat[][] = {0} and ghat[][] = {0}
   for (int mask = 0; mask < (1 << B); mask++) {
     fhat[__builtin_popcount(mask)][mask] = f[mask];
@@ -64,20 +67,23 @@ vector<int> subset_sum_convolution(vector<int> f, vector<int> g) {
       for (int mask = 0; mask < (1 << B); mask++) {
         if ((mask & (1 << j)) != 0) {
           fhat[i][mask] += fhat[i][mask ^ (1 << j)];
-          if (fhat[i][mask] >= mod) fhat[i][mask] -= mod;
+          if (fhat[i][mask] >= mod)
+            fhat[i][mask] -= mod;
           ghat[i][mask] += ghat[i][mask ^ (1 << j)];
-          if (ghat[i][mask] >= mod) ghat[i][mask] -= mod;
+          if (ghat[i][mask] >= mod)
+            ghat[i][mask] -= mod;
         }
       }
     }
   }
-  vector< vector<int> > h(B + 1, vector<int> (1 << B, 0));
+  vector<vector<int>> h(B + 1, vector<int>(1 << B, 0));
   // Do the convolution and store into h[][] = {0}
   for (int mask = 0; mask < (1 << B); mask++) {
     for (int i = 0; i <= B; i++) {
       for (int j = 0; j <= i; j++) {
         h[i][mask] += 1LL * fhat[j][mask] * ghat[i - j][mask] % mod;
-        if (h[i][mask] >= mod) h[i][mask] -= mod;
+        if (h[i][mask] >= mod)
+          h[i][mask] -= mod;
       }
     }
   }
@@ -87,13 +93,15 @@ vector<int> subset_sum_convolution(vector<int> f, vector<int> g) {
       for (int mask = 0; mask < (1 << B); mask++) {
         if ((mask & (1 << j)) != 0) {
           h[i][mask] -= h[i][mask ^ (1 << j)];
-          if (h[i][mask] < 0) h[i][mask] += mod;
+          if (h[i][mask] < 0)
+            h[i][mask] += mod;
         }
       }
     }
   }
   vector<int> fog(1 << B, 0);
-  for (int mask = 0; mask < (1 << B); mask++)  fog[mask] = h[__builtin_popcount(mask)][mask];
+  for (int mask = 0; mask < (1 << B); mask++)
+    fog[mask] = h[__builtin_popcount(mask)][mask];
   return fog;
 }
 };
@@ -104,10 +112,13 @@ int32_t main() {
   int n;
   cin >> n;
   vector<int> a(1 << 20, 0), b(1 << 20, 0);
-  for (int i = 0; i < (1 << n); i++) cin >> a[i];
-  for (int i = 0; i < (1 << n); i++) cin >> b[i];
+  for (int i = 0; i < (1 << n); i++)
+    cin >> a[i];
+  for (int i = 0; i < (1 << n); i++)
+    cin >> b[i];
   auto ans = SOS::subset_sum_convolution(a, b);
-  for (int i = 0; i < (1 << n); i++) cout << ans[i] << ' ';
+  for (int i = 0; i < (1 << n); i++)
+    cout << ans[i] << ' ';
   cout << '\n';
   return 0;
 }

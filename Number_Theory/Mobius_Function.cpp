@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 5e5 + 9;
@@ -6,7 +6,7 @@ const int N = 5e5 + 9;
 int mob[N];
 void mobius() {
   mob[1] = 1;
-  for (int i = 2; i < N; i++){
+  for (int i = 2; i < N; i++) {
     mob[i]--;
     for (int j = i + i; j < N; j += i) {
       mob[j] -= mob[i];
@@ -17,13 +17,13 @@ bool vis[N];
 vector<int> d[N];
 int mul[N];
 void add(int x, int k) {
-  for (auto y: d[x]) {
+  for (auto y : d[x]) {
     mul[y] += k;
   }
 }
 int query(int x) {
   int ans = 0;
-  for (auto y: d[x]) {
+  for (auto y : d[x]) {
     ans += mul[y] * mob[y];
   }
   return ans;
@@ -40,19 +40,20 @@ int32_t main() {
       }
     }
   }
-  int n, q; cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
   for (int i = 1; i <= n; i++) {
     cin >> a[i];
   }
   long long ans = 0;
   while (q--) {
-    int i; cin >> i;
+    int i;
+    cin >> i;
     if (vis[i]) {
       ans -= query(a[i]);
       ans += a[i] == 1;
       add(a[i], -1);
-    }
-    else {
+    } else {
       ans += query(a[i]);
       add(a[i], 1);
     }

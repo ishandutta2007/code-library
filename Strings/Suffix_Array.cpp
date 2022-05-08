@@ -1,12 +1,14 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e5 + 9;
 
-void induced_sort(const vector<int> &vec, int val_range, vector<int> &SA, const vector<bool> &sl, const vector<int> &lms_idx) {
+void induced_sort(const vector<int> &vec, int val_range, vector<int> &SA,
+                  const vector<bool> &sl, const vector<int> &lms_idx) {
   vector<int> l(val_range, 0), r(val_range, 0);
   for (int c : vec) {
-    if (c + 1 < val_range) ++l[c + 1];
+    if (c + 1 < val_range)
+      ++l[c + 1];
     ++r[c];
   }
   partial_sum(l.begin(), l.end(), l.begin());
@@ -35,7 +37,8 @@ vector<int> SA_IS(const vector<int> &vec, int val_range) {
   sl[n - 1] = false;
   for (int i = n - 2; i >= 0; --i) {
     sl[i] = (vec[i] > vec[i + 1] || (vec[i] == vec[i + 1] && sl[i + 1]));
-    if (sl[i] && !sl[i + 1]) lms_idx.push_back(i + 1);
+    if (sl[i] && !sl[i + 1])
+      lms_idx.push_back(i + 1);
   }
   reverse(lms_idx.begin(), lms_idx.end());
   induced_sort(vec, val_range, SA, sl, lms_idx);
@@ -97,7 +100,8 @@ struct SuffixArray {
     s = _s;
     sa = suffix_array(s);
     rank.resize(n);
-    for (int i = 0; i < n; i++) rank[sa[i]] = i;
+    for (int i = 0; i < n; i++)
+      rank[sa[i]] = i;
     costruct_lcp();
     prec();
     build();
@@ -111,14 +115,17 @@ struct SuffixArray {
         continue;
       }
       int j = sa[rank[i] + 1];
-      while (i + k < n && j + k < n && s[i + k] == s[j + k])  k++;
+      while (i + k < n && j + k < n && s[i + k] == s[j + k])
+        k++;
       lcp[rank[i]] = k;
-      if (k)  k--;
+      if (k)
+        k--;
     }
   }
   void prec() {
     lg.resize(n, 0);
-    for (int i = 2; i < n; i++) lg[i] = lg[i / 2] + 1;
+    for (int i = 2; i < n; i++)
+      lg[i] = lg[i / 2] + 1;
   }
   void build() {
     int sz = n - 1;
@@ -138,17 +145,21 @@ struct SuffixArray {
     return min(t[l][k], t[r - (1 << k) + 1][k]);
   }
   int get_lcp(int i, int j) { // lcp of suffix starting from i and j
-    if (i == j) return n - i;
+    if (i == j)
+      return n - i;
     int l = rank[i], r = rank[j];
-    if (l > r) swap(l, r);
+    if (l > r)
+      swap(l, r);
     return query(l, r - 1);
   }
   int lower_bound(string &t) {
     int l = 0, r = n - 1, k = t.size(), ans = n;
     while (l <= r) {
       int mid = l + r >> 1;
-      if (s.substr(sa[mid], min(n - sa[mid], k)) >= t) ans = mid, r = mid - 1;
-      else l = mid + 1;
+      if (s.substr(sa[mid], min(n - sa[mid], k)) >= t)
+        ans = mid, r = mid - 1;
+      else
+        l = mid + 1;
     }
     return ans;
   }
@@ -156,8 +167,10 @@ struct SuffixArray {
     int l = 0, r = n - 1, k = t.size(), ans = n;
     while (l <= r) {
       int mid = l + r >> 1;
-      if (s.substr(sa[mid], min(n - sa[mid], k)) > t) ans = mid, r = mid - 1;
-      else l = mid + 1;
+      if (s.substr(sa[mid], min(n - sa[mid], k)) > t)
+        ans = mid, r = mid - 1;
+      else
+        l = mid + 1;
     }
     return ans;
   }
@@ -168,18 +181,21 @@ struct SuffixArray {
     int l = 0, r = p - 1;
     while (l <= r) {
       int mid = l + r >> 1;
-      if (query(mid, p - 1) >= len) ans.first = mid, r = mid - 1;
-      else l = mid + 1;
+      if (query(mid, p - 1) >= len)
+        ans.first = mid, r = mid - 1;
+      else
+        l = mid + 1;
     }
     l = p + 1, r = n - 1;
     while (l <= r) {
       int mid = l + r >> 1;
-      if (query(p, mid - 1) >= len) ans.second = mid, l = mid + 1;
-      else r = mid - 1;
+      if (query(p, mid - 1) >= len)
+        ans.second = mid, l = mid + 1;
+      else
+        r = mid - 1;
     }
     return ans;
   }
-
 };
 
 int32_t main() {
@@ -188,6 +204,7 @@ int32_t main() {
   string s;
   cin >> s;
   SuffixArray sa(s);
-  for (int i = 0; i < s.size(); i++) cout << sa.sa[i] << '\n';
+  for (int i = 0; i < s.size(); i++)
+    cout << sa.sa[i] << '\n';
   return 0;
 }
