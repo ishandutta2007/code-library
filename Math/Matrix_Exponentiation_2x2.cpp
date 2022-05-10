@@ -44,6 +44,10 @@ matrix power(matrix a, int p) {
   matrix half = power(a, p >> 1);
   return half * half;
 }
+void print_matrix(matrix mat) {
+  cout << mat.a[0][0] << " " << mat.a[0][1] << endl;
+  cout << mat.a[1][0] << " " << mat.a[1][1] << endl;
+}
 
 int32_t main() {
   ios_base::sync_with_stdio(0);
@@ -56,5 +60,6 @@ int32_t main() {
   fib.a[1][0] = 1;
   fib.a[1][1] = 0;
   matrix result = power(fib, N);
+  print_matrix(result);
   return 0;
 }
