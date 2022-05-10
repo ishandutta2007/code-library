@@ -8,7 +8,7 @@ const int NOL = -2;
 typedef vector<vector<int>> MatrixInt;
 typedef vector<vector<bool>> MatrixBool;
 
-int hungarianMax(MatrixInt &w) {
+int hungarian_max(MatrixInt &w) {
   int n = w.size();
   int m = w[0].size();
   MatrixBool x(m, vector<bool>(m, false));
@@ -137,5 +137,5 @@ int main() {
     for (int j = 0; j < N; j++) {
       scanf("%d", &w[i][j]);
     }
-  cout << hungarianMax(w) << endl;
+  cout << hungarian_max(w) << endl;
 }

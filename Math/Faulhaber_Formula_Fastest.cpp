@@ -249,7 +249,7 @@ struct poly {
   poly &operator/=(const mint &x) { return *this = (*this) / x; }
   poly mod_xk(int k) const {
     return {a.begin(), a.begin() + min(k, size())};
-  } // modulo by x^k
+  }                          // modulo by x^k
   poly mul_xk(int k) const { // multiply by x^k
     poly ans(*this);
     ans.a.insert(ans.a.begin(), k, 0);
@@ -517,7 +517,7 @@ poly Bernoulli(int n) {
 // it assumes 0^0 = 1
 poly faulhaber(int t, int k) {
   poly B = Bernoulli(k + 2); // B[i] / i!
-  poly P(k + 2); //(t + 1)^(i + 1) / (i + 1)!
+  poly P(k + 2);             //(t + 1)^(i + 1) / (i + 1)!
   mint tmp = 1;
   for (int i = 1; i <= k + 1; i++) {
     tmp *= t + 1;

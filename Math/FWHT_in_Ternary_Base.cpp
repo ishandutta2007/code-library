@@ -92,7 +92,7 @@ struct cmplx {
 //(mod + 1) should be divisible by 3
 typedef vector<cmplx> poly;
 struct FWHT {
-  const int BIT = 11; // log2(MAX VALUE)
+  const int BIT = 11;   // log2(MAX VALUE)
   const int M = 177147; // 3^BIT, it must be a power of 3
   void fwht(poly &coefs, poly &vals, bool invert = false) {
     vals = coefs;

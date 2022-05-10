@@ -49,7 +49,7 @@ int Gauss(vector<vector<double>> a, vector<double> &ans) {
   for (int i = 0; i < m; i++)
     if (pos[i] == -1)
       return 2; // infinte solutions
-  return 1; // unique solution
+  return 1;     // unique solution
 }
 int main() {
   int n, m;
