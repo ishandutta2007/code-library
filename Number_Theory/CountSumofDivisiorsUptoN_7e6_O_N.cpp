@@ -6,7 +6,7 @@ using namespace std;
 uint divcntsum[MAX + 1] = {0};
 
 // This precomputes for all N=1 to MAX
-inline void initDivSum() {
+inline void initDivCntSum() {
   for (uint i = 1; i <= MAX; i++) {
     for (int j = i; j <= MAX; j += i) {
       divcntsum[j] += 1;
@@ -17,7 +17,7 @@ inline void initDivSum() {
   }
 }
 int main() {
-  initDivSum();
+  initDivCntSum();
   for (uint i = 1; i <= 13; i++)
     cout << divcntsum[i] << " " << endl;
   return 0;

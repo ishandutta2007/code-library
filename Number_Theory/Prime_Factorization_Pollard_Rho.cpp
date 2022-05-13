@@ -103,6 +103,60 @@ vector<ll> factorize(ll n) {
   return v;
 }
 }
+
+map<ll, int> flat_to_map_format(vector<ll> v) {
+  map<ll, int> mp;
+  int n = v.size();
+  for (int i = 0; i < n; i++) {
+    int count = 1;
+    while (i < n - 1 && v[i] == v[i + 1]) {
+      count++;
+      i++;
+    }
+    cout << v[i] << ":" << count << ", ";
+    mp[2] = count;
+  }
+  return mp;
+}
+
+pair<vector<ll>, vector<int>>
+generate_all_factors_from_two_arrays_format(vector<ll> v) {
+  vector<ll> prime_divisors;
+  vector<int> multiplicity;
+  int n = v.size();
+  for (int i = 0; i < n; i++) {
+    int count = 1;
+    while (i < n - 1 && v[i] == v[i + 1]) {
+      count++;
+      i++;
+    }
+    prime_divisors.push_back(v[i]);
+    multiplicity.push_back(count);
+  }
+  return make_pair(prime_divisors, multiplicity);
+}
+
+vector<ll> generate_all_factors_from_two_arrays_format(
+    vector<ll> prime_divisors, vector<int> multiplicity, int current_divisor,
+    long current_result) {
+  vector<ll> all_facs;
+  if (current_divisor == prime_divisors.size()) {
+    all_facs.push_back(current_result);
+    // cout<<current_result<<endl;
+  } else {
+    for (int i = 0; i <= multiplicity[current_divisor]; ++i) {
+      vector<ll> sub_facs = generate_all_factors_from_two_arrays_format(
+          prime_divisors, multiplicity, current_divisor + 1, current_result);
+      for (int j = 0; j < sub_facs.size(); j++) {
+        all_facs.push_back(sub_facs[j]);
+      }
+      current_result *= prime_divisors[current_divisor];
+    }
+  }
+  sort(all_facs.begin(), all_facs.end());
+  return all_facs;
+}
+
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
@@ -112,12 +166,13 @@ int32_t main() {
   while (t--) {
     ll n;
     cin >> n;
-    auto f = PollardRho::factorize(n);
-    sort(f.begin(), f.end());
-    cout << f.size() << ' ';
-    for (auto x : f)
-      cout << x << ' ';
-    cout << '\n';
+    auto flat_format = PollardRho::factorize(n);
+    auto map_format = flat_to_map_format(flat_format);
+    auto two_arrays = generate_all_factors_from_two_arrays_format(flat_format);
+    auto all_f = generate_all_factors_from_two_arrays_format(
+        two_arrays.first, two_arrays.second, 0, 1);
+    for (int j = 0; j < all_f.size(); j++)
+      cout << all_f[j] << " ";
   }
   return 0;
 }
