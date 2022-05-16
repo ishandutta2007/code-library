@@ -1,4 +1,3 @@
-
 def getPisanoPeriod(m):
     f_0 = 1
     f_1 = 1

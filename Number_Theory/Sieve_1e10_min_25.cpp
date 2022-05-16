@@ -231,3 +231,5 @@ int32_t main() {
 }
 
 // https://www.luogu.com.cn/problem/P5325
+// https://min-25.hatenablog.com/
+// https://zhuanlan.zhihu.com/p/60378354

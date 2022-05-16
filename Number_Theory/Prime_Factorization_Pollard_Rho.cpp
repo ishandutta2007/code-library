@@ -100,11 +100,12 @@ vector<ll> factorize(ll n) {
     w = factorize(n / x);
     v.insert(v.end(), w.begin(), w.end());
   }
+  sort(v.begin(), v.end());
   return v;
 }
 }
 
-map<ll, int> flat_to_map_format(vector<ll> v) {
+auto flat_to_map_format(vector<ll> v) {
   map<ll, int> mp;
   int n = v.size();
   for (int i = 0; i < n; i++) {
@@ -113,14 +114,13 @@ map<ll, int> flat_to_map_format(vector<ll> v) {
       count++;
       i++;
     }
-    cout << v[i] << ":" << count << ", ";
+    // cout << v[i] << ":" << count << ", ";
     mp[2] = count;
   }
   return mp;
 }
 
-pair<vector<ll>, vector<int>>
-generate_all_factors_from_two_arrays_format(vector<ll> v) {
+auto flat_to_two_arrays_format(vector<ll> v) {
   vector<ll> prime_divisors;
   vector<int> multiplicity;
   int n = v.size();
@@ -168,7 +168,7 @@ int32_t main() {
     cin >> n;
     auto flat_format = PollardRho::factorize(n);
     auto map_format = flat_to_map_format(flat_format);
-    auto two_arrays = generate_all_factors_from_two_arrays_format(flat_format);
+    auto two_arrays = flat_to_two_arrays_format(flat_format);
     auto all_f = generate_all_factors_from_two_arrays_format(
         two_arrays.first, two_arrays.second, 0, 1);
     for (int j = 0; j < all_f.size(); j++)
