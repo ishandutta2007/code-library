@@ -115,7 +115,7 @@ auto flat_to_map_format(vector<ll> v) {
       i++;
     }
     // cout << v[i] << ":" << count << ", ";
-    mp[2] = count;
+    mp[v[i]] = count;
   }
   return mp;
 }

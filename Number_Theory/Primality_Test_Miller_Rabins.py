@@ -2,12 +2,6 @@ import random
 
 
 def is_prime(n):
-    """
-    Miller-Rabin primality test.
-
-    A return value of False means n is certainly not prime. A return value of
-    True means n is very likely a prime.
-    """
     if n != int(n):
         return False
     n = int(n)

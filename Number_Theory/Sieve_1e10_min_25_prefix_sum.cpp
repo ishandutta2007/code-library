@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n^(3/4)/log(n))
+
 const int N = 2e5 + 9, D = 3; // N >= 2 * sqrt(n)
 const int mod = 1e9 + 7;
 using ll = long long;
@@ -233,3 +235,4 @@ int32_t main() {
 // https://www.luogu.com.cn/problem/P5325
 // https://min-25.hatenablog.com/
 // https://zhuanlan.zhihu.com/p/60378354
+// https://yijan.co/min_25-shai/
