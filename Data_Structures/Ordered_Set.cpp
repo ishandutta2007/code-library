@@ -16,7 +16,7 @@ int main() {
   se.insert(1);
   se.insert(2);
   cout << *se.find_by_order(0) << endl; /// k th element
-  cout << se.order_of_key(2) << endl; /// number of elements less than k
+  cout << se.order_of_key(2) << endl;   /// number of elements less than k
   o_map<int, int> mp;
   mp.insert({1, 10});
   mp.insert({2, 20});

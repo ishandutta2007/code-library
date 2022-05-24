@@ -60,11 +60,11 @@ struct ST {
 int p[N];
 pair<int, int> range[N * 2]; // range of permutation values
 pair<int, int> span[N * 2];  // range of permutation indices
-vector<int> pt[N * 2]; // directed permutation tree
+vector<int> pt[N * 2];       // directed permutation tree
 int par[N * 2];
 int ty[N * 2]; // 0 if cut node and 1 if increasing join node, 2 if decreasing
                // join node
-int id; // new index to assign to nodes
+int id;        // new index to assign to nodes
 pair<int, int> get_range(pair<int, int> x, pair<int, int> y) {
   return pair<int, int>(min(x.first, y.first), max(x.second, y.second));
 }

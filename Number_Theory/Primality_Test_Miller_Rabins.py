@@ -1,7 +1,7 @@
 import random
 
 
-def is_prime(n):
+def is_prime_miller_rabin(n):
     if n != int(n):
         return False
     n = int(n)
@@ -34,5 +34,5 @@ def is_prime(n):
     return True
 
 
-print(is_prime(17))
-print(is_prime(100))
+print(is_prime_miller_rabin(17))
+print(is_prime_miller_rabin(100))

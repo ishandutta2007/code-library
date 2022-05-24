@@ -25,7 +25,7 @@ inline bool witness(uint64 n, uint64 s, uint64 d, uint64 a) {
   return true;
 }
 
-inline bool is_prime_mr(int64 n) {
+inline bool is_prime_miller_rabin(int64 n) {
   if (((!(n & 1)) && n != 2) || (n < 2) || (n % 3 == 0 && n != 3))
     return false;
   if (n <= 3)

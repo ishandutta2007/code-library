@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 // credit: min_25
 // takes 0.6s for n = 1e9
 vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
@@ -92,7 +91,7 @@ vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
   return primes;
 }
 
-int32_t main() {
+int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   int n, a, b;

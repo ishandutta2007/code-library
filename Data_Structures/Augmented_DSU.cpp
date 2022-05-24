@@ -24,7 +24,7 @@ void initialize(int n) {
 int find(int x) {
   if (prec[x] == x)
     return x;
-  int rx = find(prec[x]); // rx is the root of x
+  int rx = find(prec[x]);         // rx is the root of x
   pot[x] = pot[prec[x]] + pot[x]; // add all potentials along the
                                   // path,i.e.,potential calculated wrt root
   prec[x] = rx;
@@ -47,7 +47,7 @@ int main() {
   cin >> m;
   initialize(n);
   for (int i = 1; i <= m; ++i) { // consider 1-based indexing of variables
-    int a, b, d; // asserting a-b=d;
+    int a, b, d;                 // asserting a-b=d;
     cin >> a >> b >> d;
     merge(a, b, d);
   }

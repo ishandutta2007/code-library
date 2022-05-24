@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 const int N = 1e8 + 9;
-
 // takes 0.7s for n = 1e8
 int spf[N];
 vector<int> primes;

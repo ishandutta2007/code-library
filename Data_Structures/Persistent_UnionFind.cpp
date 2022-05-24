@@ -92,7 +92,7 @@ struct PersistentDSU {
   bool same(int r, int u, int v) { return find(r, u) == find(r, v); }
   int get_size(int r, int u) { return sz.get_val(r, find(r, u)); }
   int count(int r) { return c[r]; } // connected components
-  int merge(int r, int u, int v) { // returns the updated root
+  int merge(int r, int u, int v) {  // returns the updated root
     cur++;
     c[cur] = c[r];
     if ((u = find(r, u)) == (v = find(r, v))) {
