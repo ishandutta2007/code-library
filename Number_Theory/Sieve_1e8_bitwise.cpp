@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+// takes 0.6s for n = 1e8
+
 #define LL long long
 #define INF INT_MAX
 #define EPS 0.00000001
