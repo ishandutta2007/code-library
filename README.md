@@ -12,3 +12,6 @@ I believe that my coding style is pretty clean and readable, and furthermore, a 
 
 ## Topic List (For this Library, Must Check)
 The topic lists for which I have created this library can be found [here](https://codeforces.com/blog/entry/95106). It also contains the relevant problems and tutorials of each topic. Upvote the attached blog if you think I have helped you somehow. 
+
+[A List of Useful Equations](https://blog.shahjalalshohag.com/equation-list)
+[A List of Topics](https://blog.shahjalalshohag.com/topic-list)
