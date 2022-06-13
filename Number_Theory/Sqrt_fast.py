@@ -6,4 +6,3 @@ def sqrt_approx(x):
     while abs(runner - (x / runner)) > delta:
         runner = ((x / runner) + runner) / 2
     return runner
-  

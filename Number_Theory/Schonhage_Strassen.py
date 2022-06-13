@@ -13,7 +13,7 @@ def setup(a, b):
     s = (K - m - 1) // 2
     N = s * n
     if a.bit_length() + b.bit_length() > N:
-        print("Input is too large", file = sys.stderr)
+        print("Input is too large", file=sys.stderr)
         sys.exit()
     print("m = ", m)
     print("r = ", r)
@@ -63,8 +63,8 @@ def bit_reverse(a):
 def fft_loop(a, l, pos, depth):
     l1 = l >> 1
     if l > 1:
-        fft_loop(a, l1,  pos, depth + 1)
-        fft_loop(a, l1,  pos + l1, depth + 1)
+        fft_loop(a, l1, pos, depth + 1)
+        fft_loop(a, l1, pos + l1, depth + 1)
     for i in range(l1):
         ide = i + pos
         ido = i + pos + l1
@@ -78,8 +78,8 @@ def fft_loop(a, l, pos, depth):
 def ifft_loop(a, l, pos, depth):
     l1 = l >> 1
     if l > 1:
-        ifft_loop(a, l1,  pos, depth + 1)
-        ifft_loop(a, l1,  pos + l1, depth + 1)
+        ifft_loop(a, l1, pos, depth + 1)
+        ifft_loop(a, l1, pos + l1, depth + 1)
     for i in range(l1):
         ide = i + pos
         ido = i + pos + l1
@@ -94,15 +94,14 @@ def ifft_loop(a, l, pos, depth):
 
 def ifft(a):
     a_copy = bit_reverse(a[:] + [0] * (n - len(a)))
-    ifft_loop(a_copy, len(a_copy),  0, 0)
+    ifft_loop(a_copy, len(a_copy), 0, 0)
     # n = 2 ^ m => 1/n = 2 ^ -m = 2 ^ (2K - m)
     return [left_shift(i, 2 * K - m) for i in a_copy]
 
 
-
 def fft(a):
     a_copy = bit_reverse(a[:] + [0] * (n - len(a)))
-    fft_loop(a_copy, len(a_copy),  0, 0)
+    fft_loop(a_copy, len(a_copy), 0, 0)
     return a_copy
 
 
@@ -113,7 +112,7 @@ def gen_data():
 def split_data(a):
     ret = []
     while a > 0:
-        ret.append(a & int('1' * s, 2))
+        ret.append(a & int("1" * s, 2))
         a >>= s
     return ret
 
@@ -142,7 +141,7 @@ def acyclic_recover(a):
 
 def main():
     a, b = gen_data()
-    setup(a,b)
+    setup(a, b)
     a_arr = split_data(a)
     b_arr = split_data(b)
     a_acyc = acyclic_leverage(a_arr)

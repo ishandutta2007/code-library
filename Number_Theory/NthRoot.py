@@ -1,4 +1,3 @@
-
 def _integer_nthroot_python(y, n):
     if y in (0, 1):
         return y, True
@@ -19,8 +18,8 @@ def _integer_nthroot_python(y, n):
             shift = int(exp - 53)
             guess = int(2.0 ** (exp - shift) + 1) << shift
         else:
-            guess = int(2.0**exp)
-    if guess > 2**50:
+            guess = int(2.0 ** exp)
+    if guess > 2 ** 50:
         # Newton iteration
         xprev, x = -1, guess
         while 1:
@@ -31,12 +30,11 @@ def _integer_nthroot_python(y, n):
     else:
         x = guess
     # Compensate
-    t = x**n
+    t = x ** n
     while t < y:
         x += 1
-        t = x**n
+        t = x ** n
     while t > y:
         x -= 1
-        t = x**n
+        t = x ** n
     return int(x), t == y  # int converts long to int if possible
-
