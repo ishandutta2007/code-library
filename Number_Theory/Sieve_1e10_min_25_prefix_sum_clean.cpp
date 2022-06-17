@@ -9,6 +9,7 @@
 #include "queue"
 using namespace std;
 #define MAXN 200006
+//http://baihacker.github.io/main/2020/The_prefix-sum_of_multiplicative_function_the_black_algorithm.html
 //#define int long long
 #define rep(i, a, b) for (int i = (a), i##end = (b); i <= i##end; ++i)
 #define per(i, a, b) for (int i = (a), i##end = (b); i >= i##end; --i)
