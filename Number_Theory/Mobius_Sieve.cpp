@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+//http://oeis.org/A008683
 using int64 = long long;
   const int N = 100000 + 10;
   std::vector<int> divs[N];
