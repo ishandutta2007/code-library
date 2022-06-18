@@ -112,7 +112,7 @@ vector<ll> factorize(ll n) {
   }
   return v;
 }
-}
+} // namespace PollardRho
 ll fib(ll n, ll mod) {
   if (n <= 1)
     return n;
@@ -147,7 +147,7 @@ ll pisano_period_prime(ll p) {
   }
   vector<ll> d;
   d.push_back(1);
-  for (auto[p, e] : mp) {
+  for (auto [p, e] : mp) {
     ll cur = 1;
     int sz = d.size();
     for (int i = 0; i < e; i++) {
@@ -175,7 +175,7 @@ ll pisano_period(ll n) {
     mp[x]++;
   }
   ll ans = 1;
-  for (auto[p, e] : mp) {
+  for (auto [p, e] : mp) {
     ll cur = pisano_period_prime(p);
     for (int i = 1; i < e; i++) {
       cur *= p;

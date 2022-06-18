@@ -11,7 +11,7 @@ bool dfs(int u) {
   if (!cycle.empty())
     return 1;
   vis[u] = 1;
-  for (auto[v, id] : g[u]) {
+  for (auto [v, id] : g[u]) {
     if (v != par[u]) {
       if (vis[v] == 0) {
         par[v] = u;

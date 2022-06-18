@@ -49,7 +49,7 @@ pair<int, int> calc(long long p) {
   }
   return make_pair(b, isqrt(p - b * b));
 }
-}
+} // namespace FermatRepresent
 
 int main() {
   pair<int, int> res = FR::calc(613);

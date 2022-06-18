@@ -7,8 +7,8 @@ const int MAX_CNT = 4e8; // 5761459;
 #define DO(P, R, I, M, E, S, i0, v0, i1, v1, i2, v2, i3, v3, i4, v4, i5, v5,   \
            i6, v6, i7, v7)                                                     \
   k = P;                                                                       \
-  \
-if(!(sieve[n] & (1 << R))) {                                                   \
+                                                                               \
+  if (!(sieve[n] & (1 << R))) {                                                \
     e = eos - I * n - M;                                                       \
     for (m = sieve + (30 * n + E) * n + S; m < e; m += i0) {                   \
       *m |= (1 << v0);                                                         \
@@ -34,8 +34,7 @@ if(!(sieve[n] & (1 << R))) {                                                   \
                 *m |= (1 << v5);                                               \
                 if ((m += i6) < eos)                                           \
                   *m |= (1 << v6);                                             \
-              \
-}                                                             \
+              }                                                                \
             }                                                                  \
           }                                                                    \
         }                                                                      \

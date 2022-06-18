@@ -83,7 +83,7 @@ long long Lehmer(long long n) {
   }
   return res;
 }
-}
+} // namespace pcf
 using namespace pcf;
 const ll inf = 1e12 + 9; // > max n
 const int M = 2020;      // maximum number of divisors

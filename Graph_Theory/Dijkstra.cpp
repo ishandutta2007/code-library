@@ -8,7 +8,8 @@ vector<pair<int, int>> g[N], r[N];
 vector<long long> dijkstra(int s, int t, vector<int> &cnt) {
   const long long inf = 1e18;
   priority_queue<pair<long long, int>, vector<pair<long long, int>>,
-                 greater<pair<long long, int>>> q;
+                 greater<pair<long long, int>>>
+      q;
   vector<long long> d(n + 1, inf);
   vector<bool> vis(n + 1, 0);
   q.push({0, s});

@@ -290,7 +290,7 @@ u128 main(i128 n) {
     }
   }
 }
-}
+} // namespace Solver
 
 int main() {
   i128 n;

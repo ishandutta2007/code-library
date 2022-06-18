@@ -54,7 +54,7 @@ int solve(vector<pair<int, int>> edges, vector<int> &res) {
   }
   return ans;
 }
-};
+}; // namespace EdgeColoring
 int deg[N][2], id[N][2], l, r;
 int32_t main() {
   ios_base::sync_with_stdio(0);

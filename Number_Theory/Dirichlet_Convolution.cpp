@@ -19,7 +19,7 @@ template <const int32_t MOD> struct modint {
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> operator*(modint<MOD> other) const {
-    int32_t c = (int64_t) this->value * other.value % MOD;
+    int32_t c = (int64_t)this->value * other.value % MOD;
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> &operator+=(modint<MOD> other) {
@@ -35,7 +35,7 @@ template <const int32_t MOD> struct modint {
     return *this;
   }
   inline modint<MOD> &operator*=(modint<MOD> other) {
-    this->value = (int64_t) this->value * other.value % MOD;
+    this->value = (int64_t)this->value * other.value % MOD;
     if (this->value < 0)
       this->value += MOD;
     return *this;
@@ -142,7 +142,7 @@ mint solve(long long x) {
   ans /= inv;
   return mp[x] = ans;
 }
-}
+} // namespace Dirichlet
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);

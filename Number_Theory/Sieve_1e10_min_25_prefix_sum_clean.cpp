@@ -1,15 +1,15 @@
-#include "iostream"
 #include "algorithm"
-#include "cstring"
-#include "cstdio"
 #include "cmath"
-#include "vector"
+#include "cstdio"
+#include "cstring"
+#include "iostream"
 #include "map"
-#include "set"
 #include "queue"
+#include "set"
+#include "vector"
 using namespace std;
 #define MAXN 200006
-//http://baihacker.github.io/main/2020/The_prefix-sum_of_multiplicative_function_the_black_algorithm.html
+// http://baihacker.github.io/main/2020/The_prefix-sum_of_multiplicative_function_the_black_algorithm.html
 //#define int long long
 #define rep(i, a, b) for (int i = (a), i##end = (b); i <= i##end; ++i)
 #define per(i, a, b) for (int i = (a), i##end = (b); i >= i##end; --i)
@@ -104,7 +104,7 @@ int solve(ll x) {
   getG();
   return (S(n, 0) + 1) % P;
 }
-}
+} // namespace Min_25
 
 void solve() {
   cin >> n;

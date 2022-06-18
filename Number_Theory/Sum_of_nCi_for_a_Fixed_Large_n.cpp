@@ -1,15 +1,15 @@
 #pragma GCC optimize("O3")
 #pragma GCC target("avx")
 
-#include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 
 #include <algorithm>
+#include <functional>
 #include <iostream>
 #include <vector>
-#include <functional>
 
 #ifdef __x86_64__
 #define NTT64
@@ -341,10 +341,9 @@ private:
     poly ret(end - beg);
     rep(i, ret.size()) {
       u64 r1 = f1[i + beg].get(), r2 = f2[i + beg].get();
-      ret[i] =
-          (r1 +
-           (m64_2(r2 + m64_2::modulus() - r1) * inv).get() % fast_mod * mod1) %
-          fast_mod;
+      ret[i] = (r1 + (m64_2(r2 + m64_2::modulus() - r1) * inv).get() %
+                         fast_mod * mod1) %
+               fast_mod;
     }
     return ret;
   }

@@ -1,7 +1,7 @@
-#include <stdio.h>
 #include <algorithm>
-#include <vector>
 #include <math.h>
+#include <stdio.h>
+#include <vector>
 #define COM 0
 #define PRI 1
 using namespace std;

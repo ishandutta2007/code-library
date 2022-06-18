@@ -1,4 +1,5 @@
 import sys
+import time
 
 
 def setup(a, b):
@@ -142,6 +143,7 @@ def acyclic_recover(a):
 def main():
     a, b = gen_data()
     setup(a, b)
+    start = time.time()
     a_arr = split_data(a)
     b_arr = split_data(b)
     a_acyc = acyclic_leverage(a_arr)
@@ -156,8 +158,14 @@ def main():
     c = combine_data(c_arr)
     print("a = %d" % a)
     print("b = %d" % b)
+    print("Schonhage_Strassen algorithm result = %d" % c)
+    sstime = time.time() - start
+    print("Schonhage_Strassen time:", sstime)
+    start = time.time()
     print("a * b = %d" % (a * b))
-    print("algorithm result = %d" % c)
+    ntime = time.time() - start
+    print("native python time:", ntime)
+    print("sppedup =", int(ntime / sstime), "x")
     # print("a array = ", a_arr)
     # print("b array = ", b_arr)
     # print("a acyclic = ", a_acyc)

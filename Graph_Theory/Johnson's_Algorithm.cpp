@@ -35,7 +35,8 @@ vector<long long> dijkstra(int n, int s, vector<struct edge> ed,
                            vector<long long> &h) {
   vector<pair<int, long long>> g[n + 1];
   priority_queue<pair<long long, int>, vector<pair<long long, int>>,
-                 greater<pair<long long, int>>> q;
+                 greater<pair<long long, int>>>
+      q;
   for (auto e : ed) {
     g[e.u].push_back({e.v, e.w + h[e.u] - h[e.v]});
   }

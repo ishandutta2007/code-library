@@ -103,7 +103,7 @@ vector<ll> factorize(ll n) {
   sort(v.begin(), v.end());
   return v;
 }
-}
+} // namespace PollardRho
 
 auto flat_to_map_format(vector<ll> v) {
   map<ll, int> mp;

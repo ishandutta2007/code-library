@@ -82,7 +82,7 @@ int solve(int n, vector<pair<int, int>> &edges) {
   }
   return ans;
 }
-}
+} // namespace Vizing
 int u[N], v[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);

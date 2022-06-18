@@ -100,7 +100,7 @@ vector<ll> factorize(ll n) {
   }
   return v;
 }
-}
+} // namespace PollardRho
 // number of solutions to x^2 = 1 mod p^k
 int f(int p, int k) {
   if (p == 2) {
@@ -128,7 +128,7 @@ int32_t main() {
     for (auto x : p)
       mp[x]++;
     ll ans = 1;
-    for (auto[p, k] : mp) {
+    for (auto [p, k] : mp) {
       ans *= f(p, k);
     }
     cout << ans << '\n';
