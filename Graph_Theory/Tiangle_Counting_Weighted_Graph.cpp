@@ -1,4 +1,7 @@
 using ll = long long;
+
+// edges[node1] = [pair<node2, weight12>, pair<node3, weight13>, ....]
+
 ll count_triangle(auto edges) {
   ll ret = 0;
   std::vector<int> mark(n + 1, -1);
