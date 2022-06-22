@@ -108,7 +108,7 @@ vector<int> pow(vector<int> a, long long p, int k) {
   transform(a, n, k, true);
   return a;
 }
-}
+} // namespace FWHT
 int cnt[N];
 int main() {
   int t;

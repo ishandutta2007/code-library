@@ -60,8 +60,9 @@ vector<vector<int>> find_recurrence_relation(const vector<int> &terms,
   auto mul = [mod](int a, int b) { return ll(a) * b % mod; };
   auto fixed = [mod](int a) { return (a %= mod) < 0 ? a + mod : a; };
   auto error = [](int order, int deg) {
-    fprintf(stderr, "Error: Could not find a recurrence relation "
-                    "of order <= %d and degree <= %d.\n\n",
+    fprintf(stderr,
+            "Error: Could not find a recurrence relation "
+            "of order <= %d and degree <= %d.\n\n",
             order, deg);
     assert(0);
   };

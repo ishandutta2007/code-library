@@ -210,7 +210,7 @@ inline long double solve() { /// simplex core
   return (ar[0][n] * minmax_flag); /// Negate the output for MINIMIZE since the
                                    /// objective function was negated
 }
-}
+} // namespace lp
 long double obj[N], cons[N];
 
 int32_t main() {

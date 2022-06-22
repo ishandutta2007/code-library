@@ -30,7 +30,7 @@ inline int power(int a, long long k) {
   }
   return ret;
 }
-}
+} // namespace FFA
 using namespace FFA;
 
 int mp[40];

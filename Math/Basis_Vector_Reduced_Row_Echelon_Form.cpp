@@ -52,7 +52,7 @@ bool vis[N];
 int a[N], p[N];
 void dfs(int u) {
   vis[u] = true;
-  for (auto[v, w] : g[u]) {
+  for (auto [v, w] : g[u]) {
     if (!vis[v]) {
       a[v] = a[u] ^ w;
       dfs(v);
