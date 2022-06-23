@@ -94,16 +94,8 @@ vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, a, b;
-  cin >> n >> a >> b;
-  auto primes = sieve(n);
-  vector<int> ans;
-  for (int i = b; i < primes.size() && primes[i] <= n; i += a)
-    ans.push_back(primes[i]);
-  cout << primes.size() << ' ' << ans.size() << '\n';
-  for (auto x : ans)
-    cout << x << ' ';
-  cout << '\n';
+  auto primes = sieve(1e9);
+  cout << primes.size() << '\n';
   return 0;
 }
 // https://judge.yosupo.jp/problem/enumerate_primes

@@ -1,16 +1,6 @@
-// #include <assert.h>
-// #include <ctype.h>
-// #include <math.h>
-// #include <memory.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <time.h>
-// #if __x86_64__ || __amd64__ || _M_X64 || __amd64 || __x86_64
+// #include <bits/stdc++.h>
+// // takes 0.35s for n = 1e9
 // #define X86_64 1
-// #elif __i386__ || _M_IX86 || _X86_ || __i386
-// #define X86 1
-// #endif
 // #if (X86_64 || X86) &&                             \
 //   (__GNUC__ || _MSC_VER || __clang__ || __TINYC__ || __INTEL_COMPILER)
 // #define BIT_SCANF 1
@@ -18,7 +8,6 @@
 // #define ASM_X86 1
 // #endif
 // #endif
-
 // #if (__GNUC__ >= 4 || __clang__)
 // #define ELIKELY(condition) __builtin_expect(condition,1)
 // #define EUNLIKELY(condition) __builtin_expect(condition,0)
@@ -41,17 +30,9 @@
 // typedef ushort stype;
 // #else
 // #define PRIME_OFFSET(mask) Pattern30[bitScanForward(mask)]
-// #if X86_64
 // typedef uint64 stype;
-// #else
-// typedef uint stype;
 // #endif
-// #endif
-// #ifndef WMH11
 // #define WHEEL210 210
-// #else
-// #define WHEEL210 2310
-// #endif
 // #ifndef M210
 // #define WHEEL WHEEL30
 // #define WHEEL_DATA WheelData30
@@ -93,17 +74,10 @@
 // #ifndef UINT_MAX
 //  UINT_MAX = 0 - 1u,
 // #endif
-// #if WHEEL210 < 2310
 //  PWS = 48,
 //  SP_BIT = 6,
 //  SI_BIT = 8,
 //  MAX_WHEEL_GAP = 11 - 1,
-// #else
-//  PWS = 480,
-//  SP_BIT = 10,
-//  SI_BIT = 10,
-//  MAX_WHEEL_GAP = 15 - 1,
-// #endif
 // #if (L2_DCACHE_SIZE < 256 || L2_DCACHE_SIZE > 4096)
 //  L2_DCACHE_SIZE = 256,
 // #endif
@@ -156,31 +130,17 @@
 //  uint Bsegs;
 // };
 // struct WheelElement {
-// #if WHEEL210 < 2310
 //  uchar WheelIndex;
 //  uchar Multiple;
 //  uchar Correct;
 //  uchar MaskBit;
-// #else
-//  ushort WheelIndex;
-//  ushort Multiple;
-//  ushort Correct;
-//  uchar MaskBit;
-// #endif
 // };
 // struct WheelInit {
-// #if WHEEL210 < 2310
 //  uchar WheelIndex;
 //  uchar MaskBit;
-// #else
-//  ushort WheelIndex;
-//  uchar MaskBit;
-// #endif
 // };
 // struct SievePrime {
-
 //  uint Si;
-
 //  uint Sp;
 // };
 // struct BucketInfo_ {
@@ -315,7 +275,6 @@
 //  }
 // }
 // static void initWheel30() {
-
 //  const uint nextMultiple[8] = {0x74561230,0x67325401,0x51734062,0x42170653,
 //                 0x35607124,0x26043715,0x10452376,0x03216547};
 //  const int psize = 8;
@@ -350,11 +309,7 @@
 //  int wi = 0,i = 0;
 //  const int psize = PWS;
 //  uint wpattern[PWS];
-// #if WHEEL210 < 2310
 //  const ushort pattern[] = {3,5,7,2311};
-// #else
-//  const ushort pattern[] = {3,5,7,11,2311};
-// #endif
 //  for (int j = 1; j < WHEEL210; j += 2) {
 //   WheelInit210[j - 1].WheelIndex = WheelInit210[j].WheelIndex = wi;
 //   int i = 0;
@@ -454,15 +409,9 @@
 //  _BitScanForward(&index,n);
 // #endif
 // #elif __GNUC__ || __clang__
-// #if X86_64
-
-//  uint index = __builtin_ctzll(n);
-// #else
-//  uint index = __builtin_ctzl(n);
-// #endif
+// uint index = __builtin_ctzll(n);
 // #elif ASM_X86
-//  stype index;
-// #if X86_64
+// stype index;
 // #if __GNUC__ || __TINYC__ || __clang__
 //  __asm__("bsfq %1,%0\n" : "=r"(index) : "rm"(n) : "cc");
 // #else
@@ -471,17 +420,6 @@
 //     bsfq eax,n
 //     mov index,eax
 //  }
-// #endif
-// #else
-// #if __GNUC__ || __TINYC__ || __clang__
-//  __asm__("bsfl %1,%0\n" : "=r"(index) : "rm"(n) : "cc");
-// #else
-//  __asm
-//  {
-//     bsf eax,n
-//     mov index,eax
-//  }
-// #endif
 // #endif
 // #endif
 //  return (uint)index;
@@ -538,9 +476,6 @@
 //  uint loops = bytes / sizeof(uint64);
 //  while (loops-- > 0) {
 //   const uint64 qw = *bitarray++;
-// // #if (__GNUC__ || __clang__) && X86_64
-// //   bit2s += _mm_popcnt_u64(qw);
-// // #el
 // #if POPCNT
 //   bit2s += __builtin_popcountll(qw);
 // #else
@@ -1349,13 +1284,8 @@
 //  return bytes;
 // }
 // static void setL1Index() {
-// #if WHEEL210 < 2310
 //  if (Threshold.L1Maxp > 65521)
 //   Threshold.L1Maxp = 65521;
-// #else
-//  if (Threshold.L1Maxp > 57751)
-//   Threshold.L1Maxp = 57751;
-// #endif
 //  for (uint p = 0,j = 300;; p = SmallPrime[++j].Sp) {
 //   if (p >= Threshold.L1Maxp && p % 210 == 1) {
 //    Threshold.L1Index = j;
@@ -1365,7 +1295,6 @@
 //  }
 // }
 // void setCacheSize(int level,uint cache) {
-
 //  if (level == 1 && cache >= 16 && cache <= (Threshold.L2Size >> 10)) {
 //   Threshold.L1Size = cache << 10;
 //   Threshold.L1Maxp = Threshold.L1Size / Config.L1Segs;
@@ -1394,7 +1323,6 @@
 //   Config.Bsegs = 1 << ilog(segs,2);
 //  }
 // }
-
 // uint setSieveSize(uint sieve_size) {
 //  const uint l1_size = Threshold.L1Size >> 10,l2_Size = Threshold.L2Size >>
 //  10; if (sieve_size <= MAX_SEGMENT && sieve_size > l2_Size) {
@@ -1934,7 +1862,7 @@
 //  return nwords;
 // }
 // static void dumpPrime(void *data,const uint64 prime) {
-//  printf("%llu %llu\n",*((uint64 *)data),prime);
+//  // printf("%llu %llu\n",*((uint64 *)data),prime);
 // }
 // static bool executeCmd(const char *cmd) {
 //  while (cmd) {
@@ -1947,12 +1875,15 @@
 //    return true;
 //   }
 //   unsigned char cmdc = toupper(params[cmdi][0]);
+//   printf("cmdi=%d cmdc=%c\n",cmdi, cmdc);
 //   uint64 start = atoint64(params[cmdi]);
 //   uint64 end = atoint64(params[cmdi + 1]);
 //   if (!isdigit(cmdc) && cmdc != 'E') {
 //    start = end;
 //    end = atoint64(params[cmdi + 2]);
 //   }
+//   cmdc = 'P';
+//   printf("cmdi=%d cmdc=%c\n",cmdi, cmdc);
 //   if (end == 0)
 //    end = start,start = 0;
 //   else if (end < start)
@@ -2106,9 +2037,10 @@
 // #elif GCOV
 //  executeCmd("e18 e9");
 // #else
-//  executeCmd("e10;1e12 1e10; e14 e10;");
-//  executeCmd("10^12 1e9; e16 e9; e18 e9*1; i");
-//  executeCmd("e14 e9; e16 e10 s4");
+//  // executeCmd("e10;1e12 1e10; e14 e10;");
+//  // executeCmd("10^12 1e9; e16 e9; e18 e9*1; i");
+//  // executeCmd("e14 e9; e16 e10 s4");
+//  executeCmd("e9");
 // #endif
 //  while (true) {
 //   char ccmd[257];
