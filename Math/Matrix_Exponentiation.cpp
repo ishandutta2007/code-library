@@ -78,27 +78,28 @@ struct Mat {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, m, k;
-  cin >> n >> m >> k;
-  Mat a(n, m);
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      cin >> a.a[i][j];
-    }
-  }
-  Mat b(m, k);
-  for (int i = 0; i < m; i++) {
-    for (int j = 0; j < k; j++) {
-      cin >> b.a[i][j];
-    }
-  }
-  Mat ans = a * b;
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < k; j++) {
+  Mat b(3, 3);
+
+  b.a[0][0] = 1;
+  b.a[0][1] = 1;
+  b.a[0][2] = 1;
+
+  b.a[1][0] = 1;
+  b.a[1][1] = 0;
+  b.a[1][2] = 0;
+
+  b.a[2][0] = 0;
+  b.a[2][1] = 1;
+  b.a[2][2] = 0;
+
+  Mat ans(3, 3);
+  ans = b.pow(2);
+
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       cout << ans.a[i][j] << ' ';
     }
     cout << '\n';
   }
   return 0;
 }
-// https://judge.yosupo.jp/problem/matrix_product
