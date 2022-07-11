@@ -60,7 +60,7 @@ struct Mat {
   inline void modinvert(const Mat &b) {
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
-        assert(mod - a[i][j] >= 0);
+        assert(-mod <= a[i][j]);
         if (a[i][j] < 0)
           a[i][j] = mod - a[i][j];
         else if (a[i][j] >= mod)
