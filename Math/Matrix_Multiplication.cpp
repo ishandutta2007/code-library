@@ -72,23 +72,25 @@ template <typename T> inline void rd(T &x) {
     c = inbuf[in_left++];
   while (c < '-');
   [[maybe_unused]] bool minus = false;
-  if constexpr (is_signed<T>::value == true) {
-    if (c == '-')
-      minus = true, c = inbuf[in_left++];
-  }
+  if
+    constexpr(is_signed<T>::value == true) {
+      if (c == '-')
+        minus = true, c = inbuf[in_left++];
+    }
   x = 0;
   while (c >= '0') {
     x = x * 10 + (c & 15);
     c = inbuf[in_left++];
   }
-  if constexpr (is_signed<T>::value == true) {
-    if (minus)
-      x = -x;
-  }
+  if
+    constexpr(is_signed<T>::value == true) {
+      if (minus)
+        x = -x;
+    }
 }
 inline void rd() {}
 template <typename Head, typename... Tail>
-inline void rd(Head &head, Tail &...tail) {
+inline void rd(Head &head, Tail &... tail) {
   rd(head);
   rd(tail...);
 }
@@ -109,10 +111,11 @@ template <typename T> inline void wt(T x) {
     outbuf[out_right++] = '0';
     return;
   }
-  if constexpr (is_signed<T>::value == true) {
-    if (x < 0)
-      outbuf[out_right++] = '-', x = -x;
-  }
+  if
+    constexpr(is_signed<T>::value == true) {
+      if (x < 0)
+        outbuf[out_right++] = '-', x = -x;
+    }
   int i = 12;
   char buf[16];
   while (x >= 10000) {
@@ -145,11 +148,11 @@ template <typename T> inline void wt(T x) {
 }
 inline void wt() {}
 template <typename Head, typename... Tail>
-inline void wt(Head &&head, Tail &&...tail) {
+inline void wt(Head &&head, Tail &&... tail) {
   wt(head);
   wt(forward<Tail>(tail)...);
 }
-template <typename... Args> inline void wtn(Args &&...x) {
+template <typename... Args> inline void wtn(Args &&... x) {
   wt(forward<Args>(x)...);
   wt('\n');
 }
@@ -590,13 +593,13 @@ void test() {
 
 int main(int argc, char **argv) {
   freopen("Matrix_Multiplication.in", "r", stdin);
-  //freopen("Matrix_Multiplication.out", "w", stdout);
+  // freopen("Matrix_Multiplication.out", "w", stdout);
   using mint = LazyMontgomeryModInt<998244353>;
   mmint::set_mod<mint>();
-// #ifdef PROFILER
-//   test();
-//   return 0;
-// #endif
+  // #ifdef PROFILER
+  //   test();
+  //   return 0;
+  // #endif
   int N, M, K;
   cin >> N >> M >> K;
   // rd(N, M, K);
@@ -607,7 +610,7 @@ int main(int argc, char **argv) {
   for (int i = 0; i < N; i++) {
     for (int k = 0; k < M; k++) {
       // rd(x);
-      cin>>x;
+      cin >> x;
       // x = i + k;
       a[i * S + k] = x;
     }
@@ -622,12 +625,12 @@ int main(int argc, char **argv) {
   }
   prod(a, b, c);
   for (int i = 0; i < N; i++) {
-   for (int j = 0; j < K; j++) {
-     x = c[i * S + j];
-     // wt(x);
-     cout << x << " ";
-     wt(j == K - 1 ? '\n' : ' ');
-   }
-   cout << endl;
+    for (int j = 0; j < K; j++) {
+      x = c[i * S + j];
+      // wt(x);
+      cout << x << " ";
+      wt(j == K - 1 ? '\n' : ' ');
+    }
+    cout << endl;
   }
 }

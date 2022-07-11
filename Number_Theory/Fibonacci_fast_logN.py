@@ -31,7 +31,7 @@ def fibonacci(n, modulo=None):
 
 
 def main():
-    sys.setrecursionlimit(2 ** 22)
+    sys.setrecursionlimit(2**22)
 
     assert fibonacci(0) == 0
     assert fibonacci(1) == 1
@@ -43,14 +43,14 @@ def main():
         == 176023680645013966468226945392411250770384383304492191886725992896575345044216019675
     )
 
-    modulo = 10 ** 9 + 7
+    modulo = 10**9 + 7
     assert fibonacci(0, modulo) == 0
     assert fibonacci(1, modulo) == 1
     assert fibonacci(2, modulo) == 1
     assert fibonacci(10, modulo) == 55
     assert fibonacci(100, modulo) == 687995182
     assert fibonacci(400, modulo) == 967250938
-    assert fibonacci(10 ** 1000, modulo) == 552179166
+    assert fibonacci(10**1000, modulo) == 552179166
 
     assert len(str(fibonacci(10000))) == 2090
     assert len(str(fibonacci(100000))) == 20899

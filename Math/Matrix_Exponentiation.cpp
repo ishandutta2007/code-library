@@ -56,6 +56,16 @@ struct Mat {
     }
     return ans;
   }
+
+  inline void modinvert(const Mat &b) {
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        assert(mod - a[i][j] >= 0) if (a[i][j] < 0) a[i][j] = mod - a[i][j];
+        else if (a[i][j] >= mod) a[i][j] = a[i][j] % mod;
+      }
+    }
+  }
+
   inline Mat pow(long long k) {
     assert(n == m);
     Mat ans(n, n), t = a;
