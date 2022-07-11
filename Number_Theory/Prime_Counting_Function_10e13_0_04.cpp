@@ -1,16 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
+// https://github.com/kimwalisch/primecount
+// n = 1e+10
+// result: 455052511
+// time: 0.008363s
 
-#ifdef LOCAL
-#define eprintf(...)                                                           \
-  {                                                                            \
-    fprintf(stderr, __VA_ARGS__);                                              \
-    fflush(stderr);                                                            \
-  }
-#else
-#define eprintf(...) 42
-#endif
+// n = 1e+11
+// result: 4118054813
+// time: 0.04879s
 
+// n = 1e+12
+// result: 37607912018
+// time: 0.174681s
+
+// n = 1e+13
+// result: 346065536839
+// time: 0.8755s
 using ll = long long;
 using ld = long double;
 using uint = unsigned int;
@@ -19,19 +24,6 @@ template <typename T> using pair2 = pair<T, T>;
 using pii = pair<int, int>;
 using pli = pair<ll, int>;
 using pll = pair<ll, ll>;
-mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-ll myRand(ll B) { return (ull)rng() % B; }
-
-#define pb push_back
-#define mp make_pair
-#define all(x) (x).begin(), (x).end()
-#define fi first
-#define se second
-
-clock_t startTime;
-double getCurrentTime() {
-  return (double)(clock() - startTime) / CLOCKS_PER_SEC;
-}
 
 int isqrt(ll n) { return sqrtl(n); }
 
@@ -101,20 +93,33 @@ ll prime_pi(const ll N) {
 }
 
 int main() {
-  startTime = clock();
   //  freopen("input.txt", "r", stdin);
   //  freopen("output.txt", "w", stdout);
 
-  ll n;
+  // ll n;
   // scanf("%lld", &n);
-  n = 1234567891234;
-  printf("%lld\n", prime_pi(n));
-  n = 123456789123;
-  printf("%lld\n", prime_pi(n));
-  n = 12345678912;
-  printf("%lld\n", prime_pi(n));
-  n = 1234567891;
-  printf("%lld\n", prime_pi(n));
+  // n = 1234567891234;
+  // printf("%lld\n", prime_pi(n));
+  // n = 123456789123;
+  // printf("%lld\n", prime_pi(n));
+  // n = 12345678912;
+  // printf("%lld\n", prime_pi(n));
+  // n = 1234567891;
+  // printf("%lld\n", prime_pi(n));
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cout.tie(NULL);
+
+  vector<ll> ns = {(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  for (ll n : ns) {
+    auto start_time = clock();
+    cout << "n = " << (double)n << endl;
+    ll res = prime_pi(n);
+    cout << "result: " << res << endl;
+    cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s"
+         << endl;
+    cout << endl;
+  }
 
   return 0;
 }

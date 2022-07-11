@@ -2,6 +2,7 @@
 using namespace std;
 
 // O(n^(3/4)/log(n))
+// Takes 1.5s for n=10000000000
 
 const int N = 2e5 + 9, D = 3; // N >= 2 * sqrt(n)
 const int mod = 1e9 + 7;

@@ -27,6 +27,9 @@ const int P = 1e9 + 7;
 const int iv2 = P + 1 >> 1, iv3 = (P + 1) / 3;
 ll n;
 
+// This template is not just cleaner but 2x faster than the other template
+// Takes 0.7s for n=10000000000
+
 namespace Min_25 {
 ll n;
 int B;
