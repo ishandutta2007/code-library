@@ -120,3 +120,5 @@ int main(){
 			printf("%d ",ans.s.a[i][j]);
     return 0;
 }
+//https://loj.ac/p/6440
+//https://loj.ac/p/138
