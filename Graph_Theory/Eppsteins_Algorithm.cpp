@@ -53,9 +53,9 @@ vector<ll> Eppstein(int n, int src, int dest,
   pq.emplace(0, dest);
   d[dest] = 0;
   while (!pq.empty()) {
-    auto [w, u] = pq.top();
+    auto[w, u] = pq.top();
     pq.pop();
-    for (auto [v, cost, id] : g[u]) {
+    for (auto[v, cost, id] : g[u]) {
       if (d[v] > w + cost) {
         d[v] = w + cost;
         par[v] = u;
@@ -78,7 +78,7 @@ vector<ll> Eppstein(int n, int src, int dest,
     q.pop();
     if (par[u] != -1)
       h[u] = h[u].meld(h[par[u]]);
-    for (auto [v, cost, id] : rg[u]) {
+    for (auto[v, cost, id] : rg[u]) {
       if (id != idx[u])
         h[u] = h[u].insert(cost - d[u] + d[v], u, v);
     }
@@ -88,14 +88,13 @@ vector<ll> Eppstein(int n, int src, int dest,
   }
   auto comp = [](auto s, auto t) { return get<0>(s) > get<0>(t); };
   priority_queue<tuple<ll, heap<ll>::node *>,
-                 vector<tuple<ll, heap<ll>::node *>>, decltype(comp)>
-      Q(comp);
+                 vector<tuple<ll, heap<ll>::node *>>, decltype(comp)> Q(comp);
   heap<ll> s;
   s = s.insert(d[src], -1, src);
   Q.emplace(d[src], s.root);
   vector<ll> ans;
   while (!Q.empty()) {
-    auto [w, cur] = Q.top();
+    auto[w, cur] = Q.top();
     Q.pop();
     if (w >= INF)
       break;

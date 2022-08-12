@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e5 + 9;
@@ -31,15 +31,19 @@ struct XORSegmentTree {
     // t[n][i] = sum of a[p ^ i] over all b <= p <= e
     t[n].resize(len);
     for (int i = 0; i < len; i++) {
-      if (i < (len >> 1)) t[n][i] = t[l][i] + t[r][i];
-      else t[n][i] = t[r][i - (len >> 1)] + t[l][i - (len >> 1)];
+      if (i < (len >> 1))
+        t[n][i] = t[l][i] + t[r][i];
+      else
+        t[n][i] = t[r][i - (len >> 1)] + t[l][i - (len >> 1)];
     }
   }
-  // add x to a[i], basically the change occurs for all t[n][i] where n is a candidate node
+  // add x to a[i], basically the change occurs for all t[n][i] where n is a
+  // candidate node
   // so we just create a lazy array to remember the change for each node
   // O(LOG)
   void upd(int n, int b, int e, int i, T x) {
-    if (b > i || e < i) return;
+    if (b > i || e < i)
+      return;
     lazy[n] += x;
     if (b == e && b == i) {
       return;
@@ -52,17 +56,24 @@ struct XORSegmentTree {
   // return sum of a[p ^ x] over all i <= p <= j
   // O(LOG)
   T query(int n, int b, int e, int i, int j, int x, int layer) {
-    if (i > j or b > j or e < i) return 0;
-    if (b >= i and e <= j) return lazy[n] + (layer == -1 ? t[n][0] : t[n][x & ((1 << layer + 1) - 1)]);
+    if (i > j or b > j or e < i)
+      return 0;
+    if (b >= i and e <= j)
+      return lazy[n] +
+             (layer == -1 ? t[n][0] : t[n][x & ((1 << layer + 1) - 1)]);
     int mid = (b + e) >> 1, l = n << 1, r = l | 1;
-    if (~x >> layer & 1) return query(l, b, mid, i, j, x, layer - 1) + query(r, mid + 1, e, i, j, x, layer - 1);
+    if (~x >> layer & 1)
+      return query(l, b, mid, i, j, x, layer - 1) +
+             query(r, mid + 1, e, i, j, x, layer - 1);
     else {
       int i1 = i, j1 = min(mid, j), i2 = max(i, mid + 1), j2 = j;
-      return query(r, mid + 1, e, mid + 1 + i1 - b, mid + 1 + j1 - b, x, layer - 1) +
-        query(l, b, mid, b + i2 - (mid + 1), b + j2 - (mid + 1), x, layer - 1);
+      return query(r, mid + 1, e, mid + 1 + i1 - b, mid + 1 + j1 - b, x,
+                   layer - 1) +
+             query(l, b, mid, b + i2 - (mid + 1), b + j2 - (mid + 1), x,
+                   layer - 1);
     }
   }
-}t;
+} t;
 mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
 int32_t main() {
   ios_base::sync_with_stdio(0);

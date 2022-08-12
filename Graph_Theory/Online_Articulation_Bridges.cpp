@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9;
@@ -13,23 +13,26 @@ struct OnlineBridge {
   vector<int> last_visit;
   OnlineBridge() {}
   OnlineBridge(int n) {
-    dsu_2ecc.resize(n + 1); // contains info of the forest of 2-edge-connected components
+    dsu_2ecc.resize(
+        n + 1); // contains info of the forest of 2-edge-connected components
     dsu_cc.resize(n + 1); // contains the info of the forest of bridge trees
-    par.resize(n + 1); // stores the correct parent of the root of each 2-edge-connected component in the bridge tree
+    par.resize(n + 1);    // stores the correct parent of the root of each
+                          // 2-edge-connected component in the bridge tree
     dsu_cc_size.resize(n + 1);
     lca_iteration = 0;
     last_visit.assign(n + 1, 0);
-    for (int i=0; i<= n; ++i) {
-        dsu_2ecc[i] = i;
-        dsu_cc[i] = i;
-        dsu_cc_size[i] = 1;
-        par[i] = -1;
+    for (int i = 0; i <= n; ++i) {
+      dsu_2ecc[i] = i;
+      dsu_cc[i] = i;
+      dsu_cc_size[i] = 1;
+      par[i] = -1;
     }
     bridges = 0;
   }
   // returns representative of the 2-edge-connected component u is in
   int find_2ecc(int u) {
-    if (u == -1) return -1;
+    if (u == -1)
+      return -1;
     return dsu_2ecc[u] == u ? u : dsu_2ecc[u] = find_2ecc(dsu_2ecc[u]);
   }
   // returns representative of the bridge tree u is in
@@ -54,8 +57,9 @@ struct OnlineBridge {
     int previous_root = child;
     dsu_cc_size[root] = dsu_cc_size[previous_root];
   }
-  // contract everything from u to v into a single node, to be precise, their LCA
-  void merge_path (int u, int v) {
+  // contract everything from u to v into a single node, to be precise, their
+  // LCA
+  void merge_path(int u, int v) {
     ++lca_iteration;
     vector<int> path_u, path_v;
     int lca = -1;
@@ -63,7 +67,7 @@ struct OnlineBridge {
       if (u != -1) {
         u = find_2ecc(u);
         path_u.push_back(u);
-        if (last_visit[u] == lca_iteration){
+        if (last_visit[u] == lca_iteration) {
           lca = u;
           break;
         }
@@ -73,7 +77,7 @@ struct OnlineBridge {
       if (v != -1) {
         v = find_2ecc(v);
         path_v.push_back(v);
-        if (last_visit[v] == lca_iteration){
+        if (last_visit[v] == lca_iteration) {
           lca = v;
           break;
         }
@@ -84,12 +88,14 @@ struct OnlineBridge {
     // all the vertices of the cycle get compressed by attaching them to the LCA
     for (int x : path_u) {
       dsu_2ecc[x] = lca;
-      if (x == lca) break;
+      if (x == lca)
+        break;
       --bridges;
     }
     for (int x : path_v) {
       dsu_2ecc[x] = lca;
-      if (x == lca) break;
+      if (x == lca)
+        break;
       --bridges;
     }
   }
@@ -97,8 +103,10 @@ struct OnlineBridge {
     int x = u, y = v;
     u = find_2ecc(u);
     v = find_2ecc(v);
-    // if they are already in the same 2-edge-connected component, then return immediately
-    if (u == v) return;
+    // if they are already in the same 2-edge-connected component, then return
+    // immediately
+    if (u == v)
+      return;
 
     // now check if they are in the same bridge tree
     int comp_u = find_cc(u);
@@ -113,18 +121,19 @@ struct OnlineBridge {
       make_root(u);
       par[u] = dsu_cc[u] = v;
       dsu_cc_size[comp_v] += dsu_cc_size[u];
-    }
-    else {
+    } else {
       merge_path(u, v);
     }
   }
-}online_bridge;
+} online_bridge;
 
 int main() {
-  int n, q; cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
   online_bridge = OnlineBridge(n);
   while (q--) {
-    int u, v; cin >> u >> v;
+    int u, v;
+    cin >> u >> v;
     online_bridge.add_edge(u, v);
     cout << online_bridge.bridges << '\n';
   }
