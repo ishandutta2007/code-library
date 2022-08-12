@@ -64,10 +64,9 @@ ll peth_root(ll a, ll p, int e, ll mod) {
     for (int j = 0; j <= v; ++j) {
       if (mp.find(target) != mp.end()) {
         int x = mp[target];
-        ans =
-            ans *
-            power(c, (j + v * x) * power(p, i - e, mod - 1) % (mod - 1), mod) %
-            mod;
+        ans = ans * power(c, (j + v * x) * power(p, i - e, mod - 1) % (mod - 1),
+                          mod) %
+              mod;
         break;
       }
       target = target * mul % mod;
