@@ -1,6 +1,6 @@
 def sterling2(n, k):
     key = str(n) + "," + str(k)
- 
+
     if key in computed.keys():
         return computed[key]
     if n == k == 0:
