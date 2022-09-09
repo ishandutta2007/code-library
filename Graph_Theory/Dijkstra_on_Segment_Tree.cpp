@@ -38,8 +38,7 @@ void upd(int n, int b, int e, int i, int j, int dir, int u, int w) {
 vector<long long> dijkstra(int s) {
   const long long inf = 1e18;
   priority_queue<pair<long long, int>, vector<pair<long long, int>>,
-                 greater<pair<long long, int>>>
-      q;
+                 greater<pair<long long, int>>> q;
   vector<long long> d(9 * N + 1, inf);
   vector<bool> vis(9 * N + 1, 0);
   q.push({0, s});

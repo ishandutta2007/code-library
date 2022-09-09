@@ -16,7 +16,7 @@ template <const int32_t MOD> struct modint {
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> operator*(modint<MOD> other) const {
-    int32_t c = (int64_t)this->value * other.value % MOD;
+    int32_t c = (int64_t) this->value * other.value % MOD;
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> &operator+=(modint<MOD> other) {
@@ -32,7 +32,7 @@ template <const int32_t MOD> struct modint {
     return *this;
   }
   inline modint<MOD> &operator*=(modint<MOD> other) {
-    this->value = (int64_t)this->value * other.value % MOD;
+    this->value = (int64_t) this->value * other.value % MOD;
     if (this->value < 0)
       this->value += MOD;
     return *this;
@@ -161,7 +161,7 @@ mint yo(vector<long long> a, long long s) {
   int i = 0;
   poly f({0});
   mint ans = 0;
-  for (auto [x, y] : R) {
+  for (auto[x, y] : R) {
     while (i < L.size() and L[i].first + x <= s) {
       if (L[i].second == 1)
         f = f + falling(s + n - 1 - L[i].first, n - 1);

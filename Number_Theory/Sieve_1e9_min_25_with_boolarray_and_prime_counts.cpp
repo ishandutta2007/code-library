@@ -105,6 +105,10 @@ vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
     prime_cnt[j] = prime_cnt[j - 1] + 1;
     j++;
   }
+  while (j < maxj) {
+    prime_cnt[j] = prime_cnt[j - 1];
+    j++;
+  }
   return primes;
 }
 

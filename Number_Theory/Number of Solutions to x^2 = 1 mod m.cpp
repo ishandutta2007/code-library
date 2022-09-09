@@ -128,7 +128,7 @@ int32_t main() {
     for (auto x : p)
       mp[x]++;
     ll ans = 1;
-    for (auto [p, k] : mp) {
+    for (auto[p, k] : mp) {
       ans *= f(p, k);
     }
     cout << ans << '\n';

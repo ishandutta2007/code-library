@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+// Fast Walsh–Hadamard transform
 const int N = 3e5 + 9, mod = 1e9 + 7;
 
 int POW(long long n, long long k) {

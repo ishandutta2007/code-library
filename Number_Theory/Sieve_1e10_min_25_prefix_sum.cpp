@@ -2,6 +2,7 @@
 using namespace std;
 
 // O(n^(3/4)/log(n))
+// Takes 1.5s for n=10000000000
 
 const int N = 2e5 + 9, D = 3; // N >= 2 * sqrt(n)
 const int mod = 1e9 + 7;
@@ -20,7 +21,7 @@ template <const int32_t MOD> struct modint {
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> operator*(modint<MOD> other) const {
-    int32_t c = (int64_t)this->value * other.value % MOD;
+    int32_t c = (int64_t) this->value * other.value % MOD;
     return modint<MOD>(c < 0 ? c + MOD : c);
   }
   inline modint<MOD> &operator+=(modint<MOD> other) {
@@ -36,7 +37,7 @@ template <const int32_t MOD> struct modint {
     return *this;
   }
   inline modint<MOD> &operator*=(modint<MOD> other) {
-    this->value = (int64_t)this->value * other.value % MOD;
+    this->value = (int64_t) this->value * other.value % MOD;
     if (this->value < 0)
       this->value += MOD;
     return *this;

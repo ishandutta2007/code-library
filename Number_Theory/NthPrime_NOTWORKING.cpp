@@ -5,12 +5,14 @@ int nthPrime(int n) {
     return 2;
   if (n == 2)
     return 3;
+  if (n == 3)
+    return 5;
   int limit, root, count = 1;
   limit = (int)(n * (log(n) + log(log(n)))) + 3;
   root = (int)sqrt(limit) + 1;
   limit = (limit - 1) / 2;
   root = root / 2 - 1;
-  boolean[] sieve = new boolean[limit];
+  bool sieve[limit];
   for (int i = 0; i < root; ++i) {
     if (!sieve[i]) {
       ++count;
