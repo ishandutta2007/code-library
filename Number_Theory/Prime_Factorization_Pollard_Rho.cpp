@@ -103,7 +103,13 @@ vector<ll> factorize(ll n) {
   sort(v.begin(), v.end());
   return v;
 }
-} // namespace PollardRho
+} // namespace PollardRho ends
+
+namespace FactorHelper {
+auto flat_to_unique_flat(vector<ll> v) {
+  v.erase(unique(v.begin(), v.end()), v.end());
+  return v;
+}
 
 auto flat_to_map_format(vector<ll> v) {
   map<ll, int> mp;
@@ -136,7 +142,7 @@ auto flat_to_two_arrays_format(vector<ll> v) {
   return make_pair(prime_divisors, multiplicity);
 }
 
-vector<ll> generate_all_factors_from_two_arrays_format(
+vector<ll> generate_all_divisors_from_two_arrays_format(
     vector<ll> prime_divisors, vector<int> multiplicity, int current_divisor,
     long current_result) {
   vector<ll> all_facs;
@@ -145,7 +151,7 @@ vector<ll> generate_all_factors_from_two_arrays_format(
     // cout<<current_result<<endl;
   } else {
     for (int i = 0; i <= multiplicity[current_divisor]; ++i) {
-      vector<ll> sub_facs = generate_all_factors_from_two_arrays_format(
+      vector<ll> sub_facs = generate_all_divisors_from_two_arrays_format(
           prime_divisors, multiplicity, current_divisor + 1, current_result);
       for (int j = 0; j < sub_facs.size(); j++) {
         all_facs.push_back(sub_facs[j]);
@@ -157,6 +163,15 @@ vector<ll> generate_all_factors_from_two_arrays_format(
   return all_facs;
 }
 
+vector<ll> get_divisors(ll n) {
+  auto flat_format = PollardRho::factorize(n);
+  auto two_arrays = flat_to_two_arrays_format(flat_format);
+  auto all_f = generate_all_divisors_from_two_arrays_format(
+      two_arrays.first, two_arrays.second, 0, 1);
+  return all_f;
+}
+} // namespace FactorHelper ends
+
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
@@ -166,13 +181,47 @@ int32_t main() {
   while (t--) {
     ll n;
     cin >> n;
+
     auto flat_format = PollardRho::factorize(n);
-    auto map_format = flat_to_map_format(flat_format);
-    auto two_arrays = flat_to_two_arrays_format(flat_format);
-    auto all_f = generate_all_factors_from_two_arrays_format(
+    cout << "All flat_format factors:" << endl;
+    for (int j = 0; j < flat_format.size(); j++)
+      cout << flat_format[j] << " ";
+    cout << endl;
+
+    auto unique_flat_format = FactorHelper::flat_to_unique_flat(flat_format);
+    cout << "All unique_flat_format factors:" << endl;
+    for (int j = 0; j < unique_flat_format.size(); j++)
+      cout << unique_flat_format[j] << " ";
+    cout << endl;
+
+    map<ll, int> map_format = FactorHelper::flat_to_map_format(flat_format);
+    cout << "All map_format factors:" << endl;
+    for (map<ll, int>::iterator it = map_format.begin(); it != map_format.end();
+         it++)
+      cout << it->first << " : " << it->second << endl;
+
+    auto two_arrays = FactorHelper::flat_to_two_arrays_format(flat_format);
+    cout << "All two_arrays factors:" << endl;
+    cout << "First array(Prime Factors):" << endl;
+    for (int j = 0; j < two_arrays.first.size(); j++)
+      cout << two_arrays.first[j] << "  ";
+    cout << endl;
+    cout << "Second array(Counts):" << endl;
+    for (int j = 0; j < two_arrays.second.size(); j++)
+      cout << two_arrays.second[j] << "  ";
+    cout << endl;
+
+    auto all_d = FactorHelper::generate_all_divisors_from_two_arrays_format(
         two_arrays.first, two_arrays.second, 0, 1);
-    for (int j = 0; j < all_f.size(); j++)
-      cout << all_f[j] << " ";
+    cout << "generate_all_divisors_from_two_arrays_format:" << endl;
+    for (int j = 0; j < all_d.size(); j++)
+      cout << all_d[j] << " ";
+    cout << endl;
+
+    auto all_d2 = FactorHelper::get_divisors(n);
+    cout << "get_divisors(directly):" << endl;
+    for (int j = 0; j < all_d2.size(); j++)
+      cout << all_d2[j] << " ";
   }
   return 0;
 }

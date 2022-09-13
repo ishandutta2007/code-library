@@ -9,6 +9,19 @@ inline int64 mulmod(int64 a, int64 b, int64 mod) {
   return res;
 }
 
+inline int64 power(int64 a, int64 n, int64 mod) {
+  int64 power = a;
+  int64 result = 1;
+
+  while (n) {
+    if (n & 1)
+      result = mulmod(result, power, mod);
+    power = mulmod(power, power, mod);
+    n >>= 1;
+  }
+  return result;
+}
+
 inline bool witness(uint64 n, uint64 s, uint64 d, uint64 a) {
   uint64 x = power(a, d, n);
   uint64 y;
