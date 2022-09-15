@@ -3,6 +3,12 @@ using namespace std;
 using ll = long long;
 using i128 = __int128;
 // Credits: chemthan
+// Prime counting speed:
+// n = 1e+10 : 455052511(time: 0.230522s)
+// n = 1e+11 : 4118054813(time: 0.483772s)
+// n = 1e+12 : 37607912018(time: 5.2088s)
+
+// Prime sum speed:
 // n = 1e+10 :  2220822432581729238(time: 0.2552s)
 // n = 1e+11 :  -1447107067060386762(time: 0.765311s)
 // n = 1e+12 :  -1932149121990928815(time: 8.23813s)
