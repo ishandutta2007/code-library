@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using ll = long long;
 using namespace std;
+// credits: Lucy_Hedgehog
 // Legendre
 // O(n^(3/4))
 // n = 1e+10 :  7413165246951120256(time: 0.843584s)
