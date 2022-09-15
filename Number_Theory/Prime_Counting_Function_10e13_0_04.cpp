@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-// https://github.com/kimwalisch/primecount
 // n = 1e+10
 // result: 455052511
 // time: 0.008363s

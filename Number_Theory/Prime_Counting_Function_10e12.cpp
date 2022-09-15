@@ -1,4 +1,6 @@
 #include "bits/stdc++.h"
+// Meissel–Lehmer_algorithm
+// O(n^(2/3))
 using namespace std;
 using ll = long long;
 // n = 1e+10
@@ -145,3 +147,5 @@ int main() {
 
   return 0;
 }
+// https://ideone.com/S9Hy1d
+// https://codeforces.com/blog/entry/91632

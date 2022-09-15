@@ -1,5 +1,6 @@
 #include "bits/stdc++.h"
-
+// Legendre
+// O(n^(3/4))
 using namespace std;
 // n = 1e+10
 // result: 455052511

@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+// Meissel–Lehmer_algorithm
+// O(n^(2/3))
 using namespace std;
 // n = 1e+10
 // result: 455052511
@@ -67,13 +69,13 @@ long long yo(long long n, int k) {
   return yo(n, k - 1) - yo(n / primes[k - 1], k - 1);
 }
 // complexity: n^(2/3).(log n^(1/3))
-long long Legendre(long long n) {
-  if (n < MAXN)
-    return pref[n];
-  int lim = sqrt(n) + 1;
-  int k = upper_bound(primes, primes + len, lim) - primes;
-  return yo(n, k) + (k - 1);
-}
+// long long Legendre(long long n) {
+//   if (n < MAXN)
+//     return pref[n];
+//   int lim = sqrt(n) + 1;
+//   int k = upper_bound(primes, primes + len, lim) - primes;
+//   return yo(n, k) + (k - 1);
+// }
 // runs under 0.2s for n = 1e12
 long long Lehmer(long long n) {
   if (n < MAXN)
