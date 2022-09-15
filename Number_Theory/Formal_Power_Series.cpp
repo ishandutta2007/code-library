@@ -765,12 +765,13 @@ public:
   INSTANT(NO)
   INSTANT(Aoki)
   INSTANT(possible)
-  INSTANT(Possible) INSTANT(POSSIBLE) INSTANT(impossible) INSTANT(Impossible)
-      INSTANT(IMPOSSIBLE)
+  INSTANT(Possible)
+  INSTANT(POSSIBLE)
+  INSTANT(impossible)
+  INSTANT(Impossible)
+  INSTANT(IMPOSSIBLE)
 #undef INSTANT
-          void Yes(bool b = true) {
-    writeln(b ? "Yes" : "No");
-  }
+  void Yes(bool b = true) { writeln(b ? "Yes" : "No"); }
   void YES(bool b = true) { writeln(b ? "YES" : "NO"); }
   void Takahashi(bool b = true) { writeln(b ? "Takahashi" : "Aoki"); }
 
