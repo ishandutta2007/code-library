@@ -16,50 +16,38 @@ using i128 = __int128;
 // n = 1e+11 :  8746113789707973631(time: 1.74779s)
 // n = 1e+12 :  8247104618519365631(time: 5.27918s)
 
-// #include <boost/unordered_map.hpp>
-
 using ull = unsigned long long;
-
 using namespace std;
-
-// using namespace boost;
-
 vector<ull> V;
-
-// boost::
 
 unordered_map<ull, ull> S;
 
-i128 f(ll n) {
-  return 1;
-  // return (i128)n;
+ll f(ll n) {
+  // return 1;
+  return n;
 };
 
-i128 g(ll n) {
-  return n;
-  // return (i128)n*(n+1)/2;
+ll g(ll n) {
+  // return n;
+  return n * (n + 1) / 2;
 };
 
 ull prime_sum(ull n) {
   ull r = (ull)sqrt(n);
-  for (int i = 1; i <= r; i++) {
+  V.reserve(r * 2 + 20);
+  for (int i = 1; i <= r; i++)
     V.push_back(n / i);
-  }
-  for (int i = V[V.size() - 1] - 1; i > 0; i--) {
+  for (int i = V[V.size() - 1] - 1; i > 0; i--)
     V.push_back(i);
-  }
-  for (int i = 0; i < V.size(); i++) {
+  for (int i = 0; i < V.size(); i++)
     S[V[i]] = g(V[i]) - 1;
-  }
 
-  for (int p = 2; p <= r; p++) {
+  for (int p = 2; p <= r; p++)
     if (S[p] > S[p - 1]) {
       ull sp = S[p - 1];
-      for (int i = 0; i < V.size() && V[i] >= p * p; i++) {
+      for (int i = 0; i < V.size() && V[i] >= p * p; i++)
         S[V[i]] -= f(p) * (S[V[i] / p] - sp);
-      }
     }
-  }
   return S[n];
 }
 

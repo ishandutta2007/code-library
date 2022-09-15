@@ -3,6 +3,9 @@ using namespace std;
 using ll = long long;
 using i128 = __int128;
 // Credits: chemthan
+// Lehmer
+// possibly inefficient O(n^(2/3))
+
 // Prime counting speed:
 // n = 1e+10 : 455052511(time: 0.230522s)
 // n = 1e+11 : 4118054813(time: 0.483772s)
@@ -25,13 +28,13 @@ long long sum[maxn];
 long long f[maxx][maxy];
 
 inline long long func(int p) {
-  return p;
   // return 1;
+  return p;
 }
 
 inline long long accfunc(long long n) {
-  return n * (n + 1) / 2;
   // return n;
+  return n * (n + 1) / 2;
 }
 
 void init() {

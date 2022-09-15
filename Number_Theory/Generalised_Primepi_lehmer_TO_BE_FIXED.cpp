@@ -109,21 +109,23 @@ long long Lehmer(long long n) {
   long long w, res = 0;
   int b = sqrt(n), c = Lehmer0(cbrt(n)), a = Lehmer0(sqrt(b));
   b = Lehmer0(b);
-  cout << endl << "a,b,c:" << a << "," << b << "," << c << endl;
+  cout << endl
+       << "n,a,c,b,yo(n, a):" << n << "," << a << "," << c << "," << b << " "
+       << yo(n, a) << endl;
   res = yo(n, a) +
-        ((1LL * (b + a - 2) * (b - a + 1)) >> 1) * func(n); // -func(1)+1;
+        ((1LL * (b + a - 2) * (b - a + 1)) >> 1); // * func(n); // -func(1)+1;
   cout << endl << n << " resA=" << res << "(" << a << "," << b << ")" << endl;
   for (int i = a; i < b; i++) {
     w = n / primes[i];
     int lim = Lehmer(sqrt(w));
-    res -= Lehmer(w); //*(func(primes[i]));
+    res -= Lehmer(w) * func(primes[i]);
     cout << endl
          << n << " resB=" << res << " after entering p=" << primes[i]
          << " substracted Leh(" << w << endl;
     if (i <= c) {
       for (int j = i; j < lim; j++) {
-        res += (1 + Lehmer(primes[j - 1])) * func(primes[j]);
-        res -= Lehmer(w / primes[j]) * func(primes[j]);
+        res -= (Lehmer(w / primes[j]) - accfunc(j - 1)) * func(primes[i]) *
+               func(primes[j]);
         cout << endl << n << " resC=" << res << endl;
       }
     }
@@ -142,15 +144,16 @@ int32_t main() {
   // vector<ll> ns = {(ll)1e4,(ll)1e5,(ll)1e6,(ll)1e7,(ll)1e8,(ll)1e9,(ll)1e10,
   // (ll)1e11, (ll)1e12, (ll)1e13};
   vector<ll> ns = {
-      // 1,2,3,4,5,
-      5, 6 //,7,8,9,10
+      //   1,2,3,4,5, 6 ,7,
+      8, 9 //,10
   }; //,100,1000,10000,99999,100000};//(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
   for (ll n : ns) {
     auto start_time = clock();
     ll res = pcf::Lehmer(n);
     cout << "n = " << (double)n << " : " << res
          << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
-         << endl;
+         << endl
+         << "======" << endl;
   }
   return 0;
 }

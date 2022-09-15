@@ -5,6 +5,12 @@ using namespace std;
 // credits:  Maksim1744
 // Legendre
 // O(n^(3/4))
+// Prime Counting timings:
+// n = 1e+10 : 455052511(time: 0.283723s)
+// n = 1e+11 : 4118054813(time: 1.40211s)
+// n = 1e+12 : 37607912018(time: 7.02708s)
+
+// Prime summing timings:
 // n = 1e+10 : 2220822432581729238(time: 0.322144s)
 // n = 1e+11 : 201467077743744681014(time: 1.63643s)
 // n = 1e+12 : 18435588552550705911377(time: 8.39142s)
@@ -30,7 +36,7 @@ i128 pref(ll n, ll k) {
     return (i128)n * (n + 1) * (2 * n + 1) / 6;
 };
 
-i128 sum_prime_pow_k(ll n, ll k) {
+i128 primepi_generalised(ll n, ll k) {
   vector<ll> v;
   v.reserve((int)sqrt(n) * 2 + 20);
   ll sq;
@@ -97,12 +103,12 @@ std::ostream &operator<<(std::ostream &dest, __int128_t value) {
 
 int main() {
   // for (ll i = 1; i <= 10; i++)
-  // printf("%lld %lld %lld %lld\n", i, sum_prime_pow_k(i, 0),
-  //        sum_prime_pow_k(i, 1), sum_prime_pow_k(i, 2));
+  // printf("%lld %lld %lld %lld\n", i, primepi_generalised(i, 0),
+  //        primepi_generalised(i, 1), primepi_generalised(i, 2));
   vector<ll> ns = {(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
   for (ll n : ns) {
     auto start_time = clock();
-    i128 res = sum_prime_pow_k(n, 1);
+    i128 res = primepi_generalised(n, 0);
     cout << "n = " << n << " : " << res
          << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
          << endl;
