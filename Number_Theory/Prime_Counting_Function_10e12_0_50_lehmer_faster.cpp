@@ -1,17 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
-// n = 1e+10
-// result: 455052511
-// time: 0.004545s
-
-// n = 1e+11
-// result: 4118054813
-// time: 0.050964s
-
-// n = 1e+12
-// result: 37607912018
-// time: 0.524191s
-const int N = 3e5 + 9;
+// n = 100000 : 9592(time: 5.3e-05s)
+// n = 1e+06 : 78498(time: 4e-06s)
+// n = 1e+07 : 664579(time: 3e-06s)
+// n = 1e+08 : 5761455(time: 0.000126s)
+// n = 1e+09 : 50847534(time: 0.0006s)
+// n = 1e+10 : 455052511(time: 0.00434s)
+// n = 1e+11 : 4118054813(time: 0.058318s)
+// n = 1e+12 : 37607912018(time: 0.53861s)
+// n = 1e+13 : 346065536839(time: 6.10802s)const int N = 3e5 + 9;
 using ll = long long;
 
 namespace pcf {
@@ -67,13 +64,13 @@ long long yo(long long n, int k) {
   return yo(n, k - 1) - yo(n / primes[k - 1], k - 1);
 }
 // complexity: n^(2/3).(log n^(1/3))
-long long Legendre(long long n) {
-  if (n < MAXN)
-    return pref[n];
-  int lim = sqrt(n) + 1;
-  int k = upper_bound(primes, primes + len, lim) - primes;
-  return yo(n, k) + (k - 1);
-}
+// long long Legendre(long long n) {
+//   if (n < MAXN)
+//     return pref[n];
+//   int lim = sqrt(n) + 1;
+//   int k = upper_bound(primes, primes + len, lim) - primes;
+//   return yo(n, k) + (k - 1);
+// }
 // runs under 0.2s for n = 1e12
 long long Lehmer(long long n) {
   if (n < MAXN)
@@ -100,21 +97,15 @@ int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   pcf::init();
-  // long long n;
-  // cin >> n;
-  // cout << pcf::Lehmer(n) << '\n';
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
-  vector<ll> ns = {(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  vector<ll> ns = {(ll)1e5,(ll)1e6,(ll)1e7,(ll)1e8,(ll)1e9,(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  //vector<ll> ns = {1,2,3,4,5,6,7,8,9,10,100,1000,10000,99999,100000};//(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
   for (ll n : ns) {
     auto start_time = clock();
-    cout << "n = " << (double)n << endl;
     ll res = pcf::Lehmer(n);
-    cout << "result: " << res << endl;
-    cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s"
-         << endl;
-    cout << endl;
+        cout << "n = " << (double)n <<" : " << res <<"(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)" << endl;
   }
   return 0;
 }
