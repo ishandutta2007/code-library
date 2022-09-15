@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using ll = long long;
 using namespace std;
+// Legendre
+// O(n^(3/4))
+// n = 1e+10 : 2220822432581729238(time: 0.194799s)
+// n = 1e+11 : -1447107067060386762(time: 1.02261s)
+// n = 1e+12 : -1932149121990928815(time: 5.73414s)
 
 ll f(ll n, ll k) {
   // should be multiplicative (f(ab) = f(a)f(b)),
@@ -66,9 +71,17 @@ ll sum_prime_pow_k(ll n, ll k) {
 }
 
 int main() {
-  for (ll i = 1; i <= 10; i++) {
-    printf("%lld %lld %lld %lld\n", i, sum_prime_pow_k(i, 0),
-           sum_prime_pow_k(i, 1), sum_prime_pow_k(i, 2));
+  // for (ll i = 1; i <= 10; i++)
+  // printf("%lld %lld %lld %lld\n", i, sum_prime_pow_k(i, 0),
+  //        sum_prime_pow_k(i, 1), sum_prime_pow_k(i, 2));
+  vector<ll> ns = {(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  for (ll n : ns) {
+    auto start_time = clock();
+    ll res = sum_prime_pow_k(n, 1);
+    cout << "n = " << n << " : " << res
+         << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
+         << endl;
   }
+
   return 0;
 }

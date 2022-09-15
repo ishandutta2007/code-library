@@ -102,12 +102,17 @@ int32_t main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
-  vector<ll> ns = {(ll)1e5,(ll)1e6,(ll)1e7,(ll)1e8,(ll)1e9,(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
-  //vector<ll> ns = {1,2,3,4,5,6,7,8,9,10,100,1000,10000,99999,100000};//(ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  vector<ll> ns = {(ll)1e5,  (ll)1e6,  (ll)1e7,  (ll)1e8, (ll)1e9,
+                   (ll)1e10, (ll)1e11, (ll)1e12, (ll)1e13};
+  // vector<ll> ns =
+  // {1,2,3,4,5,6,7,8,9,10,100,1000,10000,99999,100000};//(ll)1e10, (ll)1e11,
+  // (ll)1e12, (ll)1e13};
   for (ll n : ns) {
     auto start_time = clock();
     ll res = pcf::Lehmer(n);
-        cout << "n = " << (double)n <<" : " << res <<"(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)" << endl;
+    cout << "n = " << (double)n << " : " << res
+         << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
+         << endl;
   }
   return 0;
 }

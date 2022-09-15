@@ -763,8 +763,10 @@ public:
   void s() { writeln("s"); }
   INSTANT(No)
   INSTANT(NO)
-  INSTANT(Aoki) INSTANT(possible) INSTANT(Possible) INSTANT(POSSIBLE)
-      INSTANT(impossible) INSTANT(Impossible) INSTANT(IMPOSSIBLE)
+  INSTANT(Aoki)
+  INSTANT(possible)
+  INSTANT(Possible) INSTANT(POSSIBLE) INSTANT(impossible) INSTANT(Impossible)
+      INSTANT(IMPOSSIBLE)
 #undef INSTANT
           void Yes(bool b = true) {
     writeln(b ? "Yes" : "No");
