@@ -18,5 +18,5 @@ def A006218(n):
 
 
 n = 10
-for n in range(1,11):
-    print(A006218(n)-n)
+for n in range(1, 11):
+    print(A006218(n) - n)
