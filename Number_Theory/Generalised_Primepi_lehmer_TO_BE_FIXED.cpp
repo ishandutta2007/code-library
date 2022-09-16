@@ -35,6 +35,11 @@ inline long long accfunc(long long n) {
   return n * (n + 1) / 2;
 }
 
+ll exp(ll a, ll b) {
+  return ((1LL * (b + a - 2) * (b - a + 1)) >> 1);
+  return 1LL * (b - a)((a * a + a * b + b * b) - 1) / 6;
+}
+
 void sieve(int n) {
   f[1] = true;
   for (int i = 4; i <= n; i += 2)
@@ -112,8 +117,7 @@ long long Lehmer(long long n) {
   cout << endl
        << "n,a,c,b,yo(n, a):" << n << "," << a << "," << c << "," << b << " "
        << yo(n, a) << endl;
-  res = yo(n, a) +
-        ((1LL * (b + a - 2) * (b - a + 1)) >> 1); // * func(n); // -func(1)+1;
+  res = yo(n, a) + exp(a, b);
   cout << endl << n << " resA=" << res << "(" << a << "," << b << ")" << endl;
   for (int i = a; i < b; i++) {
     w = n / primes[i];
