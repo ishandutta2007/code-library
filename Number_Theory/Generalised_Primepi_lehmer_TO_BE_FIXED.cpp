@@ -158,7 +158,7 @@ ll P3(ll n, int a, int b, int c, int k) {
     int lim = Lehmer(sqrt(w), k);
     if (i <= c) {
       for (int j = i; j < lim; j++) {
-        p3 += (Lehmer(w / primes[j], k) - accfunc(j - 1, k)) *
+        p3 += (Lehmer(w / primes[j], k) - accfunc(j, k)) *
               func(primes[i], k) * func(primes[j], k);
       }
     }
@@ -167,7 +167,7 @@ ll P3(ll n, int a, int b, int c, int k) {
 }
 
 long long Lehmer(long long n, int k) {
-  if (n < 2)
+  if (n < 4)
     return pref[n];
   long long res = 0;
   int t = sqrt(n);
@@ -177,7 +177,7 @@ long long Lehmer(long long n, int k) {
   ll p3 = P3(n, a, b, c, k);
   res = phi - p2 - p3;
   debug({string("A"), to_string(n), to_string(a), to_string(c), to_string(b)});
-  debug({string("B"), to_string(n), to_string(phi), to_string(p2),
+  debug({string("B(n,phi,p2,p3)"), to_string(n), to_string(phi), to_string(p2),
          to_string(p3)});
   return res;
 }

@@ -51,6 +51,12 @@ void init() {
       dp[n][k] = dp[n][k - 1] - dp[n / primes[k - 1]][k - 1];
     }
   }
+  for (int i = 0; i < 6; i++) {
+    cout << endl;
+    for (int j = 0; j < 6; j++)
+      cout << dp[i][j] << " ";
+  }
+  cout << endl;
 }
 // returns the number of integers less or equal n which are
 // not divisible by any of the first k primes
@@ -76,14 +82,13 @@ long long yo(long long n, int k) {
 // runs under 0.2s for n = 1e12
 long long Lehmer(long long n);
 ll P3(ll n, int a, int b, int c) {
-  ll p3;
+  ll p3=0;
   for (int i = a; i < b; i++) {
     ll w = n / primes[i];
     int lim = Lehmer(sqrt(w));
     if (i <= c) {
       for (int j = i; j < lim; j++) {
-        p3 += j;
-        p3 -= Lehmer(w / primes[j]);
+        p3 += (Lehmer(w / primes[j])-j);
       }
     }
   }
@@ -101,18 +106,14 @@ ll P2(ll n, int a, int b, int c) {
 }
 
 long long Lehmer(long long n) {
-  if (n < MAXN)
+  if (n < 2)
     return pref[n];
-  long long res = 0;
   int t = sqrt(n), a = Lehmer(sqrt(t)), c = Lehmer(cbrt(n)), b = Lehmer(t);
-  res = yo(n, a);
-
+  ll phi = yo(n, a);
   ll p2 = P2(n, a, b, c);
-  res -= p2;
-
   ll p3 = P3(n, a, b, c);
-  res -= p3;
-
+  ll res = phi - p2 - p3;
+  // cout<<n<<":(phi,p2,p3,res)="<<phi<<" "<<p2<<" "<<p3<<" "<<res<<endl;
   return res;
 }
 } // namespace pcf
@@ -129,7 +130,7 @@ int32_t main() {
   // {1,2,3,4,5,6,7,8,9,10,100,1000,10000,99999,100000};//(ll)1e10, (ll)1e11,
   // (ll)1e12, (ll)1e13};
   // for (ll n : ns) {
-  for (ll n = 1; n <= 10; n++) {
+  for (ll n = 10; n <= 100; n++) {
     auto start_time = clock();
     ll res = pcf::Lehmer(n);
     cout << "n = " << (double)n << " : " << res
