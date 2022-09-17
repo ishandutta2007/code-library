@@ -82,13 +82,13 @@ long long yo(long long n, int k) {
 // runs under 0.2s for n = 1e12
 long long Lehmer(long long n);
 ll P3(ll n, int a, int b, int c) {
-  ll p3=0;
+  ll p3 = 0;
   for (int i = a; i < b; i++) {
     ll w = n / primes[i];
     int lim = Lehmer(sqrt(w));
     if (i <= c) {
       for (int j = i; j < lim; j++) {
-        p3 += (Lehmer(w / primes[j])-j);
+        p3 += (Lehmer(w / primes[j]) - j);
       }
     }
   }
