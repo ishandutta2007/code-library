@@ -18,21 +18,9 @@ using namespace std;
 using ll = long long;
 // using ll = __int128;
 
-void ASSERT(ll minval, ll variable, ll maxval) {
-  if (!(minval <= variable && variable <= maxval)) {
-    cout << "ASSERT FAILED: " << minval << " " << variable << " " << maxval
-         << " @ " << __FILE__ << " (" << __LINE__ << ")" << std::endl;
-    exit(0);
-  }
-}
+#define ASSERT(minval, variable, maxval) {if (!(minval <= variable && variable <= maxval)) {cout << "ASSERT FAILED: " << minval << " " << variable << " " << maxval<< " @ " << __FILE__ << " (" << __LINE__ << ")" << endl; exit(0);  }}
+#define ASSERT2(condition) {if(!(condition)){ std::cerr << "ASSERT FAILED: " << #condition << " @ " << __FILE__ << " (" << __LINE__ << ")" << std::endl; } }
 
-void ASSERT(bool condition) {
-  if (!(condition)) {
-    cout << "ASSERT FAILED: "
-         << " @ " << __FILE__ << " (" << __LINE__ << ")" << std::endl;
-    exit(0);
-  }
-}
 
 std::ostream &operator<<(std::ostream &dest, __int128_t value) {
   std::ostream::sentry s(dest);
