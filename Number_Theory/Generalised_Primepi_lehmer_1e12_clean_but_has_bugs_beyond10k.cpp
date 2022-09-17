@@ -112,7 +112,7 @@ void init(int k) {
   for (int m = 1; m < PHI_M; m++) {
     for (int n = 0; n < PHI_N; n++) {
       dp[n][m] = dp[n][m - 1];
-      if (n >= 2 * (ll)primes[m - 1] and n >= (ll)primes[m - 1] * primes[m - 1])
+      if (n >= (ll)primes[m - 1])
         dp[n][m] -= (ll)(dp[n / primes[m - 1]][m - 1]) * func(primes[m - 1], k);
       if (!(0 <= dp[n][m] and dp[n][m] <= (ll)n * (n + 1) / 2))
         cout << "n<<m=" << n << " " << m << endl;
@@ -135,13 +135,12 @@ ll yo(ll n, int m, int k) {
     return v;
   }
   if (primes[m - 1] >= n) {
-    ll v = 1 + Lehmer(n, k);
-    return v;
+    return 1;
   }
   ll v = yo(n, m - 1, k); // this can be max of n(n+1)/2
   ASSERT(0, v, (ll)n * (n + 1) / 2);
   ll takeaway =
-      (n >= 2 * primes[m - 1] and n >= primes[m - 1] * primes[m - 1])
+      (n >= primes[m - 1])
           ? (ll)yo(n / primes[m - 1], m - 1, k) * func(primes[m - 1], k)
           : 0;
   v -= takeaway;
@@ -216,7 +215,7 @@ ll Lehmer(ll n, int k) {
 int32_t main() {
   const int k = 1;
   pcf::init(k);
-  for (ll n = 1; n <= 10000000000000; n++) {
+  for (ll n = 1; n <= 10000000000000; n *= 10) {
     auto start_time = clock();
     ll res = pcf::Lehmer(n, k);
     cout << "n = " << (double)n << " : " << res
