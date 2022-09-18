@@ -135,6 +135,8 @@ void init(int k) {
 // for sum of primes yo(n, k) = yo(n, k-1) - p_k * yo(n / p_k , k-1)
 ll Lehmer(ll n, int k);
 
+//O(min(m))=>O(pi(n^(1/4)))
+//For n=10^9 =>O(min(pi(177))=O(20)
 ll yo(ll n, int m, int k) {
   if (n < PHI_N && m < PHI_M) {
     return dp[n][m];
@@ -165,6 +167,11 @@ template <class T> void debug(std::initializer_list<T> list) {
   // #endif
 }
 
+//Tb(n) = (b-a)*[T(n/a)-T(b)] * c
+//Tb(n) = (n*(1/2)-n^(1/4)) * [T(n/n*(1/4))-T(n*(1/2))] * c
+//Tb(n) = (n*(1/2)) * [T(n*(3/4))-T(n*(1/2))] * c
+//Tb(n) = (n*(1/2)) * [T(n*(3/4))] * c
+
 ll P2(ll n, int a, int b, int c, int k) {
   ll p2 = 0;
   for (int i = a; i < b; i++) {
@@ -184,6 +191,11 @@ ll P2(ll n, int a, int b, int c, int k) {
   return p2;
 }
 
+//Tb(n)=(n^(1/3)-n^(1/4))*[(n/n^(1/4))**(1/2)-n*(1/3)]*[T(n/a)-T(b)] * c
+//Tb(n)=(n^(1/3)*(n^(3/8)-n^(1/3))*[T(n/w)-T(w)] * c
+//Tb(n)=n^(1/3)*n^(3/8)*[T(n/n^(3/4))-T(n^(3/4))] * c
+//Tb(n)=n^(17/24)*[T(n^(1/4))-T(n^(3/4))] * c
+//Tb(n)=n^(17/24)*T(n^(3/4)) * c
 ll P3(ll n, int a, int b, int c, int k) {
   ll p3 = 0;
   for (int i = a; i < b; i++) {
@@ -205,6 +217,14 @@ ll P3(ll n, int a, int b, int c, int k) {
   return p3;
 }
 
+// T(n)=T(20)+n*(1/2) * T(n^(3/4)) * c2 + n^(17/24)*T(n^(3/4)) * c3
+// T(n)= c1 + n*(1/2) * T(n^(3/4) * c2 + n^(17/24)*T(n^(3/4)) * c3
+// T(n)= c1 + T(n^(3/4))[n^(1/2) * c2 + n^(17/24) * c3]
+// T(n)= T(n^(3/4))[n^(17/24) * c3]
+// T(n)/T(n^(3/4)) = [n^(17/24) * c3]
+// Let T(n) n^x,
+// (x-3x/4)=17/24
+// x=17/6
 ll Lehmer(ll n, int k) {
   if (n < ACTUAL_MAX_PRIMES)
     return pref[n];
