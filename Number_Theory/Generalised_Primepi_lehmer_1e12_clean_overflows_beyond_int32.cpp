@@ -9,18 +9,13 @@ using namespace std;
 // n = 1e+13 : 346029867905(time: 7.42527s)
 
 // Sum prime timings
-// n = 1e+09 : -5507193164078852(time: 0.001258s)
-// n = 1e+10 : 4346955191190699564(time: 0.00956s)
-// n = 1e+11 : -2366641945361200515(time: 0.098383s)
-// n = 1e+12 : 9085273575588645537(time: 1.00599s)
-// n = 1e+13 : -2701895728919619381(time: 8.78676s)
-// Init time: 0.600518s
-// n = 1e+10 : 2220822432581729238(time: 0.620104s)
-// n = 1e+11 : -1447107067060386762(time: 0.770829s)
-// n = 1e+12 : -1932149121990928815(time: 2.32636s)
+// Init time: 0.594631s
+// n = 1e+10 : 2220822432581729238(time: 0.02622s + 0.594631s)
+// n = 1e+11 : 201467077743744681014(time: 0.235392s + 0.594631s)
+// n = 1e+12 : 18435588552550705911377(time: 2.24556s + 0.594631s)
 
 using ll = long long;
-// using ll = __int128;
+using i128 = __int128;
 
 #define ASSERT(minval, variable, maxval)                                       \
   {                                                                            \
@@ -81,11 +76,11 @@ inline ll func(int p, int k) {
     return p;
 }
 
-inline ll accfunc(ll n, int k) {
+inline i128 accfunc(ll n, int k) {
   if (k == 0)
     return n;
   else if (k == 1)
-    return n * (n + 1) / 2;
+    return (i128)n * (i128)(n + 1) / 2;
 }
 
 void sieve(int n, int k) {
@@ -133,26 +128,26 @@ void init(int k) {
 // not divisible by any of the first k primes
 // recurrence --> yo(n, k) = yo(n, k-1) - yo(n / p_k , k-1)
 // for sum of primes yo(n, k) = yo(n, k-1) - p_k * yo(n / p_k , k-1)
-ll Lehmer(ll n, int k);
+i128 Lehmer(ll n, int k);
 
-//O(min(m))=>O(pi(n^(1/4)))
-//For n=10^9 =>O(min(pi(177))=O(20)
-ll yo(ll n, int m, int k) {
+// O(min(m))=>O(pi(n^(1/4)))
+// For n=10^9 =>O(min(pi(177))=O(20)
+i128 yo(ll n, int m, int k) {
   if (n < PHI_N && m < PHI_M) {
     return dp[n][m];
   }
   if (m == 0) {
-    ll v = accfunc(n, k);
+    i128 v = accfunc(n, k);
     return v;
   }
   if (primes[m - 1] >= n) {
     return 1;
   }
-  ll v = yo(n, m - 1, k); // this can be max of n(n+1)/2
+  i128 v = yo(n, m - 1, k); // this can be max of n(n+1)/2
   // ASSERT(0, v, (ll)n * (n + 1) / 2);
-  ll takeaway =
+  i128 takeaway =
       (n >= primes[m - 1])
-          ? (ll)yo(n / primes[m - 1], m - 1, k) * func(primes[m - 1], k)
+          ? yo(n / primes[m - 1], m - 1, k) * func(primes[m - 1], k)
           : 0;
   v -= takeaway;
   // ASSERT(0, v, (ll)n * (n + 1) / 2);
@@ -167,16 +162,16 @@ template <class T> void debug(std::initializer_list<T> list) {
   // #endif
 }
 
-//Tb(n) = (b-a)*[T(n/a)-T(b)] * c
-//Tb(n) = (n*(1/2)-n^(1/4)) * [T(n/n*(1/4))-T(n*(1/2))] * c
-//Tb(n) = (n*(1/2)) * [T(n*(3/4))-T(n*(1/2))] * c
-//Tb(n) = (n*(1/2)) * [T(n*(3/4))] * c
+// Tb(n) = (b-a)*[T(n/a)-T(b)] * c
+// Tb(n) = (n*(1/2)-n^(1/4)) * [T(n/n*(1/4))-T(n*(1/2))] * c
+// Tb(n) = (n*(1/2)) * [T(n*(3/4))-T(n*(1/2))] * c
+// Tb(n) = (n*(1/2)) * [T(n*(3/4))] * c
 
-ll P2(ll n, int a, int b, int c, int k) {
-  ll p2 = 0;
+i128 P2(ll n, int a, int b, int c, int k) {
+  i128 p2 = 0;
   for (int i = a; i < b; i++) {
     ll w = n / primes[i];
-    ll t = (ll)(Lehmer(w, k) - Lehmer(primes[i - 1], k)) * func(primes[i], k);
+    i128 t = (i128)(Lehmer(w, k) - Lehmer(primes[i - 1], k)) * func(primes[i], k);
     // if (!(0 <= t and t <= (ll)n * (n + 1) / 2)) {
     //   debug({string("A:n,a,c,b,t="), to_string((long long)n), to_string(a),
     //          to_string(c), to_string(b), to_string(t),
@@ -191,13 +186,13 @@ ll P2(ll n, int a, int b, int c, int k) {
   return p2;
 }
 
-//Tb(n)=(n^(1/3)-n^(1/4))*[(n/n^(1/4))**(1/2)-n*(1/3)]*[T(n/a)-T(b)] * c
-//Tb(n)=(n^(1/3)*(n^(3/8)-n^(1/3))*[T(n/w)-T(w)] * c
-//Tb(n)=n^(1/3)*n^(3/8)*[T(n/n^(3/4))-T(n^(3/4))] * c
-//Tb(n)=n^(17/24)*[T(n^(1/4))-T(n^(3/4))] * c
-//Tb(n)=n^(17/24)*T(n^(3/4)) * c
-ll P3(ll n, int a, int b, int c, int k) {
-  ll p3 = 0;
+// Tb(n)=(n^(1/3)-n^(1/4))*[(n/n^(1/4))**(1/2)-n*(1/3)]*[T(n/a)-T(b)] * c
+// Tb(n)=(n^(1/3)*(n^(3/8)-n^(1/3))*[T(n/w)-T(w)] * c
+// Tb(n)=n^(1/3)*n^(3/8)*[T(n/n^(3/4))-T(n^(3/4))] * c
+// Tb(n)=n^(17/24)*[T(n^(1/4))-T(n^(3/4))] * c
+// Tb(n)=n^(17/24)*T(n^(3/4)) * c
+i128 P3(ll n, int a, int b, int c, int k) {
+  i128 p3 = 0;
   for (int i = a; i < b; i++) {
     ll w = (ll)n / primes[i];
     // int lim =
@@ -206,11 +201,12 @@ ll P3(ll n, int a, int b, int c, int k) {
     int lim = pref0[(int)sqrtl(w)];
     if (i <= c) {
       for (int j = i; j < lim; j++) {
-        ll t = (ll)(Lehmer(w / primes[j], k) - (ll)Lehmer(primes[j - 1], k)) *
-               (ll)func(primes[i], k) * func(primes[j], k);
-        // ASSERT(0, t, (ll)n * (n + 1) / 2);
+        i128 lehd_diff = Lehmer(w / primes[j], k) - Lehmer(primes[j - 1], k);
+        // ASSERT(0, lehd_diff, (i128)n * (n + 1) / 2);
+        i128 t = lehd_diff*((i128)func(primes[i], k) * (i128)func(primes[j], k));
+        // ASSERT(0, t, (i128)n * (n + 1) / 2);
         p3 += t;
-        // ASSERT(0, p3, (ll)n * (n + 1) / 2);
+        // ASSERT(0, p3, (i128)n * (n + 1) / 2);
       }
     }
   }
@@ -221,14 +217,13 @@ ll P3(ll n, int a, int b, int c, int k) {
 // T(n)= c1 + n*(1/2) * T(n^(3/4) * c2 + n^(17/24)*T(n^(3/4)) * c3
 // T(n)= c1 + T(n^(3/4))[n^(1/2) * c2 + n^(17/24) * c3]
 // T(n)= T(n^(3/4))[n^(17/24) * c3]
-// T(n)/T(n^(3/4)) = [n^(17/24) * c3]
 // Let T(n) n^x,
-// (x-3x/4)=17/24
+// x=0.75x+17/24
 // x=17/6
-ll Lehmer(ll n, int k) {
+i128 Lehmer(ll n, int k) {
   if (n < ACTUAL_MAX_PRIMES)
-    return pref[n];
-  ll res = 0;
+    return (i128)pref[n];
+  i128 res = 0;
   int t = sqrtl(n);
   int a = pref0[(int)sqrt(t)];
   // int a = upper_bound(primes, primes + ACTUAL_MAX_PRIMES, (ll)sqrt(t)) -
@@ -237,21 +232,24 @@ ll Lehmer(ll n, int k) {
   int c = upper_bound(primes, primes + ACTUAL_MAX_PRIMES, cbrt(n)) - primes;
   // int b = pref[t];
   int b = upper_bound(primes, primes + ACTUAL_MAX_PRIMES, t) - primes;
-  auto start_time = clock();
-  ll phi = yo(n, a, k);
-  if (n > 1e9)
-    cout << n
-         << "(phi time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
-         << "s)" << endl;
-  start_time = clock();
-  ll p2 = P2(n, a, b, c, k);
-  if (n > 1e9)
-    cout << n << "(P2 time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
-         << "s)" << endl;
-  ll p3 = P3(n, a, b, c, k);
-  if (n > 1e9)
-    cout << n << "(P3 time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
-         << "s)" << endl;
+  //auto start_time = clock();
+  i128 phi = yo(n, a, k);
+  //if (n > 1e9)
+  //  cout << n << ":phi=" << phi
+  //       << "(phi time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+  //       << "s)" << endl;
+  //start_time = clock();
+  i128 p2 = P2(n, a, b, c, k);
+  //if (n > 1e9)
+  //  cout << n << ":P2=" << p2
+  //       << "(P2 time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+  //       << "s)" << endl;
+  //start_time = clock();
+  i128 p3 = P3(n, a, b, c, k);
+  //if (n > 1e9)
+  //  cout << n << ":P3=" << p3
+  //       << "(P3 time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+  //       << "s)" << endl;
   res = phi - 1 + Lehmer(primes[a - 1], k) - p2 - p3;
   // ASSERT(0, res, (ll)n * (n + 1) / 2);
   return res;
@@ -266,7 +264,7 @@ int32_t main() {
        << "s" << endl;
   for (ll n = 10000000000; n <= 1000000000000; n *= 10) {
     start_time = clock();
-    ll res = pcf::Lehmer(n, k);
+    i128 res = pcf::Lehmer(n, k);
     cout << "n = " << (double)n << " : " << res
          << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
          << endl;
