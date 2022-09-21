@@ -26,3 +26,4 @@ def rwh_primes2(n):
 start = time.time()
 primes = rwh_primes2(SIEVE_LIMIT)
 print("rwh_primes2:", time.time() - start)
+
