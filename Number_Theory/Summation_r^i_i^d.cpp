@@ -349,4 +349,3 @@ int main() {
 }
 // CYMario
 // https://judge.yosupo.jp/problem/sum_of_exponential_times_polynomial
-

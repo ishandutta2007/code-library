@@ -1169,5 +1169,3 @@ signed main() {
     solve();
   }
 }
-
-
