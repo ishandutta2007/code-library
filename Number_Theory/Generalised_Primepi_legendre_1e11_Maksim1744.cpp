@@ -30,9 +30,9 @@ i128 accfunc(ll n, ll k) {
   // should return sum_{i=1..n} func(i)
   if (k == 0)
     return n;
-  if (k == 1) // can handle up 63 bit n
+  if (k == 1) // can handle upto 63 bit n
     return ((i128)n * n + n) / 2;
-  if (k == 2) // can handle up 42 bit n
+  if (k == 2) // can handle upto 42 bit n
     return (i128)n * (n + 1) * (2 * n + 1) / 6;
 };
 
