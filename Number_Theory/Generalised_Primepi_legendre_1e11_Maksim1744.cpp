@@ -15,9 +15,9 @@ using namespace std;
 // n = 1e+11 : 201467077743744681014(time: 1.63643s)
 // n = 1e+12 : 18435588552550705911377(time: 8.39142s)
 
-i128 f(ll n, ll k) {
-  // should be multiplicative (f(ab) = f(a)f(b)),
-  // the result will be sum f(p) over all primes
+i128 func(ll n, ll k) {
+  // should be multiplicative (func(ab) = func(a)func(b)),
+  // the result will be sum func(p) over all primes
   if (k == 0)
     return 1;
   if (k == 1)
@@ -26,8 +26,8 @@ i128 f(ll n, ll k) {
     return (i128)n * n;
 };
 
-i128 pref(ll n, ll k) {
-  // should return sum_{i=1..n} f(i)
+i128 accfunc(ll n, ll k) {
+  // should return sum_{i=1..n} func(i)
   if (k == 0)
     return n;
   if (k == 1) // can handle up 63 bit n
@@ -55,7 +55,7 @@ i128 primepi_generalised(ll n, ll k) {
   }
   vector<i128> s(v.size());
   for (int i = 0; i < s.size(); ++i)
-    s[i] = pref(v[i], k) - 1;
+    s[i] = accfunc(v[i], k) - 1;
   auto geti = [&](ll x) {
     if (x <= sq)
       return (int)x - 1;
@@ -70,7 +70,7 @@ i128 primepi_generalised(ll n, ll k) {
         if (v[i] < p2) {
           break;
         }
-        s[i] -= (s[geti(v[i] / p)] - sp) * f(p, k);
+        s[i] -= (s[geti(v[i] / p)] - sp) * func(p, k);
       }
     }
   }
