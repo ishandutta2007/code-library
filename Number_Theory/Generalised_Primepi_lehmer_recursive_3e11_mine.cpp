@@ -108,8 +108,7 @@ void sieve(int n, int k) {
   }
 }
 
-void init(int k) {
-  sieve(MAXN - 1, k);
+void init_tinyphi(int PHI_N, int PHI_M) {
   // precalculation of phi upto size (PHI_N,PHI_M)
   for (int n = 0; n < PHI_N; n++)
     dp[n][0] = accfunc(n, k);
@@ -118,10 +117,15 @@ void init(int k) {
       dp[n][m] = dp[n][m - 1];
       if (n >= (ll)primes[m - 1])
         dp[n][m] -= (ll)(dp[n / primes[m - 1]][m - 1]) * func(primes[m - 1], k);
-      if (!(0 <= dp[n][m] and dp[n][m] <= (ll)n * (n + 1) / 2))
-        cout << "n<<m=" << n << " " << m << endl;
+//       if (!(0 <= dp[n][m] and dp[n][m] <= (ll)n * (n + 1) / 2))
+//         cout << "n<<m=" << n << " " << m << endl;
     }
   }
+}
+  
+void init(int k) {
+  sieve(MAXN - 1, k);
+  init_tinyphi(PHI_N, PHI_M);
 }
 
 // returns the number of integers less or equal n which are
