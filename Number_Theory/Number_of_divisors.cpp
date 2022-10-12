@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define LL long long
+#define ll long long
 #define EPS 0.00000001
 #define PI 2 * acos(0.0)
 #define Fout freopen("output.txt", "w", stdout)
@@ -8,9 +8,9 @@ using namespace std;
 #define MS(ARRAY, VALUE) memset(ARRAY, VALUE, sizeof(ARRAY))
 #define RT                                                                     \
   printf("Run Time : %0.3lf seconds\n", clock() / (CLOCKS_PER_SEC * 1.0))
-LL prime[100010];
+ll prime[100010];
 bool mark[1000030];
-LL nprime = 0;
+ll nprime = 0;
 
 template <class X> void sieve(X n) {
   X i, j, limit = sqrt(n) + 2;
