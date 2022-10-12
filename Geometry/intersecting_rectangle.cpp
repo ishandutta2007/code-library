@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<pair<int, int>> get_intersecting_rectangle(int xal, int yal, int xar, int yar, int xbl,
-                                  int ybr, int x4, int y4) {
+vector<pair<int, int>> get_intersecting_rectangle(int xal, int yal, int xar,
+                                                  int yar, int xbl, int ybr,
+                                                  int x4, int y4) {
   // bottom-left point of intersection rectangle
   int xcl = max(xal, xbl);
   int ycl = max(yal, ybr);
@@ -13,7 +14,7 @@ vector<pair<int, int>> get_intersecting_rectangle(int xal, int yal, int xar, int
 
   vector<pair<int, int>> re;
   if (xcl > xcr || ycl > ycr) {
-    return re;  // no intersection
+    return re; // no intersection
   }
   re.push_back(make_pair(xcl, ycl));
   re.push_back(make_pair(xcr, ycr));
@@ -29,7 +30,7 @@ int main() {
 
   auto inter = get_intersecting_rectangle(xal, yal, xar, yar, xbl, ybr, x4, y4);
   if (inter.size() == 0)
-  	    cout << "No intersection" << endl; 
+    cout << "No intersection" << endl;
   else if (inter.size() == 2)
     cout << "(" << inter[0].first << "," << inter[0].second << ")"
          << "(" << inter[1].first << "," << inter[1].second << ")" << endl;
