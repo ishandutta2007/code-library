@@ -18,15 +18,15 @@ using namespace std;
 #define MACROS_HPP
 
 #ifndef __has_attribute
-  #define __has_attribute(x) 0
+#define __has_attribute(x) 0
 #endif
 
 #ifndef __has_builtin
-  #define __has_builtin(x) 0
+#define __has_builtin(x) 0
 #endif
 
 #ifndef __has_cpp_attribute
-  #define __has_cpp_attribute(x) 0
+#define __has_cpp_attribute(x) 0
 #endif
 
 /// Some functions in primesieve use a large number of variables
@@ -36,51 +36,47 @@ using namespace std;
 /// with NOINLINE in order to avoid these issues.
 ///
 #if __has_attribute(noinline)
-  #define NOINLINE __attribute__((noinline))
+#define NOINLINE __attribute__((noinline))
 #elif defined(_MSC_VER)
-  #define NOINLINE __declspec(noinline)
+#define NOINLINE __declspec(noinline)
 #else
-  #define NOINLINE
+#define NOINLINE
 #endif
 
-#if __cplusplus >= 202002L && \
-    __has_cpp_attribute(unlikely)
-  #define if_unlikely(x) if (x) [[unlikely]]
-#elif defined(__GNUC__) || \
-      __has_builtin(__builtin_expect)
-  #define if_unlikely(x) if (__builtin_expect(!!(x), 0))
+#if __cplusplus >= 202002L && __has_cpp_attribute(unlikely)
+#define if_unlikely(x)                                                         \
+  if (x)                                                                       \
+  [[unlikely]]
+#elif defined(__GNUC__) || __has_builtin(__builtin_expect)
+#define if_unlikely(x) if (__builtin_expect(!!(x), 0))
 #else
-  #define if_unlikely(x) if (x)
+#define if_unlikely(x) if (x)
 #endif
 
-#if __cplusplus >= 201703L && \
-    __has_cpp_attribute(fallthrough)
-  #define FALLTHROUGH [[fallthrough]]
+#if __cplusplus >= 201703L && __has_cpp_attribute(fallthrough)
+#define FALLTHROUGH [[fallthrough]]
 #elif __has_attribute(fallthrough)
-  #define FALLTHROUGH __attribute__((fallthrough))
+#define FALLTHROUGH __attribute__((fallthrough))
 #else
-  #define FALLTHROUGH
+#define FALLTHROUGH
 #endif
 
-#if defined(__GNUC__) || \
-    __has_builtin(__builtin_unreachable)
-  #define UNREACHABLE __builtin_unreachable()
+#if defined(__GNUC__) || __has_builtin(__builtin_unreachable)
+#define UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
-  #define UNREACHABLE __assume(0)
+#define UNREACHABLE __assume(0)
 #else
-  #define UNREACHABLE
+#define UNREACHABLE
 #endif
 
 /// Use [[maybe_unused]] from C++17 once widely supported
 #if defined(NDEBUG)
-  #define MAYBE_UNUSED(x)
+#define MAYBE_UNUSED(x)
 #else
-  #define MAYBE_UNUSED(x) x
+#define MAYBE_UNUSED(x) x
 #endif
 
 #endif
-
-
 
 #ifndef IMATH_HPP
 #define IMATH_HPP
@@ -216,7 +212,8 @@ template <typename T> struct is_unsigned {
 // };
 
 // template <typename T> struct is_signed {
-//   enum { value = std::is_signed<T>::value || std::is_same<T, int128_t>::value };
+//   enum { value = std::is_signed<T>::value || std::is_same<T, int128_t>::value
+//   };
 // };
 
 // template <typename T> struct is_unsigned {
@@ -910,11 +907,8 @@ namespace primesum {
 #endif
 // int256_t.hpp ends
 
-
 #ifndef PITABLE_HPP
 #define PITABLE_HPP
-
-
 
 ///
 /// @file  popcnt.hpp
@@ -933,41 +927,30 @@ namespace primesum {
 #include <stdint.h>
 
 #ifndef __has_builtin
-  #define __has_builtin(x) 0
+#define __has_builtin(x) 0
 #endif
 
 #if defined(__GNUC__) || __has_builtin(__builtin_popcountll)
 
-inline uint64_t popcnt64(uint64_t x)
-{
-  return __builtin_popcountll(x);
-}
+inline uint64_t popcnt64(uint64_t x) { return __builtin_popcountll(x); }
 
-#elif defined(_MSC_VER) && \
-      defined(_WIN64)
+#elif defined(_MSC_VER) && defined(_WIN64)
 
 #include <nmmintrin.h>
 
-inline uint64_t popcnt64(uint64_t x)
-{
-  return _mm_popcnt_u64(x);
-}
+inline uint64_t popcnt64(uint64_t x) { return _mm_popcnt_u64(x); }
 
-#elif defined(_MSC_VER) && \
-      defined(_WIN32)
+#elif defined(_MSC_VER) && defined(_WIN32)
 
 #include <nmmintrin.h>
 
-inline uint64_t popcnt64(uint64_t x)
-{
-  return _mm_popcnt_u32((uint32_t) x) + 
-         _mm_popcnt_u32((uint32_t)(x >> 32));
+inline uint64_t popcnt64(uint64_t x) {
+  return _mm_popcnt_u32((uint32_t)x) + _mm_popcnt_u32((uint32_t)(x >> 32));
 }
 
 #else
 
-inline uint64_t popcnt64(uint64_t x)
-{
+inline uint64_t popcnt64(uint64_t x) {
   uint64_t m1 = 0x5555555555555555ull;
   uint64_t m2 = 0x3333333333333333ull;
   uint64_t m4 = 0x0F0F0F0F0F0F0F0Full;
@@ -984,29 +967,23 @@ inline uint64_t popcnt64(uint64_t x)
 
 #endif
 
-
 namespace primesum {
 
-class PiTable
-{
+class PiTable {
 public:
   PiTable(uint64_t max);
 
   /// Get number of primes <= n
-  int64_t operator[](uint64_t n) const
-  {
+  int64_t operator[](uint64_t n) const {
     assert(n <= max_);
     uint64_t bitmask = 0xffffffffffffffffull >> (63 - n % 64);
     return pi_[n / 64].prime_count + popcnt64(pi_[n / 64].bits & bitmask);
   }
 
-  int64_t size() const
-  {
-    return max_ + 1;
-  }
+  int64_t size() const { return max_ + 1; }
+
 private:
-  struct PiData
-  {
+  struct PiData {
     uint64_t prime_count = 0;
     uint64_t bits = 0;
   };
@@ -1024,22 +1001,18 @@ private:
 
 namespace primesum {
 
-class PhiTiny
-{
+class PhiTiny {
 public:
   PhiTiny();
 
-  template <typename T>
-  T phi(T x, int64_t a) const
-  {
+  template <typename T> T phi(T x, int64_t a) const {
     assert(a <= max_a());
 
     T pp = prime_products[a];
     return (x / pp) * totients[a] + phi_[a][x % pp];
   }
 
-  static int64_t get_c(int64_t y)
-  {
+  static int64_t get_c(int64_t y) {
     assert(y >= 0);
 
     if (y >= primes.back())
@@ -1048,10 +1021,7 @@ public:
       return pi[y];
   }
 
-  static int64_t max_a()
-  {
-    return primes.size() - 1;
-  }
+  static int64_t max_a() { return primes.size() - 1; }
 
 private:
   std::array<std::vector<int16_t>, 7> phi_;
@@ -1063,16 +1033,11 @@ private:
 
 extern const PhiTiny phiTiny;
 
-inline bool is_phi_tiny(int64_t a)
-{
-  return a <= PhiTiny::max_a();
-}
+inline bool is_phi_tiny(int64_t a) { return a <= PhiTiny::max_a(); }
 
-template <typename T>
-T phi_tiny(T x, int64_t a)
-{
+template <typename T> T phi_tiny(T x, int64_t a) {
   if (x <= std::numeric_limits<uint32_t>::max())
-    return phiTiny.phi((uint32_t) x, a);
+    return phiTiny.phi((uint32_t)x, a);
   else
     return phiTiny.phi(x, a);
 }
@@ -1088,45 +1053,37 @@ T phi_tiny(T x, int64_t a)
 
 namespace primesum {
 
-template <typename T>
-struct fastdiv
-{
-  typedef typename std::conditional<sizeof(T) / 2 <= sizeof(uint32_t), uint32_t,
-          typename std::conditional<sizeof(T) / 2 <= sizeof(uint64_t), uint64_t,
-          T>::type>::type type;
+template <typename T> struct fastdiv {
+  typedef typename std::conditional<
+      sizeof(T) / 2 <= sizeof(uint32_t), uint32_t,
+      typename std::conditional<sizeof(T) / 2 <= sizeof(uint64_t), uint64_t,
+                                T>::type>::type type;
 };
 
 template <typename X, typename Y>
-typename std::enable_if<(sizeof(X) == sizeof(Y)), X>::type
-fast_div(X x, Y y)
-{
-  static_assert(prt::is_integral<X>::value &&
-                prt::is_integral<Y>::value,
+typename std::enable_if<(sizeof(X) == sizeof(Y)), X>::type fast_div(X x, Y y) {
+  static_assert(prt::is_integral<X>::value && prt::is_integral<Y>::value,
                 "fast_div(x, y): types must be integral");
 
   using fastdiv_t = typename fastdiv<X>::type;
 
   if (x <= std::numeric_limits<fastdiv_t>::max() &&
-      y <= std::numeric_limits<fastdiv_t>::max())
-  {
-    return (fastdiv_t) x / (fastdiv_t) y;
+      y <= std::numeric_limits<fastdiv_t>::max()) {
+    return (fastdiv_t)x / (fastdiv_t)y;
   }
 
   return x / y;
 }
 
 template <typename X, typename Y>
-typename std::enable_if<(sizeof(X) > sizeof(Y)), X>::type
-fast_div(X x, Y y)
-{
-  static_assert(prt::is_integral<X>::value &&
-                prt::is_integral<Y>::value,
+typename std::enable_if<(sizeof(X) > sizeof(Y)), X>::type fast_div(X x, Y y) {
+  static_assert(prt::is_integral<X>::value && prt::is_integral<Y>::value,
                 "fast_div(x, y): types must be integral");
 
   using fastdiv_t = typename fastdiv<X>::type;
 
   if (x <= std::numeric_limits<fastdiv_t>::max())
-    return (fastdiv_t) x / (fastdiv_t) y;
+    return (fastdiv_t)x / (fastdiv_t)y;
 
   return x / y;
 }
@@ -1134,13 +1091,6 @@ fast_div(X x, Y y)
 } // namespace
 
 #endif
-
-
-
-
-
-
-
 
 ///
 /// @file   primesieve.hpp
@@ -1170,8 +1120,7 @@ namespace primesieve {
 
 /// Store the primes <= stop in the primes vector.
 template <typename T>
-inline void generate_primes(uint64_t stop, std::vector<T>* primes)
-{
+inline void generate_primes(uint64_t stop, std::vector<T> *primes) {
   if (primes)
     store_primes(0, stop, *primes);
 }
@@ -1180,24 +1129,23 @@ inline void generate_primes(uint64_t stop, std::vector<T>* primes)
 /// in the primes vector.
 ///
 template <typename T>
-inline void generate_primes(uint64_t start, uint64_t stop, std::vector<T>* primes)
-{
+inline void generate_primes(uint64_t start, uint64_t stop,
+                            std::vector<T> *primes) {
   if (primes)
     store_primes(start, stop, *primes);
 }
 
 /// Store the first n primes in the primes vector.
 template <typename T>
-inline void generate_n_primes(uint64_t n, std::vector<T>* primes)
-{
+inline void generate_n_primes(uint64_t n, std::vector<T> *primes) {
   if (primes)
     store_n_primes(n, 0, *primes);
 }
 
 /// Store the first n primes >= start in the primes vector.
 template <typename T>
-inline void generate_n_primes(uint64_t n, uint64_t start, std::vector<T>* primes)
-{
+inline void generate_n_primes(uint64_t n, uint64_t start,
+                              std::vector<T> *primes) {
   if (primes)
     store_n_primes(n, start, *primes);
 }
@@ -1324,33 +1272,9 @@ void set_num_threads(int num_threads);
 
 /// Get the primesieve version number, in the form “i.j”.
 std::string primesieve_version();
-
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///
 /// @file  PreSieve.hpp
@@ -1384,12 +1308,12 @@ namespace primesieve {
 /// - PreSieve multiples of primes <= 19 uses  323.32 kilobytes
 /// - PreSieve multiples of primes <= 23 uses    7.44 megabytes
 ///
-class PreSieve
-{
+class PreSieve {
 public:
   void init(uint64_t, uint64_t);
   uint64_t getMaxPrime() const { return maxPrime_; }
-  void copy(uint8_t*, uint64_t, uint64_t) const;
+  void copy(uint8_t *, uint64_t, uint64_t) const;
+
 private:
   uint64_t maxPrime_ = 0;
   uint64_t primeProduct_ = 0;
@@ -1402,21 +1326,6 @@ private:
 
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #ifndef PRIMESIEVE_CLASS_HPP
 #define PRIMESIEVE_CLASS_HPP
 
@@ -1425,28 +1334,26 @@ namespace primesieve {
 using counts_t = std::array<uint64_t, 6>;
 class ParallelSieve;
 
-enum
-{
-  COUNT_PRIMES      = 1 << 0,
-  COUNT_TWINS       = 1 << 1,
-  COUNT_TRIPLETS    = 1 << 2,
+enum {
+  COUNT_PRIMES = 1 << 0,
+  COUNT_TWINS = 1 << 1,
+  COUNT_TRIPLETS = 1 << 2,
   COUNT_QUADRUPLETS = 1 << 3,
   COUNT_QUINTUPLETS = 1 << 4,
-  COUNT_SEXTUPLETS  = 1 << 5,
-  PRINT_PRIMES      = 1 << 6,
-  PRINT_TWINS       = 1 << 7,
-  PRINT_TRIPLETS    = 1 << 8,
+  COUNT_SEXTUPLETS = 1 << 5,
+  PRINT_PRIMES = 1 << 6,
+  PRINT_TWINS = 1 << 7,
+  PRINT_TRIPLETS = 1 << 8,
   PRINT_QUADRUPLETS = 1 << 9,
   PRINT_QUINTUPLETS = 1 << 10,
-  PRINT_SEXTUPLETS  = 1 << 11,
-  PRINT_STATUS      = 1 << 12
+  PRINT_SEXTUPLETS = 1 << 11,
+  PRINT_STATUS = 1 << 12
 };
 
-class PrimeSieve
-{
+class PrimeSieve {
 public:
   PrimeSieve();
-  PrimeSieve(ParallelSieve*);
+  PrimeSieve(ParallelSieve *);
   virtual ~PrimeSieve();
   // Getters
   uint64_t getStart() const;
@@ -1454,7 +1361,7 @@ public:
   uint64_t getDistance() const;
   int getSieveSize() const;
   double getSeconds() const;
-  PreSieve& getPreSieve();
+  PreSieve &getPreSieve();
   // Setters
   void setStart(uint64_t);
   void setStop(uint64_t);
@@ -1481,7 +1388,7 @@ public:
   uint64_t nthPrime(uint64_t);
   uint64_t nthPrime(int64_t, uint64_t);
   // Count
-  counts_t& getCounts();
+  counts_t &getCounts();
   uint64_t getCount(int) const;
   uint64_t countPrimes(uint64_t, uint64_t);
 
@@ -1507,7 +1414,7 @@ private:
   /// Sieve size in KiB
   int sieveSize_ = 0;
   /// Status updates must be synchronized by main thread
-  ParallelSieve* parent_ = nullptr;
+  ParallelSieve *parent_ = nullptr;
   PreSieve preSieve_;
   void processSmallPrimes();
   static void printStatus(double, double);
@@ -1516,12 +1423,6 @@ private:
 } // namespace
 
 #endif
-
-
-
-
-
-
 
 ///
 /// @file   ParallelSieve.hpp
@@ -1541,8 +1442,7 @@ private:
 
 namespace primesieve {
 
-class ParallelSieve : public PrimeSieve
-{
+class ParallelSieve : public PrimeSieve {
 public:
   using PrimeSieve::sieve;
 
@@ -1565,12 +1465,6 @@ private:
 
 #endif
 
-
-
-
-
-
-
 ///
 /// @file   pmath.hpp
 /// @brief  Auxiliary math functions for primesieve.
@@ -1586,46 +1480,32 @@ private:
 
 namespace {
 
-template <typename X, typename Y>
-inline X ceilDiv(X x, Y y)
-{
-  return (X) ((x + y - 1) / y);
+template <typename X, typename Y> inline X ceilDiv(X x, Y y) {
+  return (X)((x + y - 1) / y);
 }
 
-template <typename T>
-constexpr bool isPow2(T x)
-{
+template <typename T> constexpr bool isPow2(T x) {
   return x != 0 && (x & (x - 1)) == 0;
 }
 
-template <typename T>
-constexpr T numberOfBits(T)
-{
-  return (T) std::numeric_limits<
-      typename std::make_unsigned<T>::type
-          >::digits;
+template <typename T> constexpr T numberOfBits(T) {
+  return (T)std::numeric_limits<typename std::make_unsigned<T>::type>::digits;
 }
 
-template <typename T>
-inline T floorPow2(T x)
-{
+template <typename T> inline T floorPow2(T x) {
   for (T i = 1; i < numberOfBits(x); i += i)
     x |= (x >> i);
 
   return x - (x >> 1);
 }
 
-template <typename T>
-inline T ilog2(T x)
-{
+template <typename T> inline T ilog2(T x) {
   T log2 = 0;
   T bits = numberOfBits(x);
 
-  for (T i = bits / 2; i > 0; i /= 2)
-  {
+  for (T i = bits / 2; i > 0; i /= 2) {
     T one = 1;
-    if (x >= (one << i))
-    {
+    if (x >= (one << i)) {
       x >>= i;
       log2 += i;
     }
@@ -1637,9 +1517,7 @@ inline T ilog2(T x)
 #if __cplusplus >= 201402L
 
 /// C++14 compile time square root using binary search
-template <typename T>
-constexpr T ctSqrt(T x, T lo, T hi)
-{
+template <typename T> constexpr T ctSqrt(T x, T lo, T hi) {
   if (lo == hi)
     return lo;
 
@@ -1656,25 +1534,19 @@ constexpr T ctSqrt(T x, T lo, T hi)
 #define MID ((lo + hi + 1) / 2)
 
 /// C++11 compile time square root using binary search
-template <typename T>
-constexpr T ctSqrt(T x, T lo, T hi)
-{
-  return lo == hi ? lo : ((x / MID < MID)
-      ? ctSqrt<T>(x, lo, MID - 1) : ctSqrt<T>(x, MID, hi));
+template <typename T> constexpr T ctSqrt(T x, T lo, T hi) {
+  return lo == hi ? lo : ((x / MID < MID) ? ctSqrt<T>(x, lo, MID - 1)
+                                          : ctSqrt<T>(x, MID, hi));
 }
 
 #endif
 
-template <typename T>
-constexpr T ctSqrt(T x)
-{
+template <typename T> constexpr T ctSqrt(T x) {
   return ctSqrt<T>(x, 0, x / 2 + 1);
 }
 
-template <typename T>
-inline T isqrt(T x)
-{
-  T r = (T) std::sqrt((double) x);
+template <typename T> inline T isqrt(T x) {
+  T r = (T)std::sqrt((double)x);
 
   constexpr T maxSqrt = ctSqrt(std::numeric_limits<T>::max());
   r = std::min(r, maxSqrt);
@@ -1688,8 +1560,7 @@ inline T isqrt(T x)
 }
 
 /// Returns 2^64-1 if (x + y) > 2^64-1
-inline uint64_t checkedAdd(uint64_t x, uint64_t y)
-{
+inline uint64_t checkedAdd(uint64_t x, uint64_t y) {
   if (x >= std::numeric_limits<uint64_t>::max() - y)
     return std::numeric_limits<uint64_t>::max();
   else
@@ -1697,8 +1568,7 @@ inline uint64_t checkedAdd(uint64_t x, uint64_t y)
 }
 
 /// Returns 0 if (x - y) < 0
-inline uint64_t checkedSub(uint64_t x, uint64_t y)
-{
+inline uint64_t checkedSub(uint64_t x, uint64_t y) {
   if (x > y)
     return x - y;
   else
@@ -1706,73 +1576,50 @@ inline uint64_t checkedSub(uint64_t x, uint64_t y)
 }
 
 template <typename A, typename B, typename C>
-inline B inBetween(A min, B x, C max)
-{
+inline B inBetween(A min, B x, C max) {
   using T = typename std::common_type<A, B, C>::type;
 
-  if ((T) x < (T) min)
-    return (B) min;
-  if ((T) x > (T) max)
-    return (B) max;
+  if ((T)x < (T)min)
+    return (B)min;
+  if ((T)x > (T)max)
+    return (B)max;
 
   return x;
 }
 
 /// primeCountApprox(x) >= pi(x)
-inline std::size_t primeCountApprox(uint64_t start, uint64_t stop)
-{
+inline std::size_t primeCountApprox(uint64_t start, uint64_t stop) {
   if (start > stop)
     return 0;
   if (stop <= 10)
     return 4;
 
   // pi(x) <= x / (log(x) - 1.1) + 5, for x >= 4
-  double x = (double) stop;
+  double x = (double)stop;
   double logx = std::log(x);
   double div = logx - 1.1;
   double pix = (stop - start) / div + 5;
 
-  return (std::size_t) pix;
+  return (std::size_t)pix;
 }
 
-inline std::size_t primeCountApprox(uint64_t stop)
-{
+inline std::size_t primeCountApprox(uint64_t stop) {
   return primeCountApprox(0, stop);
 }
 
 /// Approximation of the maximum prime gap near n
-template <typename T>
-inline T maxPrimeGap(T n)
-{
-  double x = (double) n;
+template <typename T> inline T maxPrimeGap(T n) {
+  double x = (double)n;
   x = std::max(8.0, x);
   double logx = std::log(x);
   double prime_gap = logx * logx;
 
-  return (T) prime_gap;
+  return (T)prime_gap;
 }
 
 } // namespace
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///
 /// @file   Wheel.hpp
@@ -1793,8 +1640,7 @@ namespace primesieve {
 /// The WheelInit data structure is used to calculate the
 /// first multiple >= start of each sieving prime
 ///
-struct WheelInit
-{
+struct WheelInit {
   uint8_t nextMultipleFactor;
   uint8_t wheelIndex;
 };
@@ -1805,8 +1651,7 @@ extern const WheelInit wheel210Init[210];
 /// The WheelElement data structure is used to skip multiples
 /// of small primes using wheel factorization
 ///
-struct WheelElement
-{
+struct WheelElement {
   /// Bitmask used to unset the bit corresponding to the current
   /// multiple of a SievingPrime object
   uint8_t unsetBit;
@@ -1821,24 +1666,23 @@ struct WheelElement
   int8_t next;
 };
 
-extern const WheelElement wheel30[8*8];
-extern const WheelElement wheel210[48*8];
+extern const WheelElement wheel30[8 * 8];
+extern const WheelElement wheel210[48 * 8];
 
 /// The abstract Wheel class is used skip multiples of small
 /// primes in the sieve of Eratosthenes. The EratSmall,
 /// EratMedium and EratBig classes are derived from Wheel.
 ///
-template <int MODULO, int SIZE, const WheelElement* WHEEL, const WheelInit* INIT>
-class Wheel
-{
+template <int MODULO, int SIZE, const WheelElement *WHEEL,
+          const WheelInit *INIT>
+class Wheel {
 public:
   /// Add a new sieving prime to the sieving algorithm.
   /// Calculate the first multiple > segmentLow of prime and
   /// the position within the sieve array of that multiple
   /// and its wheel index. When done store the sieving prime.
   ///
-  void addSievingPrime(uint64_t prime, uint64_t segmentLow)
-  {
+  void addSievingPrime(uint64_t prime, uint64_t segmentLow) {
     assert(segmentLow % 30 == 0);
 
     // This hack is required because in primesieve the 8
@@ -1852,8 +1696,7 @@ public:
     quotient = std::max(prime, quotient);
     uint64_t multiple = prime * quotient;
     // prime not needed for sieving
-    if (multiple > stop_ ||
-        multiple < segmentLow)
+    if (multiple > stop_ || multiple < segmentLow)
       return;
 
     // calculate the next multiple of prime that is not
@@ -1865,7 +1708,8 @@ public:
 
     nextMultiple += multiple - segmentLow;
     uint64_t multipleIndex = nextMultiple / 30;
-    uint64_t wheelIndex = wheelOffsets_[prime % 30] + INIT[quotient % MODULO].wheelIndex;
+    uint64_t wheelIndex =
+        wheelOffsets_[prime % 30] + INIT[quotient % MODULO].wheelIndex;
     storeSievingPrime(prime, multipleIndex, wheelIndex);
   }
 
@@ -1874,39 +1718,29 @@ protected:
   virtual ~Wheel() = default;
   virtual void storeSievingPrime(uint64_t, uint64_t, uint64_t) = 0;
 
-  static uint64_t getMaxFactor()
-  {
-    return WHEEL[0].nextMultipleFactor;
-  }
+  static uint64_t getMaxFactor() { return WHEEL[0].nextMultipleFactor; }
 
   /// Cross-off the current multiple of sievingPrime
   /// and calculate its next multiple
   ///
-  static void unsetBit(uint8_t* sieve,
-                       uint64_t sievingPrime,
-                       uint64_t* multipleIndex,
-                       uint64_t* wheelIndex)
-  {
+  static void unsetBit(uint8_t *sieve, uint64_t sievingPrime,
+                       uint64_t *multipleIndex, uint64_t *wheelIndex) {
     sieve[*multipleIndex] &= WHEEL[*wheelIndex].unsetBit;
-    *multipleIndex        += WHEEL[*wheelIndex].nextMultipleFactor * sievingPrime;
-    *multipleIndex        += WHEEL[*wheelIndex].correct;
-    *wheelIndex           += WHEEL[*wheelIndex].next;
+    *multipleIndex += WHEEL[*wheelIndex].nextMultipleFactor * sievingPrime;
+    *multipleIndex += WHEEL[*wheelIndex].correct;
+    *wheelIndex += WHEEL[*wheelIndex].next;
   }
 
 private:
   static const uint64_t wheelOffsets_[30];
 };
 
-template <int MODULO, int SIZE, const WheelElement* WHEEL, const WheelInit* INIT>
-const uint64_t
-Wheel<MODULO, SIZE, WHEEL, INIT>::wheelOffsets_[30] =
-{
-  0, SIZE * 7, 0, 0, 0, 0,
-  0, SIZE * 0, 0, 0, 0, SIZE * 1,
-  0, SIZE * 2, 0, 0, 0, SIZE * 3,
-  0, SIZE * 4, 0, 0, 0, SIZE * 5,
-  0, 0,        0, 0, 0, SIZE * 6
-};
+template <int MODULO, int SIZE, const WheelElement *WHEEL,
+          const WheelInit *INIT>
+const uint64_t Wheel<MODULO, SIZE, WHEEL, INIT>::wheelOffsets_[30] = {
+    0, SIZE * 7, 0, 0,        0, 0, 0, SIZE * 0, 0, 0,
+    0, SIZE * 1, 0, SIZE * 2, 0, 0, 0, SIZE * 3, 0, SIZE * 4,
+    0, 0,        0, SIZE * 5, 0, 0, 0, 0,        0, SIZE * 6};
 
 /// 3rd wheel, skips multiples of 2, 3 and 5
 using Wheel30_t = Wheel<30, 8, wheel30, wheel30Init>;
@@ -1917,7 +1751,6 @@ using Wheel210_t = Wheel<210, 48, wheel210, wheel210Init>;
 } // namespace
 
 #endif
-
 
 ///
 /// @file   config.hpp
@@ -1931,7 +1764,6 @@ using Wheel210_t = Wheel<210, 48, wheel210, wheel210Init>;
 
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
-
 
 namespace {
 namespace config {
@@ -1964,42 +1796,38 @@ enum {
   MAX_CACHE_ITERATOR = (1 << 20) * 1024
 };
 
-  /// Sieving primes <= (sieveSize in bytes * FACTOR_ERATSMALL)
-  /// are processed in EratSmall. The ideal value for
-  /// FACTOR_ERATSMALL has been determined experimentally by
-  /// running benchmarks near 10^10.
-  /// @pre FACTOR_ERATSMALL >= 0 && <= 3
-  ///
-  const double FACTOR_ERATSMALL = 0.175;
+/// Sieving primes <= (sieveSize in bytes * FACTOR_ERATSMALL)
+/// are processed in EratSmall. The ideal value for
+/// FACTOR_ERATSMALL has been determined experimentally by
+/// running benchmarks near 10^10.
+/// @pre FACTOR_ERATSMALL >= 0 && <= 3
+///
+const double FACTOR_ERATSMALL = 0.175;
 
-  /// Sieving primes > (sieveSize in bytes * FACTOR_ERATSMALL)
-  /// and <= (sieveSize in bytes * FACTOR_ERATMEDIUM)
-  /// are processed in EratMedium. The ideal value for
-  /// FACTOR_ERATMEDIUM has been determined experimentally by
-  /// running benchmarks near 10^14.
-  ///
-  /// @pre FACTOR_ERATMEDIUM >= 0 && <= 9
-  /// FACTOR_ERATMEDIUM * max(sieveSize) / 30 * 6 + 6 <= max(multipleIndex)
-  /// FACTOR_ERATMEDIUM * 2^22 / 30 * 6 + 6 <= 2^23 - 1
-  /// FACTOR_ERATMEDIUM <= ((2^23 - 7) * 30) / (2^22 * 6)
-  /// FACTOR_ERATMEDIUM <= 9.999991655
-  ///
-  const double FACTOR_ERATMEDIUM = 5.0;
+/// Sieving primes > (sieveSize in bytes * FACTOR_ERATSMALL)
+/// and <= (sieveSize in bytes * FACTOR_ERATMEDIUM)
+/// are processed in EratMedium. The ideal value for
+/// FACTOR_ERATMEDIUM has been determined experimentally by
+/// running benchmarks near 10^14.
+///
+/// @pre FACTOR_ERATMEDIUM >= 0 && <= 9
+/// FACTOR_ERATMEDIUM * max(sieveSize) / 30 * 6 + 6 <= max(multipleIndex)
+/// FACTOR_ERATMEDIUM * 2^22 / 30 * 6 + 6 <= 2^23 - 1
+/// FACTOR_ERATMEDIUM <= ((2^23 - 7) * 30) / (2^22 * 6)
+/// FACTOR_ERATMEDIUM <= 9.999991655
+///
+const double FACTOR_ERATMEDIUM = 5.0;
 
-  /// Each thread sieves at least a distance of MIN_THREAD_DISTANCE
-  /// in order to reduce the initialization overhead.
-  /// @pre MIN_THREAD_DISTANCE >= 100
-  ///
-  const uint64_t MIN_THREAD_DISTANCE = (uint64_t) 1e7;
+/// Each thread sieves at least a distance of MIN_THREAD_DISTANCE
+/// in order to reduce the initialization overhead.
+/// @pre MIN_THREAD_DISTANCE >= 100
+///
+const uint64_t MIN_THREAD_DISTANCE = (uint64_t)1e7;
 
 } // namespace config
 } // namespace
 
 #endif
-
-
-
-
 
 #ifndef BUCKET_HPP
 #define BUCKET_HPP
@@ -2014,55 +1842,38 @@ namespace primesieve {
 /// usage the multipleIndex and wheelIndex are packed into a
 /// single 32-bit variable.
 ///
-class SievingPrime
-{
+class SievingPrime {
 public:
   enum {
     MAX_MULTIPLEINDEX = (1 << 23) - 1,
-    MAX_WHEELINDEX    = (1 << (32 - 23)) - 1
+    MAX_WHEELINDEX = (1 << (32 - 23)) - 1
   };
 
   SievingPrime() = default;
 
-  SievingPrime(uint64_t sievingPrime,
-               uint64_t multipleIndex,
-               uint64_t wheelIndex)
-  {
+  SievingPrime(uint64_t sievingPrime, uint64_t multipleIndex,
+               uint64_t wheelIndex) {
     set(sievingPrime, multipleIndex, wheelIndex);
   }
 
-  void set(uint64_t multipleIndex,
-           uint64_t wheelIndex)
-  {
+  void set(uint64_t multipleIndex, uint64_t wheelIndex) {
     assert(multipleIndex <= MAX_MULTIPLEINDEX);
     assert(wheelIndex <= MAX_WHEELINDEX);
-    indexes_ = (uint32_t) (multipleIndex | (wheelIndex << 23));
+    indexes_ = (uint32_t)(multipleIndex | (wheelIndex << 23));
   }
 
-  void set(uint64_t sievingPrime,
-           uint64_t multipleIndex,
-           uint64_t wheelIndex)
-  {
+  void set(uint64_t sievingPrime, uint64_t multipleIndex, uint64_t wheelIndex) {
     assert(multipleIndex <= MAX_MULTIPLEINDEX);
     assert(wheelIndex <= MAX_WHEELINDEX);
-    indexes_ = (uint32_t) (multipleIndex | (wheelIndex << 23));
-    sievingPrime_ = (uint32_t) sievingPrime;
+    indexes_ = (uint32_t)(multipleIndex | (wheelIndex << 23));
+    sievingPrime_ = (uint32_t)sievingPrime;
   }
 
-  uint64_t getSievingPrime() const
-  {
-    return sievingPrime_;
-  }
+  uint64_t getSievingPrime() const { return sievingPrime_; }
 
-  uint64_t getMultipleIndex() const
-  {
-    return indexes_ & MAX_MULTIPLEINDEX;
-  }
+  uint64_t getMultipleIndex() const { return indexes_ & MAX_MULTIPLEINDEX; }
 
-  uint64_t getWheelIndex() const
-  {
-    return indexes_ >> 23;
-  }
+  uint64_t getWheelIndex() const { return indexes_ >> 23; }
 
 private:
   /// multipleIndex = 23 least significant bits of indexes_
@@ -2077,14 +1888,13 @@ private:
 /// there is no more space in the current Bucket a new Bucket
 /// is allocated.
 ///
-class Bucket
-{
+class Bucket {
 public:
-  SievingPrime* begin() { return &sievingPrimes_[0]; }
-  SievingPrime* end()   { return end_; }
-  Bucket* next()        { return next_; }
-  void setNext(Bucket* next) { next_ = next; }
-  void setEnd(SievingPrime* end) { end_ = end; }
+  SievingPrime *begin() { return &sievingPrimes_[0]; }
+  SievingPrime *end() { return end_; }
+  Bucket *next() { return next_; }
+  void setNext(Bucket *next) { next_ = next; }
+  void setEnd(SievingPrime *end) { end_ = end; }
   void reset() { end_ = begin(); }
 
   /// Get the sieving prime's bucket.
@@ -2096,15 +1906,14 @@ public:
   /// prime's address and that is aligned by sizeof(Bucket).
   /// That's the address of the sieving prime's bucket.
   ///
-  static Bucket* get(SievingPrime* sievingPrime)
-  {
+  static Bucket *get(SievingPrime *sievingPrime) {
     assert(sievingPrime != nullptr);
-    std::size_t address = (std::size_t) sievingPrime;
+    std::size_t address = (std::size_t)sievingPrime;
     // We need to adjust the address
     // in case the bucket is full.
     address -= 1;
     address -= address % sizeof(Bucket);
-    return (Bucket*) address;
+    return (Bucket *)address;
   }
 
   /// Returns true if the bucket is full with sieving primes
@@ -2114,20 +1923,20 @@ public:
   /// us to quickly check if the bucket is full using the next
   /// sieving prime's address % sizeof(Bucket).
   ///
-  static bool isFull(SievingPrime* sievingPrime)
-  {
-    std::size_t address = (std::size_t) sievingPrime;
+  static bool isFull(SievingPrime *sievingPrime) {
+    std::size_t address = (std::size_t)sievingPrime;
     return address % sizeof(Bucket) == 0;
   }
 
 private:
   enum {
-    SIEVING_PRIMES_OFFSET = sizeof(SievingPrime*) + sizeof(Bucket*),
-    SIEVING_PRIMES_SIZE = (config::BUCKET_BYTES - SIEVING_PRIMES_OFFSET) / sizeof(SievingPrime)
+    SIEVING_PRIMES_OFFSET = sizeof(SievingPrime *) + sizeof(Bucket *),
+    SIEVING_PRIMES_SIZE =
+        (config::BUCKET_BYTES - SIEVING_PRIMES_OFFSET) / sizeof(SievingPrime)
   };
 
-  SievingPrime* end_;
-  Bucket* next_;
+  SievingPrime *end_;
+  Bucket *next_;
   SievingPrime sievingPrimes_[SIEVING_PRIMES_SIZE];
 };
 
@@ -2136,12 +1945,6 @@ static_assert(isPow2(sizeof(Bucket)), "sizeof(Bucket) must be a power of 2!");
 } // namespace
 
 #endif
-
-
-
-
-
-
 
 #ifndef ERATSMALL_HPP
 #define ERATSMALL_HPP
@@ -2154,28 +1957,25 @@ namespace primesieve {
 /// of Eratosthenes optimized for small sieving primes that
 /// have many multiples per segment.
 ///
-class EratSmall : public Wheel30_t
-{
+class EratSmall : public Wheel30_t {
 public:
   static uint64_t getL1CacheSize(uint64_t);
   void init(uint64_t, uint64_t, uint64_t);
-  void crossOff(uint8_t*, uint64_t);
+  void crossOff(uint8_t *, uint64_t);
   bool enabled() const { return enabled_; }
+
 private:
   uint64_t maxPrime_ = 0;
   uint64_t l1CacheSize_ = 0;
   std::vector<SievingPrime> primes_;
   bool enabled_ = false;
   void storeSievingPrime(uint64_t, uint64_t, uint64_t);
-  NOINLINE void crossOff(uint8_t*, uint8_t*);
+  NOINLINE void crossOff(uint8_t *, uint8_t *);
 };
 
 } // namespace
 
 #endif
-
-
-
 
 ///
 /// @file  MemoryPool.hpp
@@ -2193,18 +1993,17 @@ private:
 
 namespace primesieve {
 
-class MemoryPool
-{
+class MemoryPool {
 public:
-  NOINLINE void addBucket(SievingPrime*& sievingPrime);
-  void freeBucket(Bucket* bucket);
+  NOINLINE void addBucket(SievingPrime *&sievingPrime);
+  void freeBucket(Bucket *bucket);
 
 private:
   void allocateBuckets();
-  void initBuckets(void* memory, std::size_t bytes);
+  void initBuckets(void *memory, std::size_t bytes);
   void increaseAllocCount();
   /// List of empty buckets
-  Bucket* stock_ = nullptr;
+  Bucket *stock_ = nullptr;
   /// Number of buckets to allocate
   std::size_t count_ = 64;
   /// Pointers of allocated buckets
@@ -2214,10 +2013,6 @@ private:
 } // namespace
 
 #endif
-
-
-
-
 
 #ifndef ERATMEDIUM_HPP
 #define ERATMEDIUM_HPP
@@ -2232,37 +2027,31 @@ namespace primesieve {
 /// Eratosthenes optimized for medium sieving primes
 /// that have a few multiples per segment.
 ///
-class EratMedium : public Wheel30_t
-{
+class EratMedium : public Wheel30_t {
 public:
   void init(uint64_t, uint64_t, uint64_t);
   bool enabled() const { return enabled_; }
-  NOINLINE void crossOff(uint8_t*, uint64_t);
+  NOINLINE void crossOff(uint8_t *, uint64_t);
+
 private:
   bool enabled_ = false;
   uint64_t maxPrime_ = 0;
   MemoryPool memoryPool_;
-  std::array<SievingPrime*, 64> buckets_;
+  std::array<SievingPrime *, 64> buckets_;
   void storeSievingPrime(uint64_t, uint64_t, uint64_t);
-  NOINLINE void crossOff_7(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_11(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_13(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_17(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_19(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_23(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_29(uint8_t*, uint8_t*, Bucket*);
-  NOINLINE void crossOff_31(uint8_t*, uint8_t*, Bucket*);
+  NOINLINE void crossOff_7(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_11(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_13(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_17(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_19(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_23(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_29(uint8_t *, uint8_t *, Bucket *);
+  NOINLINE void crossOff_31(uint8_t *, uint8_t *, Bucket *);
 };
 
 } // namespace
 
 #endif
-
-
-
-
-
-
 
 ///
 /// @file  EratBig.hpp
@@ -2287,31 +2076,26 @@ namespace primesieve {
 /// Eratosthenes optimized for big sieving primes that have
 /// very few multiples per segment.
 ///
-class EratBig : public Wheel210_t
-{
+class EratBig : public Wheel210_t {
 public:
   void init(uint64_t, uint64_t, uint64_t);
-  NOINLINE void crossOff(uint8_t*);
+  NOINLINE void crossOff(uint8_t *);
   bool enabled() const { return enabled_; }
+
 private:
   uint64_t maxPrime_ = 0;
   uint64_t log2SieveSize_ = 0;
   uint64_t moduloSieveSize_ = 0;
-  std::vector<SievingPrime*> buckets_;
+  std::vector<SievingPrime *> buckets_;
   MemoryPool memoryPool_;
   bool enabled_ = false;
   void storeSievingPrime(uint64_t, uint64_t, uint64_t);
-  NOINLINE void crossOff(uint8_t*, Bucket*);
+  NOINLINE void crossOff(uint8_t *, Bucket *);
 };
 
 } // namespace
 
 #endif
-
-
-
-
-
 
 #ifndef ERAT_HPP
 #define ERAT_HPP
@@ -2347,25 +2131,24 @@ private:
 /// bitscan" algorithm.
 
 #if !defined(__has_builtin)
-  #define __has_builtin(x) 0
+#define __has_builtin(x) 0
 #endif
 
 #if !defined(__has_include)
-  #define __has_include(x) 0
+#define __has_include(x) 0
 #endif
 
-#if __cplusplus >= 202002L && \
-    __has_include(<bit>) && \
-    (defined(__BMI__) /* TZCNT (x64) */ || \
-     defined(__aarch64__) /* CTZ = RBIT + CLZ */ || \
-     defined(_M_ARM64) /* CTZ = RBIT + CLZ */)
+#if __cplusplus >= 202002L &&                                                  \
+    __has_include(<bit>)&&(defined(__BMI__) /* TZCNT (x64) */ ||               \
+                           defined(__aarch64__) /* CTZ = RBIT + CLZ */ ||      \
+                           defined(_M_ARM64) /* CTZ = RBIT + CLZ */)
 
 #include <bit>
 #define ctz64(x) std::countr_zero(x)
 
-#elif __has_builtin(__builtin_ctzll) && \
-    (defined(__BMI__) /* TZCNT (x64) */ || \
-     defined(__aarch64__) /* CTZ = RBIT + CLZ */ || \
+#elif __has_builtin(__builtin_ctzll) &&                                        \
+    (defined(__BMI__) /* TZCNT (x64) */ ||                                     \
+     defined(__aarch64__) /* CTZ = RBIT + CLZ */ ||                            \
      defined(_M_ARM64) /* CTZ = RBIT + CLZ */)
 
 #define ctz64(x) __builtin_ctzll(x)
@@ -2382,8 +2165,7 @@ class PreSieve;
 /// Eratosthenes algorithms optimized for small, medium and big
 /// sieving primes to cross-off multiples.
 ///
-class Erat
-{
+class Erat {
 public:
   uint64_t getSieveSize() const;
   uint64_t getStop() const;
@@ -2400,10 +2182,10 @@ protected:
   /// Upper bound of the current segment
   uint64_t segmentHigh_ = 0;
   /// Sieve of Eratosthenes array
-  uint8_t* sieve_ = nullptr;
+  uint8_t *sieve_ = nullptr;
   Erat();
   Erat(uint64_t, uint64_t);
-  void init(uint64_t, uint64_t, uint64_t, PreSieve&);
+  void init(uint64_t, uint64_t, uint64_t, PreSieve &);
   void addSievingPrime(uint64_t);
   NOINLINE void sieveSegment();
   bool hasNextSegment() const;
@@ -2414,7 +2196,7 @@ private:
   uint64_t maxEratSmall_ = 0;
   uint64_t maxEratMedium_ = 0;
   std::unique_ptr<uint8_t[]> deleter_;
-  PreSieve* preSieve_ = nullptr;
+  PreSieve *preSieve_ = nullptr;
   EratSmall eratSmall_;
   EratBig eratBig_;
   EratMedium eratMedium_;
@@ -2428,8 +2210,7 @@ private:
 };
 
 /// Convert 1st set bit into prime
-inline uint64_t Erat::nextPrime(uint64_t bits, uint64_t low)
-{
+inline uint64_t Erat::nextPrime(uint64_t bits, uint64_t low) {
 #if defined(ctz64)
   // Find first set 1 bit
   auto bitIndex = ctz64(bits);
@@ -2446,40 +2227,23 @@ inline uint64_t Erat::nextPrime(uint64_t bits, uint64_t low)
 #endif
 }
 
-inline void Erat::addSievingPrime(uint64_t prime)
-{
-       if (prime > maxEratMedium_)   eratBig_.addSievingPrime(prime, segmentLow_);
-  else if (prime > maxEratSmall_) eratMedium_.addSievingPrime(prime, segmentLow_);
-  else /* (prime > maxPreSieve) */ eratSmall_.addSievingPrime(prime, segmentLow_);
+inline void Erat::addSievingPrime(uint64_t prime) {
+  if (prime > maxEratMedium_)
+    eratBig_.addSievingPrime(prime, segmentLow_);
+  else if (prime > maxEratSmall_)
+    eratMedium_.addSievingPrime(prime, segmentLow_);
+  else /* (prime > maxPreSieve) */
+    eratSmall_.addSievingPrime(prime, segmentLow_);
 }
 
-inline uint64_t Erat::getStop() const
-{
-  return stop_;
-}
+inline uint64_t Erat::getStop() const { return stop_; }
 
 /// Sieve size in KiB
-inline uint64_t Erat::getSieveSize() const
-{
-  return sieveSize_ >> 10;
-}
+inline uint64_t Erat::getSieveSize() const { return sieveSize_ >> 10; }
 
 } // namespace
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #ifndef PRINTPRIMES_HPP
 #define PRINTPRIMES_HPP
@@ -2495,18 +2259,18 @@ class Store;
 /// used to reconstruct primes and prime k-tuplets from
 /// 1 bits of the sieve array
 ///
-class PrintPrimes : public Erat
-{
+class PrintPrimes : public Erat {
 public:
-  PrintPrimes(PrimeSieve&);
+  PrintPrimes(PrimeSieve &);
   NOINLINE void sieve();
+
 private:
   uint64_t low_ = 0;
   /// Count lookup tables for prime k-tuplets
   std::vector<uint8_t> kCounts_[6];
-  counts_t& counts_;
+  counts_t &counts_;
   /// Reference to the associated PrimeSieve object
-  PrimeSieve& ps_;
+  PrimeSieve &ps_;
   void initCounts();
   void print();
   void countPrimes();
@@ -2519,187 +2283,115 @@ private:
 
 #endif
 
-
-
-
-
 // #include <primesieve/forward.hpp>
 // #include <primesieve/PreSieve.hpp>
 
 namespace {
 
-struct SmallPrime
-{
+struct SmallPrime {
   uint64_t first;
   uint64_t last;
   int index;
   string str;
 };
 
-const array<SmallPrime, 8> smallPrimes
-{{
-  { 2,  2, 0, "2" },
-  { 3,  3, 0, "3" },
-  { 5,  5, 0, "5" },
-  { 3,  5, 1, "(3, 5)" },
-  { 5,  7, 1, "(5, 7)" },
-  { 5, 11, 2, "(5, 7, 11)" },
-  { 5, 13, 3, "(5, 7, 11, 13)" },
-  { 5, 17, 4, "(5, 7, 11, 13, 17)" }
-}};
+const array<SmallPrime, 8> smallPrimes{{{2, 2, 0, "2"},
+                                        {3, 3, 0, "3"},
+                                        {5, 5, 0, "5"},
+                                        {3, 5, 1, "(3, 5)"},
+                                        {5, 7, 1, "(5, 7)"},
+                                        {5, 11, 2, "(5, 7, 11)"},
+                                        {5, 13, 3, "(5, 7, 11, 13)"},
+                                        {5, 17, 4, "(5, 7, 11, 13, 17)"}}};
 
 } // namespace
 
 namespace primesieve {
 
-PrimeSieve::PrimeSieve()
-{
+PrimeSieve::PrimeSieve() {
   int sieveSize = get_sieve_size();
   setSieveSize(sieveSize);
 }
 
 /// Used for multi-threading
-PrimeSieve::PrimeSieve(ParallelSieve* parent) :
-  flags_(parent->flags_),
-  sieveSize_(parent->sieveSize_),
-  parent_(parent)
-{ }
+PrimeSieve::PrimeSieve(ParallelSieve *parent)
+    : flags_(parent->flags_), sieveSize_(parent->sieveSize_), parent_(parent) {}
 
 PrimeSieve::~PrimeSieve() = default;
 
-void PrimeSieve::reset()
-{
+void PrimeSieve::reset() {
   counts_.fill(0);
   percent_ = -1.0;
   seconds_ = 0.0;
   sievedDistance_ = 0;
 }
 
-bool PrimeSieve::isFlag(int flag) const
-{
-  return (flags_ & flag) == flag;
-}
+bool PrimeSieve::isFlag(int flag) const { return (flags_ & flag) == flag; }
 
-bool PrimeSieve::isFlag(int first, int last) const
-{
+bool PrimeSieve::isFlag(int first, int last) const {
   int mask = (last * 2) - first;
   return (flags_ & mask) != 0;
 }
 
-bool PrimeSieve::isCountPrimes() const
-{
-  return isFlag(COUNT_PRIMES);
-}
+bool PrimeSieve::isCountPrimes() const { return isFlag(COUNT_PRIMES); }
 
-bool PrimeSieve::isPrintPrimes() const
-{
-  return isFlag(PRINT_PRIMES);
-}
+bool PrimeSieve::isPrintPrimes() const { return isFlag(PRINT_PRIMES); }
 
-bool PrimeSieve::isPrint() const
-{
+bool PrimeSieve::isPrint() const {
   return isFlag(PRINT_PRIMES, PRINT_SEXTUPLETS);
 }
 
-bool PrimeSieve::isCountkTuplets() const
-{
+bool PrimeSieve::isCountkTuplets() const {
   return isFlag(COUNT_TWINS, COUNT_SEXTUPLETS);
 }
 
-bool PrimeSieve::isPrintkTuplets() const
-{
+bool PrimeSieve::isPrintkTuplets() const {
   return isFlag(PRINT_TWINS, PRINT_SEXTUPLETS);
 }
 
-bool PrimeSieve::isStatus() const
-{
-  return isFlag(PRINT_STATUS);
-}
+bool PrimeSieve::isStatus() const { return isFlag(PRINT_STATUS); }
 
-bool PrimeSieve::isCount(int i) const
-{
-  return isFlag(COUNT_PRIMES << i);
-}
+bool PrimeSieve::isCount(int i) const { return isFlag(COUNT_PRIMES << i); }
 
-bool PrimeSieve::isPrint(int i) const
-{
-  return isFlag(PRINT_PRIMES << i);
-}
+bool PrimeSieve::isPrint(int i) const { return isFlag(PRINT_PRIMES << i); }
 
-uint64_t PrimeSieve::getStart() const
-{
-  return start_;
-}
+uint64_t PrimeSieve::getStart() const { return start_; }
 
-uint64_t PrimeSieve::getStop() const
-{
-  return stop_;
-}
+uint64_t PrimeSieve::getStop() const { return stop_; }
 
-uint64_t PrimeSieve::getDistance() const
-{
+uint64_t PrimeSieve::getDistance() const {
   if (start_ <= stop_)
     return stop_ - start_;
   else
     return 0;
 }
 
-uint64_t PrimeSieve::getCount(int i) const
-{
-  return counts_.at(i);
-}
+uint64_t PrimeSieve::getCount(int i) const { return counts_.at(i); }
 
-counts_t& PrimeSieve::getCounts()
-{
-  return counts_;
-}
+counts_t &PrimeSieve::getCounts() { return counts_; }
 
-int PrimeSieve::getSieveSize() const
-{
-  return sieveSize_;
-}
+int PrimeSieve::getSieveSize() const { return sieveSize_; }
 
-double PrimeSieve::getSeconds() const
-{
-  return seconds_;
-}
+double PrimeSieve::getSeconds() const { return seconds_; }
 
-PreSieve& PrimeSieve::getPreSieve()
-{
-  return preSieve_;
-}
+PreSieve &PrimeSieve::getPreSieve() { return preSieve_; }
 
-void PrimeSieve::setFlags(int flags)
-{
-  flags_ = flags;
-}
+void PrimeSieve::setFlags(int flags) { flags_ = flags; }
 
-void PrimeSieve::addFlags(int flags)
-{
-  flags_ |= flags;
-}
+void PrimeSieve::addFlags(int flags) { flags_ |= flags; }
 
-void PrimeSieve::setStart(uint64_t start)
-{
-  start_ = start;
-}
+void PrimeSieve::setStart(uint64_t start) { start_ = start; }
 
-void PrimeSieve::setStop(uint64_t stop)
-{
-  stop_ = stop;
-}
+void PrimeSieve::setStop(uint64_t stop) { stop_ = stop; }
 
 /// Set the size of the sieve array in KiB (kibibyte)
-void PrimeSieve::setSieveSize(int sieveSize)
-{
+void PrimeSieve::setSieveSize(int sieveSize) {
   sieveSize_ = inBetween(8, sieveSize, 4096);
   sieveSize_ = floorPow2(sieveSize_);
 }
 
-void PrimeSieve::setStatus(double percent)
-{
-  if (!parent_)
-  {
+void PrimeSieve::setStatus(double percent) {
+  if (!parent_) {
     auto old = percent_;
     percent_ = percent;
     if (isFlag(PRINT_STATUS))
@@ -2707,10 +2399,8 @@ void PrimeSieve::setStatus(double percent)
   }
 }
 
-void PrimeSieve::updateStatus(uint64_t dist)
-{
-  if (parent_)
-  {
+void PrimeSieve::updateStatus(uint64_t dist) {
+  if (parent_) {
     // This is a worker thread, so we need
     // to send the update status request
     // to the parent object which handles
@@ -2718,9 +2408,7 @@ void PrimeSieve::updateStatus(uint64_t dist)
     updateDistance_ += dist;
     if (parent_->tryUpdateStatus(updateDistance_))
       updateDistance_ = 0;
-  }
-  else
-  {
+  } else {
     sievedDistance_ += dist;
     double percent = 100;
     if (getDistance() > 0)
@@ -2732,11 +2420,9 @@ void PrimeSieve::updateStatus(uint64_t dist)
   }
 }
 
-void PrimeSieve::printStatus(double old, double current)
-{
-  int percent = (int) current;
-  if (percent > (int) old)
-  {
+void PrimeSieve::printStatus(double old, double current) {
+  int percent = (int)current;
+  if (percent > (int)old) {
     cout << '\r' << percent << '%' << flush;
     if (percent == 100)
       cout << '\n';
@@ -2744,12 +2430,9 @@ void PrimeSieve::printStatus(double old, double current)
 }
 
 /// Process small primes <= 5 and small k-tuplets <= 17
-void PrimeSieve::processSmallPrimes()
-{
-  for (auto& p : smallPrimes)
-  {
-    if (p.first >= start_ && p.last <= stop_)
-    {
+void PrimeSieve::processSmallPrimes() {
+  for (auto &p : smallPrimes) {
+    if (p.first >= start_ && p.last <= stop_) {
       if (isCount(p.index))
         counts_[p.index]++;
       if (isPrint(p.index))
@@ -2758,21 +2441,18 @@ void PrimeSieve::processSmallPrimes()
   }
 }
 
-uint64_t PrimeSieve::countPrimes(uint64_t start, uint64_t stop)
-{
+uint64_t PrimeSieve::countPrimes(uint64_t start, uint64_t stop) {
   sieve(start, stop, COUNT_PRIMES);
   return getCount(0);
 }
 
-void PrimeSieve::sieve(uint64_t start, uint64_t stop)
-{
+void PrimeSieve::sieve(uint64_t start, uint64_t stop) {
   setStart(start);
   setStop(stop);
   sieve();
 }
 
-void PrimeSieve::sieve(uint64_t start, uint64_t stop, int flags)
-{
+void PrimeSieve::sieve(uint64_t start, uint64_t stop, int flags) {
   setStart(start);
   setStop(stop);
   setFlags(flags);
@@ -2782,8 +2462,7 @@ void PrimeSieve::sieve(uint64_t start, uint64_t stop, int flags)
 /// Sieve the primes and prime k-tuplets (twin primes,
 /// prime triplets, ...) in [start, stop].
 ///
-void PrimeSieve::sieve()
-{
+void PrimeSieve::sieve() {
   reset();
 
   if (start_ > stop_)
@@ -2795,8 +2474,7 @@ void PrimeSieve::sieve()
   if (start_ <= 5)
     processSmallPrimes();
 
-  if (stop_ >= 7)
-  {
+  if (stop_ >= 7) {
     PrintPrimes printPrimes(*this);
     printPrimes.sieve();
   }
@@ -2809,19 +2487,14 @@ void PrimeSieve::sieve()
 
 } // namespace
 
-
-
-
-
 // #include <isqrt.hpp>
 namespace primesum {
 
 /// Generate a vector with the primes <= max.
 /// The primes vector uses 1-indexing i.e. primes[1] = 2.
 ///
-vector<int32_t> generate_primes(int64_t max)
-{
-  vector<int32_t> primes = { 0 };
+vector<int32_t> generate_primes(int64_t max) {
+  vector<int32_t> primes = {0};
   primesieve::generate_primes(max, &primes);
   return primes;
 }
@@ -2829,9 +2502,8 @@ vector<int32_t> generate_primes(int64_t max)
 /// Generate a vector with the first n primes.
 /// The primes vector uses 1-indexing i.e. primes[1] = 2.
 ///
-vector<int32_t> generate_n_primes(int64_t n)
-{
-  vector<int32_t> primes = { 0 };
+vector<int32_t> generate_n_primes(int64_t n) {
+  vector<int32_t> primes = {0};
   primesieve::generate_n_primes(n, &primes);
   return primes;
 }
@@ -2839,8 +2511,7 @@ vector<int32_t> generate_n_primes(int64_t n)
 /// Generate a vector with the prime counts <= max
 /// using the sieve of Eratosthenes
 ///
-vector<int32_t> generate_pi(int64_t max)
-{
+vector<int32_t> generate_pi(int64_t max) {
   int64_t sqrt = isqrt(max);
   int64_t size = max + 1;
   vector<char> sieve(size, 1);
@@ -2853,8 +2524,7 @@ vector<int32_t> generate_pi(int64_t max)
   vector<int32_t> pi(size, 0);
   int32_t pix = 0;
 
-  for (int64_t i = 2; i < size; i++)
-  {
+  for (int64_t i = 2; i < size; i++) {
     pix += sieve[i];
     pi[i] = pix;
   }
@@ -2866,25 +2536,21 @@ vector<int32_t> generate_pi(int64_t max)
 /// This implementation is based on code by Rick Sladkey:
 /// https://mathoverflow.net/q/99545
 ///
-vector<int32_t> generate_moebius(int64_t max)
-{
+vector<int32_t> generate_moebius(int64_t max) {
   int64_t sqrt = isqrt(max);
   int64_t size = max + 1;
   vector<int32_t> mu(size, 1);
 
-  for (int64_t i = 2; i <= sqrt; i++)
-  {
-    if (mu[i] == 1)
-    {
+  for (int64_t i = 2; i <= sqrt; i++) {
+    if (mu[i] == 1) {
       for (int64_t j = i; j < size; j += i)
-        mu[j] *= (int32_t) -i;
+        mu[j] *= (int32_t)-i;
       for (int64_t j = i * i; j < size; j += i * i)
         mu[j] = 0;
     }
   }
 
-  for (int64_t i = 2; i < size; i++)
-  {
+  for (int64_t i = 2; i < size; i++) {
     if (mu[i] == i)
       mu[i] = 1;
     else if (mu[i] == -i)
@@ -2901,8 +2567,7 @@ vector<int32_t> generate_moebius(int64_t max)
 /// Generate a vector with the least prime factors
 /// of the integers <= max
 ///
-vector<int32_t> generate_lpf(int64_t max)
-{
+vector<int32_t> generate_lpf(int64_t max) {
   int64_t sqrt = isqrt(max);
   int64_t size = max + 1;
   vector<int32_t> lpf(size, 1);
@@ -2911,11 +2576,11 @@ vector<int32_t> generate_lpf(int64_t max)
     if (lpf[i] == 1)
       for (int64_t j = i * i; j < size; j += i)
         if (lpf[j] == 1)
-          lpf[j] = (int32_t) i;
+          lpf[j] = (int32_t)i;
 
   for (int64_t i = 2; i < size; i++)
     if (lpf[i] == 1)
-      lpf[i] = (int32_t) i;
+      lpf[i] = (int32_t)i;
 
   // phi(x / 1, c) contributes to the sum in the
   // Lagarias-Miller-Odlyzko prime counting algorithm,
@@ -2938,21 +2603,14 @@ namespace {
 /// Cache phi(x, a) results if a < MAX_A
 const int MAX_A = 100;
 
-class PhiCache
-{
+class PhiCache {
 public:
-  PhiCache(vector<int32_t>& primes,
-           PiTable& pi) :
-    primes_(primes),
-    pi_(pi)
-  { }
+  PhiCache(vector<int32_t> &primes, PiTable &pi) : primes_(primes), pi_(pi) {}
 
   /// Calculate phi(x, a) using the recursive formula:
   /// phi(x, a) = phi(x, a - 1) - phi(x / primes_[a], a - 1)
   ///
-  template <int SIGN>
-  int64_t phi(int64_t x, int64_t a)
-  {
+  template <int SIGN> int64_t phi(int64_t x, int64_t a) {
     if (x <= primes_[a])
       return SIGN;
     else if (is_phi_tiny(a))
@@ -2981,8 +2639,7 @@ public:
     sum += (pi_sqrtx - a) * SIGN;
     sum += phi_tiny(x, c) * SIGN;
 
-    for (int64_t i = c; i < pi_sqrtx; i++)
-    {
+    for (int64_t i = c; i < pi_sqrtx; i++) {
       int64_t x2 = fast_div(x, primes_[i + 1]);
 
       if (is_pix(x2, i))
@@ -2999,56 +2656,48 @@ public:
 private:
   using T = uint16_t;
   array<vector<T>, MAX_A> cache_;
-  vector<int32_t>& primes_;
-  PiTable& pi_;
+  vector<int32_t> &primes_;
+  PiTable &pi_;
 
-  void update_cache(uint64_t x, uint64_t a, int64_t sum)
-  {
-    if (a < cache_.size() &&
-        x <= numeric_limits<T>::max())
-    {
+  void update_cache(uint64_t x, uint64_t a, int64_t sum) {
+    if (a < cache_.size() && x <= numeric_limits<T>::max()) {
       if (x >= cache_[a].size())
         cache_[a].resize(x + 1, 0);
 
-      cache_[a][x] = (T) abs(sum);
+      cache_[a][x] = (T)abs(sum);
     }
   }
 
-  bool is_pix(int64_t x, int64_t a) const
-  {
-    return x < pi_.size() &&
-           x < isquare(primes_[a + 1]);
+  bool is_pix(int64_t x, int64_t a) const {
+    return x < pi_.size() && x < isquare(primes_[a + 1]);
   }
 
-  bool is_cached(uint64_t x, uint64_t a) const
-  {
-    return a < cache_.size() && 
-           x < cache_[a].size() && 
-           cache_[a][x];
+  bool is_cached(uint64_t x, uint64_t a) const {
+    return a < cache_.size() && x < cache_[a].size() && cache_[a][x];
   }
 };
 
 } // namespace
 
 namespace primesum {
-int64_t phi(int64_t x, int64_t a, int threads)
-{
-  if (x < 1) return 0;
-  if (a > x) return 1;
-  if (a < 1) return x;
+int64_t phi(int64_t x, int64_t a, int threads) {
+  if (x < 1)
+    return 0;
+  if (a > x)
+    return 1;
+  if (a < 1)
+    return x;
 
   int64_t sum = 0;
 
   if (is_phi_tiny(a))
     sum = phi_tiny(x, a);
-  else
-  {
+  else {
     auto primes = generate_n_primes(a);
 
     if (primes[a] >= x)
       sum = 1;
-    else
-    {
+    else {
       // use large pi(x) lookup table for speed
       int64_t sqrtx = isqrt(x);
       PiTable pi(max(sqrtx, primes[a]));
@@ -3061,7 +2710,8 @@ int64_t phi(int64_t x, int64_t a, int threads)
 
       sum = phi_tiny(x, c) - a + pi_sqrtx;
 
-      #pragma omp parallel for num_threads(threads) schedule(dynamic, 16) firstprivate(cache) reduction(+: sum)
+#pragma omp parallel for num_threads(threads)                                  \
+    schedule(dynamic, 16) firstprivate(cache) reduction(+ : sum)
       for (int64_t i = c; i < pi_sqrtx; i++)
         sum += cache.phi<-1>(x / primes[i + 1], i);
     }
@@ -3072,8 +2722,6 @@ int64_t phi(int64_t x, int64_t a, int threads)
 
 } // namespace
 
-
-
 // #include <primesum-internal.hpp>
 // #include <imath.hpp>
 
@@ -3083,8 +2731,7 @@ namespace primesum {
 /// Run time: O(x)
 /// Memory usage: O(x^(1/2))
 ///
-int64_t pi_legendre(int64_t x, int threads)
-{
+int64_t pi_legendre(int64_t x, int threads) {
   if (x < 2)
     return 0;
 
@@ -3102,7 +2749,7 @@ int256_t pi_lmo1(int128_t x) {
 
   int64_t y = iroot<3>(x);
   int64_t pi_y = pi_legendre(y, 1);
-  //int64_t c = PhiTiny::get_c(y);
+  // int64_t c = PhiTiny::get_c(y);
   // int256_t S1 = 0;
   // int256_t S2 = 0;
 

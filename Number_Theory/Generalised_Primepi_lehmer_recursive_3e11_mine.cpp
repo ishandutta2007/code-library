@@ -117,12 +117,12 @@ void init_tinyphi(int PHI_N, int PHI_M) {
       dp[n][m] = dp[n][m - 1];
       if (n >= (ll)primes[m - 1])
         dp[n][m] -= (ll)(dp[n / primes[m - 1]][m - 1]) * func(primes[m - 1], k);
-//       if (!(0 <= dp[n][m] and dp[n][m] <= (ll)n * (n + 1) / 2))
-//         cout << "n<<m=" << n << " " << m << endl;
+      //       if (!(0 <= dp[n][m] and dp[n][m] <= (ll)n * (n + 1) / 2))
+      //         cout << "n<<m=" << n << " " << m << endl;
     }
   }
 }
-  
+
 void init(int k) {
   sieve(MAXN - 1, k);
   init_tinyphi(PHI_N, PHI_M);
