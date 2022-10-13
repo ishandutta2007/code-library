@@ -77,8 +77,9 @@ int main() {
   cout << m << endl;
 
   auto lrlp = longest_run_length(m);
-  cout << lrlp.first << " : " << lrlp.second.first << "(starting index 0-indexed), "
-       << lrlp.second.second << "(run-length)" << endl;
+  cout << lrlp.first << " : " << lrlp.second.first
+       << "(starting index 0-indexed), " << lrlp.second.second << "(run-length)"
+       << endl;
 
   auto n = decode(m);
   cout << n << endl;
