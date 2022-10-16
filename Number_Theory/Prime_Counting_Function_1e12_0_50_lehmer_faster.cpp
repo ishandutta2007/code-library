@@ -10,7 +10,8 @@ using namespace std;
 // n = 1e+10 : 455052511(time: 0.00434s)
 // n = 1e+11 : 4118054813(time: 0.058318s)
 // n = 1e+12 : 37607912018(time: 0.53861s)
-// n = 1e+13 : 346065536839(time: 6.10802s)const int N = 3e5 + 9;
+// n = 1e+13 : 346065536839(time: 6.10802s)
+const int N = 3e5 + 9;
 using ll = long long;
 
 namespace pcf {
