@@ -6,14 +6,14 @@ using namespace std;
 const int MAX = 1000005;
 const int MODULO = 1000000007;
 
-int power(int a, long long b, int modulo) {
-  if (b == 0)
-    return 1 % modulo;
-  if (b & 1)
-    return 1LL * a * power(a, b - 1, modulo) % modulo;
-  int half = power(a, b >> 1, modulo);
-  return 1LL * half * half % modulo;
-}
+// int power(int a, long long b, int modulo) {
+//   if (b == 0)
+//     return 1 % modulo;
+//   if (b & 1)
+//     return 1LL * a * power(a, b - 1, modulo) % modulo;
+//   int half = power(a, b >> 1, modulo);
+//   return 1LL * half * half % modulo;
+// }
 
 struct matrix {
   int a[2][2];

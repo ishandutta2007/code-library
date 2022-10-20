@@ -1,65 +1,26 @@
-import sys
-from math import sqrt
+import math
 
-# continued fraction of sqrt(x)
-# there will always be a cycle of size <= 2 * sqrt(x) in the continued fraction
-def get_continued_fraction(ans, x):
-    a0 = int(sqrt(x))
-    n, m, a = 1, 0, 0
-    f = True
-    if a0 * a0 != x:
-        while a != 2 * a0:
-            m = n * a - m
-            n = (x - m * m) / n
-            a = int((a0 + m) / n)
-            if not f:
-                ans.append(a)
-            f = False
+def solvePell(n):
+    x = int(math.sqrt(n))
+    y, z, r = x, 1, x << 1
+    e1, e2 = 1, 0
+    f1, f2 = 0, 1
+    while True:
+        y = r * z - y
+        z = (n - y * y) // z
+        r = (x + y) // z
 
+        e1, e2 = e2, e1 + e2 * r
+        f1, f2 = f2, f1 + f2 * r
 
-# generating (x, y)
-def gen(a, x, y, i, cur):
-    if i >= cur:
-        return x * a[i] + 1, a[i]
+        a, b = f2 * x + e2, f2
+        if a * a - n * b * b == 1:
+            return a, b
+
+for n in range(1,100):
+    sqn = int(math.sqrt(n))
+    if sqn*sqn == n:
+        print("x^2 - %3d * y^2 = 1 for x = %27d and y = %25d" % (n, x, y))
     else:
-        rx, ry = gen(a, y, a[i + 1], i + 1, cur)
-        x = x * rx + ry
-        y = rx
-        return x, y
-
-
-# generate the solutions to the equation x^2 - n*y^2 = 1
-# (1, 0) is always a solution, so try to generate a solution with positive x and y
-# O(sqrt(n)) but solutions can be too large
-# when n > 1e6 it gets RecursionError
-# when n is a square or n <= 0, it outputs (1, 0) only
-def main():
-    n = int(input())
-    a = []
-    if n >= 0:
-        get_continued_fraction(a, n)
-    cycle = len(a) - 1
-    p, q = 1, 0
-    if cycle > 0:
-        if cycle % 2 == 0:
-            p, q = gen(a, a[0], a[1], 1, cycle - 2)
-        else:
-            a += a[1:] + a[1:]
-            p, q = gen(a, a[0], a[1], 1, 2 * cycle - 1)
-
-    # printing first k solutions with increasing (x, y)
-    k = 5
-    x, y = p, q
-    print(x, y)
-    lx, ly = x, y
-    for _ in range(k - 1):
-        cx = lx * x + n * ly * y
-        cy = lx * y + ly * x
-        print(cx, cy)
-        lx, ly = cx, cy
-
-
-if __name__ == "__main__":
-    main()
-
-# https://brilliant.org/wiki/quadratic-diophantine-equations-pells-equation/
+        x, y = solvePell(n)
+        print("x^2 - %3d * y^2 = 1 No solution" % (x, y))
