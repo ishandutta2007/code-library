@@ -4,7 +4,7 @@ using ll = long long;
 
 int digs[] = {2, 3, 5, 7};
 
-ll get_next_number(ll num, int first = true) {
+ll get_next_number(ll num) {
   // cout<<endl<<num<<endl;
   int ld = num % 10;
   bool exists = find(begin(digs), end(digs), ld) != end(digs);
@@ -15,19 +15,17 @@ ll get_next_number(ll num, int first = true) {
       exists = find(begin(digs), end(digs), ld) != end(digs);
     }
   } else {
-    if (first == true) {
-      if (ld == 2)
-        num++;
-      else if (ld == 3 or ld == 5)
-        num += 2;
-      else if (ld == 7)
-        num += 5;
-    }
+    if (ld == 2)
+      num++;
+    else if (ld == 3 or ld == 5)
+      num += 2;
+    else if (ld == 7)
+      num += 5;
   }
   int pd = (num % 100) / 10;
   exists = find(begin(digs), end(digs), pd) != end(digs);
   if (!exists) {
-    return 10 * get_next_number(num / 10, false) + 2;
+    return 10 * get_next_number(num / 10) + 2;
   }
   return num;
 }
