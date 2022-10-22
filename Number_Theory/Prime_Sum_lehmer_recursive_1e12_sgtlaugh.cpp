@@ -1,4 +1,10 @@
 /***
+ *
+ * Prime sum function in sublinear time with the Meissel-Lehmer algorithm
+ *
+ * The function prime_sum(n) returns the number of primes not exceeding n
+ * It is just a templatized wrapper of lehmer(n)
+ *
  * Complexity: Roughly ~O(n^(2/3))
  * Credits: sgtlaugh
 ***/
@@ -6,8 +12,17 @@
 // n = 1e+11 : 4118094746(time: 0.85s)
 // n = 1e+12 : 37607404117(time: 1.05s)
 // n = 1e+13 : 346029867905(time: 2.86s)
+
+// Pre-process time = 0.883
+
+// n = 1e+10 : 2220822432581729238(time: 0.882764s)
+// n = 1e+11 : 201467077743744681014(time: 0.896576s)
+// n = 1e+12 : 18435588552550705911377(time: 1.071478s)
+// n = 1e+13 : 1699246443377779418889494(time: 3.15304s)
 #include <bits/stdc++.h>
+
 using namespace std;
+using ll = long long;
 using i128 = __int128;
 
 std::ostream &operator<<(std::ostream &dest, __int128_t value) {
@@ -34,7 +49,7 @@ std::ostream &operator<<(std::ostream &dest, __int128_t value) {
 }
 /// Magic constants, optimized to answer prime counting queries for n=10^13 but
 /// can be tweaked
-/// Reduce MAXN and MAXM to sacrifice time for memory
+// Reduce MAXN and MAXM to sacrifice time for memory
 
 const int MAXN = 50;
 const int MAXM = 2000010;
@@ -43,26 +58,11 @@ const int MAXV = 20000010;
 const auto fast_div = [](const uint64_t &a, const uint32_t &b) -> uint64_t {
   return double(a) / b + 1e-9;
 };
-
 int pi[MAXV];
 uint64_t pi_sum[MAXV], dp[MAXN][MAXM];
 
 vector<int> primes;
 bitset<MAXV> is_prime;
-
-inline uint64_t func(int p, int k) {
-  if (k == 0)
-    return 1;
-  else if (k == 1)
-    return p;
-}
-
-inline i128 accfunc(uint64_t n, int k) {
-  if (k == 0)
-    return n;
-  else if (k == 1)
-    return (i128)n * (i128)(n + 1) / 2;
-}
 
 void sieve() {
   is_prime[2] = true;
@@ -80,7 +80,7 @@ void sieve() {
     pi[i] = pi[i - 1], pi_sum[i] = pi_sum[i - 1];
     if (is_prime[i]) {
       primes.push_back(i);
-      pi[i]++, pi_sum[i] += func(i, 1); // i;
+      pi[i]++, pi_sum[i] += i;
     }
   }
 }
@@ -88,12 +88,10 @@ void sieve() {
 void gen() {
   sieve();
   for (int i = 0; i < MAXM; i++)
-    dp[0][i] = (uint64_t)accfunc(i, 1); // i * (i + 1) / 2;
+    dp[0][i] = (uint64_t)i * (i + 1) / 2;
   for (int i = 1; i < MAXN; i++) {
     for (int j = 1; j < MAXM; j++) {
-      dp[i][j] =
-          dp[i - 1][j] -
-          dp[i - 1][fast_div(j, primes[i])] * func(primes[i], 1); // primes[i];
+      dp[i][j] = dp[i - 1][j] - dp[i - 1][fast_div(j, primes[i])] * primes[i];
     }
   }
 }
@@ -102,7 +100,7 @@ typedef uint64_t int128;
 
 template <typename T> T phi(T m, int n) {
   if (!n)
-    return (T)accfunc(m, 1); // m * (m + 1) / 2;
+    return (T)m * (m + 1) / 2;
   if (n < MAXN && m < MAXM)
     return dp[n][m];
   if (m < MAXV && (uint64_t)primes[n] * primes[n] >= m)
@@ -110,7 +108,7 @@ template <typename T> T phi(T m, int n) {
   return phi(m, n - 1) - phi((T)fast_div(m, primes[n]), n - 1) * primes[n];
 }
 
-template <typename T> T lehmer(T n, int k) {
+template <typename T> T lehmer(T n) {
   if (n < MAXV)
     return pi_sum[n];
 
@@ -118,7 +116,7 @@ template <typename T> T lehmer(T n, int k) {
   T res = phi(n, pi[c]) + pi_sum[c] - 1;
 
   for (int i = pi[c] + 1; i <= pi[s]; i++) {
-    T w = lehmer(fast_div(n, primes[i]), k) - pi_sum[primes[i] - 1];
+    T w = lehmer(fast_div(n, primes[i])) - pi_sum[primes[i] - 1];
     res -= w * primes[i];
   }
 
@@ -127,14 +125,8 @@ template <typename T> T lehmer(T n, int k) {
 
 __int128 prime_sum(long long n) {
   if (n <= UINT_MAX)
-    return lehmer((uint64_t)n, 1);
-  return lehmer((__int128)n, 1);
-}
-
-__int128 prime_pi(long long n) {
-  if (n <= UINT_MAX)
-    return lehmer((uint64_t)n, 0);
-  return lehmer((__int128)n, 0);
+    return lehmer((uint64_t)n);
+  return lehmer((__int128)n);
 }
 
 int main() {
@@ -142,15 +134,15 @@ int main() {
   gen();
   printf("Pre-process time = %0.3f\n\n",
          (clock() - start) / (double)CLOCKS_PER_SEC); /// 0.940
+
   start = clock();
 
   assert(prime_sum(1000) == 76127);
-  assert(prime_sum(1e6) == 37550402023);
-  assert(prime_sum(1e7) == 3203324994356);
-  assert(prime_sum(1e8) == 279209790387276);
+  assert(prime_sum(1000000) == 37550402023);
   assert(prime_sum(1e9) == 24739512092254535LL);
   assert(prime_sum(1e10) == 2220822432581729238LL);
   assert(prime_sum(UINT_MAX) == 425649736193687430LL);
+
   assert(prime_sum(1e11) ==
          (__int128)603698 * 333721625289043LL); /// 201467077743744681014
   assert(prime_sum(1e12) ==
@@ -159,7 +151,16 @@ int main() {
          (__int128)10166702 *
              167138413556114797LL); /// 1699246443377779418889494
 
-  printf("\nCalculation time = %0.3f\n",
-         (clock() - start) / (double)CLOCKS_PER_SEC); /// 2.130
+  // printf("\nCalculation time = %0.3f\n", (clock()-start) /
+  // (double)CLOCKS_PER_SEC);  /// 2.130
+
+  auto start_time = clock();
+  for (ll n = 10000000000; n <= 10000000000000; n *= 10) {
+    start_time = clock();
+    i128 res = prime_sum(n);
+    cout << "n = " << (double)n << " : " << res
+         << "(time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s)"
+         << endl;
+  }
   return 0;
 }
