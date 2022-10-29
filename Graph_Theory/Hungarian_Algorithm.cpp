@@ -19,7 +19,7 @@ struct Hungarian {
     for (int i = 1; i <= n; ++i) {
       fy[i] = l[i] = r[i] = 0;
       for (int j = 1; j <= n; ++j)
-        c[i][j] = inf;
+        c[i][j] = inf;// make it 0 for maximum cost matching (not necessarily with max count of matching)
     }
   }
   void add_edge(int u, int v, long long cost) { c[u][v] = min(c[u][v], cost); }

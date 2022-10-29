@@ -5,10 +5,10 @@ using T = long long;
 const int MAX_INDEPENDENT_SET_SIZE = 120;
 
 struct GroundSetElement {
-  int color;
-  T vector;
-  bool in_independent_set; // if this element is in the IS
-  int independent_set_position; // the index of this element in the IS
+	int color;
+	T vector;
+	bool in_independent_set; // if this element is in the IS
+	int independent_set_position; // the index of this element in the IS
 };
 
 vector<GroundSetElement> elements;
@@ -123,59 +123,59 @@ bool augment() {
   // swapping the oracles might run faster
   auto oracle1 = colorful_oracle;
   auto oracle2 = linear_oracle;
-  oracle1.prepare();
-  oracle2.prepare();
+	oracle1.prepare();
+	oracle2.prepare();
 
-  const int SOURCE = -1;
-  const int NOT_VISITED = -2;
-  const int NOT_FOUND = -3;
+	const int SOURCE = -1;
+	const int NOT_VISITED = -2;
+	const int NOT_FOUND = -3;
 
   int sz = elements.size();
   vector<int> par(sz, NOT_VISITED);
-  int endpoint = NOT_FOUND;
-  queue<int> q;
-  for (int i = 0; i < sz; i++) {
-    if (oracle1.can_insert(i)) {
-      par[i] = SOURCE;
-      q.push(i);
-    }
-  }
-  while (q.size()) {
-    int cur = q.front();
-    q.pop();
-    if (elements[cur].in_independent_set) {
-      for (int to = 0; to < sz; to++) {
-        if (par[to] != NOT_VISITED) continue;
-        if (!oracle1.can_exchange(to, cur)) continue;
-        par[to] = cur;
-        q.push(to);
-      }
-    } else {
-      if (oracle2.can_insert(cur)) {
-        endpoint = cur;
-        break;
-      }
-      for (auto to : independent_set) {
-        if (par[to] != NOT_VISITED) continue;
-        if (!oracle2.can_exchange(cur, to)) continue;
-        par[to] = cur;
-        q.push(to);
-      }
-    }
-  }
-  if (endpoint == NOT_FOUND) return false;
-  do {
-    elements[endpoint].in_independent_set ^= true;
-    endpoint = par[endpoint];
-  } while (endpoint != SOURCE);
-  independent_set.clear();
-  for (int i = 0; i < sz; i++) {
-    if (elements[i].in_independent_set) {
-      elements[i].independent_set_position = independent_set.size();
-      independent_set.push_back(i);
-    }
-  }
-  return true;
+	int endpoint = NOT_FOUND;
+	queue<int> q;
+	for (int i = 0; i < sz; i++) {
+		if (oracle1.can_insert(i)) {
+			par[i] = SOURCE;
+			q.push(i);
+		}
+	}
+	while (q.size()) {
+		int cur = q.front();
+		q.pop();
+		if (elements[cur].in_independent_set) {
+			for (int to = 0; to < sz; to++) {
+				if (par[to] != NOT_VISITED) continue;
+				if (!oracle1.can_exchange(to, cur)) continue;
+				par[to] = cur;
+				q.push(to);
+			}
+		} else {
+			if (oracle2.can_insert(cur)) {
+				endpoint = cur;
+				break;
+			}
+			for (auto to : independent_set) {
+				if (par[to] != NOT_VISITED) continue;
+				if (!oracle2.can_exchange(cur, to)) continue;
+				par[to] = cur;
+				q.push(to);
+			}
+		}
+	}
+	if (endpoint == NOT_FOUND) return false;
+	do {
+		elements[endpoint].in_independent_set ^= true;
+		endpoint = par[endpoint];
+	} while (endpoint != SOURCE);
+	independent_set.clear();
+	for (int i = 0; i < sz; i++) {
+		if (elements[i].in_independent_set) {
+			elements[i].independent_set_position = independent_set.size();
+			independent_set.push_back(i);
+		}
+	}
+	return true;
 }
 
 // returns the largest subset of elements that is independent for both matroids
@@ -202,9 +202,9 @@ vector<int> matriod_intersection(vector<GroundSetElement> _elements) {
 
 
 int32_t main() {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-  int n; cin >> n;
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	int n; cin >> n;
   vector<GroundSetElement> v;
   for (int i = 1; i <= n; i++) {
     v.emplace_back();
@@ -231,7 +231,7 @@ int32_t main() {
   for (int i = n; i < elements.size(); i++) {
     if (elements[i].in_independent_set) cout << elements[i].vector << "\n";
   }
-  return 0;
+	return 0;
 }
 // https://codeforces.com/blog/entry/69287
 // https://codeforces.com/gym/102156/problem/D

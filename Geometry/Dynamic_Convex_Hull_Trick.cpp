@@ -58,7 +58,8 @@ struct CHT : public multiset<line> {
       erase(prev(y));
   }
   ll query(ll x) {
-    assert(!empty()) auto l = *lower_bound((line){x, inf});
+    assert(!empty());
+     auto l = *lower_bound((line){x, inf});
     return l.m * x + l.b;
   }
 };
