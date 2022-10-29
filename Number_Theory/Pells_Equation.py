@@ -1,7 +1,10 @@
 import math
 
+
 def solvePell(n):
     x = int(math.sqrt(n))
+    if x * x == n:
+        return -1, -1
     y, z, r = x, 1, x << 1
     e1, e2 = 1, 0
     f1, f2 = 0, 1
@@ -17,10 +20,7 @@ def solvePell(n):
         if a * a - n * b * b == 1:
             return a, b
 
-for n in range(1,100):
-    sqn = int(math.sqrt(n))
-    if sqn*sqn == n:
-        print("x^2 - %3d * y^2 = 1 for x = %27d and y = %25d" % (n, x, y))
-    else:
-        x, y = solvePell(n)
-        print("x^2 - %3d * y^2 = 1 No solution" % (x, y))
+
+for D in range(1, 100):
+    x, y = solvePell(D)
+    print(x, y)

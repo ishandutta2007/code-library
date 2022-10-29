@@ -16,13 +16,6 @@ using namespace std;
 // result: 346065536839
 // time: 0.8755s
 using ll = long long;
-using ld = long double;
-using uint = unsigned int;
-using ull = unsigned long long;
-template <typename T> using pair2 = pair<T, T>;
-using pii = pair<int, int>;
-using pli = pair<ll, int>;
-using pll = pair<ll, ll>;
 
 int isqrt(ll n) { return sqrtl(n); }
 
