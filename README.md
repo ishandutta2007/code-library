@@ -38,7 +38,9 @@ https://sites.google.com/site/indy256/algo_cpp
 
 # Steps to merge from upstream:
 
+```
 git remote add upstream https://github.com/ShahjalalShohag/code-library.git
 git fetch upstream
 git checkout master
 git merge upstream/master
+```
