@@ -21,4 +21,3 @@ std::ostream &operator<<(std::ostream &dest, __int128_t value) {
   }
   return dest;
 }
-

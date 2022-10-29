@@ -1,21 +1,18 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // https://codeforces.com/blog/entry/108053
 // for a set of n elements S, computes the basis of the set S
 // any element of S will be representable using the elements of the basis.
 // gcd(basis[i], basis[j]) == 1 for  all i < j
-// all x * y, x / y, gcd(x, y) and lcm(x, y) for x in S, y in S will also be representable
+// all x * y, x / y, gcd(x, y) and lcm(x, y) for x in S, y in S will also be
+// representable
 // this also holds for all subsets of S
 // basis size = n * log_log(A) where A = max(S)
 // takes O(n^2 log_A) time to build the whole basis
-template<typename T>
-T gcd(T a, T b) {
-  return b == 0 ? a : gcd(b, a % b);
-}
-template<typename T>
-struct PrimeBasis {
-  void reduce_pair(T& x, T& y) {
+template <typename T> T gcd(T a, T b) { return b == 0 ? a : gcd(b, a % b); }
+template <typename T> struct PrimeBasis {
+  void reduce_pair(T &x, T &y) {
     bool to_swap = 0;
     if (x > y) {
       to_swap ^= 1;
@@ -28,18 +25,22 @@ struct PrimeBasis {
         swap(x, y);
       }
     }
-    if (to_swap) swap(x, y);
+    if (to_swap)
+      swap(x, y);
   }
   vector<T> basis;
   void solve_inner(int pos, T &val) {
-    while (basis[pos] % val == 0) basis[pos] /= val;
+    while (basis[pos] % val == 0)
+      basis[pos] /= val;
     vector<T> curr_basis = {basis[pos], val};
     int ptr = 1;
     while (ptr < curr_basis.size()) {
       for (int i = 0; i < ptr; i++) {
         reduce_pair(curr_basis[i], curr_basis[ptr]);
-        if (curr_basis[ptr] == 1) break;
-        if (curr_basis[i] == 1) break;
+        if (curr_basis[ptr] == 1)
+          break;
+        if (curr_basis[i] == 1)
+          break;
         T g = gcd(curr_basis[ptr], curr_basis[i]);
         if (g > 1) {
           curr_basis[ptr] /= g;
@@ -51,7 +52,9 @@ struct PrimeBasis {
     }
     basis[pos] = curr_basis[0];
     val = curr_basis[1];
-    for (int i = 2; i < curr_basis.size(); i++) if (curr_basis[i] > 1) basis.push_back(curr_basis[i]);
+    for (int i = 2; i < curr_basis.size(); i++)
+      if (curr_basis[i] > 1)
+        basis.push_back(curr_basis[i]);
     if (basis[pos] == 1) {
       swap(basis[pos], basis.back());
       basis.pop_back();
@@ -65,10 +68,13 @@ struct PrimeBasis {
         basis.pop_back();
         break;
       }
-      if (val == 1) return;
-      if (gcd(basis[i], val) > 1) solve_inner(i, val);
+      if (val == 1)
+        return;
+      if (gcd(basis[i], val) > 1)
+        solve_inner(i, val);
     }
-    if (val > 1) basis.push_back(val);
+    if (val > 1)
+      basis.push_back(val);
   }
   void verify_basis() {
     for (int i = 0; i < basis.size(); i++) {
@@ -79,7 +85,8 @@ struct PrimeBasis {
   }
   void verify_element(T x) {
     for (auto &k : basis) {
-      while (x % k == 0) x /= k;
+      while (x % k == 0)
+        x /= k;
     }
     assert(x == 1);
   }
@@ -104,11 +111,13 @@ using ll = long long;
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   vector<ll> a(n);
   PrimeBasis<ll> B;
   for (int i = 0; i < n; i++) {
-    ll x; cin >> x;
+    ll x;
+    cin >> x;
     B.add_element(x);
     a[i] = x;
   }
@@ -120,10 +129,11 @@ int32_t main() {
   while (!v.empty()) {
     bool found = false;
     for (int i = 0; i < v.size(); i++) {
-      auto [fac, x] = v[i];
+      auto[fac, x] = v[i];
       vector<int> cur = vector<int>(B.basis.size(), 0);
       for (int j = 0; j < v.size(); j++) {
-        if (i == j) continue;
+        if (i == j)
+          continue;
         cur = lcm(cur, v[j].first);
       }
       if (cur != lcm(cur, fac)) {
@@ -140,7 +150,7 @@ int32_t main() {
   }
   reverse(ans.begin(), ans.end());
   cout << "Yes\n";
-  for (auto x: ans) {
+  for (auto x : ans) {
     cout << x << ' ';
   }
   cout << '\n';

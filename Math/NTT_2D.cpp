@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1 << 13;
@@ -8,31 +8,41 @@ using Mat = vector<vector<int>>;
 int lim, rev[N], w[N], wn[N], inv_lim;
 void reduce(int &x) { x = (x + mod) % mod; }
 int POW(int x, int y, int ans = 1) {
-  for (; y; y >>= 1, x = (long long) x * x % mod) if (y & 1) ans = (long long) ans * x % mod;
+  for (; y; y >>= 1, x = (long long)x * x % mod)
+    if (y & 1)
+      ans = (long long)ans * x % mod;
   return ans;
 }
 void precompute(int len) {
-  lim = wn[0] = 1; int s = -1;
-  while (lim < len) lim <<= 1, ++s;
-  for (int i = 0; i < lim; ++i) rev[i] = rev[i >> 1] >> 1 | (i & 1) << s;
+  lim = wn[0] = 1;
+  int s = -1;
+  while (lim < len)
+    lim <<= 1, ++s;
+  for (int i = 0; i < lim; ++i)
+    rev[i] = rev[i >> 1] >> 1 | (i & 1) << s;
   const int g = POW(root, (mod - 1) / lim);
   inv_lim = POW(lim, mod - 2);
-  for (int i = 1; i < lim; ++i) wn[i] = (long long) wn[i - 1] * g % mod;
+  for (int i = 1; i < lim; ++i)
+    wn[i] = (long long)wn[i - 1] * g % mod;
 }
 void ntt(vector<int> &a, int typ) {
-  for (int i = 0; i < lim; ++i) if (i < rev[i]) swap(a[i], a[rev[i]]);
+  for (int i = 0; i < lim; ++i)
+    if (i < rev[i])
+      swap(a[i], a[rev[i]]);
   for (int i = 1; i < lim; i <<= 1) {
-    for (int j = 0, t = lim / i / 2; j < i; ++j) w[j] = wn[j * t];
+    for (int j = 0, t = lim / i / 2; j < i; ++j)
+      w[j] = wn[j * t];
     for (int j = 0; j < lim; j += i << 1) {
       for (int k = 0; k < i; ++k) {
-        const int x = a[k + j], y = (long long) a[k + j + i] * w[k] % mod;
+        const int x = a[k + j], y = (long long)a[k + j + i] * w[k] % mod;
         reduce(a[k + j] += y - mod), reduce(a[k + j + i] = x - y);
       }
     }
   }
   if (!typ) {
     reverse(a.begin() + 1, a.begin() + lim);
-    for (int i = 0; i < lim; ++i) a[i] = (long long) a[i] * inv_lim % mod;
+    for (int i = 0; i < lim; ++i)
+      a[i] = (long long)a[i] * inv_lim % mod;
   }
 }
 // a is of size n * n
@@ -55,7 +65,7 @@ Mat multiply(Mat a, Mat b) {
     ntt(a[i], 1);
     ntt(b[i], 1);
   }
-  Mat ans(lim, vector<int> (lim, 0));
+  Mat ans(lim, vector<int>(lim, 0));
   for (int j = 0; j < lim; j++) {
     vector<int> col_a(lim), col_b(lim);
     for (int i = 0; i < lim; i++) {
@@ -88,7 +98,7 @@ Mat multiply(Mat a, Mat b) {
 }
 Mat multiply_brute(Mat a, Mat b) {
   int n = a.size(), m = b.size();
-  Mat ans(n + m - 1, vector<int> (n + m - 1, 0));
+  Mat ans(n + m - 1, vector<int>(n + m - 1, 0));
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
       for (int r = 0; r < m; r++) {
