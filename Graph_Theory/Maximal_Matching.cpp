@@ -37,7 +37,7 @@
 // #include "../atcoder/all"
 
 #define sz(v) ((int)(v).size())
-#define all(v) (v).begin(),(v).end()
+#define all(v) (v).begin(), (v).end()
 
 using namespace std;
 
@@ -49,7 +49,8 @@ struct Edge {
   int start;
   int finish;
 
-  Edge(int dest, int start, int finish) : dest(dest), start(start), finish(finish) {}
+  Edge(int dest, int start, int finish)
+      : dest(dest), start(start), finish(finish) {}
 };
 
 // code by Min_25
@@ -65,17 +66,23 @@ class MaximumMatching {
       "The Weighted Matching Approach to Maximum Cardinality Matching" (2017)
       (https://arxiv.org/abs/1703.03998)
   */
- public:
-  struct Edge { int from, to; };
+public:
+  struct Edge {
+    int from, to;
+  };
   static constexpr int Inf = 1 << 30;
 
- private:
+private:
   enum Label {
     kInner = -1, // should be < 0
     kFree = 0    // should be 0
   };
-  struct Link { int from, to; };
-  struct Log { int v, par; };
+  struct Link {
+    int from, to;
+  };
+  struct Log {
+    int v, par;
+  };
 
   struct LinkedList {
     LinkedList() {}
@@ -86,11 +93,10 @@ class MaximumMatching {
     vector<int> head, next;
   };
 
-  template <typename T>
-  struct Queue {
+  template <typename T> struct Queue {
     Queue() {}
     Queue(int N) : qh(0), qt(0), data(N) {}
-    T operator [] (int i) const { return data[i]; }
+    T operator[](int i) const { return data[i]; }
     void enqueue(int u) { data[qt++] = u; }
     int dequeue() { return data[qh++]; }
     bool empty() const { return qh == qt; }
@@ -103,26 +109,32 @@ class MaximumMatching {
   struct DisjointSetUnion {
     DisjointSetUnion() {}
     DisjointSetUnion(int N) : par(N) {
-      for (int i = 0; i < N; ++i) par[i] = i;
+      for (int i = 0; i < N; ++i)
+        par[i] = i;
     }
     int find(int u) { return par[u] == u ? u : (par[u] = find(par[u])); }
     void unite(int u, int v) {
       u = find(u), v = find(v);
-      if (u != v) par[v] = u;
+      if (u != v)
+        par[v] = u;
     }
     vector<int> par;
   };
 
- public:
-  MaximumMatching(int N, const vector<Edge>& in)
+public:
+  MaximumMatching(int N, const vector<Edge> &in)
       : N(N), NH(N >> 1), ofs(N + 2, 0), edges(in.size() * 2) {
 
-    for (auto& e : in) ofs[e.from + 1] += 1, ofs[e.to + 1] += 1;
-    for (int i = 1; i <= N + 1; ++i) ofs[i] += ofs[i - 1];
-    for (auto& e : in) {
-      edges[ofs[e.from]++] = e; edges[ofs[e.to]++] = {e.to, e.from};
+    for (auto &e : in)
+      ofs[e.from + 1] += 1, ofs[e.to + 1] += 1;
+    for (int i = 1; i <= N + 1; ++i)
+      ofs[i] += ofs[i - 1];
+    for (auto &e : in) {
+      edges[ofs[e.from]++] = e;
+      edges[ofs[e.to]++] = {e.to, e.from};
     }
-    for (int i = N + 1; i > 0; --i) ofs[i] = ofs[i - 1];
+    for (int i = N + 1; i > 0; --i)
+      ofs[i] = ofs[i - 1];
     ofs[0] = 0;
   }
 
@@ -132,30 +144,35 @@ class MaximumMatching {
     while (match * 2 + 1 < N) {
       reset_count();
       bool has_augmenting_path = do_edmonds_search();
-      if (!has_augmenting_path) break;
+      if (!has_augmenting_path)
+        break;
       match += find_maximal();
       clear();
     }
     return match;
   }
 
-  vector<int> get_mate(){
-    return mate;
-  }
+  vector<int> get_mate() { return mate; }
 
- private:
+private:
   void reset_count() {
-    time_current_ = 0; time_augment_ = Inf;
-    contract_count_ = 0; outer_id_ = 1;
+    time_current_ = 0;
+    time_augment_ = Inf;
+    contract_count_ = 0;
+    outer_id_ = 1;
     dsu_changelog_size_ = dsu_changelog_last_ = 0;
   }
 
   void clear() {
     que.clear();
-    for (int u = 1; u <= N; ++u) potential[u] = 1;
-    for (int u = 1; u <= N; ++u) dsu.par[u] = u;
-    for (int t = time_current_; t <= N / 2; ++t) list.head[t] = -1;
-    for (int u = 1; u <= N; ++u) blossom.head[u] = -1;
+    for (int u = 1; u <= N; ++u)
+      potential[u] = 1;
+    for (int u = 1; u <= N; ++u)
+      dsu.par[u] = u;
+    for (int t = time_current_; t <= N / 2; ++t)
+      list.head[t] = -1;
+    for (int u = 1; u <= N; ++u)
+      blossom.head[u] = -1;
   }
 
   // first phase
@@ -163,7 +180,8 @@ class MaximumMatching {
   inline void grow(int x, int y, int z) {
     label[y] = kInner;
     potential[y] = time_current_; // visited time
-    link[z] = {x, y}; label[z] = label[x];
+    link[z] = {x, y};
+    label[z] = label[x];
     potential[z] = time_current_ + 1;
     que.enqueue(z);
   }
@@ -174,15 +192,18 @@ class MaximumMatching {
     label[mate[bx]] = label[mate[by]] = h;
     int lca = -1;
     while (1) {
-      if (mate[by] != 0) swap(bx, by);
+      if (mate[by] != 0)
+        swap(bx, by);
       bx = lca = dsu.find(link[bx].from);
-      if (label[mate[bx]] == h) break;
+      if (label[mate[bx]] == h)
+        break;
       label[mate[bx]] = h;
     }
     for (auto bv : {dsu.par[x], dsu.par[y]}) {
       for (; bv != lca; bv = dsu.par[link[bv].from]) {
         int mv = mate[bv];
-        link[mv] = {x, y}; label[mv] = label[x];
+        link[mv] = {x, y};
+        label[mv] = label[x];
         potential[mv] = 1 + (time_current_ - potential[mv]) + time_current_;
         que.enqueue(mv);
         dsu.par[bv] = dsu.par[mv] = lca;
@@ -200,18 +221,24 @@ class MaximumMatching {
         if (label[y] > 0) { // outer blossom/vertex
           int time_next = (px + potential[y]) >> 1;
           if (lx != label[y]) {
-            if (time_next == time_current_) return true;
+            if (time_next == time_current_)
+              return true;
             time_augment_ = min(time_next, time_augment_);
           } else {
-            if (bx == dsu.find(y)) continue;
+            if (bx == dsu.find(y))
+              continue;
             if (time_next == time_current_) {
-              contract(x, y); bx = dsu.find(x);
-            } else if (time_next <= NH) list.push(time_next, eid);
+              contract(x, y);
+              bx = dsu.find(x);
+            } else if (time_next <= NH)
+              list.push(time_next, eid);
           }
         } else if (label[y] == kFree) { // free vertex
           int time_next = px + 1;
-          if (time_next == time_current_) grow(x, y, mate[y]);
-          else if (time_next <= NH) list.push(time_next, eid);
+          if (time_next == time_current_)
+            grow(x, y, mate[y]);
+          else if (time_next <= NH)
+            list.push(time_next, eid);
         }
       }
     }
@@ -223,22 +250,32 @@ class MaximumMatching {
     const int time_lim = min(NH + 1, time_augment_);
     for (++time_current_; time_current_ <= time_lim; ++time_current_) {
       dsu_changelog_size_ = dsu_changelog_last_;
-      if (time_current_ == time_lim) break;
+      if (time_current_ == time_lim)
+        break;
       bool updated = false;
       for (int h = list.head[time_current_]; h >= 0; h = list.next[h]) {
-        auto& e = edges[h]; int x = e.from, y = e.to;
+        auto &e = edges[h];
+        int x = e.from, y = e.to;
         if (label[y] > 0) {
           // Case: outer -- (free => inner => outer)
-          if (potential[x] + potential[y] != (time_current_ << 1)) continue;
-          if (dsu.find(x) == dsu.find(y)) continue;
-          if (label[x] != label[y]) { time_augment_ = time_current_; return false; }
-          contract(x, y); updated = true;
+          if (potential[x] + potential[y] != (time_current_ << 1))
+            continue;
+          if (dsu.find(x) == dsu.find(y))
+            continue;
+          if (label[x] != label[y]) {
+            time_augment_ = time_current_;
+            return false;
+          }
+          contract(x, y);
+          updated = true;
         } else if (label[y] == kFree) {
-          grow(x, y, mate[y]); updated = true;
+          grow(x, y, mate[y]);
+          updated = true;
         }
       }
       list.head[time_current_] = -1;
-      if (updated) return false;
+      if (updated)
+        return false;
     }
     return time_current_ > NH;
   }
@@ -247,18 +284,25 @@ class MaximumMatching {
     label[0] = kFree;
     for (int u = 1; u <= N; ++u) {
       if (mate[u] == 0) {
-        que.enqueue(u); label[u] = u; // component id
-      } else label[u] = kFree;
+        que.enqueue(u);
+        label[u] = u; // component id
+      } else
+        label[u] = kFree;
     }
     while (1) {
-      if (find_augmenting_path()) break;
+      if (find_augmenting_path())
+        break;
       bool maximum = adjust_dual_variables();
-      if (maximum) return false;
-      if (time_current_ == time_augment_) break;
+      if (maximum)
+        return false;
+      if (time_current_ == time_augment_)
+        break;
     }
     for (int u = 1; u <= N; ++u) {
-      if (label[u] > 0) potential[u] -= time_current_;
-      else if (label[u] < 0) potential[u] = 1 + (time_current_ - potential[u]);
+      if (label[u] > 0)
+        potential[u] -= time_current_;
+      else if (label[u] < 0)
+        potential[u] = 1 + (time_current_ - potential[u]);
     }
     return true;
   }
@@ -266,14 +310,17 @@ class MaximumMatching {
   // second phase
 
   void rematch(int v, int w) {
-    int t = mate[v]; mate[v] = w;
-    if (mate[t] != v) return;
+    int t = mate[v];
+    mate[v] = w;
+    if (mate[t] != v)
+      return;
     if (link[v].to == dsu.find(link[v].to)) {
       mate[t] = link[v].from;
       rematch(mate[t], t);
     } else {
       int x = link[v].from, y = link[v].to;
-      rematch(x, y); rematch(y, x);
+      rematch(x, y);
+      rematch(y, x);
     }
   }
 
@@ -281,31 +328,42 @@ class MaximumMatching {
     int px = potential[x], lx = label[bx];
     for (int eid = ofs[x]; eid < ofs[x + 1]; ++eid) {
       int y = edges[eid].to;
-      if (px + potential[y] != 0) continue;
+      if (px + potential[y] != 0)
+        continue;
       int by = dsu.find(y), ly = label[by];
       if (ly > 0) { // outer
-        if (lx >= ly) continue;
+        if (lx >= ly)
+          continue;
         int stack_beg = stack_last_;
         for (int bv = by; bv != bx; bv = dsu.find(link[bv].from)) {
           int bw = dsu.find(mate[bv]);
-          stack[stack_last_++] = bw; link[bw] = {x, y};
+          stack[stack_last_++] = bw;
+          link[bw] = {x, y};
           dsu.par[bv] = dsu.par[bw] = bx;
         }
         while (stack_last_ > stack_beg) {
           int bv = stack[--stack_last_];
           for (int v = blossom.head[bv]; v >= 0; v = blossom.next[v]) {
-            if (!dfs_augment(v, bx)) continue;
+            if (!dfs_augment(v, bx))
+              continue;
             stack_last_ = stack_beg;
             return true;
           }
         }
       } else if (ly == kFree) {
-        label[by] = kInner; int z = mate[by];
-        if (z == 0) { rematch(x, y); rematch(y, x); return true; }
+        label[by] = kInner;
+        int z = mate[by];
+        if (z == 0) {
+          rematch(x, y);
+          rematch(y, x);
+          return true;
+        }
         int bz = dsu.find(z);
-        link[bz] = {x, y}; label[bz] = outer_id_++;
+        link[bz] = {x, y};
+        label[bz] = outer_id_++;
         for (int v = blossom.head[bz]; v >= 0; v = blossom.next[v]) {
-          if (dfs_augment(v, bz)) return true;
+          if (dfs_augment(v, bz))
+            return true;
         }
       }
     }
@@ -314,20 +372,25 @@ class MaximumMatching {
 
   int find_maximal() {
     // discard blossoms whose potential is 0.
-    for (int u = 1; u <= N; ++u) dsu.par[u] = u;
+    for (int u = 1; u <= N; ++u)
+      dsu.par[u] = u;
     for (int i = 0; i < dsu_changelog_size_; ++i) {
       dsu.par[dsu_changelog[i].v] = dsu_changelog[i].par;
     }
     for (int u = 1; u <= N; ++u) {
-      label[u] = kFree; blossom.push(dsu.find(u), u);
+      label[u] = kFree;
+      blossom.push(dsu.find(u), u);
     }
     int ret = 0;
-    for (int u = 1; u <= N; ++u) if (!mate[u]) {
+    for (int u = 1; u <= N; ++u)
+      if (!mate[u]) {
         int bu = dsu.par[u];
-        if (label[bu] != kFree) continue;
+        if (label[bu] != kFree)
+          continue;
         label[bu] = outer_id_++;
         for (int v = blossom.head[bu]; v >= 0; v = blossom.next[v]) {
-          if (!dfs_augment(v, bu)) continue;
+          if (!dfs_augment(v, bu))
+            continue;
           ret += 1;
           break;
         }
@@ -352,30 +415,35 @@ class MaximumMatching {
     list = LinkedList(NH + 1, edges.size());
 
     blossom = LinkedList(N + 1, N + 1);
-    stack.resize(N); stack_last_ = 0;
+    stack.resize(N);
+    stack_last_ = 0;
   }
 
- private:
+private:
   const int N, NH;
-  vector<int> ofs; vector<Edge> edges;
+  vector<int> ofs;
+  vector<Edge> edges;
 
   Queue<int> que;
 
   vector<int> mate, potential;
-  vector<int> label; vector<Link> link;
+  vector<int> label;
+  vector<Link> link;
 
-  vector<Log> dsu_changelog; int dsu_changelog_last_, dsu_changelog_size_;
+  vector<Log> dsu_changelog;
+  int dsu_changelog_last_, dsu_changelog_size_;
 
   DisjointSetUnion dsu;
   LinkedList list, blossom;
-  vector<int> stack; int stack_last_;
+  vector<int> stack;
+  int stack_last_;
 
   int time_current_, time_augment_;
   int contract_count_, outer_id_;
 };
 
 class GMaksimizatsiyaParSosedei {
- public:
+public:
   void solveOne() {
     int n;
     cin >> n;
@@ -392,7 +460,8 @@ class GMaksimizatsiyaParSosedei {
       assert(a[start] == 0);
       assert(a[finish] == 0);
       for (int j = start; j + 1 <= finish; j += 2) {
-        while (count[free] > 0) ++free;
+        while (count[free] > 0)
+          ++free;
         a[j] = a[j + 1] = free;
         count[free] += 2;
       }
@@ -402,7 +471,8 @@ class GMaksimizatsiyaParSosedei {
       assert(a[start] == 0);
       assert(a[finish] == 0);
       for (int j = start + 1; j + 1 <= finish; j += 2) {
-        while (count[free] > 0) ++free;
+        while (count[free] > 0)
+          ++free;
         a[j] = a[j + 1] = free;
         count[free] += 2;
       }
@@ -421,7 +491,8 @@ class GMaksimizatsiyaParSosedei {
         if (start <= finish) {
           if (start == 0) {
             for (int j = start; j + 1 <= finish; j += 2) {
-              while (count[free] > 0) ++free;
+              while (count[free] > 0)
+                ++free;
               a[j] = a[j + 1] = free;
               count[free] += 2;
             }
@@ -429,14 +500,16 @@ class GMaksimizatsiyaParSosedei {
               if (finish + 1 < n) {
                 a[finish] = a[finish + 1];
               } else {
-                while (count[free] > 0) ++free;
+                while (count[free] > 0)
+                  ++free;
                 a[finish] = free;
               }
               ++count[a[finish]];
             }
           } else if (finish == n - 1) {
             for (int j = finish; j - 1 >= start; j -= 2) {
-              while (count[free] > 0) ++free;
+              while (count[free] > 0)
+                ++free;
               a[j] = a[j - 1] = free;
               count[free] += 2;
             }
@@ -444,7 +517,8 @@ class GMaksimizatsiyaParSosedei {
               if (start > 0) {
                 a[start] = a[start - 1];
               } else {
-                while (count[free] > 0) ++free;
+                while (count[free] > 0)
+                  ++free;
                 a[start] = free;
               }
               ++count[a[start]];
@@ -452,7 +526,8 @@ class GMaksimizatsiyaParSosedei {
           } else {
             if ((finish - start + 1) % 2 == 0) {
               // even block
-              evenEdges[min(a[start - 1], a[finish + 1])].emplace_back(max(a[start - 1], a[finish + 1]), start, finish);
+              evenEdges[min(a[start - 1], a[finish + 1])].emplace_back(
+                  max(a[start - 1], a[finish + 1]), start, finish);
             } else {
               // odd block
               oddEdges[a[start - 1]].emplace_back(a[finish + 1], start, finish);
@@ -469,7 +544,8 @@ class GMaksimizatsiyaParSosedei {
       assert(a[finish] == 0);
       if (to == a[start - 1]) {
         for (int j = finish; j - 1 >= start; j -= 2) {
-          while (count[free] > 0) ++free;
+          while (count[free] > 0)
+            ++free;
           a[j] = a[j - 1] = free;
           count[free] += 2;
         }
@@ -477,7 +553,8 @@ class GMaksimizatsiyaParSosedei {
         ++count[a[start]];
       } else if (to == a[finish + 1]) {
         for (int j = start; j + 1 <= finish; j += 2) {
-          while (count[free] > 0) ++free;
+          while (count[free] > 0)
+            ++free;
           a[j] = a[j + 1] = free;
           count[free] += 2;
         }
@@ -489,21 +566,25 @@ class GMaksimizatsiyaParSosedei {
     };
 
     vector<bool> satisfied(n + 1);
-    for (int i = 0; i + 1 < n; ++i) if (a[i] > 0 && a[i] == a[i + 1]) satisfied[a[i]] = true;
+    for (int i = 0; i + 1 < n; ++i)
+      if (a[i] > 0 && a[i] == a[i + 1])
+        satisfied[a[i]] = true;
     n = min(n, 600);
     vector<int> oddComponent(n + 1, -1);
 
     int satisfiedIndex = -1;
     vector<int> component;
     auto oddDfs = [&](auto self, int at, int viaStart) {
-      if (at < 0) return;
+      if (at < 0)
+        return;
       if (satisfied[at]) {
         satisfiedIndex = at;
       }
       oddComponent[at] = -2;
       component.push_back(at);
       for (auto e : oddEdges[at]) {
-        if (e.start == viaStart || a[e.start] != 0) continue;
+        if (e.start == viaStart || a[e.start] != 0)
+          continue;
         if (oddComponent[e.dest] == -1) {
           self(self, e.dest, e.start);
         } else {
@@ -515,7 +596,8 @@ class GMaksimizatsiyaParSosedei {
     };
 
     auto oddDfs2 = [&](auto self, auto at) {
-      if (at < 0) return;
+      if (at < 0)
+        return;
       for (auto e : oddEdges[at]) {
         if (a[e.start] == 0) {
           handleOdd(e.start, e.finish, e.dest);
@@ -526,20 +608,22 @@ class GMaksimizatsiyaParSosedei {
     };
 
     int oddComps = 0;
-    for (int i = 1; i <= n; ++i) if (oddComponent[i] == -1) {
-      satisfiedIndex = -1;
-      component.clear();
-      oddDfs(oddDfs, i, -1);
-      if (satisfiedIndex >= 0) {
-        oddDfs2(oddDfs2, satisfiedIndex);
-        for (int x : component) {
-          assert(satisfied[x]);
+    for (int i = 1; i <= n; ++i)
+      if (oddComponent[i] == -1) {
+        satisfiedIndex = -1;
+        component.clear();
+        oddDfs(oddDfs, i, -1);
+        if (satisfiedIndex >= 0) {
+          oddDfs2(oddDfs2, satisfiedIndex);
+          for (int x : component) {
+            assert(satisfied[x]);
+          }
+        } else {
+          for (int x : component)
+            oddComponent[x] = oddComps;
+          ++oddComps;
         }
-      } else {
-        for (int x : component) oddComponent[x] = oddComps;
-        ++oddComps;
       }
-    }
 
     vector<MaximumMatching::Edge> medges;
     for (int i = 1; i <= n; ++i) {
@@ -556,21 +640,23 @@ class GMaksimizatsiyaParSosedei {
 
     auto mate = matching.get_mate();
 
-    for (int i = 1; i <= n; ++i) if (oddComponent[i] >= 0 && mate[oddComponent[i] + 1] > 0) {
-      int us = oddComponent[i];
-      int other = mate[oddComponent[i] + 1] - 1;
-      for (Edge e : evenEdges[i]) {
-        if (oddComponent[e.dest] == other) {
-          handleEvenInteresting(e.start, e.finish);
-          oddDfs2(oddDfs2, i);
-          oddDfs2(oddDfs2, e.dest);
-          mate[us + 1] = mate[other + 1] = 0;
-          break;
+    for (int i = 1; i <= n; ++i)
+      if (oddComponent[i] >= 0 && mate[oddComponent[i] + 1] > 0) {
+        int us = oddComponent[i];
+        int other = mate[oddComponent[i] + 1] - 1;
+        for (Edge e : evenEdges[i]) {
+          if (oddComponent[e.dest] == other) {
+            handleEvenInteresting(e.start, e.finish);
+            oddDfs2(oddDfs2, i);
+            oddDfs2(oddDfs2, e.dest);
+            mate[us + 1] = mate[other + 1] = 0;
+            break;
+          }
         }
       }
-    }
 
-    for (int i = 0; i < oddComps; ++i) assert(mate[i + 1] == 0);
+    for (int i = 0; i < oddComps; ++i)
+      assert(mate[i + 1] == 0);
 
     for (int i = 1; i <= n; ++i) {
       for (Edge e : evenEdges[i]) {
@@ -603,14 +689,12 @@ class GMaksimizatsiyaParSosedei {
 // #define st_mtimespec st_mtim
 
 int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(0);
-    GMaksimizatsiyaParSosedei solver;
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(0);
+  GMaksimizatsiyaParSosedei solver;
 
-
-    solver.solve();
-    return 0;
+  solver.solve();
+  return 0;
 }
 
-
-//https://codeforces.com/problemset/problem/1615/G
+// https://codeforces.com/problemset/problem/1615/G

@@ -3,7 +3,7 @@ using namespace std;
 
 const int N = 2e5 + 10;
 
-int str[N]; // input
+int str[N];           // input
 int _rank[N], pos[N]; // output
 int cnt[N], _next[N]; // internal
 bool bh[N], b2h[N];
@@ -26,7 +26,7 @@ void suffixSort(int n) {
 
   for (int h = 1; h < n; h <<= 1) {
     //{bh[i] == false if the first h characters of pos[i-1] == the first h
-    //characters of pos[i]}
+    // characters of pos[i]}
     int buckets = 0;
     for (int i = 0, j; i < n; i = j) {
       j = i + 1;
@@ -38,7 +38,7 @@ void suffixSort(int n) {
     if (buckets == n)
       break; // We are done! Lucky bastards!
     //{suffixes are separted in buckets containing strings starting with the
-    //same h characters}
+    // same h characters}
 
     for (int i = 0; i < n; i = _next[i]) {
       cnt[i] = 0;
