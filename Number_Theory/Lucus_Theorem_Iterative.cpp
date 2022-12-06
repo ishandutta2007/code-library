@@ -1,9 +1,9 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 using namespace atcoder;
 
-//const int N = 1e6 + 3, mod = 1e6 + 3;
+// const int N = 1e6 + 3, mod = 1e6 + 3;
 
 template <const int32_t MOD> struct modint {
   int32_t value;
@@ -90,24 +90,28 @@ mint ifact[mod];
 
 // binom(n, k) mod 200003
 mint binom(ll n, ll k) {
-    if (k < 0 or k > n) return 0;
-    mint res = 1;
-    while (n) {
-        ll n0 = n % mod;
-        ll k0 = k % mod;
-        if (n0 < k0) return 0;
-        res *= fact[n0] * ifact[k0] * ifact[n0 - k0];
-        n /= mod;
-        k /= mod;
-    }
-    return res;
+  if (k < 0 or k > n)
+    return 0;
+  mint res = 1;
+  while (n) {
+    ll n0 = n % mod;
+    ll k0 = k % mod;
+    if (n0 < k0)
+      return 0;
+    res *= fact[n0] * ifact[k0] * ifact[n0 - k0];
+    n /= mod;
+    k /= mod;
+  }
+  return res;
 }
 
 int main() {
-    mint::set_mod(mod);
-    fact[0] = 1;
-    for (int i = 1; i < mod; i++) fact[i] = fact[i - 1] * i;
-    ifact[mod - 1] = fact[mod - 1].inv();
-    for (int i = mod - 1; i >= 1; i--) ifact[i - 1] = ifact[i] * i;    
-    cout << binom(100, 7) << endl;
+  mint::set_mod(mod);
+  fact[0] = 1;
+  for (int i = 1; i < mod; i++)
+    fact[i] = fact[i - 1] * i;
+  ifact[mod - 1] = fact[mod - 1].inv();
+  for (int i = mod - 1; i >= 1; i--)
+    ifact[i - 1] = ifact[i] * i;
+  cout << binom(100, 7) << endl;
 }
