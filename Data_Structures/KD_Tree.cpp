@@ -112,3 +112,11 @@ int main() {
   }
   return 0;
 }
+
+// This is all-nearest-neighbor ( findNearestNeighbour ) problem
+// https://www.youtube.com/watch?v=Glp7THUpGow
+// Using KD tree it is solved in O(nlogn)
+// Using KD tree with floor rounding it can be solved in in O(nloglogn)
+// Using randomised algorith it can be solved in O(n)
+// blog explaining it https://fajnezadania.wordpress.com/2016/07/23/na-wypadek-awarii/
+// more links can be found here https://codeforces.com/blog/entry/45583
