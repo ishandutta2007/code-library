@@ -1,8 +1,9 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e5 + 9;
-struct ST { // add, del and query for the element that occurs the maximum number of times
+struct ST { // add, del and query for the element that occurs the maximum number
+            // of times
   static const int B = 1000;
   int c[N], cc[N / B + 2][N], mx[N / B + 2];
   ST() {
@@ -46,7 +47,7 @@ struct ST { // add, del and query for the element that occurs the maximum number
 const int B = 5000;
 struct query {
   int l1, r1, l2, r2, id;
-  bool operator < (const query &x) const {
+  bool operator<(const query &x) const {
     array<int, 7> a({l1 / B, r1 / B, l2 / B, r2, l1, r1, l2});
     array<int, 7> b({x.l1 / B, x.r1 / B, x.l2 / B, x.r2, x.l1, x.r1, x.l2});
     return a < b;
@@ -58,7 +59,7 @@ vector<int> g[N];
 void dfs(int u, int p = 0) {
   st[u] = ++T;
   a[T] = b[u];
-  for (auto v: g[u]) {
+  for (auto v : g[u]) {
     if (v ^ p) {
       dfs(v, u);
     }
@@ -67,29 +68,29 @@ void dfs(int u, int p = 0) {
 }
 
 ST t;
-void add(int i) {
-  t.add(a[i]);
-}
-void del(int i) {
-  t.del(a[i]);
-}
+void add(int i) { t.add(a[i]); }
+void del(int i) { t.del(a[i]); }
 int ans[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n; cin >> n;
+  int n;
+  cin >> n;
   for (int i = 1; i <= n; i++) {
     cin >> b[i];
   }
   for (int i = 1; i < n; i++) {
-    int u, v; cin >> u >> v;
+    int u, v;
+    cin >> u >> v;
     g[u].push_back(v);
     g[v].push_back(u);
   }
   dfs(1);
-  int q; cin >> q;
+  int q;
+  cin >> q;
   for (int i = 1; i <= q; i++) {
-    int u, v; cin >> u >> v;
+    int u, v;
+    cin >> u >> v;
     int l1 = st[u], r1 = en[u];
     int l2 = st[v], r2 = en[v];
     Q[i] = {l1, r1, l2, r2, i};
@@ -99,7 +100,7 @@ int32_t main() {
   add(cl1);
   add(cl2);
   for (int i = 1; i <= q; i++) {
-    auto [l1, r1, l2, r2, id] = Q[i];
+    auto[l1, r1, l2, r2, id] = Q[i];
     while (cr1 < r1) {
       ++cr1;
       add(cr1);

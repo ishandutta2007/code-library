@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 2e5 + 9;
@@ -8,14 +8,16 @@ using T = pair<ll, int>;
 
 vector<array<int, 3>> g[N];
 ll d[N], rd[N], f[N];
-vector<array<int, 2>> S[N], R[N]; // shortest path graph, reverse shortest path graph
+vector<array<int, 2>> S[N],
+    R[N];        // shortest path graph, reverse shortest path graph
 bool sp_edge[N]; // if edge is in the main shortest path
 int path_id[N], l[N], r[N], u[N], v[N], w[N], edge[N];
 vector<T> event[N];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, m, Q; cin >> n >> m >> Q;
+  int n, m, Q;
+  cin >> n >> m >> Q;
   for (int i = 1; i <= m; i++) {
     cin >> u[i] >> v[i] >> w[i];
     g[u[i]].push_back({v[i], w[i], i});
@@ -28,9 +30,9 @@ int32_t main() {
   d[1] = 0;
   q.push({0, 1});
   while (!q.empty()) {
-    auto [x, u] = q.top();
+    auto[x, u] = q.top();
     q.pop();
-    for (auto [v, w, i]: g[u]) {
+    for (auto[v, w, i] : g[u]) {
       if (d[u] + w < d[v]) {
         d[v] = d[u] + w;
         edge[v] = i;
@@ -45,9 +47,9 @@ int32_t main() {
   rd[n] = 0;
   q.push({0, n});
   while (!q.empty()) {
-    auto [x, u] = q.top();
+    auto[x, u] = q.top();
     q.pop();
-    for (auto [v, w, i]: g[u]) {
+    for (auto[v, w, i] : g[u]) {
       if (rd[u] + w < rd[v]) {
         rd[v] = rd[u] + w;
         q.push({rd[v], v});
@@ -55,12 +57,12 @@ int32_t main() {
     }
   }
   for (int u = 1; u <= n; u++) {
-    for (auto [v, w, i]: g[u]) {
+    for (auto[v, w, i] : g[u]) {
       if (d[u] + w == d[v]) {
         S[u].push_back({v, i});
       }
     }
-    for (auto [v, w, i]: g[u]) {
+    for (auto[v, w, i] : g[u]) {
       if (rd[u] + w == rd[v]) {
         R[u].push_back({v, i});
       }
@@ -89,12 +91,11 @@ int32_t main() {
     l[i] = path.size();
   }
   l[1] = -1;
-  for (auto [_, u]: vec) {
-    for (auto [v, i]: S[u]) {
+  for (auto[_, u] : vec) {
+    for (auto[v, i] : S[u]) {
       if (sp_edge[i]) {
         l[v] = min(l[v], path_id[i]);
-      }
-      else {
+      } else {
         l[v] = min(l[v], l[u]);
       }
     }
@@ -109,20 +110,20 @@ int32_t main() {
     r[i] = -1;
   }
   r[n] = path.size();
-  for (auto [_, u]: vec) {
-    for (auto [v, i]: R[u]) {
+  for (auto[_, u] : vec) {
+    for (auto[v, i] : R[u]) {
       if (sp_edge[i]) {
         r[v] = max(r[v], path_id[i]);
-      }
-      else {
+      } else {
         r[v] = max(r[v], r[u]);
       }
     }
   }
 
   for (int u = 1; u <= n; u++) {
-    for (auto [v, w, _]: g[u]) {
-      if (sp_edge[_]) continue;
+    for (auto[v, w, _] : g[u]) {
+      if (sp_edge[_])
+        continue;
       ll cur = d[u] + rd[v] + w;
       if (l[u] + 1 <= r[v] - 1) {
         event[l[u] + 1].push_back({cur, +1});
@@ -132,24 +133,23 @@ int32_t main() {
   }
   multiset<ll> se;
   for (int i = 0; i < path.size(); i++) {
-    for (auto [cur, add]: event[i]) {
+    for (auto[cur, add] : event[i]) {
       if (add == 1) {
         se.insert(cur);
-      }
-      else {
+      } else {
         se.erase(se.find(cur));
       }
     }
     if (se.empty()) {
       f[i] = inf;
-    }
-    else {
+    } else {
       f[i] = *se.begin();
     }
   }
 
   while (Q--) {
-    int i, x; cin >> i >> x;
+    int i, x;
+    cin >> i >> x;
 
     ll ans = d[u[i]] + rd[v[i]] + x;
     ans = min(ans, d[v[i]] + rd[u[i]] + x);
@@ -165,8 +165,7 @@ int32_t main() {
       //   }
       // }
       except_i = f[path_id[i]];
-    }
-    else {
+    } else {
       except_i = min(except_i, d[n]);
     }
     ans = min(ans, except_i);

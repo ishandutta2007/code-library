@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // O(2^(m / 2) * m)
@@ -7,13 +7,18 @@ int g[N][N], c[N], cost[1 << 20], dp[1 << 20], need[1 << 20];
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, m; cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
   int last;
   for (int i = 1; i <= n; i++) {
-    int x; cin >> x;
+    int x;
+    cin >> x;
     --x;
-    if (i == 1) g[x][x] = 1; //self loop is okay, it means we must take x in our vertex cover
-    if (i == n) g[x][x] = 1;
+    if (i == 1)
+      g[x][x] =
+          1; // self loop is okay, it means we must take x in our vertex cover
+    if (i == n)
+      g[x][x] = 1;
     if (i > 1) {
       g[last][x] = 1;
       g[x][last] = 1;
@@ -39,8 +44,7 @@ int32_t main() {
             if (~mask >> i & 1 and ~mask >> j & 1) {
               good = false;
             }
-          }
-          else {
+          } else {
             if (~mask >> i & 1) {
               need[mask] |= 1 << (j - one);
             }
@@ -74,8 +78,9 @@ int32_t main() {
     }
   }
   for (int i = 0; i < two; i++) {
-    for (int mask = (1 << two) - 1 ; mask >= 0 ; mask--) {
-      if ((mask & (1 << i)) == 0) dp[mask] = min(dp[mask], dp[mask ^ (1 << i)]);
+    for (int mask = (1 << two) - 1; mask >= 0; mask--) {
+      if ((mask & (1 << i)) == 0)
+        dp[mask] = min(dp[mask], dp[mask ^ (1 << i)]);
     }
   }
   int ans = 1e9;

@@ -1,13 +1,17 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 3e7 + 9, mod = 1e9 + 7, inf = mod;
 
 int power(long long n, long long k) {
-  int ans = 1 % mod; n %= mod; if (n < 0) n += mod;
+  int ans = 1 % mod;
+  n %= mod;
+  if (n < 0)
+    n += mod;
   while (k) {
-    if (k & 1) ans = (long long) ans * n % mod;
-    n = (long long) n * n % mod;
+    if (k & 1)
+      ans = (long long)ans * n % mod;
+    n = (long long)n * n % mod;
     k >>= 1;
   }
   return ans;
@@ -19,7 +23,8 @@ int ncr(int n, int k) {
 int solve(int n, int k) {
   return 1LL * fac[n] * ncr(n - 1, n - k) % mod * ifac[k] % mod;
 }
-int yo(int i, int which, int total_balls, int count_balls, int alpha, int beta) {
+int yo(int i, int which, int total_balls, int count_balls, int alpha,
+       int beta) {
   if (i == n + 1) {
     return abs(solve(total_balls, count_balls) - target);
   }
@@ -28,19 +33,22 @@ int yo(int i, int which, int total_balls, int count_balls, int alpha, int beta) 
     int val = yo(i + 1, which ^ 1, total_balls, count_balls, alpha, beta);
     alpha = max(alpha, val);
     ans = max(ans, val);
-    if (beta <= alpha) return ans;
-    val = yo(i + 1, which ^ 1, total_balls + a[i], count_balls + 1, alpha, beta);
+    if (beta <= alpha)
+      return ans;
+    val =
+        yo(i + 1, which ^ 1, total_balls + a[i], count_balls + 1, alpha, beta);
     alpha = max(alpha, val);
     ans = max(ans, val);
     return ans;
-  }
-  else {
+  } else {
     int ans = inf;
     int val = yo(i + 1, which ^ 1, total_balls, count_balls, alpha, beta);
     beta = min(beta, val);
     ans = min(ans, val);
-    if (beta <= alpha) return ans;
-    val = yo(i + 1, which ^ 1, total_balls + a[i], count_balls + 1, alpha, beta);
+    if (beta <= alpha)
+      return ans;
+    val =
+        yo(i + 1, which ^ 1, total_balls + a[i], count_balls + 1, alpha, beta);
     beta = min(beta, val);
     ans = min(ans, val);
     return ans;
@@ -57,7 +65,8 @@ int32_t main() {
   for (int i = N - 2; i >= 0; i--) {
     ifac[i] = 1LL * ifac[i + 1] * (i + 1) % mod;
   }
-  int t, cs = 0; cin >> t;
+  int t, cs = 0;
+  cin >> t;
   while (t--) {
     cin >> n >> target;
     for (int i = 1; i <= n; i++) {

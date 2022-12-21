@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 1e5 + 9, LG = 16;
@@ -7,8 +7,9 @@ using ll = long long;
 vector<array<int, 2>> g[N];
 // take the longest path from the root and do the same thing
 // recursively for the decomposed subtrees
-struct LongPathDecomposition{
-  int n, par[N][LG + 1], child[N]; // the subtree of child contains the node having the max dep
+struct LongPathDecomposition {
+  int n, par[N][LG + 1],
+      child[N]; // the subtree of child contains the node having the max dep
   ll dep[N], mx_dep[N];
   void dfs(int u, int p = 0) {
     par[u][0] = p;
@@ -17,7 +18,7 @@ struct LongPathDecomposition{
     }
     mx_dep[u] = dep[u];
     child[u] = 0;
-    for (auto [v, w]: g[u]) {
+    for (auto[v, w] : g[u]) {
       if (v != p) {
         dep[v] = dep[u] + w;
         dfs(v, u);
@@ -34,7 +35,7 @@ struct LongPathDecomposition{
     if (child[u]) {
       decomp(child[u], u, h);
     }
-    for (auto [v, w]: g[u]) {
+    for (auto[v, w] : g[u]) {
       if (v != p and v != child[u]) {
         decomp(v, u, v);
       }
@@ -68,11 +69,15 @@ struct LongPathDecomposition{
     }
     return par[u][0];
   }
-  // max sum of the union of $path_cnt paths such that their union contains the node u
+  // max sum of the union of $path_cnt paths such that their union contains the
+  // node u
   // so just take the longest 2 * path_cnt leaves
   ll query(int u, int path_cnt) {
-    int leaves = min(head_cnt, path_cnt * 2 - 1); // considering root as a leaf for this problem
-    if (leaves <= 0) return 0;
+    int leaves =
+        min(head_cnt,
+            path_cnt * 2 - 1); // considering root as a leaf for this problem
+    if (leaves <= 0)
+      return 0;
     if (pos[head[u]] < leaves) {
       return sum[leaves - 1];
     }
@@ -83,14 +88,15 @@ struct LongPathDecomposition{
     }
     return ans;
   }
-}t1, t2;
-ll d[N], mx; int x;
+} t1, t2;
+ll d[N], mx;
+int x;
 void dfs(int u, int p = 0) {
   if (d[u] >= mx) {
     mx = d[u];
     x = u;
   }
-  for (auto [v, w]: g[u]) {
+  for (auto[v, w] : g[u]) {
     if (v ^ p) {
       d[v] = d[u] + w;
       dfs(v, u);
@@ -100,9 +106,11 @@ void dfs(int u, int p = 0) {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  int n, q; cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
   for (int i = 1; i < n; i++) {
-    int u, v, w; cin >> u >> v >> w;
+    int u, v, w;
+    cin >> u >> v >> w;
     g[u].push_back({v, w});
     g[v].push_back({u, w});
   }
@@ -114,7 +122,8 @@ int32_t main() {
   t2.build(n, y);
   ll last = 0;
   while (q--) {
-    int u, k; cin >> u >> k;
+    int u, k;
+    cin >> u >> k;
     u = (u + last - 1) % n + 1;
     k = (k + last - 1) % n + 1;
     last = max(t1.query(u, k), t2.query(u, k));
