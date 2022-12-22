@@ -46,3 +46,4 @@ int32_t main() {
        << sqrtl(dist2(p[z.x], p[z.y])) << '\n';
   return 0;
 }
+// https://www.spoj.com/problems/CLOPPAIR/
