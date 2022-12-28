@@ -103,3 +103,5 @@ void init() {
 // https://www.fatalerrors.org/a/p3307-sdoi2013-necklace-burnside-lemma-mobius-inversion-characteristic-equation.html#:~:text=Now%20consider%20the%20scheme%20of%20necklace.%20According%20to,the%20number%20of%20permutation%20rings%20with%20%28i%29%20%29.
 // https://www.geeksforgeeks.org/orbit-counting-theorem-or-burnsides-lemma/
 // https://crypto.stanford.edu/~blynn/polya/burnside.html
+// Calculation of simple undirected non-isomorphic graphs based:
+// https://github.com/thinszx/Calculation-of-Simple-Undirected-Non-Isomorphic-Graphs
