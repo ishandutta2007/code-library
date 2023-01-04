@@ -2,11 +2,11 @@
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
- 
+
 using ll = long long;
 const ll INF = numeric_limits<ll>::max() / 4;
 typedef vector<ll> VL;
- 
+
 struct StepMCMF {
   int N;
   vector<vector<int>> ed, red;
@@ -14,18 +14,18 @@ struct StepMCMF {
   vector<int> seen;
   VL dist, pi;
   vector<pair<int, int>> par;
- 
+
   StepMCMF(int _N)
       : N(_N), ed(N), red(N), cap(N, VL(N)), flow(cap), cost(cap), seen(N),
         dist(N), pi(N), par(N) {}
- 
+
   void addEdge(int from, int to, int capa, int costEd) {
     cap[from][to] = capa;
     cost[from][to] = costEd;
     ed[from].push_back(to);
     red[to].push_back(from);
   }
- 
+
   void path(int s) {
     fill(seen.begin(), seen.end(), 0);
     fill(dist.begin(), dist.end(), INF);
@@ -34,7 +34,7 @@ struct StepMCMF {
     __gnu_pbds::priority_queue<pair<int, int>> q;
     vector<decltype(q)::point_iterator> its(N);
     q.push({0, s});
- 
+
     auto relax = [&](int i, int capa, int costEd, int dir) {
       int val = di - pi[i] + costEd;
       if (capa and val < dist[i]) {
@@ -46,7 +46,7 @@ struct StepMCMF {
           q.modify(its[i], {-dist[i], i});
       }
     };
- 
+
     while (!q.empty()) {
       s = q.top().second;
       q.pop();
@@ -63,7 +63,7 @@ struct StepMCMF {
       pi[i] = min(pi[i] + dist[i], INF);
   }
 
-    //returns the min cost for flow=1, flow=2, etc...
+  // returns the min cost for flow=1, flow=2, etc...
   vector<int> maxflow(int s, int t) {
     vector<int> ret;
     int totflow = 0, totcost = 0;
@@ -86,11 +86,11 @@ struct StepMCMF {
     return ret;
   }
 };
- 
+
 signed main(void) {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
- 
+
   int N;
   cin >> N;
   vector<int> A(N), B(N), C(N);
@@ -102,11 +102,11 @@ signed main(void) {
     --A[i], --B[i];
     best[A[i]][B[i]] = max(best[A[i]][B[i]], C[i]);
   }
- 
+
   StepMCMF mcmf(2 * X + 2);
- 
+
   int s = 2 * X, t = 2 * X + 1;
- 
+
   for (int i = 0; i < X; ++i)
     mcmf.addEdge(s, i, 1, 0);
   for (int i = 0; i < X; ++i)
@@ -117,7 +117,7 @@ signed main(void) {
         mcmf.addEdge(i, X + j, 1, M - best[i][j]);
   auto sol = mcmf.maxflow(s, t);
   cout << sol.size() << endl;
-  //sol[i] is negative so we make the trick to reduce M*flow
+  // sol[i] is negative so we make the trick to reduce M*flow
   for (int i = 0; i < (int)sol.size(); ++i)
     cout << (i + 1) * M - sol[i] << '\n';
 }
