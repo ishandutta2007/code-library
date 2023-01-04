@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 //  This code uses min heap instead of solving pells equation
-//  This code is 100x faster than pythons
+//  This code is 100x faster than pythons(for p=47)
 //  https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem
 std::vector<std::pair<long long, long long>>
 stormer(std::vector<unsigned int> primes) {
