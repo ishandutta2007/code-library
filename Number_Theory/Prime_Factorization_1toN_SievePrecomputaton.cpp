@@ -1,5 +1,7 @@
-//If you need to factorise all numbers from 1 to n . Precomputation via Sieve is faster than querrying Pollard Rho N times.
-
+//If you need to factorise all numbers from 1 to N . 
+//Precomputation via Sieve is faster than querrying Pollard Rho N times.
+//For this N should be small enough such that it is possible to do precomputation.
+  
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
