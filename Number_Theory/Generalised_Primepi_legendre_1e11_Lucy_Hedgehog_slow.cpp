@@ -3,6 +3,7 @@ using namespace std;
 using ll = long long;
 using i128 = __int128;
 // credits: Lucy_Hedgehog
+// https://github.com/Bodigrim/arithmoi/issues/60
 // Legendre
 // O(n^(3/4))
 
