@@ -1,7 +1,8 @@
-//If you need to factorise all numbers from 1 to N . 
-//Precomputation via Sieve is faster than querrying Pollard Rho N times.
-//For this N should be small enough such that it is possible to do precomputation.
-  
+// If you need to factorise all numbers from 1 to N .
+// Precomputation via Sieve is faster than querrying Pollard Rho N times.
+// For this N should be small enough such that it is possible to do
+// precomputation.
+
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
@@ -63,13 +64,13 @@ int main(int argc, char const *argv[]) {
   start_time = clock();
   int n = 20;
   for (int x = 1; x <= n; x++) {
-    cout<<"Factors of "<<x<<" = {";
+    cout << "Factors of " << x << " = {";
     vector<ll> p = getFactorization(x);
     map<ll, int> facs = flat_to_map_format(p);
     for (const auto & [ key, val ] : facs) {
-      cout<< key <<":"<< val<<", ";
+      cout << key << ":" << val << ", ";
     }
-    cout<<"}"<<endl;
+    cout << "}" << endl;
   }
   cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << endl;
   return 0;

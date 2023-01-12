@@ -4,8 +4,10 @@ import pprint as pp
 
 inf = float("inf")
 
+
 def isqrt(n):
     return int(sqrt(n))
+
 
 try:
     from gmpy2 import mpz, isqrt
@@ -141,7 +143,7 @@ def stormer2(
 
 start = time()
 
-primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]  #, 41, 43 , 41, 47]
+primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]  # , 41, 43 , 41, 47]
 solutions = list(stormer2(primes))
 solutions.sort()
 only_even_by2solutions = [
