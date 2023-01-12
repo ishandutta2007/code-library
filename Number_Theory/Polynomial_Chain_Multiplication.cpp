@@ -1,7 +1,8 @@
 /*
  Polynomial Chain Multiplication
  Takes input vals[i] -> coefficients of polynomials
- Computes (x-vals0)(x-vals1)...(x-vals{n-1})
+ Computes (1+x+x^2+x^3+...+x^vals0)(1+x+x^2+x^3+...+x^vals1)...(1+x+x^2+x^3+...+x^vals{n-1})
+ Note it Does not simplify equations to (1-x^(1+vals0))(1-x^(1+vals1))...(1-x^(1+vals{n-1}))/(1-x)^n and yet is faster.
  Returns ans[] -> coefficients of resultant polynomial
  O(N*log^2(N))
  https://discuss.codechef.com/t/countway-editorial/13246/2
