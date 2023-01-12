@@ -1,7 +1,7 @@
 /*
  Polynomial Chain Multiplication
- takes input c[i]-> coefficients of polynomials
- computes (x-c0)(x-c0)(x-c0)..(x-c_{n-1})
+ takes input vals[i]-> coefficients of polynomials
+ computes (x-vals0)(x-vals1)...(x-vals{n-1})
  returns ans[] -> coefficients of resultant polynomial
  O(N*log^2(N))
  https://discuss.codechef.com/t/countway-editorial/13246/2
