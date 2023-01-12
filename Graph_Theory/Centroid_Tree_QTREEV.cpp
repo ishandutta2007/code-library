@@ -4,8 +4,8 @@ using namespace std;
 
 const int maxn = 2e5 + 10;
 vector<int> grafo[maxn]; // graph
-bool rm[maxn]; // is removed?
-int sub[maxn]; // subtree size;
+bool rm[maxn];           // is removed?
+int sub[maxn];           // subtree size;
 
 int dfs(int u, int p = -1) { // dfs to find sizes;
   sub[u] = 1;

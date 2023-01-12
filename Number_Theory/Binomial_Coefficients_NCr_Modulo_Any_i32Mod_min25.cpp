@@ -257,5 +257,4 @@ int main() {
   return 0;
 }
 
-// https://judge.yosupo.jp/problem/binomial_coefficient
-// min_25
+// https://judge.yosupo.jp/submission/46090
