@@ -4,7 +4,7 @@ using namespace std;
 using ll = long long;
 #define db long double
 #define ii pair<int, int>
-#define vi vector<ll>
+#define vll vector<ll>
 #define fi first
 #define se second
 #define sz(a) (int)(a).size()
@@ -55,7 +55,7 @@ public:
 };
 #define cd comp<double>
 vector<cd> w;
-vi rev;
+vll rev;
 ll FFTMOD;
 void revbits(int newlim) {
   static int lim = -1;
@@ -115,7 +115,7 @@ void fft(vector<cd> &poly, int inv = false) {
     for (auto &x : poly)
       x = x / sz(poly);
 }
-vi multiply(vi &a, vi &b) {
+vll multiply(vll &a, vll &b) {
   int bits = 1, sz1 = sz(a) + sz(b), reqsz;
   while ((1 << bits) < sz1)
     ++bits;
@@ -135,7 +135,7 @@ vi multiply(vi &a, vi &b) {
       poly[reqsz - i] = poly[i].conj();
   }
   fft(poly, true);
-  vi ans(sz1 - 1);
+  vll ans(sz1 - 1);
   FN(i, sz(ans)) ans[i] = (ll)(poly[i].real + 0.5) % FFTMOD;
 
   /*Uncomment for multiplication of two numbers
@@ -152,16 +152,16 @@ vi multiply(vi &a, vi &b) {
 } // fft
 
 namespace poly_chain {
-vi coeffs;
-vi polynomial_chain_multiplication(int l, int r) {
+vll coeffs;
+vll polynomial_chain_multiplication(int l, int r) {
   if (l == r) {
-    vi tmp{-coeffs[l], 1};
+    vll tmp{-coeffs[l], 1};
     return tmp;
   }
   int mid = (l + r) >> 1;
-  vi left = polynomial_chain_multiplication(l, mid);
-  vi right = polynomial_chain_multiplication(mid + 1, r);
-  vi ans = fft::multiply(left, right);
+  vll left = polynomial_chain_multiplication(l, mid);
+  vll right = polynomial_chain_multiplication(mid + 1, r);
+  vll ans = fft::multiply(left, right);
   return ans;
 }
 } // poly_chain
@@ -182,7 +182,7 @@ int count_ps_in_fact(ll n, ll p) {
 
 // ll evaluate_P(Polynomial polyx, ll x, ll pp) {}
 
-vi polyx;
+vll polyx;
 void precompute(int p){
       fft::FFTMOD=(ll)(p)*p;
     // fft::FFTMOD=1e9+7;//(ll)(p)*p;
@@ -224,9 +224,9 @@ ll inverted_factorial_after_stripping(ll n, ll p, string gap = "") {
     }
   } else {
     cout << gap + "In " << n << "! " << pp
-         << " Large residual_nos case. Needs to be handled via polynomial"
+         << " Large residual_nos case. Needs to be handled vlla polynomial"
          << endl;
-    // Large residual_nos case.Needs to be handled via polynomial
+    // Large residual_nos case.Needs to be handled vlla polynomial
 
     // P(x)=(x+1)(x+2)(x+3).....(x+p-1)
     cout << gap + "In " << n << "! " << pp
@@ -239,10 +239,10 @@ ll inverted_factorial_after_stripping(ll n, ll p, string gap = "") {
     // poly_chain::coeffs.resize(0);
     // for (int i = 0; i <= p - 1; i++)
     //   poly_chain::coeffs.pb(-i);
-    // vi polyx = poly_chain::polynomial_chain_multiplication(
+    // vll polyx = poly_chain::polynomial_chain_multiplication(
     //     0, sz(poly_chain::coeffs) - 1);
     cout << gap + "In " << n << "! " << pp << " Expanded: ";
-    for (int i = 0; i < polyx.size(); i++)
+    for (int i = 1; i < polyx.size(); i++)
       cout << polyx[i] << " ";
     cout << endl;
 
