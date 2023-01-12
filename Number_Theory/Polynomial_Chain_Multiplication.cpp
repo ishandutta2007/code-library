@@ -1,6 +1,6 @@
 /*
  Polynomial Chain Multiplication
- Takes input vals[i]-> coefficients of polynomials
+ Takes input vals[i] -> coefficients of polynomials
  Computes (x-vals0)(x-vals1)...(x-vals{n-1})
  Returns ans[] -> coefficients of resultant polynomial
  O(N*log^2(N))
