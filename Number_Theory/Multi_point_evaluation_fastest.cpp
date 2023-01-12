@@ -2,7 +2,7 @@
 using u32 = unsigned;
 using u64 = unsigned long long;
 using u128 = __uint128_t;
-u32 output;
+// u32 output;
 
 constexpr u32 N = 1 << 18 | 1;
 constexpr u32 mod = 998244353;
@@ -389,7 +389,7 @@ inline void sub(u32 &x) { x = x ? x - 1 : mod - 1; }
 static const u32 brute_limit = 32;
 u32 n, m, M;
 u32 a[N << 1], b[N << 1], b2[N], b4[N], c[N << 1], d[N << 1];
-u32 ans[N];
+std::vector<u32> ans(N, 0);
 u32 o[9][N];
 u32 val[9][N << 2];
 u32 sgt[9][N << 2];
@@ -604,23 +604,7 @@ inline void naive() {
   }
 }
 
-int main() {
-  cin >> n >> m;
-
-  for (M = 1; M < n || M < m;)
-    M <<= 1;
-  const int max_ask = 1 << 18;
-  if (M > max_ask)
-    M = max_ask;
-
-  base_init(M);
-
-  for (u32 i = 0; i < n; ++i) {
-    cin >> a[i];
-  }
-  for (u32 i = 0; i < m; ++i) {
-    cin >> b[i];
-  }
+std::vector<u32> multi_point_evaluation(int n, int m) {
   if ((u64)n * m < 500000)
     naive();
   else {
@@ -681,6 +665,27 @@ int main() {
       }
     }
   }
+  return ans;
+}
+
+int main() {
+  cin >> n >> m;
+
+  for (M = 1; M < n || M < m;)
+    M <<= 1;
+  const int max_ask = 1 << 18;
+  if (M > max_ask)
+    M = max_ask;
+
+  base_init(M);
+
+  for (u32 i = 0; i < n; ++i) {
+    cin >> a[i];
+  }
+  for (u32 i = 0; i < m; ++i) {
+    cin >> b[i];
+  }
+  auto ans = multi_point_evaluation(n, m);
   for (u32 i = m - 1; ~i; --i) {
     cout << '\n' << ans[i];
   }

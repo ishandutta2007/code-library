@@ -166,8 +166,6 @@ vll polynomial_chain_multiplication(int l, int r) {
 }
 } // poly_chain
 
-
-
 // void factorise(ll n) {}
 
 int count_ps_in_fact(ll n, ll p) {
@@ -183,18 +181,18 @@ int count_ps_in_fact(ll n, ll p) {
 // ll evaluate_P(Polynomial polyx, ll x, ll pp) {}
 
 vll polyx;
-void precompute(int p){
-      fft::FFTMOD=(ll)(p)*p;
-    // fft::FFTMOD=1e9+7;//(ll)(p)*p;
-    poly_chain::coeffs.resize(0);
-    for (int i = 0; i <= p - 1; i++)
-      poly_chain::coeffs.pb(-i);
-    polyx = poly_chain::polynomial_chain_multiplication(
-        0, sz(poly_chain::coeffs) - 1);
-    // cout << gap + "In " << n << "! " << pp << " Expanded: ";
-    // for (int i = 0; i < polyx.size(); i++)
-    //   cout << polyx[i] << " ";
-    // cout << endl;
+void precompute(int p) {
+  fft::FFTMOD = (ll)(p)*p;
+  // fft::FFTMOD=1e9+7;//(ll)(p)*p;
+  poly_chain::coeffs.resize(0);
+  for (int i = 0; i <= p - 1; i++)
+    poly_chain::coeffs.pb(-i);
+  polyx = poly_chain::polynomial_chain_multiplication(
+      0, sz(poly_chain::coeffs) - 1);
+  // cout << gap + "In " << n << "! " << pp << " Expanded: ";
+  // for (int i = 0; i < polyx.size(); i++)
+  //   cout << polyx[i] << " ";
+  // cout << endl;
 }
 
 ll inverted_factorial_after_stripping(ll n, ll p, string gap = "") {
