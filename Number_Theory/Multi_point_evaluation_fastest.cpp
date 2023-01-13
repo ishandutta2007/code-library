@@ -2,6 +2,7 @@
 using u32 = unsigned;
 using u64 = unsigned long long;
 using u128 = __uint128_t;
+namespace MPE {
 // u32 output;
 
 constexpr u32 N = 1 << 18 | 1;
@@ -508,9 +509,9 @@ inline void getans(u32 dep, u32 l, u32 r, u32 *a, u32 *cur, bool good,
     for (int i = l; i < r; ++i) {
       u32 &x = ans[i];
       const u32 b1 = b[i];
-      const u32 b2 = ::b2[i];
+      const u32 b2 = MPE::b2[i];
       const u32 b3 = (u64)b2 * b1 % mod;
-      const u32 b4 = ::b4[i];
+      const u32 b4 = MPE::b4[i];
       x = ((u64)x * b4 + (u64)g[0 + 0] * b3 + (u64)g[0 + 1] * b2 +
            (u64)g[0 + 2] * b1 + g[0 + 3]) %
           mod;
@@ -667,27 +668,27 @@ std::vector<u32> multi_point_evaluation(int n, int m) {
   }
   return ans;
 }
-
+} // MPE
 int main() {
-  cin >> n >> m;
+  MPE::cin >> MPE::n >> MPE::m;
 
-  for (M = 1; M < n || M < m;)
-    M <<= 1;
+  for (MPE::M = 1; MPE::M < MPE::n || MPE::M < MPE::m;)
+    MPE::M <<= 1;
   const int max_ask = 1 << 18;
-  if (M > max_ask)
-    M = max_ask;
+  if (MPE::M > max_ask)
+    MPE::M = max_ask;
 
-  base_init(M);
+  MPE::base_init(MPE::M);
 
-  for (u32 i = 0; i < n; ++i) {
-    cin >> a[i];
+  for (u32 i = 0; i < MPE::n; ++i) {
+    MPE::cin >> MPE::a[i];
   }
-  for (u32 i = 0; i < m; ++i) {
-    cin >> b[i];
+  for (u32 i = 0; i < MPE::m; ++i) {
+    MPE::cin >> MPE::b[i];
   }
-  auto ans = multi_point_evaluation(n, m);
-  for (u32 i = m - 1; ~i; --i) {
-    cout << '\n' << ans[i];
+  auto ans = MPE::multi_point_evaluation(MPE::n, MPE::m);
+  for (u32 i = MPE::m - 1; ~i; --i) {
+    MPE::cout << '\n' << ans[i];
   }
 }
 
