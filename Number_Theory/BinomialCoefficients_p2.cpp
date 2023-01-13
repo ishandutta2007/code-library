@@ -55,7 +55,7 @@ public:
 /*
 ncr modulo p^2 where p is 10^7
 n and r are also 64 bit
-Time complexity O(p^2)
+Time complexity O(p)
 */
 
 #include <bits/stdc++.h>
