@@ -2,19 +2,6 @@
 using u32 = unsigned;
 using u64 = unsigned long long;
 using u128 = __uint128_t;
-namespace MPE {
-// u32 output;
-
-constexpr u32 N = 1 << 18 | 1;
-constexpr u32 mod = 998244353;
-constexpr u32 mod2 = mod * 2;
-
-inline u64 getdiv(u64 x) {
-  constexpr u64 base = (-1ull) / mod;
-  return u64((u128)x * base >> 64);
-}
-
-inline u32 getmod(u64 x) { return (u32)x - mod * u32(getdiv(x)); }
 
 struct istream {
   static const u32 size = 1 << 22;
@@ -57,6 +44,20 @@ struct ostream {
   }
 } cout;
 
+namespace MPE {
+// u32 output;
+
+constexpr u32 N = 1 << 18 | 1;
+constexpr u32 mod = 998244353;
+constexpr u32 mod2 = mod * 2;
+
+inline u64 getdiv(u64 x) {
+  constexpr u64 base = (-1ull) / mod;
+  return u64((u128)x * base >> 64);
+}
+
+inline u32 getmod(u64 x) { return (u32)x - mod * u32(getdiv(x)); }
+
 struct multi_integer {
   u32 val, ival;
   inline multi_integer() {}
@@ -90,10 +91,10 @@ static constexpr u32 map[4] = {0, mod, mod2, mod + mod2};
 inline u32 norm2(u32 x) { return x - map[x >> 30]; }
 inline u32 norm2_lazy(u32 x) { return x - map[x >> 30]; }
 inline u32 norm2_ex(u32 x) { return x - map[x >> 30]; }
-inline u32 pow(u32 a, u32 b, u32 ans = 1) {
-  for (; b; b >>= 1, a = (u64)a * a % mod)
+inline u32 pow(u32 coeff, u32 b, u32 ans = 1) {
+  for (; b; b >>= 1, coeff =(u64)coeff * coeff % mod)
     if (b & 1)
-      ans = (u64)ans * a % mod;
+      ans = (u64)ans * coeff % mod;
   return ans;
 }
 
@@ -127,246 +128,246 @@ inline void safe_init(u32 len) {
 }
 inline u32 multi(u32 w, u32 idx) { return wn[idx] * w; }
 
-inline void dft(u32 *a) {
-#define trans(a, b, idx)                                                       \
+inline void dft(u32 *coeff) {
+#define trans(coeff, b, idx)                                                       \
   {                                                                            \
-    const u32 A = norm2(a + b);                                                \
-    b = wn[idx] * (a + mod2 - b), a = A;                                       \
+    const u32 A = norm2(coeff + b);                                                \
+    b = wn[idx] * (coeff + mod2 - b), coeff =A;                                       \
   }
-#define trans2(a, b)                                                           \
+#define trans2(coeff, b)                                                           \
   {                                                                            \
-    const u32 A = norm2(a + b);                                                \
-    b = norm2(a + mod2 - b), a = A;                                            \
+    const u32 A = norm2(coeff + b);                                                \
+    b = norm2(coeff + mod2 - b), coeff =A;                                            \
   }
 
   for (int mid = lim >> 1; mid != 4; mid >>= 1) {
     for (int j = 0; j != lim; j += mid + mid) {
       for (int k = 0; k != mid; k += 4) {
         const u32 A0 =
-            wn[mid + k + 0] * (a[j + k + 0] + mod2 - a[mid + j + k + 0]);
+            wn[mid + k + 0] * (coeff[j + k + 0] + mod2 - coeff[mid + j + k + 0]);
         const u32 A1 =
-            wn[mid + k + 1] * (a[j + k + 1] + mod2 - a[mid + j + k + 1]);
+            wn[mid + k + 1] * (coeff[j + k + 1] + mod2 - coeff[mid + j + k + 1]);
         const u32 A2 =
-            wn[mid + k + 2] * (a[j + k + 2] + mod2 - a[mid + j + k + 2]);
+            wn[mid + k + 2] * (coeff[j + k + 2] + mod2 - coeff[mid + j + k + 2]);
         const u32 A3 =
-            wn[mid + k + 3] * (a[j + k + 3] + mod2 - a[mid + j + k + 3]);
-        a[j + k + 0] = norm2(a[j + k + 0] + a[mid + j + k + 0]);
-        a[j + k + 1] = norm2(a[j + k + 1] + a[mid + j + k + 1]);
-        a[j + k + 2] = norm2(a[j + k + 2] + a[mid + j + k + 2]);
-        a[j + k + 3] = norm2(a[j + k + 3] + a[mid + j + k + 3]);
-        a[mid + j + k + 0] = A0;
-        a[mid + j + k + 1] = A1;
-        a[mid + j + k + 2] = A2;
-        a[mid + j + k + 3] = A3;
+            wn[mid + k + 3] * (coeff[j + k + 3] + mod2 - coeff[mid + j + k + 3]);
+        coeff[j + k + 0] = norm2(coeff[j + k + 0] + coeff[mid + j + k + 0]);
+        coeff[j + k + 1] = norm2(coeff[j + k + 1] + coeff[mid + j + k + 1]);
+        coeff[j + k + 2] = norm2(coeff[j + k + 2] + coeff[mid + j + k + 2]);
+        coeff[j + k + 3] = norm2(coeff[j + k + 3] + coeff[mid + j + k + 3]);
+        coeff[mid + j + k + 0] = A0;
+        coeff[mid + j + k + 1] = A1;
+        coeff[mid + j + k + 2] = A2;
+        coeff[mid + j + k + 3] = A3;
       }
     }
   }
   for (int j = 0; j != lim; j += 8) {
-    trans2(a[j + 0], a[j + 4]);
-    trans(a[j + 1], a[j + 5], 5);
-    trans(a[j + 2], a[j + 6], 6);
-    trans(a[j + 3], a[j + 7], 7);
+    trans2(coeff[j + 0], coeff[j + 4]);
+    trans(coeff[j + 1], coeff[j + 5], 5);
+    trans(coeff[j + 2], coeff[j + 6], 6);
+    trans(coeff[j + 3], coeff[j + 7], 7);
 
-    trans2(a[j + 0], a[j + 2]);
-    trans(a[j + 1], a[j + 3], 3);
-    trans2(a[j + 4], a[j + 6]);
-    trans(a[j + 5], a[j + 7], 3);
+    trans2(coeff[j + 0], coeff[j + 2]);
+    trans(coeff[j + 1], coeff[j + 3], 3);
+    trans2(coeff[j + 4], coeff[j + 6]);
+    trans(coeff[j + 5], coeff[j + 7], 3);
 
-    trans2(a[j + 0], a[j + 1]);
-    trans2(a[j + 2], a[j + 3]);
-    trans2(a[j + 4], a[j + 5]);
-    trans2(a[j + 6], a[j + 7]);
+    trans2(coeff[j + 0], coeff[j + 1]);
+    trans2(coeff[j + 2], coeff[j + 3]);
+    trans2(coeff[j + 4], coeff[j + 5]);
+    trans2(coeff[j + 6], coeff[j + 7]);
   }
 #undef trans
 #undef trans2
 }
 
-inline void dft_last(u32 *a) {
+inline void dft_last(u32 *coeff) {
   int mid = lim >> 1;
 
   {
     int k = 0, limit = mid / 2 + 1;
     for (; k + 1 != limit; k += 4) {
-      a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
-      a[mid + k + 1] = wn[mid + k + 1] * a[k + 1];
-      a[mid + k + 2] = wn[mid + k + 2] * a[k + 2];
-      a[mid + k + 3] = wn[mid + k + 3] * a[k + 3];
+      coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
+      coeff[mid + k + 1] = wn[mid + k + 1] * coeff[k + 1];
+      coeff[mid + k + 2] = wn[mid + k + 2] * coeff[k + 2];
+      coeff[mid + k + 3] = wn[mid + k + 3] * coeff[k + 3];
     }
-    a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
+    coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
   }
 
   mid >>= 1;
 
-  const u32 A0 = wn[mid + 0] * (a[0] + mod2 - a[mid + 0]);
-  a[0] = norm2(a[0] + a[mid + 0]), a[mid + 0] = A0;
+  const u32 A0 = wn[mid + 0] * (coeff[0] + mod2 - coeff[mid + 0]);
+  coeff[0] = norm2(coeff[0] + coeff[mid + 0]), coeff[mid + 0] = A0;
 
   {
     int k = 1;
     for (; k + 3 != mid; k += 4) {
-      a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
-      a[mid + k + 1] = wn[mid + k + 1] * a[k + 1];
-      a[mid + k + 2] = wn[mid + k + 2] * a[k + 2];
-      a[mid + k + 3] = wn[mid + k + 3] * a[k + 3];
+      coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
+      coeff[mid + k + 1] = wn[mid + k + 1] * coeff[k + 1];
+      coeff[mid + k + 2] = wn[mid + k + 2] * coeff[k + 2];
+      coeff[mid + k + 3] = wn[mid + k + 3] * coeff[k + 3];
     }
     for (; k != mid; k += 1)
-      a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
+      coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
   }
 
-  a += mid + mid;
+  coeff += mid + mid;
 
-  const u32 A1 = wn[mid + 0] * (a[0] + mod2 - a[mid + 0]);
-  a[0] = norm2(a[0] + a[mid + 0]), a[mid + 0] = A1;
+  const u32 A1 = wn[mid + 0] * (coeff[0] + mod2 - coeff[mid + 0]);
+  coeff[0] = norm2(coeff[0] + coeff[mid + 0]), coeff[mid + 0] = A1;
 
   {
     int k = 1;
     for (; k + 3 != mid; k += 4) {
-      a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
-      a[mid + k + 1] = wn[mid + k + 1] * a[k + 1];
-      a[mid + k + 2] = wn[mid + k + 2] * a[k + 2];
-      a[mid + k + 3] = wn[mid + k + 3] * a[k + 3];
+      coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
+      coeff[mid + k + 1] = wn[mid + k + 1] * coeff[k + 1];
+      coeff[mid + k + 2] = wn[mid + k + 2] * coeff[k + 2];
+      coeff[mid + k + 3] = wn[mid + k + 3] * coeff[k + 3];
     }
     for (; k != mid; k += 1)
-      a[mid + k + 0] = wn[mid + k + 0] * a[k + 0];
+      coeff[mid + k + 0] = wn[mid + k + 0] * coeff[k + 0];
   }
 
   init(lim >> 2);
-  dft(a - lim);
-  dft(a);
-  dft(a + lim);
+  dft(coeff - lim);
+  dft(coeff);
+  dft(coeff + lim);
 }
 
 inline u32 div_lim(u32 x) { return (x + u64(-x & (lim - 1)) * mod) >> shift; }
-inline void base_idft(u32 *a) {
-#define trans(a, b, idx)                                                       \
+inline void base_idft(u32 *coeff) {
+#define trans(coeff, b, idx)                                                       \
   {                                                                            \
-    u32 A = norm2_lazy(a), B = iwn[idx] * b;                                   \
-    a = A + B;                                                                 \
+    u32 A = norm2_lazy(coeff), B = iwn[idx] * b;                                   \
+    coeff =A + B;                                                                 \
     b = A + mod2 - B;                                                          \
   }
-#define trans2(a, b)                                                           \
+#define trans2(coeff, b)                                                           \
   {                                                                            \
-    const u32 A = norm2(a), B = norm2(b);                                      \
-    a = A + B;                                                                 \
+    const u32 A = norm2(coeff), B = norm2(b);                                      \
+    coeff =A + B;                                                                 \
     b = A + mod2 - B;                                                          \
   }
 
   for (int j = 0; j != lim; j += 8) {
-    trans2(a[j + 0], a[j + 1]);
-    trans2(a[j + 2], a[j + 3]);
-    trans2(a[j + 4], a[j + 5]);
-    trans2(a[j + 6], a[j + 7]);
+    trans2(coeff[j + 0], coeff[j + 1]);
+    trans2(coeff[j + 2], coeff[j + 3]);
+    trans2(coeff[j + 4], coeff[j + 5]);
+    trans2(coeff[j + 6], coeff[j + 7]);
 
-    trans2(a[j + 0], a[j + 2]);
-    trans(a[j + 1], a[j + 3], 3);
-    trans2(a[j + 4], a[j + 6]);
-    trans(a[j + 5], a[j + 7], 3);
+    trans2(coeff[j + 0], coeff[j + 2]);
+    trans(coeff[j + 1], coeff[j + 3], 3);
+    trans2(coeff[j + 4], coeff[j + 6]);
+    trans(coeff[j + 5], coeff[j + 7], 3);
 
-    trans2(a[j + 0], a[j + 4]);
-    trans(a[j + 1], a[j + 5], 5);
-    trans(a[j + 2], a[j + 6], 6);
-    trans(a[j + 3], a[j + 7], 7);
+    trans2(coeff[j + 0], coeff[j + 4]);
+    trans(coeff[j + 1], coeff[j + 5], 5);
+    trans(coeff[j + 2], coeff[j + 6], 6);
+    trans(coeff[j + 3], coeff[j + 7], 7);
   }
   for (int mid = 8; mid != lim; mid <<= 1) {
     for (int j = 0; j != lim; j += mid + mid) {
       for (int k = 0; k != mid; k += 4) {
-        const u32 A0 = norm2_lazy(a[j + k + 0]),
-                  B0 = iwn[mid + k + 0] * a[mid + j + k + 0];
-        const u32 A1 = norm2_lazy(a[j + k + 1]),
-                  B1 = iwn[mid + k + 1] * a[mid + j + k + 1];
-        const u32 A2 = norm2_lazy(a[j + k + 2]),
-                  B2 = iwn[mid + k + 2] * a[mid + j + k + 2];
-        const u32 A3 = norm2_lazy(a[j + k + 3]),
-                  B3 = iwn[mid + k + 3] * a[mid + j + k + 3];
-        a[mid + j + k + 0] = A0 + mod2 - B0;
-        a[mid + j + k + 1] = A1 + mod2 - B1;
-        a[mid + j + k + 2] = A2 + mod2 - B2;
-        a[mid + j + k + 3] = A3 + mod2 - B3;
-        a[j + k + 0] = A0 + B0;
-        a[j + k + 1] = A1 + B1;
-        a[j + k + 2] = A2 + B2;
-        a[j + k + 3] = A3 + B3;
+        const u32 A0 = norm2_lazy(coeff[j + k + 0]),
+                  B0 = iwn[mid + k + 0] * coeff[mid + j + k + 0];
+        const u32 A1 = norm2_lazy(coeff[j + k + 1]),
+                  B1 = iwn[mid + k + 1] * coeff[mid + j + k + 1];
+        const u32 A2 = norm2_lazy(coeff[j + k + 2]),
+                  B2 = iwn[mid + k + 2] * coeff[mid + j + k + 2];
+        const u32 A3 = norm2_lazy(coeff[j + k + 3]),
+                  B3 = iwn[mid + k + 3] * coeff[mid + j + k + 3];
+        coeff[mid + j + k + 0] = A0 + mod2 - B0;
+        coeff[mid + j + k + 1] = A1 + mod2 - B1;
+        coeff[mid + j + k + 2] = A2 + mod2 - B2;
+        coeff[mid + j + k + 3] = A3 + mod2 - B3;
+        coeff[j + k + 0] = A0 + B0;
+        coeff[j + k + 1] = A1 + B1;
+        coeff[j + k + 2] = A2 + B2;
+        coeff[j + k + 3] = A3 + B3;
       }
     }
   }
 #undef trans
 #undef trans2
 }
-inline void idft_last_copy(u32 *a, u32 *res) {
+inline void idft_last_copy(u32 *coeff, u32 *res) {
 
-#define trans(a, b, idx)                                                       \
+#define trans(coeff, b, idx)                                                       \
   {                                                                            \
-    u32 A = norm2_lazy(a), B = iwn[idx] * b;                                   \
-    a = A + B;                                                                 \
+    u32 A = norm2_lazy(coeff), B = iwn[idx] * b;                                   \
+    coeff = A + B;                                                                 \
     b = A + mod2 - B;                                                          \
   }
-#define trans2(a, b)                                                           \
+#define trans2(coeff, b)                                                           \
   {                                                                            \
-    const u32 A = norm2(a), B = norm2(b);                                      \
-    a = A + B;                                                                 \
+    const u32 A = norm2(coeff), B = norm2(b);                                      \
+    coeff = A + B;                                                                 \
     b = A + mod2 - B;                                                          \
   }
   for (int j = 0; j != lim; j += 8) {
-    trans2(a[j + 0], a[j + 1]);
-    trans2(a[j + 2], a[j + 3]);
-    trans2(a[j + 4], a[j + 5]);
-    trans2(a[j + 6], a[j + 7]);
+    trans2(coeff[j + 0], coeff[j + 1]);
+    trans2(coeff[j + 2], coeff[j + 3]);
+    trans2(coeff[j + 4], coeff[j + 5]);
+    trans2(coeff[j + 6], coeff[j + 7]);
 
-    trans2(a[j + 0], a[j + 2]);
-    trans(a[j + 1], a[j + 3], 3);
-    trans2(a[j + 4], a[j + 6]);
-    trans(a[j + 5], a[j + 7], 3);
+    trans2(coeff[j + 0], coeff[j + 2]);
+    trans(coeff[j + 1], coeff[j + 3], 3);
+    trans2(coeff[j + 4], coeff[j + 6]);
+    trans(coeff[j + 5], coeff[j + 7], 3);
 
-    trans2(a[j + 0], a[j + 4]);
-    trans(a[j + 1], a[j + 5], 5);
-    trans(a[j + 2], a[j + 6], 6);
-    trans(a[j + 3], a[j + 7], 7);
+    trans2(coeff[j + 0], coeff[j + 4]);
+    trans(coeff[j + 1], coeff[j + 5], 5);
+    trans(coeff[j + 2], coeff[j + 6], 6);
+    trans(coeff[j + 3], coeff[j + 7], 7);
   }
   for (int mid = 8; mid<lim>> 2; mid <<= 1) {
     for (int j = 0; j != lim; j += mid + mid) {
       for (int k = 0; k != mid; k += 4) {
-        const u32 A0 = norm2_lazy(a[j + k + 0]),
-                  B0 = iwn[mid + k + 0] * a[mid + j + k + 0];
-        const u32 A1 = norm2_lazy(a[j + k + 1]),
-                  B1 = iwn[mid + k + 1] * a[mid + j + k + 1];
-        const u32 A2 = norm2_lazy(a[j + k + 2]),
-                  B2 = iwn[mid + k + 2] * a[mid + j + k + 2];
-        const u32 A3 = norm2_lazy(a[j + k + 3]),
-                  B3 = iwn[mid + k + 3] * a[mid + j + k + 3];
-        a[mid + j + k + 0] = A0 + mod2 - B0;
-        a[mid + j + k + 1] = A1 + mod2 - B1;
-        a[mid + j + k + 2] = A2 + mod2 - B2;
-        a[mid + j + k + 3] = A3 + mod2 - B3;
-        a[j + k + 0] = A0 + B0;
-        a[j + k + 1] = A1 + B1;
-        a[j + k + 2] = A2 + B2;
-        a[j + k + 3] = A3 + B3;
+        const u32 A0 = norm2_lazy(coeff[j + k + 0]),
+                  B0 = iwn[mid + k + 0] * coeff[mid + j + k + 0];
+        const u32 A1 = norm2_lazy(coeff[j + k + 1]),
+                  B1 = iwn[mid + k + 1] * coeff[mid + j + k + 1];
+        const u32 A2 = norm2_lazy(coeff[j + k + 2]),
+                  B2 = iwn[mid + k + 2] * coeff[mid + j + k + 2];
+        const u32 A3 = norm2_lazy(coeff[j + k + 3]),
+                  B3 = iwn[mid + k + 3] * coeff[mid + j + k + 3];
+        coeff[mid + j + k + 0] = A0 + mod2 - B0;
+        coeff[mid + j + k + 1] = A1 + mod2 - B1;
+        coeff[mid + j + k + 2] = A2 + mod2 - B2;
+        coeff[mid + j + k + 3] = A3 + mod2 - B3;
+        coeff[j + k + 0] = A0 + B0;
+        coeff[j + k + 1] = A1 + B1;
+        coeff[j + k + 2] = A2 + B2;
+        coeff[j + k + 3] = A3 + B3;
       }
     }
   }
   int mid = lim >> 2;
   for (int j = 0; j != lim; j += mid + mid) {
     for (int k = 0; k != mid; k += 4) {
-      const u32 A0 = norm2_lazy(a[j + k + 0]),
-                B0 = iwn[mid + k + 0] * a[mid + j + k + 0];
-      const u32 A1 = norm2_lazy(a[j + k + 1]),
-                B1 = iwn[mid + k + 1] * a[mid + j + k + 1];
-      const u32 A2 = norm2_lazy(a[j + k + 2]),
-                B2 = iwn[mid + k + 2] * a[mid + j + k + 2];
-      const u32 A3 = norm2_lazy(a[j + k + 3]),
-                B3 = iwn[mid + k + 3] * a[mid + j + k + 3];
-      a[mid + j + k + 0] = A0 + mod2 - B0;
-      a[mid + j + k + 1] = A1 + mod2 - B1;
-      a[mid + j + k + 2] = A2 + mod2 - B2;
-      a[mid + j + k + 3] = A3 + mod2 - B3;
+      const u32 A0 = norm2_lazy(coeff[j + k + 0]),
+                B0 = iwn[mid + k + 0] * coeff[mid + j + k + 0];
+      const u32 A1 = norm2_lazy(coeff[j + k + 1]),
+                B1 = iwn[mid + k + 1] * coeff[mid + j + k + 1];
+      const u32 A2 = norm2_lazy(coeff[j + k + 2]),
+                B2 = iwn[mid + k + 2] * coeff[mid + j + k + 2];
+      const u32 A3 = norm2_lazy(coeff[j + k + 3]),
+                B3 = iwn[mid + k + 3] * coeff[mid + j + k + 3];
+      coeff[mid + j + k + 0] = A0 + mod2 - B0;
+      coeff[mid + j + k + 1] = A1 + mod2 - B1;
+      coeff[mid + j + k + 2] = A2 + mod2 - B2;
+      coeff[mid + j + k + 3] = A3 + mod2 - B3;
     }
   }
   res -= mid;
   mid <<= 1;
   for (int k = mid >> 1; k != mid; k += 4) {
-    const u32 A0 = norm2_lazy(a[k + 0]), B0 = iwn[mid + k + 0] * a[mid + k + 0];
-    const u32 A1 = norm2_lazy(a[k + 1]), B1 = iwn[mid + k + 1] * a[mid + k + 1];
-    const u32 A2 = norm2_lazy(a[k + 2]), B2 = iwn[mid + k + 2] * a[mid + k + 2];
-    const u32 A3 = norm2_lazy(a[k + 3]), B3 = iwn[mid + k + 3] * a[mid + k + 3];
+    const u32 A0 = norm2_lazy(coeff[k + 0]), B0 = iwn[mid + k + 0] * coeff[mid + k + 0];
+    const u32 A1 = norm2_lazy(coeff[k + 1]), B1 = iwn[mid + k + 1] * coeff[mid + k + 1];
+    const u32 A2 = norm2_lazy(coeff[k + 2]), B2 = iwn[mid + k + 2] * coeff[mid + k + 2];
+    const u32 A3 = norm2_lazy(coeff[k + 3]), B3 = iwn[mid + k + 3] * coeff[mid + k + 3];
     res[k + 0] = norm2_ex(A0 + mod2 - B0);
     res[k + 1] = norm2_ex(A1 + mod2 - B1);
     res[k + 2] = norm2_ex(A2 + mod2 - B2);
@@ -376,20 +377,19 @@ inline void idft_last_copy(u32 *a, u32 *res) {
 #undef trans2
 }
 
-inline void idft(u32 *a) {
-  base_idft(a);
+inline void idft(u32 *coeff) {
+  base_idft(coeff);
   for (int i = 0; i != lim; ++i)
-    a[i] = div_lim(a[i]);
+    coeff[i] = div_lim(coeff[i]);
 }
 
-inline void fill(u32 *a, const u32 *b, u32 len) {
-  memcpy(a, b, len << 2);
-  memset(a + len, 0, (lim - len) << 2);
+inline void fill(u32 *coeff, const u32 *b, u32 len) {
+  memcpy(coeff, b, len << 2);
+  memset(coeff + len, 0, (lim - len) << 2);
 }
 inline void sub(u32 &x) { x = x ? x - 1 : mod - 1; }
 static const u32 brute_limit = 32;
-u32 n, m, M;
-u32 a[N << 1], b[N << 1], b2[N], b4[N], c[N << 1], d[N << 1];
+u32 coeff[N << 1], b[N << 1], b2[N], b4[N], c[N << 1], d[N << 1];
 std::vector<u32> ans(N, 0);
 u32 o[9][N];
 u32 val[9][N << 2];
@@ -398,15 +398,15 @@ u32 sgt[9][N << 2];
 u32 power_b[N], ex_b[N];
 u32 dft_val[N];
 
-inline void prod(u32 *a, const u32 *b, const u32 *c) {
+inline void prod(u32 *coeff, const u32 *b, const u32 *c) {
   for (int i = 0; i < lim; i += 4) {
-    a[i + 0] = getmod((u64)b[i + 0] * c[i + 0]);
-    a[i + 1] = getmod((u64)b[i + 1] * c[i + 1]);
-    a[i + 2] = getmod((u64)b[i + 2] * c[i + 2]);
-    a[i + 3] = getmod((u64)b[i + 3] * c[i + 3]);
+    coeff[i + 0] = getmod((u64)b[i + 0] * c[i + 0]);
+    coeff[i + 1] = getmod((u64)b[i + 1] * c[i + 1]);
+    coeff[i + 2] = getmod((u64)b[i + 2] * c[i + 2]);
+    coeff[i + 3] = getmod((u64)b[i + 3] * c[i + 3]);
   }
 }
-inline void solve(u32 dep, u32 l, u32 r, bool good) {
+inline void solve(u32 m, u32 dep, u32 l, u32 r, bool good) {
 
   if (l >= m) {
     std::fill(val[dep] + l * 4, val[dep] + r * 4, 1);
@@ -448,10 +448,10 @@ inline void solve(u32 dep, u32 l, u32 r, bool good) {
     u32 mid0 = (l * 3 + r * 1) >> 2;
     u32 mid1 = (l * 2 + r * 2) >> 2;
     u32 mid2 = (l * 1 + r * 3) >> 2;
-    solve(dep + 1, l, mid0, 1);
-    solve(dep + 1, mid0, mid1, 1);
-    solve(dep + 1, mid1, mid2, 1);
-    solve(dep + 1, mid2, r, 1);
+    solve(m, dep + 1, l, mid0, 1);
+    solve(m, dep + 1, mid0, mid1, 1);
+    solve(m, dep + 1, mid1, mid2, 1);
+    solve(m, dep + 1, mid2, r, 1);
     init(n);
     u32 *da = val[dep + 1] + l * 4;
     u32 *db = val[dep + 1] + mid0 * 4;
@@ -483,7 +483,7 @@ inline void solve(u32 dep, u32 l, u32 r, bool good) {
     }
   }
 }
-inline void getans(u32 dep, u32 l, u32 r, u32 *a, u32 *cur, bool good,
+inline void getans(u32 m, u32 dep, u32 l, u32 r, u32 *coeff, u32 *cur, bool good,
                    u32 inv) {
 
   if (l >= m)
@@ -495,15 +495,15 @@ inline void getans(u32 dep, u32 l, u32 r, u32 *a, u32 *cur, bool good,
     memcpy(B + 1, o[dep] + l, (n - 1) << 2);
     *B = 1;
     for (int i = 0; i < n; ++i) {
-      a[i] = norm1(a[i]);
+      coeff[i] = norm1(coeff[i]);
       u64 sum = 0;
       int j = 0;
       for (; j + 3 <= i; j += 4) {
-        sum += (u64)a[j + 0] * B[i - j - 0] + (u64)a[j + 1] * B[i - j - 1] +
-               (u64)a[j + 2] * B[i - j - 2] + (u64)a[j + 3] * B[i - j - 3];
+        sum += (u64)coeff[j + 0] * B[i - j - 0] + (u64)coeff[j + 1] * B[i - j - 1] +
+               (u64)coeff[j + 2] * B[i - j - 2] + (u64)coeff[j + 3] * B[i - j - 3];
       }
       for (; j <= i; ++j)
-        sum += (u64)a[j] * B[i - j];
+        sum += (u64)coeff[j] * B[i - j];
       g[i] = sum % mod;
     }
     for (int i = l; i < r; ++i) {
@@ -535,8 +535,8 @@ inline void getans(u32 dep, u32 l, u32 r, u32 *a, u32 *cur, bool good,
 
   if (mid0 >= m) {
     for (int i = 0; i != n / 4; ++i)
-      a[n + i] = a[n / 4 * 3 + i];
-    getans(dep + 1, l, mid0, a + n, cur + n, 1, inv);
+      coeff[n + i] = coeff[n / 4 * 3 + i];
+    getans(m, dep + 1, l, mid0, coeff + n, cur + n, 1, inv);
     return;
   }
 
@@ -551,76 +551,76 @@ inline void getans(u32 dep, u32 l, u32 r, u32 *a, u32 *cur, bool good,
   u32 *dcd = sgt[dep] + mid1 * 2;
 
   init(n);
-  dft(a);
+  dft(coeff);
 
-  prod(cur, a, dcd);
+  prod(cur, coeff, dcd);
   prod(c, cur, db);
 
   inv = div_lim(inv);
-  idft_last_copy(c, a + n);
-  getans(dep + 1, l, mid0, a + n, cur + n, 1, inv);
+  idft_last_copy(c, coeff + n);
+  getans(m, dep + 1, l, mid0, coeff + n, cur + n, 1, inv);
 
   if (mid0 >= m)
     return;
   init(n);
   prod(c, cur, da);
-  idft_last_copy(c, a + n);
-  getans(dep + 1, mid0, mid1, a + n, cur + n, 1, inv);
+  idft_last_copy(c, coeff + n);
+  getans(m, dep + 1, mid0, mid1, coeff + n, cur + n, 1, inv);
 
   if (mid1 >= m)
     return;
   init(n);
-  prod(cur, a, dab);
+  prod(cur, coeff, dab);
   prod(c, cur, dd);
-  idft_last_copy(c, a + n);
-  getans(dep + 1, mid1, mid2, a + n, cur + n, 1, inv);
+  idft_last_copy(c, coeff + n);
+  getans(m, dep + 1, mid1, mid2, coeff + n, cur + n, 1, inv);
 
   if (mid2 >= m)
     return;
   init(n);
   prod(c, cur, dc);
-  idft_last_copy(c, a + n);
-  getans(dep + 1, mid2, r, a + n, cur + n, 1, inv);
+  idft_last_copy(c, coeff + n);
+  getans(m, dep + 1, mid2, r, coeff + n, cur + n, 1, inv);
 }
 
-inline void init_inv(const u32 *a, u32 *res, int n) {
+inline void init_inv(const u32 *coeff, u32 *res, int n) {
   static u32 pre[N];
-  *pre = *a;
+  *pre = *coeff;
   for (int i = 1; i != n; ++i) {
-    pre[i] = (u64)pre[i - 1] * a[i] % mod;
+    pre[i] = (u64)pre[i - 1] * coeff[i] % mod;
   }
   u32 &all_inv = res[0] = pow(pre[n - 1], mod - 2);
   for (int i = n - 1; i; --i) {
     res[i] = (u64)all_inv * pre[i - 1] % mod;
-    all_inv = (u64)all_inv * a[i] % mod;
+    all_inv = (u64)all_inv * coeff[i] % mod;
   }
 }
 
-inline void naive() {
+inline void naive(u32 n, u32 m) {
   for (u32 i = m - 1; ~i; --i) {
     u32 x = b[i], &ret = ans[i] = 0;
     for (int i = n - 1; ~i; --i) {
-      ret = ((u64)ret * x + a[i]) % mod;
+      ret = ((u64)ret * x + coeff[i]) % mod;
     }
   }
 }
 
-std::vector<u32> multi_point_evaluation(int n, int m) {
+std::vector<u32> multi_point_evaluation(u32 n, u32 m, u32 M) {
   if ((u64)n * m < 500000)
-    naive();
+    naive(n, m);
   else {
     init(M);
-    fill(dfta, a, n);
+    fill(dfta, coeff, n);
     dft(dfta);
     for (int i = 1; i < lim; ++i)
       rev[i] = rev[i >> 1] >> 1 | i % 2 * lim / 2;
     const int GG = pow(3, mod / lim);
     for (int i = 0, multi = 1; i < lim; ++i) {
-      a[rev[lim - i]] = (u64)dfta[rev[i]] * multi % mod;
+      coeff[rev[lim - i]] = (u64)dfta[rev[i]] * multi % mod;
       w[i] = multi;
       multi = (u64)multi * GG % mod;
     }
-    *a = *dfta;
+    *coeff =*dfta;
 
     u32 res = 0;
     for (int i = 0; i < m; ++i) {
@@ -649,15 +649,15 @@ std::vector<u32> multi_point_evaluation(int n, int m) {
       }
     }
 
-    solve(0, 0, M, 0);
+    solve(m, 0, 0, M, 0);
     init(M);
     init_inv(dft_val, d, M);
-    prod(a, d, a);
-    idft(a);
+    prod(coeff, d, coeff);
+    idft(coeff);
     for (u32 i = 0; i < M; ++i)
-      a[i] = norm2(a[i]);
+      coeff[i] = norm2(coeff[i]);
     static u32 cur[N << 1];
-    getans(0, 0, M, a, cur, 0, 1);
+    getans(m, 0, 0, M, coeff, cur, 0, 1);
     for (int i = 0; i < m; ++i) {
       if (power_b[i]) {
         ans[i] = (u64)ans[i] * (mod - power_b[i]) % mod;
@@ -669,26 +669,30 @@ std::vector<u32> multi_point_evaluation(int n, int m) {
   return ans;
 }
 } // MPE
+
+u32 n, m, M;
 int main() {
-  MPE::cin >> MPE::n >> MPE::m;
+  cin >> n >> m;
 
-  for (MPE::M = 1; MPE::M < MPE::n || MPE::M < MPE::m;)
-    MPE::M <<= 1;
+  for (M = 1; M < n || M < m;)
+    M <<= 1;
   const int max_ask = 1 << 18;
-  if (MPE::M > max_ask)
-    MPE::M = max_ask;
+  if (M > max_ask)
+    M = max_ask;
 
-  MPE::base_init(MPE::M);
+  MPE::base_init(M);
 
-  for (u32 i = 0; i < MPE::n; ++i) {
-    MPE::cin >> MPE::a[i];
+  for (u32 i = 0; i < n; ++i) {
+    cin >> MPE::coeff[i];
   }
-  for (u32 i = 0; i < MPE::m; ++i) {
-    MPE::cin >> MPE::b[i];
+
+  for (u32 i = 0; i < m; ++i) {
+    cin >> MPE::b[i];
   }
-  auto ans = MPE::multi_point_evaluation(MPE::n, MPE::m);
-  for (u32 i = MPE::m - 1; ~i; --i) {
-    MPE::cout << '\n' << ans[i];
+
+  auto ans = MPE::multi_point_evaluation(n, m, M);
+  for (u32 i = m - 1; ~i; --i) {
+    cout << '\n' << ans[i];
   }
 }
 
