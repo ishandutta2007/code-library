@@ -51,7 +51,10 @@ public:
 #define tr_end(ans, ...) ans
 #define dbg(arg) arg
 #endif // TRACE
-
+/*
+ncr modulo p^2 where p is 10^7
+n and r are also 64 bit
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -466,24 +469,31 @@ i128 bonom_p2(ll n, ll r, ll p) {
 }
 
 int main() {
-  // i128 b = bonom_p2(240, 130, 7);
+  ll p;
+  i128 b;
+  // b = bonom_p2(240, 130, 7);
   // cout << "bonom_p2(240, 130) mod " << 7 * 7 << " = " << (ll)b << endl;
-  // ll p = 10007;
-  // i128 b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
-  // cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << " = " << (ll)b <<
+
+  // p = 10007;
+  // b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
+  // cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << " = " << (ll)b
+  // <<endl;
+
+  // p = 10007;
+  // b = bonom_p2((ll)(99930048), (ll)(99930048) / 2, p);
+  // cout << "bonom_p2(99930048, 99930048/2)%" << (ll)(p) * (p) << "=" <<(ll)b<<
   // endl;
-  // ll p = 10007;
-  // i128 b = bonom_p2((ll)(99930048), (ll)(99930048) / 2, p);
-  // cout << "bonom_p2(99930048, 99930048/2)%" << (ll)(p) * (p) << "=" <<(ll)b
-  // << endl;
-  // ll p = 100019;
-  // i128 b = bonom_p2((ll)(1e15), (ll)(1e15) / 2, p);
+
+  // p = 100019;
+  // b = bonom_p2((ll)(1e15), (ll)(1e15) / 2, p);
   // cout << "bonom_p2(1e15, 5*1e14)%"  << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  // ll p = 1000003;
-  // i128 b = bonom_p2((ll)(1e14), (ll)(1e14) / 2, p);
+
+  // p = 1000003;
+  // b = bonom_p2((ll)(1e14), (ll)(1e14) / 2, p);
   // cout << "bonom_p2(1e14, 5*1e13)%" << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  ll p = 10000019;
-  i128 b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
+
+  p = 10000019;
+  b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
   cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << "=" << (ll)b << endl;
   return 0;
 }
