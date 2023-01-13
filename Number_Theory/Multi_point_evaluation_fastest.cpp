@@ -34,8 +34,9 @@ struct ostream {
         *--(unsigned *&)vout = map[x % 10000];
       while (x)
         *--vout = x % 10 + 48, x /= 10;
-    } else
+    } else {
       *--vout = 48;
+    }
     return *this;
   }
   inline ostream &operator<<(char x) {
@@ -46,11 +47,11 @@ struct ostream {
 
 namespace MPE {
 constexpr u32 N = 1 << 18 | 1;
-constexpr u32 mod = 998244353;
-constexpr u32 mod2 = mod * 2;
+u32 mod;
+u32 mod2 = mod * 2;
 
 inline u64 getdiv(u64 x) {
-  constexpr u64 base = (-1ull) / mod;
+  u64 base = (-1ull) / mod;
   return u64((u128)x * base >> 64);
 }
 
@@ -85,7 +86,7 @@ inline u32 get_index(u32 x, u32 lim) {
 }
 
 __attribute((always_inline)) u32 norm1(u32 x) { return x >= mod ? x - mod : x; }
-static constexpr u32 map[4] = {0, mod, mod2, mod + mod2};
+static u32 map[4] = {0, mod, mod2, mod + mod2};
 inline u32 norm2(u32 x) { return x - map[x >> 30]; }
 inline u32 norm2_lazy(u32 x) { return x - map[x >> 30]; }
 inline u32 norm2_ex(u32 x) { return x - map[x >> 30]; }
@@ -610,14 +611,15 @@ inline void naive(u32 n, u32 m) {
 }
 
 std::vector<u32> multi_point_evaluation(u32 n, u32 m, u32 M) {
-  if ((u64)n * m < 500000)
+  if ((u64)n * m < 500000) {
     naive(n, m);
-  else {
+  } else {
     init(M);
     fill(dfta, coeff, n);
     dft(dfta);
-    for (int i = 1; i < lim; ++i)
+    for (int i = 1; i < lim; ++i) {
       rev[i] = rev[i >> 1] >> 1 | i % 2 * lim / 2;
+    }
     const int GG = pow(3, mod / lim);
     for (int i = 0, multi = 1; i < lim; ++i) {
       coeff[rev[lim - i]] = (u64)dfta[rev[i]] * multi % mod;
@@ -658,8 +660,9 @@ std::vector<u32> multi_point_evaluation(u32 n, u32 m, u32 M) {
     init_inv(dft_val, d, M);
     prod(coeff, d, coeff);
     idft(coeff);
-    for (u32 i = 0; i < M; ++i)
+    for (u32 i = 0; i < M; ++i) {
       coeff[i] = norm2(coeff[i]);
+    }
     static u32 cur[N << 1];
     getans(m, 0, 0, M, coeff, cur, 0, 1);
     for (int i = 0; i < m; ++i) {
@@ -674,16 +677,19 @@ std::vector<u32> multi_point_evaluation(u32 n, u32 m, u32 M) {
 }
 } // MPE
 
-u32 n, m, M;
 int main() {
+  u32 n, m, M;
   cin >> n >> m;
 
-  for (M = 1; M < n || M < m;)
+  for (M = 1; M < n || M < m;) {
     M <<= 1;
+  }
   const int max_ask = 1 << 18;
-  if (M > max_ask)
+  if (M > max_ask) {
     M = max_ask;
+  }
 
+  MPE::mod = 998244353;
   MPE::base_init(M);
 
   for (u32 i = 0; i < n; ++i) {
