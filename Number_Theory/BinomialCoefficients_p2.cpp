@@ -276,9 +276,6 @@ void precompute(int p) {
   // for (int i = 0; i < polyx.size(); i++)
   //   cout << polyx[i] << " ";
   // cout << endl;
-  // powsp[0]=1;
-  // for(int i=1;i<p;i++)
-  // powsp[i]=(powsp[i-1]*p)%pp;
 }
 
 ll bigpow(ll n, ll k, ll MOD) {
@@ -397,13 +394,14 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
       // ll ansb4=ans;
       // cout << gap + "In " << n << "! " << pp << " small residual_nos stil
       // left :";
-      ll first_residual_no = lasti + p + 1;
-      for (ll i = first_residual_no; i <= n; i++) {
+      ll first_residual_of_residual_no = lasti + p + 1;
+      for (ll i = first_residual_of_residual_no; i <= n; i++) {
         // cout << "" << i << ",";
         ans = (i128)(ans)*i % pp;
       }
       // cout << endl;
-      // if (ans==0)std::cout<<"Yo2 "<<ansb4<<" "<<first_residual_no<<"
+      // if (ans==0)std::cout<<"Yo2 "<<ansb4<<"
+      // "<<first_residual_of_residual_no<<"
       // "<<n<<std::endl;
     }
   }
