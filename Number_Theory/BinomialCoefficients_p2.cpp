@@ -478,33 +478,39 @@ int main() {
 
   // b = bonom_p2(240, 130, 7);
   // cout << "bonom_p2(240, 130) mod " << 7 * 7 << " = " << (ll)b << endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 10007;
   // b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
   // cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << " = " << (ll)b
   // <<endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 10007;
   // b = bonom_p2((ll)(99930048), (ll)(99930048) / 2, p);
   // cout << "bonom_p2(99930048, 99930048/2)%" << (ll)(p) * (p) << "=" <<(ll)b<<
   // endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 100019;
   // b = bonom_p2((ll)(1e15), (ll)(1e15) / 2, p);
   // cout << "bonom_p2(1e15, 5*1e14)%"  << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   p = 1000003;
   b = bonom_p2((ll)(1e14), (ll)(1e14) / 2, p);
-  cout << "bonom_p2(1e14, 5*1e13)%" << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  cout << "bonom_p2(1e14, 5*1e13)%" << (ll)(p) * (p) << "=" << (ll)b << endl;
+  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+       << "s)" << endl;
 
   p = 10000019;
   b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
   cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << "=" << (ll)b << endl;
-  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+       << "s)" << endl;
   return 0;
 }

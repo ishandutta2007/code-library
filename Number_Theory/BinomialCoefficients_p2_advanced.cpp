@@ -254,21 +254,19 @@ int count_ps_in_fact(ll n, ll p) {
 
 vector<ll> generate_polynomial_coeffs(int n) {
   vector<ll> coeffs;
-    ifstream  data("../data/poly_coeffs_3162.txt");
-    string line;
-    if(getline(data,line))
-    {
-        stringstream lineStream(line);
-        string cell;
-        while(std::getline(lineStream,cell,','))
-        {
-            coeffs.push_back(stoll(cell));
-        }
-        // for (int i=0;i<coeffs.size();i++)if (i<5 or i>3155)cout<<i<<" : "<<" "<<coeffs[i]<<endl;
+  ifstream data("../data/poly_coeffs_3162.txt");
+  string line;
+  if (getline(data, line)) {
+    stringstream lineStream(line);
+    string cell;
+    while (std::getline(lineStream, cell, ',')) {
+      coeffs.push_back(stoll(cell));
     }
+    // for (int i=0;i<coeffs.size();i++)if (i<5 or i>3155)cout<<i<<" : "<<"
+    // "<<coeffs[i]<<endl;
+  }
   return coeffs;
 }
-
 
 i128 p0;
 // vll qolyx;
@@ -328,11 +326,11 @@ ll bigpow(ll n, ll k, ll MOD) {
   return x;
 }
 
-//TODO:to be changed to multipoint evaluation
+// TODO:to be changed to multipoint evaluation
 vector<ll> brute_eval(vector<ll> coeffs, vector<ll> points, ll p) {
   vector<ll> answers;
   ll pp = p * p;
-  for (ll point : points){
+  for (ll point : points) {
     i128 pointpow = 1;
     i128 ans = 0;
     for (int i = 0; i < coeffs.size(); i++) {
@@ -374,13 +372,15 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
   // of "
   //      << n << " ie " << n / p << " is " << ans << endl;
   if (residual_nos <= p) {
-    // cout << gap + "In " << n << "! " << pp << " small residual_nos case from    "         << n - n % p + 1 << " to " << n << endl;
+    // cout << gap + "In " << n << "! " << pp << " small residual_nos case from
+    // "         << n - n % p + 1 << " to " << n << endl;
     // small residual_nos case
     for (ll i = n - n % p + 1; i <= n; i++) {
       ans = (i128)(ans)*i % pp;
     }
   } else {
-    // cout << gap + "In " << n << "! " << pp         << " Large residual_nos case. Needs to be handled via polynomial"         << endl;
+    // cout << gap + "In " << n << "! " << pp         << " Large residual_nos
+    // case. Needs to be handled via polynomial"         << endl;
     // Large residual_nos case.Needs to be handled vlla polynomial
 
     // P(x)=(x+1)(x+2)(x+3).....(x+p-1)
@@ -438,40 +438,42 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
     ll number_of_subgroups = residual_nos / p;
     if (lasti >= 0) {
       // ll ansb4=ans;
-      if (p==(int)1e7+19){
-            // cout << gap + "In " << n << "! " << pp << "residual_nos stilleft :";
-            ll first_residual_of_residual_no = lasti + p + 1;
-            for (ll i = first_residual_of_residual_no; i <= n; i++) {
-              // cout << "" << i << ",";
-              ans = (i128)(ans)*i % pp;
-            }
-      }else{
-            ll total_residual_of_residual_nos = n - lasti - p;
-            int block_size = (int)sqrt(p);
-            int no_of_blocks = total_residual_of_residual_nos / block_size;
-            // Q(x) = (x+1)(x+2)(x+3).......(x+block_size)
-            vector<ll>points;
-            for (int i = 0; i < no_of_blocks; i++)
-              points.push_back(block_size * i);
-            vector<ll> evaluated_vals = brute_eval(qoly_coeffs, points, p);
-            // Q(0).Q(block_size).Q(2*block_size).Q(3*block_size)...Q((no_of_blocks-1)*block_size)
-            i128 polyprod = 1;
-            for (ll evaluated_val : evaluated_vals)
-              polyprod = polyprod * evaluated_val % pp;
-            ans = (ll)(((i128)ans * polyprod) % pp);
-      
-            ll first_residual_of_residual_of_residual_no = lasti + p + 1 + block_size * no_of_blocks;
-            // cout << gap + "In " << n << "! " << pp << " Smallest of small residual_nos stil left ("<<n- first_residual_of_residual_of_residual_no+1 <<" nos):";
-            for (ll i = first_residual_of_residual_of_residual_no; i <= n; i++) {
-              // cout << "" << i << ", ";
-              ans = (i128)(ans)*i % pp;
-            }
-      
-      
-            // cout << endl;
-            // if (ans==0)std::cout<<"Yo2 "<<ansb4<<"
-            // "<<first_residual_of_residual_no<<"
-            // "<<n<<std::endl;
+      if (p == (int)1e7 + 19) {
+        // cout << gap + "In " << n << "! " << pp << "residual_nos stilleft :";
+        ll first_residual_of_residual_no = lasti + p + 1;
+        for (ll i = first_residual_of_residual_no; i <= n; i++) {
+          // cout << "" << i << ",";
+          ans = (i128)(ans)*i % pp;
+        }
+      } else {
+        ll total_residual_of_residual_nos = n - lasti - p;
+        int block_size = (int)sqrt(p);
+        int no_of_blocks = total_residual_of_residual_nos / block_size;
+        // Q(x) = (x+1)(x+2)(x+3).......(x+block_size)
+        vector<ll> points;
+        for (int i = 0; i < no_of_blocks; i++)
+          points.push_back(block_size * i);
+        vector<ll> evaluated_vals = brute_eval(qoly_coeffs, points, p);
+        // Q(0).Q(block_size).Q(2*block_size).Q(3*block_size)...Q((no_of_blocks-1)*block_size)
+        i128 polyprod = 1;
+        for (ll evaluated_val : evaluated_vals)
+          polyprod = polyprod * evaluated_val % pp;
+        ans = (ll)(((i128)ans * polyprod) % pp);
+
+        ll first_residual_of_residual_of_residual_no =
+            lasti + p + 1 + block_size * no_of_blocks;
+        // cout << gap + "In " << n << "! " << pp << " Smallest of small
+        // residual_nos stil left ("<<n-
+        // first_residual_of_residual_of_residual_no+1 <<" nos):";
+        for (ll i = first_residual_of_residual_of_residual_no; i <= n; i++) {
+          // cout << "" << i << ", ";
+          ans = (i128)(ans)*i % pp;
+        }
+
+        // cout << endl;
+        // if (ans==0)std::cout<<"Yo2 "<<ansb4<<"
+        // "<<first_residual_of_residual_no<<"
+        // "<<n<<std::endl;
       }
     }
   }
@@ -548,33 +550,39 @@ int main() {
 
   // b = bonom_p2(240, 130, 7);
   // cout << "bonom_p2(240, 130) mod " << 7 * 7 << " = " << (ll)b << endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 10007;
   // b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
   // cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << " = " << (ll)b
   // <<endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 10007;
   // b = bonom_p2((ll)(99930048), (ll)(99930048) / 2, p);
   // cout << "bonom_p2(99930048, 99930048/2)%" << (ll)(p) * (p) << "=" <<(ll)b<<
   // endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 100019;
   // b = bonom_p2((ll)(1e15), (ll)(1e15) / 2, p);
   // cout << "bonom_p2(1e15, 5*1e14)%"  << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   // p = 1000003;
   // b = bonom_p2((ll)(1e14), (ll)(1e14) / 2, p);
   // cout << "bonom_p2(1e14, 5*1e13)%" << (ll)(p) * (p) << "=" << (ll)b <<endl;
-  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  // cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+  // << "s)" << endl;
 
   p = 10000019;
   b = bonom_p2((ll)(1e17), (ll)(1e17) / 2, p);
   cout << "bonom_p2(1e17, 5*1e16)%" << (ll)(p) * (p) << "=" << (ll)b << endl;
-  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC << "s)" << endl;
+  cout << "time from start= " << (double)(clock() - start) / CLOCKS_PER_SEC
+       << "s)" << endl;
   return 0;
 }
