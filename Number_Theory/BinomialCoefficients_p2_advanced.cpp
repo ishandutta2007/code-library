@@ -308,6 +308,42 @@ ll bigpow(ll n, ll k, ll MOD) {
 
 std::map<ll, ll> dp;
 
+vector<ll> polynomial_coeffs(int n) {
+  // const int SIZE = 3163+7;
+  vector<ll> coeffs;
+  // int i = 0;
+  // int coeffs[i];
+
+  string inFileName = "../data/poly_coeffs_3162.txt";
+  ifstream inFile;
+  inFile.open(inFileName.c_str());
+
+  if (inFile.is_open()) {
+    for (i = 0; i < SIZE; i++) {
+      ll v;
+      inFile >> v;
+      coeffs.push_back(v);
+      cout << coeffs[i] << " ";
+    }
+
+    inFile.close(); // CLose input file
+  } else { // Error message
+    cout << "Can't find input file " << endl;
+  }
+  return coeffs;
+}
+
+ll brute_eval(vector<ll> coeffs, ll point, ll p) {
+  ll pp = p * p;
+  i128 pointpow = 1;
+  i128 ans = 0;
+  for (int i = 0; i < coeffs.size(); i++) {
+    ans = (ans + (i128)coeffs * pointpow % pp) % pp;
+    pointpow = pointpow * point % pp;
+  }
+  return (ll)ans;
+}
+
 ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
   if (dp[n] > 0)
     return dp[n];
@@ -412,10 +448,17 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
       int no_of_blocks = total_residual_of_residual_nos / block_size;
       // Q(x) = (x+1)(x+2)(x+3).......(x+block_size)
       // Q(0).Q(block_size).Q(2*block_size).Q(3*block_size)...Q((no_of_blocks-1)*block_size)
-      for (ll i = first_residual_of_residual_no; i <= n; i++) {
-        // cout << "" << i << ",";
-        ans = (i128)(ans)*i % pp;
-      }
+      vll poly_coeffs = polynomial_coeffs(block_size);
+      //TODO:to be changed to multipoint evaluation
+      i128 polyprod = 1;
+      for (int i = 0; i < no_of_blocks; i++)
+        polyprod = polyprod * brute_eval(poly_coeffs, block_size * i) % pp;
+      ans = (ll)(((i128)ans * polyprod) % pp);
+      // for (ll i = first_residual_of_residual_no; i <= n; i++) {
+      //   // cout << "" << i << ",";
+      //   ans = (i128)(ans)*i % pp;
+      // }
+
       // cout << endl;
       // if (ans==0)std::cout<<"Yo2 "<<ansb4<<"
       // "<<first_residual_of_residual_no<<"
