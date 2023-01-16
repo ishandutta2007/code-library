@@ -61,12 +61,12 @@ def simplepell(D, bail=inf):  # copied from labmath (https://pypi.org/project/la
     G1 = a * d + 1
     while Q != 1:
         P = a * Q - P
-        Q = (D - P**2) // Q
+        Q = (D - P ** 2) // Q
         a = (P + d) // Q
         i, B1, B0, G1, G0 = not i, a * B1 + B0, B1, a * G1 + G0, G1
         if G0 > bail:
             return
-    x, y = a, b = (G0, B0) if i else (G0**2 + D * B0**2, 2 * G0 * B0)
+    x, y = a, b = (G0, B0) if i else (G0 ** 2 + D * B0 ** 2, 2 * G0 * B0)
     while x <= bail:
         yield (x, y)
         x, y = x * a + y * b * D, y * a + x * b

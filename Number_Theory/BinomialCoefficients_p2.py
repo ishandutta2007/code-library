@@ -40,7 +40,7 @@ def binom_mod_p2(n, r, p):
             ans = f_n
             ans = ans * f_r_inv % pp
             ans = ans * f_nr_inv % pp
-            ans = ans * (p**excessp) % pp
+            ans = ans * (p ** excessp) % pp
         except Exception as e:
             print(e)
             print(n, r)
@@ -54,7 +54,7 @@ def binom_mod_p2(n, r, p):
     return ans
 
 
-p = 10**4 + 7
+p = 10 ** 4 + 7
 n = 99930048
 r = n // 2
 

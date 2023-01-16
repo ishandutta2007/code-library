@@ -8,7 +8,7 @@ def rwh_primes(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """Returns  a list of primes < n"""
     sieve = [True] * n
-    for i in range(3, int(n**0.5) + 1, 2):
+    for i in range(3, int(n ** 0.5) + 1, 2):
         if sieve[i]:
             sieve[i * i :: 2 * i] = [False] * ((n - i * i - 1) / (2 * i) + 1)
     return [2] + [i for i in range(3, n, 2) if sieve[i]]
@@ -18,7 +18,7 @@ def rwh_primes1(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """Returns  a list of primes < n"""
     sieve = [True] * (n / 2)
-    for i in range(3, int(n**0.5) + 1, 2):
+    for i in range(3, int(n ** 0.5) + 1, 2):
         if sieve[i / 2]:
             sieve[i * i / 2 :: i] = [False] * ((n - i * i - 1) / (2 * i) + 1)
     return [2] + [2 * i + 1 for i in range(1, n / 2) if sieve[i]]
@@ -31,7 +31,7 @@ def rwh_primes2(n):
     n = {0: n, 1: n - 1, 2: n + 4, 3: n + 3, 4: n + 2, 5: n + 1}[n % 6]
     sieve = [True] * (n / 3)
     sieve[0] = False
-    for i in range(int(n**0.5) / 3 + 1):
+    for i in range(int(n ** 0.5) / 3 + 1):
         if sieve[i]:
             k = 3 * i + 1 | 1
             sieve[((k * k) / 3) :: 2 * k] = [False] * (
@@ -498,7 +498,7 @@ def sieveOfAtkin(end):
 
 def ambi_sieve_plain(n):
     s = list(range(3, n, 2))
-    for m in range(3, int(n**0.5) + 1, 2):
+    for m in range(3, int(n ** 0.5) + 1, 2):
         if s[(m - 3) / 2]:
             for t in range((m * m - 3) / 2, (n >> 1) - 1, m):
                 s[t] = 0
@@ -525,7 +525,7 @@ def sundaram3(max_n):
 def ambi_sieve(n):
     # http://tommih.blogspot.com/2009/04/fast-prime-number-generator.html
     s = np.arange(3, n, 2)
-    for m in range(3, int(n**0.5) + 1, 2):
+    for m in range(3, int(n ** 0.5) + 1, 2):
         if s[(m - 3) / 2]:
             s[(m * m - 3) / 2 :: m] = 0
     return np.r_[2, s[s > 0]]
@@ -536,7 +536,7 @@ def primesfrom3to(n):
     """Returns a array of primes, p < n"""
     assert n >= 2
     sieve = np.ones(n / 2, dtype=np.bool)
-    for i in range(3, int(n**0.5) + 1, 2):
+    for i in range(3, int(n ** 0.5) + 1, 2):
         if sieve[i / 2]:
             sieve[i * i / 2 :: i] = False
     return np.r_[2, 2 * np.nonzero(sieve)[0][1::] + 1]
@@ -547,7 +547,7 @@ def primesfrom2to(n):
     """Input n>=6, Returns a array of primes, 2 <= p < n"""
     sieve = np.ones(n / 3 + (n % 6 == 2), dtype=np.bool)
     sieve[0] = False
-    for i in range(int(n**0.5) / 3 + 1):
+    for i in range(int(n ** 0.5) / 3 + 1):
         if sieve[i]:
             k = 3 * i + 1 | 1
             sieve[((k * k) / 3) :: 2 * k] = False
