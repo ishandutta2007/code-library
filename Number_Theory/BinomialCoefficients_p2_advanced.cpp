@@ -439,13 +439,12 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
     if (lasti >= 0) {
       // ll ansb4=ans;
       if (p==(int)1e7+19){
-            // cout << gap + "In " << n << "! " << pp << " small residual_nos stil
-            // left :";
-            // ll first_residual_of_residual_no = lasti + p + 1;
-            // for (ll i = first_residual_of_residual_no; i <= n; i++) {
-            //   // cout << "" << i << ",";
-            //   ans = (i128)(ans)*i % pp;
-            // }
+            // cout << gap + "In " << n << "! " << pp << "residual_nos stilleft :";
+            ll first_residual_of_residual_no = lasti + p + 1;
+            for (ll i = first_residual_of_residual_no; i <= n; i++) {
+              // cout << "" << i << ",";
+              ans = (i128)(ans)*i % pp;
+            }
       }else{
             ll total_residual_of_residual_nos = n - lasti - p;
             int block_size = (int)sqrt(p);
