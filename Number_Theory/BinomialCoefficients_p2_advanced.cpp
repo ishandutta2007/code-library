@@ -438,7 +438,7 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
     ll number_of_subgroups = residual_nos / p;
     if (lasti >= 0) {
       // ll ansb4=ans;
-      if (p == (int)1e7 + 19) {
+      if (p != (int)1e7 + 19) {
         // cout << gap + "In " << n << "! " << pp << "residual_nos stilleft :";
         ll first_residual_of_residual_no = lasti + p + 1;
         for (ll i = first_residual_of_residual_no; i <= n; i++) {
