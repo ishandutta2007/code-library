@@ -157,10 +157,10 @@ void precompute(int p) {
 // T(N/P)=O(sqrtP)+T(N/PP)
 // T(N/PP)=O(sqrtP)+T(N/PPP)
 // O(sqrtP*log(N/P)/log(P))
-map<ll, ll> dp;
+// map<ll, ll> dp;
 ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
-  if (dp[n] > 0)
-    return dp[n];
+  // if (dp[n] > 0)
+  //   return dp[n];
   // tr_begin(dbg(n));
   if (n == 0)
     return 1;
@@ -196,7 +196,7 @@ ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
     ans = ans * (i128)factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
   // cout << gap + "In " << n << "! " << "ans final after recusrive="<< (ll)ans
   // << endl;
-  dp[n] = (ll)ans;
+  // dp[n] = (ll)ans;
   return (ll)ans;
   // return tr_end(ans, dbg(n));
 }
