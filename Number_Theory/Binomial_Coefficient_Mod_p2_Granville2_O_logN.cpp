@@ -127,5 +127,6 @@ ll nCr(ll n, ll r) {
   return ans;
 }
 
-// https://github.com/ignaciohermosillacornejo/apuntes_icpc/blob/234221acf8ceb6ddb0097fd6f94cea47b2923883/math/nCr/nCr.cpp
-// https://github.com/pavel-zeman/CodeChef/blob/a8a6b7638d3af4ed9fe7f64843a86e218882194a/CodeChef/src/y2017/m05/challenge/LongSandwich.cpp
+//https://github.com/ignaciohermosillacornejo/apuntes_icpc/blob/234221acf8ceb6ddb0097fd6f94cea47b2923883/math/nCr/nCr.cpp
+//https://github.com/pavel-zeman/CodeChef/blob/a8a6b7638d3af4ed9fe7f64843a86e218882194a/CodeChef/src/y2017/m05/challenge/LongSandwich.cpp
+// https://people.math.rochester.edu/faculty/doug/otherpapers/granville.pdf
