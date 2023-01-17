@@ -2,6 +2,8 @@
 #ifdef TRACE
 #include <iostream>
 #include <sstream>
+
+const int MAXP = 11234567;
 class tracer_t {
   int trace_depth = 0;
   inline void prefix(int depth, int line, const std::string &fun) {
@@ -109,7 +111,7 @@ ll inverse(ll a, ll m) {
   return (x % m + m) % m;
 }
 
-i128 fact0pow[4 * 11234567];
+i128 fact0pow[MAXP+2];
 vector<i128> pans1_sqrtblocks;
 vector<i128> pans2_sqrtblocks;
 
