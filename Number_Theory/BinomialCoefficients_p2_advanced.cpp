@@ -88,25 +88,6 @@ int count_ps_in_fact(ll n, ll p) {
   return cnt;
 }
 
-// ll evaluate_P(Polynomial polyx, ll x, ll pp) {}
-
-// vector<ll> generate_polynomial_coeffs(int n) {
-//   vector<ll> coeffs;
-//   ifstream data("../data/poly_coeffs_3162.txt");
-//   string line;
-//   if (getline(data, line)) {
-//     stringstream lineStream(line);
-//     string cell;
-//     while (std::getline(lineStream, cell, ',')) {
-//       coeffs.push_back(stoll(cell));
-//     }
-//     // for (int i=0;i<coeffs.size();i++)if (i<5 or i>3155)cout<<i<<" : "<<"
-//     // "<<coeffs[i]<<endl;
-//   }
-//   return coeffs;
-// }
-
-
 ll extended_euclid(ll a, ll b, ll &x, ll &y) {
   if (b == 0) {
     x = 1;
@@ -132,6 +113,7 @@ i128 fact0pow[4 * 11234567];
 vector<i128> pans1_sqrtblocks;
 vector<i128> pans2_sqrtblocks;
 
+//O(P)
 void precompute(int p) {
   auto precompute_start = clock();
 
@@ -167,41 +149,12 @@ void precompute(int p) {
   cout << "precompute time= " << (double)(clock() - precompute_start) / CLOCKS_PER_SEC  << "s)" << endl;
 }
 
-ll bigpow(ll n, ll k, ll MOD) {
-  ll x = 1, y = k;
-  while (y) {
-    if (y & 1) {
-      x = x * n;
-      if (x >= MOD)
-        x = x % MOD;
-    }
-    n = n * n;
-    if (n >= MOD)
-      n = n % MOD;
-    y >>= 1;
-  }
-  return x;
-}
-
-// TODO:to be changed to multipoint evaluation
-vector<ll> brute_eval(vector<ll> coeffs, vector<ll> points, ll p) {
-  vector<ll> answers;
-  ll pp = p * p;
-  for (ll point : points) {
-    i128 pointpow = 1;
-    i128 ans = 0;
-    for (int i = 0; i < coeffs.size(); i++) {
-      ans = (ans + (i128)coeffs[i] * pointpow % pp) % pp;
-      pointpow = pointpow * point % pp;
-    }
-    // cout << "brute_eval at:" << point << " = " << (ll)ans << endl;
-    answers.push_back((ll)ans);
-  }
-  return answers;
-}
-
+//T(N)=O(sqrtP)+T(N/P)
+//T(N/P)=O(sqrtP)+T(N/PP)
+//T(N/PP)=O(sqrtP)+T(N/PPP)
+//O(sqrtP*log(N/P)/log(P))
 map<ll, ll> dp;
-ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
+ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
   if (dp[n] > 0)
     return dp[n];
   // tr_begin(dbg(n));
@@ -227,7 +180,7 @@ ll factorial_after_stripping_ps_mod_p2(ll n, ll p, string gap = "") {
   }
   // cout << gap + "In " << n << "! " << "ans after residual="<< (ll)ans << endl;
   if(n >= p)
-  ans = ans*(i128)factorial_after_stripping_ps_mod_p2(n / p, p, gap + " ") % pp;
+  ans = ans*(i128)factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
   // cout << gap + "In " << n << "! " << "ans final after recusrive="<< (ll)ans << endl;
   dp[n] = (ll)ans;
   return (ll)ans;
@@ -248,19 +201,19 @@ i128 bonom_p2(ll n, ll r, ll p) {
   // cout << "Excess p on numeratot=" << net_p << endl;
   if (net_p >= 2)
     return 0;
-  ll r_f_inv = inverse(factorial_after_stripping_ps_mod_p2(r, p), p * p);
+  ll r_f_inv = inverse(factorial_stripped_p_mod_pp(r, p), p * p);
   // assert(1 <= r_f_inv);
-  ll nr_f_inv = inverse(factorial_after_stripping_ps_mod_p2(n - r, p), p * p);
+  ll nr_f_inv = inverse(factorial_stripped_p_mod_pp(n - r, p), p * p);
   // assert(1 <= nr_f_inv);
-  ll n_f = factorial_after_stripping_ps_mod_p2(n, p);
+  ll n_f = factorial_stripped_p_mod_pp(n, p);
   // assert(1 <= n_f);
-  // cout << "inverse(factorial_after_stripping_ps_mod_p2(" << r << ", " << p<<
+  // cout << "inverse(factorial_stripped_p_mod_pp(" << r << ", " << p<<
   // "),
   // p*p) =" << r_f_inv << endl;
-  // cout << "inverse(factorial_after_stripping_ps_mod_p2(" << n - r << ", " <<
+  // cout << "inverse(factorial_stripped_p_mod_pp(" << n - r << ", " <<
   // p<<
   // "), p*p) =" << nr_f_inv << endl;
-  // cout << "factorial_after_stripping_ps_mod_p2(" << n << ", " << p << ") ="
+  // cout << "factorial_stripped_p_mod_pp(" << n << ", " << p << ") ="
   // <<
   // n_f<< endl;
   i128 ans = n_f;
@@ -314,3 +267,7 @@ int main() {
        << "s)" << endl;
   return 0;
 }
+//https://web.archive.org/web/20170202003812/http://www.dms.umontreal.ca/~andrew/PDF/BinCoeff.pdf
+//https://blog.prabowodjonatan.id/posts/binomial-mod-pe/
+//https://en.wikipedia.org/wiki/Wilf%E2%80%93Zeilberger_pair
+
