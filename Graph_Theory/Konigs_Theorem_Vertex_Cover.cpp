@@ -97,3 +97,5 @@ struct vertex_cover {
     }
 }
 cover;
+
+// https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory)
