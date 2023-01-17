@@ -237,3 +237,4 @@ int32_t main() {
 // https://min-25.hatenablog.com/
 // https://zhuanlan.zhihu.com/p/60378354
 // https://yijan.co/min_25-shai/
+// https://oi-wiki.org/math/number-theory/min-25/
