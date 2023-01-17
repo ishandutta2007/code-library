@@ -113,7 +113,7 @@ i128 fact0pow[4 * 11234567];
 vector<i128> pans1_sqrtblocks;
 vector<i128> pans2_sqrtblocks;
 
-//O(P)
+// O(P)
 void precompute(int p) {
   auto precompute_start = clock();
 
@@ -127,32 +127,34 @@ void precompute(int p) {
     fact0pow[i] = fact0pow[i - 1] * fact0 % pp;
     // cout<<i<<" :"<<(ll)fact0pow[i]<<endl;
   }
-  int sqrtp=(int)sqrt(p);
+  int sqrtp = (int)sqrt(p);
   int block_size = sqrtp;
 
   ll sumofinverses = 0;
   i128 pans2 = 1;
-  for(int k=1;k<=p/block_size;k++){
-    for(int i=1;i<=block_size;i++){
-      ll next_term=block_size * (k - 1) + i;
+  for (int k = 1; k <= p / block_size; k++) {
+    for (int i = 1; i <= block_size; i++) {
+      ll next_term = block_size * (k - 1) + i;
       pans2 = pans2 * next_term % pp;
-      sumofinverses = (sumofinverses + inverse(next_term,  pp)) % pp;
+      sumofinverses = (sumofinverses + inverse(next_term, pp)) % pp;
     }
     i128 pans1 = (i128)p;
     pans1 = pans1 * pans2 % pp;
     pans1 = pans1 * (i128)sumofinverses % pp;
-    // cout<< "of prime "<<p<<" precomptued "<<k<<"-th sqrt block prods="<< (ll)pans1<<" "<<(ll)pans2<<endl;
+    // cout<< "of prime "<<p<<" precomptued "<<k<<"-th sqrt block prods="<<
+    // (ll)pans1<<" "<<(ll)pans2<<endl;
     pans1_sqrtblocks.push_back(pans1);
     pans2_sqrtblocks.push_back(pans2);
   }
 
-  cout << "precompute time= " << (double)(clock() - precompute_start) / CLOCKS_PER_SEC  << "s)" << endl;
+  cout << "precompute time= "
+       << (double)(clock() - precompute_start) / CLOCKS_PER_SEC << "s)" << endl;
 }
 
-//T(N)=O(sqrtP)+T(N/P)
-//T(N/P)=O(sqrtP)+T(N/PP)
-//T(N/PP)=O(sqrtP)+T(N/PPP)
-//O(sqrtP*log(N/P)/log(P))
+// T(N)=O(sqrtP)+T(N/P)
+// T(N/P)=O(sqrtP)+T(N/PP)
+// T(N/PP)=O(sqrtP)+T(N/PPP)
+// O(sqrtP*log(N/P)/log(P))
 map<ll, ll> dp;
 ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
   if (dp[n] > 0)
@@ -162,31 +164,40 @@ ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
     return 1;
   ll pp = (ll)p * p;
   int sqrtp = (int)sqrt(p);
-  ll u = n / pp; // number_of_complete_groups
-  ll v = (n % pp) / p; // number_of_complete_subgroups
-  ll w = (n % p) / sqrtp; // number_of_sqrtp_blocks
+  ll u = n / pp;                 // number_of_complete_groups
+  ll v = (n % pp) / p;           // number_of_complete_subgroups
+  ll w = (n % p) / sqrtp;        // number_of_sqrtp_blocks
   ll r = ((n % pp) % p) % sqrtp; // number_of_final_residual numbers
 
   i128 ans = (u % 2 == 0) ? (i128)1 : (i128)(pp - 1);
-  // cout << gap + "In " << n << "! no_of_groups=" << u << ", "<< "ans after group="<< (ll)ans << endl;
-  ans = ans*fact0pow[v] % pp;
-  // cout << gap + "In " << n << "! no_of_sungroups=" << v << ", "<< "ans after subgroup="<< (ll)ans << endl;
-  if (w>=1) ans = ans*((i128)v * pans1_sqrtblocks[w-1] % pp + pans2_sqrtblocks[w-1]) % pp;
-  // cout << gap + "In " << n << "! no_of_sqrtp_blocks=" << w << ", "<< v <<"*"<< (ll)pans1_sqrtblocks[w-1] <<" + "<< (ll)pans2_sqrtblocks[w-1] << endl;
-  // cout << gap + "In " << n << "! " << "ans after sqrtp blocks="<< (ll)ans << endl;
-  if (r>=1)
-  for (ll i = n - r + 1; i <= n; i++) {
-    ans = ans*(i128)i % pp;
-  }
-  // cout << gap + "In " << n << "! " << "ans after residual="<< (ll)ans << endl;
-  if(n >= p)
-  ans = ans*(i128)factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
-  // cout << gap + "In " << n << "! " << "ans final after recusrive="<< (ll)ans << endl;
+  // cout << gap + "In " << n << "! no_of_groups=" << u << ", "<< "ans after
+  // group="<< (ll)ans << endl;
+  ans = ans * fact0pow[v] % pp;
+  // cout << gap + "In " << n << "! no_of_sungroups=" << v << ", "<< "ans after
+  // subgroup="<< (ll)ans << endl;
+  if (w >= 1)
+    ans = ans *
+          ((i128)v * pans1_sqrtblocks[w - 1] % pp + pans2_sqrtblocks[w - 1]) %
+          pp;
+  // cout << gap + "In " << n << "! no_of_sqrtp_blocks=" << w << ", "<< v
+  // <<"*"<< (ll)pans1_sqrtblocks[w-1] <<" + "<< (ll)pans2_sqrtblocks[w-1] <<
+  // endl;
+  // cout << gap + "In " << n << "! " << "ans after sqrtp blocks="<< (ll)ans <<
+  // endl;
+  if (r >= 1)
+    for (ll i = n - r + 1; i <= n; i++) {
+      ans = ans * (i128)i % pp;
+    }
+  // cout << gap + "In " << n << "! " << "ans after residual="<< (ll)ans <<
+  // endl;
+  if (n >= p)
+    ans = ans * (i128)factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
+  // cout << gap + "In " << n << "! " << "ans final after recusrive="<< (ll)ans
+  // << endl;
   dp[n] = (ll)ans;
   return (ll)ans;
   // return tr_end(ans, dbg(n));
 }
-
 
 i128 bonom_p2(ll n, ll r, ll p) {
   precompute(p);
@@ -267,7 +278,6 @@ int main() {
        << "s)" << endl;
   return 0;
 }
-//https://web.archive.org/web/20170202003812/http://www.dms.umontreal.ca/~andrew/PDF/BinCoeff.pdf
-//https://blog.prabowodjonatan.id/posts/binomial-mod-pe/
-//https://en.wikipedia.org/wiki/Wilf%E2%80%93Zeilberger_pair
-
+// https://web.archive.org/web/20170202003812/http://www.dms.umontreal.ca/~andrew/PDF/BinCoeff.pdf
+// https://blog.prabowodjonatan.id/posts/binomial-mod-pe/
+// https://en.wikipedia.org/wiki/Wilf%E2%80%93Zeilberger_pair

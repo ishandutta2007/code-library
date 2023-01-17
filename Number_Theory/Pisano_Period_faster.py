@@ -2098,7 +2098,7 @@ def _try_composite(a, d, n, s):
     if pow(a, d, n) == 1:
         return False
     for i in range(s):
-        if pow(a, 2 ** i * d, n) == n - 1:
+        if pow(a, 2**i * d, n) == n - 1:
             return False
     return True  # n  is definitely composite
 

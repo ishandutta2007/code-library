@@ -90,7 +90,7 @@ int count_ps_in_fact(ll n, ll p) {
 
 i128 p0pow[4 * 11234567];
 void precompute(int p) {
-  i128  = 1;
+  i128 = 1;
   ll pp = (ll)p * p;
   for (int i = 1; i < p; i++) {
     p0 = (i128)(p0)*i % pp;
@@ -141,8 +141,7 @@ ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
   // group leaders ie k*PP as well as subleaders ie k*P are non-invertible so
   // handled resusively
   // ll ansb4=ans;
-  ans =
-      (i128)(ans)*factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
+  ans = (i128)(ans)*factorial_stripped_p_mod_pp(n / p, p, gap + " ") % pp;
   // if (ans==0)std::cout<<"Yo0"<<ansb4<<" "<<n<<std::endl;
   // cout << gap + "In " << n << "! " << pp << " factorial from recursive case
   // of "

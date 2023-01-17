@@ -1,13 +1,21 @@
 /*
  * In Chinese, this is called ZhouGe's Sieve
- * given a multiplicative function $f(n)$, where $f(p^c)$ is a polynomial of $p$.
+ * given a multiplicative function $f(n)$, where $f(p^c)$ is a polynomial of
+ * $p$.
  * Find the value of $F(n) = \sum\limits_{1 \le x \le n} f(x)$
  *
- * $F(n) = \sum\limits_{\substack{1 \le x \le n \\ \not \exists p > \sqrt{n}, p \mid x}} f(x) (1 + \sum\limits_{\sqrt{n} < p \le \lfloor \frac{n}{x} \rfloor}f(p))$
+ * $F(n) = \sum\limits_{\substack{1 \le x \le n \\ \not \exists p > \sqrt{n}, p
+ * \mid x}} f(x) (1 + \sum\limits_{\sqrt{n} < p \le \lfloor \frac{n}{x}
+ * \rfloor}f(p))$
  *
- * $F(n)=f(1, n)+\sum\limits_{1 \le x \le \sqrt{n}}f(x)(g(\lfloor \frac{n}{x} \rfloor)-g(\sqrt{n}))$, where $g(n)=\sum\limits_{1 \le p \le n}f(p)$, $f(1,n)=\sum\limits_{\substack{1 \le x \le n \\ \not \exists p > p_m, p \mid x}} f(x)$ and $p_m$ is the largest prime less than or equal to $\sqrt{n}$.
+ * $F(n)=f(1, n)+\sum\limits_{1 \le x \le \sqrt{n}}f(x)(g(\lfloor \frac{n}{x}
+ * \rfloor)-g(\sqrt{n}))$, where $g(n)=\sum\limits_{1 \le p \le n}f(p)$,
+ * $f(1,n)=\sum\limits_{\substack{1 \le x \le n \\ \not \exists p > p_m, p \mid
+ * x}} f(x)$ and $p_m$ is the largest prime less than or equal to $\sqrt{n}$.
  *
- * $f(i,n)=\sum\limits_{\substack{1 \le x \le n \\ \not \exists p > p_m \text{or } p < p_{i}, p \mid x}} f(x)$, $f(i,n)=f(i+1,n)+\sum\limits_{c \ge 1}f(i+1, \lfloor \frac{n}{p_i^c}\rfloor)$.
+ * $f(i,n)=\sum\limits_{\substack{1 \le x \le n \\ \not \exists p > p_m \text{or
+ * } p < p_{i}, p \mid x}} f(x)$, $f(i,n)=f(i+1,n)+\sum\limits_{c \ge 1}f(i+1,
+ * \lfloor \frac{n}{p_i^c}\rfloor)$.
  *
  * the following program is an example of \sum_{i=1}^{n} \sigma_0(i^m)
  */
@@ -20,7 +28,7 @@
 using uint64 = unsigned long long;
 using uint32 = unsigned int;
 
-constexpr uint32 N = 7e5; //this should be twice as \sqrt{n}
+constexpr uint32 N = 7e5; // this should be twice as \sqrt{n}
 
 uint64 e[N], g[N], sigma[N];
 uint32 ps[N], pcnt;
@@ -31,7 +39,7 @@ int fsq[N];
 
 uint64 solve(uint64 n, uint64 m) {
   const uint32 sn = sqrt(n);
-  auto sieve = [sn, m] () {
+  auto sieve = [sn, m]() {
     sigma[1] = 1, pcnt = 0;
     memset(ps + 1, 0, sizeof(*ps) * sn);
     for (uint32 i = 2; i <= sn; ++i) {
@@ -53,29 +61,33 @@ uint64 solve(uint64 n, uint64 m) {
       }
     }
   };
-  auto calc_g = [sn] (uint64 n, uint64 m) {
+  auto calc_g = [sn](uint64 n, uint64 m) {
     for (uint32 i = 1; i <= sn; ++i) {
       lcnt[i] = n / i - 1;
       scnt[i] = i - 1;
     }
     for (uint32 p = 2; p <= sn; ++p) {
-      if (scnt[p] == scnt[p - 1]) continue;
+      if (scnt[p] == scnt[p - 1])
+        continue;
       uint64 pcnt = scnt[p - 1];
       uint64 q = (uint64)p * p;
       uint32 ed = std::min<uint64>(sn, n / q);
       for (uint32 i = 1; i <= ed; ++i) {
         uint64 d = (uint64)i * p;
-        if (d <= sn) lcnt[i] -= lcnt[d] - pcnt;
-        else lcnt[i] -= scnt[n / d] - pcnt;
+        if (d <= sn)
+          lcnt[i] -= lcnt[d] - pcnt;
+        else
+          lcnt[i] -= scnt[n / d] - pcnt;
       }
-      for (uint32 i = sn; i >= q; --i) scnt[i] -= scnt[i / p] - pcnt;
+      for (uint32 i = sn; i >= q; --i)
+        scnt[i] -= scnt[i / p] - pcnt;
     }
     for (uint32 i = 1; i <= sn; ++i) {
       lcnt[i] = (lcnt[i] - scnt[sn]) * (m + 1);
       scnt[i] *= m + 1;
     }
   };
-  auto calc_f = [sn] (uint64 n, uint64 m) {
+  auto calc_f = [sn](uint64 n, uint64 m) {
     for (uint32 i = 1; i <= sn; ++i) {
       fval[i - 1] = i;
       fval[sn - i + sn] = n / i;
@@ -83,11 +95,13 @@ uint64 solve(uint64 n, uint64 m) {
       fsum[sn - i + sn] = 1;
     }
     for (uint32 i = 0, j = 0; i < sn * 2; ++i) {
-      while (j < pcnt && (uint64)ps[j] * ps[j] <= fval[i]) ++j;
+      while (j < pcnt && (uint64)ps[j] * ps[j] <= fval[i])
+        ++j;
       fsq[i] = j - 1;
     }
     for (int i = pcnt - 1, bound = sn * 2 - 1; i >= 0; --i) {
-      while (bound >= 0 && fsq[bound] >= i) --bound;
+      while (bound >= 0 && fsq[bound] >= i)
+        --bound;
       uint64 p = ps[i];
       for (int j = sn * 2 - 1; j > bound; --j) {
         uint64 x = fval[j], pe = p, y = x / pe;
@@ -108,5 +122,3 @@ uint64 solve(uint64 n, uint64 m) {
   }
   return ret;
 }
-
-

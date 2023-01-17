@@ -42,4 +42,4 @@ class Solution:
             STree.update(1, 0, len(xs) - 1, xs_i[x1], xs_i[x2] - 1, op_cl)
             cur_x_sum = STree.total[1]
 
-        return area % (10 ** 9 + 7)
+        return area % (10**9 + 7)

@@ -96,7 +96,7 @@ def is_quadratic_residue(a, p):
 
 
 def legendre(a, q, l, n):
-    x = q ** l
+    x = q**l
     if x == 0:
         return 1
 
@@ -105,7 +105,7 @@ def legendre(a, q, l, n):
 
     while x != 0:
         if x % 2 == 0:
-            a = (a ** 2) % n
+            a = (a**2) % n
             x //= 2
         else:
             x -= 1
@@ -147,10 +147,10 @@ def sqrt_mod_prime(a, p):
             if w == 1:
                 return v
             k = 1
-            while pow_mod(w, 2 ** k, p) != 1:
+            while pow_mod(w, 2**k, p) != 1:
                 k += 1
             d = pow_mod(y, 2 ** (r - k - 1), p)
-            y = (d ** 2) % p
+            y = (d**2) % p
             r = k
             v = (d * v) % p
             w = (w * y) % p
@@ -312,7 +312,7 @@ def siqs_find_next_poly(n, factor_base, i, g, B):
     Quadratic Sieve, given that g is the i-th polynomial.
     """
     v = lowest_set_bit(i) + 1
-    z = -1 if ceil(i / (2 ** v)) % 2 == 1 else 1
+    z = -1 if ceil(i / (2**v)) % 2 == 1 else 1
     b = (g.b + 2 * z * B[v - 1]) % g.a
     a = g.a
     b_orig = b
@@ -727,7 +727,7 @@ def trial_div_init_primes(n, upper_bound):
             if rem == 1:
                 return factors, 1
 
-            for j in range(i ** 2, upper_bound + 1, i):
+            for j in range(i**2, upper_bound + 1, i):
                 is_prime[j] = False
 
     for i in range(max_i + 1, upper_bound + 1):
@@ -834,7 +834,7 @@ def check_perfect_power(n):
         bth_root = kth_root_int(n, b)
         if bth_root < largest_checked_prime:
             break
-        if bth_root ** b == n:
+        if bth_root**b == n:
             return (bth_root, b)
     return None
 
