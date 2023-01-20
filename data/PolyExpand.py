@@ -1,3 +1,7 @@
+
+# Generation of polynomial
+# (x+1)(x+2)(x+3).....(x+3162)
+
 from sympy import Symbol, prod, expand, Poly
 import time
 
