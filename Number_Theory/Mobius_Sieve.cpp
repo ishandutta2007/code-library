@@ -1,3 +1,4 @@
+//computes till 10^6 in 1 sec (1000x slower than rust version)
 #include <bits/stdc++.h>
 using namespace std;
 // http://oeis.org/A008683
