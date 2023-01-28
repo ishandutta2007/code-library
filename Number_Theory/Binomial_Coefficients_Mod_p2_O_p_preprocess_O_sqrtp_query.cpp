@@ -111,7 +111,7 @@ ll inverse(ll a, ll m) {
   return (x % m + m) % m;
 }
 
-i128 fact0pow[MAXP+2];
+i128 fact0pow[MAXP + 2];
 vector<i128> pans1_sqrtblocks;
 vector<i128> pans2_sqrtblocks;
 

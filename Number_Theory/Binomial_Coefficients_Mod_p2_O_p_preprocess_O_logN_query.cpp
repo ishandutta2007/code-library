@@ -111,9 +111,9 @@ ll inverse(ll a, ll m) {
   return (x % m + m) % m;
 }
 
-i128 fact0pow[MAXP+2];
-i128 term1[MAXP+2];
-i128 facto_term[MAXP+2];
+i128 fact0pow[MAXP + 2];
+i128 term1[MAXP + 2];
+i128 facto_term[MAXP + 2];
 
 // O(P)
 void precompute(int p) {
@@ -139,8 +139,8 @@ void precompute(int p) {
     sumofinverses = (sumofinverses + inverse(k, pp)) % pp;
     // cout<< "of prime "<<p<<" precomptued "<<k<<"-th sqrt block prods="<<
     // (ll)pans1<<" "<<(ll)facto<<endl;
-    term1[k-1]=((p*facto)%pp*(i128)sumofinverses)%pp;
-    facto_term[k-1]=facto;
+    term1[k - 1] = ((p * facto) % pp * (i128)sumofinverses) % pp;
+    facto_term[k - 1] = facto;
     // term1.push_back(((p*facto)%pp*(i128)sumofinverses)%pp);
     // facto_term.push_back(facto);
   }
@@ -160,9 +160,9 @@ ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
     return 1;
   ll pp = (ll)p * p;
   int sqrtp = (int)sqrt(p);
-  ll u = n / pp;                 // number_of_complete_groups
-  ll v = (n % pp) / p;           // number_of_complete_subgroups
-  ll r = (n % pp) % p;           // number_of_final_residual numbers
+  ll u = n / pp;       // number_of_complete_groups
+  ll v = (n % pp) / p; // number_of_complete_subgroups
+  ll r = (n % pp) % p; // number_of_final_residual numbers
 
   i128 ans = (u % 2 == 0) ? (i128)1 : (i128)(pp - 1);
   // cout << gap + "In " << n << "! no_of_groups=" << u << ", "<< "ans after
@@ -171,7 +171,7 @@ ll factorial_stripped_p_mod_pp(ll n, ll p, string gap = "") {
   // cout << gap + "In " << n << "! no_of_sungroups=" << v << ", "<< "ans after
   // subgroup="<< (ll)ans << endl;
   if (r >= 1)
-    ans = ans *  ((i128)v * term1[r - 1] % pp + facto_term[r - 1]) % pp;
+    ans = ans * ((i128)v * term1[r - 1] % pp + facto_term[r - 1]) % pp;
   // cout << gap + "In " << n << "! no_of_sqrtp_blocks=" << w << ", "<< v
   // <<"*"<< (ll)term1[w-1] <<" + "<< (ll)facto_term[w-1] <<
   // endl;

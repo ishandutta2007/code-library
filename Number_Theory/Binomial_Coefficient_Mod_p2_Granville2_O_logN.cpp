@@ -5,7 +5,7 @@
 
 // Modular computation of nCr using lucas theorem, granville theorem and CRT
 
-ll num; // Set num to the corresponding mod for the nCr calculations
+ll num;            // Set num to the corresponding mod for the nCr calculations
 umap<ll, int> MOD; // MOD[P]=V_p(mod)
 umap<ll, vector<ll>> FMOD; // n! mod p if MOD[p]=1 else the product of all i mod
                            // P^MOD[P], where 1<=i<=n and (i,p)=1
@@ -98,7 +98,7 @@ ll lucas(ll n, ll r, int p) {
     ans = mul(ans, FMOD[p][n], p);                     // n!/(r!(n-r!)) mod p
     return ans;
   }
-  ll ans = lucas(n / p, r / p, p); // Recursion
+  ll ans = lucas(n / p, r / p, p);           // Recursion
   ans = mul(ans, lucas(n % p, r % p, p), p); // False recursion
   return ans;
 }
@@ -127,6 +127,6 @@ ll nCr(ll n, ll r) {
   return ans;
 }
 
-//https://github.com/ignaciohermosillacornejo/apuntes_icpc/blob/234221acf8ceb6ddb0097fd6f94cea47b2923883/math/nCr/nCr.cpp
-//https://github.com/pavel-zeman/CodeChef/blob/a8a6b7638d3af4ed9fe7f64843a86e218882194a/CodeChef/src/y2017/m05/challenge/LongSandwich.cpp
+// https://github.com/ignaciohermosillacornejo/apuntes_icpc/blob/234221acf8ceb6ddb0097fd6f94cea47b2923883/math/nCr/nCr.cpp
+// https://github.com/pavel-zeman/CodeChef/blob/a8a6b7638d3af4ed9fe7f64843a86e218882194a/CodeChef/src/y2017/m05/challenge/LongSandwich.cpp
 // https://people.math.rochester.edu/faculty/doug/otherpapers/granville.pdf

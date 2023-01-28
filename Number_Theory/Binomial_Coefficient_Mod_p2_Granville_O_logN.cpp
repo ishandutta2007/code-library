@@ -130,7 +130,7 @@ pair<ll, ll> CRT(ll r1, ll m1, ll r2, ll m2) {
 }
 
 ll num = 142857;
-umap<ll, int> MOD; // MOD[P]=V_p(mod)
+umap<ll, int> MOD;         // MOD[P]=V_p(mod)
 umap<ll, vector<ll>> FMOD; // n! mod p if MOD[p]=1 else the product of all i mod
                            // P^MOD[P], where 1<=i<=n and (i,p)=1
 umap<ll, vector<ll>> invFMOD; // the inverse of FMOD[n] in the corresponding MOD
@@ -224,7 +224,7 @@ ll lucas(ll n, ll r, int p) {
     ans = mul(ans, FMOD[p][n], p);                     // n!/(r!(n-r!)) mod p
     return ans;
   }
-  ll ans = lucas(n / p, r / p, p); // Recursion
+  ll ans = lucas(n / p, r / p, p);           // Recursion
   ans = mul(ans, lucas(n % p, r % p, p), p); // False recursion
   return ans;
 }

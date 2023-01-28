@@ -4,7 +4,7 @@
 from sympy import Symbol, prod, expand, Poly
 import time
 
-p = 10 ** 7 + 19
+p = 10**7 + 19
 pp = p * p
 start = time.time()
 x = Symbol("x")

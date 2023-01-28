@@ -6,6 +6,7 @@
 // Then just run Reduce()
 //
 // ATTENTION: The reduced DAG may contain duplicate edges
+// Tarjan?
 
 struct SCCWrapper {
 
