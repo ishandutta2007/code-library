@@ -2,3 +2,7 @@
 */**/htmlcov
 */**/.coverage
 .coverage
+__pycache__
+*/**/__pycache__
+
+
