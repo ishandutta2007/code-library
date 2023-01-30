@@ -116,11 +116,11 @@ Primality testing
 
 # from sympy.utilities.misc import as_int
 
-# from mpmath.libmp import bitcount as _bitlength
+from mpmath.libmp import bitcount as _bitlength
 
 
-# def _int_tuple(*i):
-#     return tuple(int(_) for _ in i)
+def _int_tuple(*i):
+    return tuple(int(_) for _ in i)
 
 
 # def is_euler_pseudoprime(n, b):
@@ -167,67 +167,67 @@ Primality testing
 #             return False
 
 
-# def is_square(n, prep=True):
-#     """Return True if n == a * a for some integer a, else False.
-#     If n is suspected of *not* being a square then this is a
-#     quick method of confirming that it is not.
+def is_square(n, prep=True):
+    """Return True if n == a * a for some integer a, else False.
+    If n is suspected of *not* being a square then this is a
+    quick method of confirming that it is not.
 
-#     Examples
-#     ========
+    Examples
+    ========
 
-#     >>> from sympy.ntheory.primetest import is_square
-#     >>> is_square(25)
-#     True
-#     >>> is_square(2)
-#     False
+    >>> from sympy.ntheory.primetest import is_square
+    >>> is_square(25)
+    True
+    >>> is_square(2)
+    False
 
-#     References
-#     ==========
+    References
+    ==========
 
-#     .. [1]  http://mersenneforum.org/showpost.php?p=110896
+    .. [1]  http://mersenneforum.org/showpost.php?p=110896
 
-#     See Also
-#     ========
-#     sympy.core.power.integer_nthroot
-#     """
-#     if prep:
-#         n = as_int(n)
-#         if n < 0:
-#             return False
-#         if n in (0, 1):
-#             return True
-#     # def magic(n):
-#     #     s = {x**2 % n for x in range(n)}
-#     #     return sum(1 << bit for bit in s)
-#     # >>> print(hex(magic(128)))
-#     # 0x2020212020202130202021202030213
-#     # >>> print(hex(magic(99)))
-#     # 0x209060049048220348a410213
-#     # >>> print(hex(magic(91)))
-#     # 0x102e403012a0c9862c14213
-#     # >>> print(hex(magic(85)))
-#     # 0x121065188e001c46298213
-#     if not 0x2020212020202130202021202030213 & (1 << (n & 127)):
-#         return False  # e.g. 2, 3
-#     m = n % (99 * 91 * 85)
-#     if not 0x209060049048220348a410213 & (1 << (m % 99)):
-#         return False  # e.g. 17, 68
-#     if not 0x102e403012a0c9862c14213 & (1 << (m % 91)):
-#         return False  # e.g. 97, 388
-#     if not 0x121065188e001c46298213 & (1 << (m % 85)):
-#         return False  # e.g. 793, 1408
-#     # n is either:
-#     #   a) odd = 4*even + 1 (and square if even = k*(k + 1))
-#     #   b) even with
-#     #     odd multiplicity of 2 --> not square, e.g. 39040
-#     #     even multiplicity of 2, e.g. 4, 16, 36, ..., 16324
-#     #         removal of factors of 2 to give an odd, and rejection if
-#     #         any(i%2 for i in divmod(odd - 1, 4))
-#     #         will give an odd number in form 4*even + 1.
-#     # Use of `trailing` to check the power of 2 is not done since it
-#     # does not apply to a large percentage of arbitrary numbers
-#     # and the integer_nthroot is able to quickly resolve these cases.
-#     return integer_nthroot(n, 2)[1]
+    See Also
+    ========
+    sympy.core.power.integer_nthroot
+    """
+    if prep:
+        n = as_int(n)
+        if n < 0:
+            return False
+        if n in (0, 1):
+            return True
+    # def magic(n):
+    #     s = {x**2 % n for x in range(n)}
+    #     return sum(1 << bit for bit in s)
+    # >>> print(hex(magic(128)))
+    # 0x2020212020202130202021202030213
+    # >>> print(hex(magic(99)))
+    # 0x209060049048220348a410213
+    # >>> print(hex(magic(91)))
+    # 0x102e403012a0c9862c14213
+    # >>> print(hex(magic(85)))
+    # 0x121065188e001c46298213
+    if not 0x2020212020202130202021202030213 & (1 << (n & 127)):
+        return False  # e.g. 2, 3
+    m = n % (99 * 91 * 85)
+    if not 0x209060049048220348a410213 & (1 << (m % 99)):
+        return False  # e.g. 17, 68
+    if not 0x102e403012a0c9862c14213 & (1 << (m % 91)):
+        return False  # e.g. 97, 388
+    if not 0x121065188e001c46298213 & (1 << (m % 85)):
+        return False  # e.g. 793, 1408
+    # n is either:
+    #   a) odd = 4*even + 1 (and square if even = k*(k + 1))
+    #   b) even with
+    #     odd multiplicity of 2 --> not square, e.g. 39040
+    #     even multiplicity of 2, e.g. 4, 16, 36, ..., 16324
+    #         removal of factors of 2 to give an odd, and rejection if
+    #         any(i%2 for i in divmod(odd - 1, 4))
+    #         will give an odd number in form 4*even + 1.
+    # Use of `trailing` to check the power of 2 is not done since it
+    # does not apply to a large percentage of arbitrary numbers
+    # and the integer_nthroot is able to quickly resolve these cases.
+    return integer_nthroot(n, 2)[1]
 
 
 def _test(n, base, s, t):
@@ -273,8 +273,10 @@ def bitcount(n):
 # from sympy.core.function import Function
 # from sympy.core.logic import fuzzy_and
 # from sympy.core.mul import Mul
-# from sympy.core.numbers import igcd, ilcm, Rational, Integer
-# from sympy.core.power import integer_nthroot, Pow, integer_log
+from sympy.core.numbers import igcd
+# from sympy.core.numbers import  ilcm, Rational, Integer
+from sympy.core.power import integer_nthroot
+# from sympy.core.power import Pow, integer_log
 # from sympy.core.singleton import S
 # from sympy.external.gmpy import SYMPY_INTS
 SYMPY_INTS = (int,)
@@ -2964,112 +2966,112 @@ def mr(n, bases):
     return True
 
 
-# def _lucas_sequence(n, P, Q, k):
-#     """Return the modular Lucas sequence (U_k, V_k, Q_k).
+def _lucas_sequence(n, P, Q, k):
+    """Return the modular Lucas sequence (U_k, V_k, Q_k).
 
-#     Given a Lucas sequence defined by P, Q, returns the kth values for
-#     U and V, along with Q^k, all modulo n.  This is intended for use with
-#     possibly very large values of n and k, where the combinatorial functions
-#     would be completely unusable.
+    Given a Lucas sequence defined by P, Q, returns the kth values for
+    U and V, along with Q^k, all modulo n.  This is intended for use with
+    possibly very large values of n and k, where the combinatorial functions
+    would be completely unusable.
 
-#     The modular Lucas sequences are used in numerous places in number theory,
-#     especially in the Lucas compositeness tests and the various n + 1 proofs.
+    The modular Lucas sequences are used in numerous places in number theory,
+    especially in the Lucas compositeness tests and the various n + 1 proofs.
 
-#     Examples
-#     ========
+    Examples
+    ========
 
-#     >>> from sympy.ntheory.primetest import _lucas_sequence
-#     >>> N = 10**2000 + 4561
-#     >>> sol = U, V, Qk = _lucas_sequence(N, 3, 1, N//2); sol
-#     (0, 2, 1)
+    >>> from sympy.ntheory.primetest import _lucas_sequence
+    >>> N = 10**2000 + 4561
+    >>> sol = U, V, Qk = _lucas_sequence(N, 3, 1, N//2); sol
+    (0, 2, 1)
 
-#     """
-#     D = P*P - 4*Q
-#     if n < 2:
-#         raise ValueError("n must be >= 2")
-#     if k < 0:
-#         raise ValueError("k must be >= 0")
-#     if D == 0:
-#         raise ValueError("D must not be zero")
+    """
+    D = P*P - 4*Q
+    if n < 2:
+        raise ValueError("n must be >= 2")
+    if k < 0:
+        raise ValueError("k must be >= 0")
+    if D == 0:
+        raise ValueError("D must not be zero")
 
-#     if k == 0:
-#         return _int_tuple(0, 2, Q)
-#     U = 1
-#     V = P
-#     Qk = Q
-#     b = _bitlength(k)
-#     if Q == 1:
-#         # Optimization for extra strong tests.
-#         while b > 1:
-#             U = (U*V) % n
-#             V = (V*V - 2) % n
-#             b -= 1
-#             if (k >> (b - 1)) & 1:
-#                 U, V = U*P + V, V*P + U*D
-#                 if U & 1:
-#                     U += n
-#                 if V & 1:
-#                     V += n
-#                 U, V = U >> 1, V >> 1
-#     elif P == 1 and Q == -1:
-#         # Small optimization for 50% of Selfridge parameters.
-#         while b > 1:
-#             U = (U*V) % n
-#             if Qk == 1:
-#                 V = (V*V - 2) % n
-#             else:
-#                 V = (V*V + 2) % n
-#                 Qk = 1
-#             b -= 1
-#             if (k >> (b-1)) & 1:
-#                 U, V = U + V, V + U*D
-#                 if U & 1:
-#                     U += n
-#                 if V & 1:
-#                     V += n
-#                 U, V = U >> 1, V >> 1
-#                 Qk = -1
-#     else:
-#         # The general case with any P and Q.
-#         while b > 1:
-#             U = (U*V) % n
-#             V = (V*V - 2*Qk) % n
-#             Qk *= Qk
-#             b -= 1
-#             if (k >> (b - 1)) & 1:
-#                 U, V = U*P + V, V*P + U*D
-#                 if U & 1:
-#                     U += n
-#                 if V & 1:
-#                     V += n
-#                 U, V = U >> 1, V >> 1
-#                 Qk *= Q
-#             Qk %= n
-#     return _int_tuple(U % n, V % n, Qk)
+    if k == 0:
+        return _int_tuple(0, 2, Q)
+    U = 1
+    V = P
+    Qk = Q
+    b = _bitlength(k)
+    if Q == 1:
+        # Optimization for extra strong tests.
+        while b > 1:
+            U = (U*V) % n
+            V = (V*V - 2) % n
+            b -= 1
+            if (k >> (b - 1)) & 1:
+                U, V = U*P + V, V*P + U*D
+                if U & 1:
+                    U += n
+                if V & 1:
+                    V += n
+                U, V = U >> 1, V >> 1
+    elif P == 1 and Q == -1:
+        # Small optimization for 50% of Selfridge parameters.
+        while b > 1:
+            U = (U*V) % n
+            if Qk == 1:
+                V = (V*V - 2) % n
+            else:
+                V = (V*V + 2) % n
+                Qk = 1
+            b -= 1
+            if (k >> (b-1)) & 1:
+                U, V = U + V, V + U*D
+                if U & 1:
+                    U += n
+                if V & 1:
+                    V += n
+                U, V = U >> 1, V >> 1
+                Qk = -1
+    else:
+        # The general case with any P and Q.
+        while b > 1:
+            U = (U*V) % n
+            V = (V*V - 2*Qk) % n
+            Qk *= Qk
+            b -= 1
+            if (k >> (b - 1)) & 1:
+                U, V = U*P + V, V*P + U*D
+                if U & 1:
+                    U += n
+                if V & 1:
+                    V += n
+                U, V = U >> 1, V >> 1
+                Qk *= Q
+            Qk %= n
+    return _int_tuple(U % n, V % n, Qk)
 
 
-# def _lucas_selfridge_params(n):
-#     """Calculates the Selfridge parameters (D, P, Q) for n.  This is
-#        method A from page 1401 of Baillie and Wagstaff.
+def _lucas_selfridge_params(n):
+    """Calculates the Selfridge parameters (D, P, Q) for n.  This is
+       method A from page 1401 of Baillie and Wagstaff.
 
-#     References
-#     ==========
-#     .. [1] "Lucas Pseudoprimes", Baillie and Wagstaff, 1980.
-#            http://mpqs.free.fr/LucasPseudoprimes.pdf
-#     """
-#     from sympy.ntheory.residue_ntheory import jacobi_symbol
-#     D = 5
-#     while True:
-#         g = igcd(abs(D), n)
-#         if g > 1 and g != n:
-#             return (0, 0, 0)
-#         if jacobi_symbol(D, n) == -1:
-#             break
-#         if D > 0:
-#           D = -D - 2
-#         else:
-#           D = -D + 2
-#     return _int_tuple(D, 1, (1 - D)/4)
+    References
+    ==========
+    .. [1] "Lucas Pseudoprimes", Baillie and Wagstaff, 1980.
+           http://mpqs.free.fr/LucasPseudoprimes.pdf
+    """
+    from sympy.ntheory.residue_ntheory import jacobi_symbol
+    D = 5
+    while True:
+        g = igcd(abs(D), n)
+        if g > 1 and g != n:
+            return (0, 0, 0)
+        if jacobi_symbol(D, n) == -1:
+            break
+        if D > 0:
+          D = -D - 2
+        else:
+          D = -D + 2
+    return _int_tuple(D, 1, (1 - D)/4)
 
 
 # def _lucas_extrastrong_params(n):
@@ -3141,63 +3143,63 @@ def mr(n, bases):
 #     return U == 0
 
 
-# def is_strong_lucas_prp(n):
-#     """Strong Lucas compositeness test with Selfridge parameters.  Returns
-#     False if n is definitely composite, and True if n is a strong Lucas
-#     probable prime.
+def is_strong_lucas_prp(n):
+    """Strong Lucas compositeness test with Selfridge parameters.  Returns
+    False if n is definitely composite, and True if n is a strong Lucas
+    probable prime.
 
-#     This is often used in combination with the Miller-Rabin test, and
-#     in particular, when combined with M-R base 2 creates the strong BPSW test.
+    This is often used in combination with the Miller-Rabin test, and
+    in particular, when combined with M-R base 2 creates the strong BPSW test.
 
-#     References
-#     ==========
-#     - "Lucas Pseudoprimes", Baillie and Wagstaff, 1980.
-#       http://mpqs.free.fr/LucasPseudoprimes.pdf
-#     - OEIS A217255: Strong Lucas Pseudoprimes
-#       https://oeis.org/A217255
-#     - https://en.wikipedia.org/wiki/Lucas_pseudoprime
-#     - https://en.wikipedia.org/wiki/Baillie-PSW_primality_test
+    References
+    ==========
+    - "Lucas Pseudoprimes", Baillie and Wagstaff, 1980.
+      http://mpqs.free.fr/LucasPseudoprimes.pdf
+    - OEIS A217255: Strong Lucas Pseudoprimes
+      https://oeis.org/A217255
+    - https://en.wikipedia.org/wiki/Lucas_pseudoprime
+    - https://en.wikipedia.org/wiki/Baillie-PSW_primality_test
 
-#     Examples
-#     ========
+    Examples
+    ========
 
-#     >>> from sympy.ntheory.primetest import isprime, is_strong_lucas_prp
-#     >>> for i in range(20000):
-#     ...     if is_strong_lucas_prp(i) and not isprime(i):
-#     ...        print(i)
-#     5459
-#     5777
-#     10877
-#     16109
-#     18971
-#     """
-#     from sympy.ntheory.factor_ import trailing
-#     n = as_int(n)
-#     if n == 2:
-#         return True
-#     if n < 2 or (n % 2) == 0:
-#         return False
-#     if is_square(n, False):
-#         return False
+    >>> from sympy.ntheory.primetest import isprime, is_strong_lucas_prp
+    >>> for i in range(20000):
+    ...     if is_strong_lucas_prp(i) and not isprime(i):
+    ...        print(i)
+    5459
+    5777
+    10877
+    16109
+    18971
+    """
+    # from sympy.ntheory.factor_ import trailing
+    n = as_int(n)
+    if n == 2:
+        return True
+    if n < 2 or (n % 2) == 0:
+        return False
+    if is_square(n, False):
+        return False
 
-#     D, P, Q = _lucas_selfridge_params(n)
-#     if D == 0:
-#         return False
+    D, P, Q = _lucas_selfridge_params(n)
+    if D == 0:
+        return False
 
-#     # remove powers of 2 from n+1 (= k * 2**s)
-#     s = trailing(n + 1)
-#     k = (n+1) >> s
+    # remove powers of 2 from n+1 (= k * 2**s)
+    s = trailing(n + 1)
+    k = (n+1) >> s
 
-#     U, V, Qk = _lucas_sequence(n, P, Q, k)
+    U, V, Qk = _lucas_sequence(n, P, Q, k)
 
-#     if U == 0 or V == 0:
-#         return True
-#     for r in range(1, s):
-#         V = (V*V - 2*Qk) % n
-#         if V == 0:
-#             return True
-#         Qk = pow(Qk, 2, n)
-#     return False
+    if U == 0 or V == 0:
+        return True
+    for r in range(1, s):
+        V = (V*V - 2*Qk) % n
+        if V == 0:
+            return True
+        Qk = pow(Qk, 2, n)
+    return False
 
 
 # def is_extra_strong_lucas_prp(n):
@@ -3478,11 +3480,14 @@ r = 10**9
 isprime(r)
 r = 10**18
 isprime(r)
+r = 10**37
+isprime(r)
 for i in range(10000):
     r = random.randint(10**9, 2*10**9)
-    isprime(r)
-for i in range(100000):
+for i in range(10000):
     r = random.randint(10**18, 2*10**18)
+for i in range(100000):
+    r = random.randint(10**37, 2*10**37)
     isprime(r)
 print(f"{time.time() - st} sec")
 
