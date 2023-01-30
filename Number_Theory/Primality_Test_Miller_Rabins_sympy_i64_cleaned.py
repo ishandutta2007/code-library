@@ -1,6 +1,11 @@
+# 4x Faster than Hardcoded
 import time
 import random
-# 4x Faster than Hardcoded
+from collections import defaultdict
+from functools import reduce
+import random
+import math
+from bisect import bisect
     
 def _test(n, base, s, t):
     """Miller-Rabin strong pseudoprime test for one base.
@@ -19,15 +24,6 @@ def _test(n, base, s, t):
             if b == 1:
                 return False
     return False
-"""
-Integer factorization
-"""
-
-from collections import defaultdict
-from functools import reduce
-import random
-import math
-from bisect import bisect
 
 powers = [1<<_ for _ in range(300)]
 
@@ -75,14 +71,12 @@ def trailing(n):
     if low_byte:
         return small_trailing[low_byte]
 
-    
     z = bitcount(n) - 1
     if isinstance(z, SYMPY_INTS):
         if n == 1 << z:
             return z
 
     if z < 300:
-        
         t = 8
         n >>= 8
         while not n & 0xff:
@@ -114,7 +108,6 @@ def mr(n, bases):
 
     References
     ==========
-
     .. [1] Richard Crandall & Carl Pomerance (2005), "Prime Numbers:
            A Computational Perspective", Springer, 2nd edition, 135-138
 
@@ -129,23 +122,16 @@ def mr(n, bases):
     False
     >>> mr(479001599, [31, 73])
     True
-
     """
     n = as_int(n)
     if n < 2:
         return False
-    
     s = trailing(n - 1)
     t = n >> s
     for base in bases:
-        
         if base >= n:
             base %= n
         if base >= 2:
-            
-            
-            
-            
             if not _test(n, base, s, t):
                 return False
     return True
@@ -237,8 +223,6 @@ def isprime(n):
         return True
     if n < 31417:
         return pow(2, n, n) == 2 and n not in [7957, 8321, 13747, 18721, 19951, 23377]
-
-
     if n < 341531:
         return mr(n, [9345883071009581737])
     if n < 885594169:
@@ -258,27 +242,6 @@ def isprime(n):
     if n < 3317044064679887385961981:
         return mr(n, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41])
 
-    
-    #if n < 18446744073709551616:
-    
-    #if n < 9080191:
-    
-    #if n < 19471033:
-    
-    #if n < 38010307:
-    
-    #if n < 316349281:
-    
-    #if n < 4759123141:
-    
-    #if n < 105936894253:
-    
-    #if n < 31858317218647:
-    
-    #if n < 3071837692357849:
-    
-    #if n < 18446744073709551616:
-    
     return mr(n, [2]) and is_strong_lucas_prp(n)
 
 st = time.time()
