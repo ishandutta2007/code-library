@@ -6,7 +6,7 @@ from functools import reduce
 import random
 import math
 from bisect import bisect
-    
+
 def _test(n, base, s, t):
     """Miller-Rabin strong pseudoprime test for one base.
     Return False if n is definitely composite, True if n is
@@ -93,14 +93,6 @@ def trailing(n):
         p //= 2
     return t
 
-trial_int_msg = "Trial division with ints [%i ... %i] and fail_max=%i"
-trial_msg = "Trial division with primes [%i ... %i]"
-rho_msg = "Pollard's rho with retries %i, max_steps %i and seed %i"
-pm1_msg = "Pollard's p-1 with smoothness bound %i and seed %i"
-ecm_msg = "Elliptic Curve with B1 bound %i, B2 bound %i, num_curves %i"
-factor_msg = '\t%i ** %i'
-fermat_msg = 'Close factors satisying Fermat condition found.'
-complete_msg = 'Factorization is complete.'
 
 def mr(n, bases):
     """Perform a Miller-Rabin strong pseudoprime test on n using a
@@ -256,4 +248,3 @@ for i in range(100000):
     r = random.randint(10**18, 2*10**18)
     isprime(r)
 print(f"{time.time() - st} sec")
-
