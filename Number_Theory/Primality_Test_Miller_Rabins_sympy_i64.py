@@ -259,11 +259,46 @@ from collections import defaultdict
 from functools import reduce
 import random
 import math
+from bisect import bisect
 
 # from sympy.core import sympify
 # from sympy.core.containers import Dict
 # from sympy.core.evalf import bitcount
-from mpmath.libmp import bitcount as mpmath_bitcount
+# from mpmath.libmp import bitcount as mpmath_bitcount
+
+powers = [1<<_ for _ in range(300)]
+
+def python_bitcount(n):
+    """Calculate bit size of the nonnegative integer n."""
+    bc = bisect(powers, n)
+    if bc != 300:
+        return bc
+    bc = int(math.log(n, 2)) - 4
+    return bc + bctable[n>>bc]
+
+# def gmpy_bitcount(n):
+#     """Calculate bit size of the nonnegative integer n."""
+#     if n: return MPZ(n).numdigits(2)
+#     else: return 0
+
+# #def sage_bitcount(n):
+# #    if n: return MPZ(n).nbits()
+# #    else: return 0
+
+# def sage_trailing(n):
+#     return MPZ(n).trailing_zero_bits()
+
+# if BACKEND == 'gmpy':
+#     mpmath_bitcount = gmpy_bitcount
+#     trailing = gmpy_trailing
+# elif BACKEND == 'sage':
+#     sage_bitcount = sage_utils.bitcount
+#     mpmath_bitcount = sage_bitcount
+#     trailing = sage_trailing
+# else:
+mpmath_bitcount = python_bitcount
+# trailing = python_trailing
+
 def bitcount(n):
     """Return smallest integer, b, such that |n|/2**b < 1.
     """
