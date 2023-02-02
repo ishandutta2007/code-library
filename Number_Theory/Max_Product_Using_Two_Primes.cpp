@@ -5,22 +5,18 @@ using ll = long long;
 // generate maximum product using two primes(or any number) and their powers under a limit
 // O(log limit /log min(p1,p2))
 
-int gen_max_prod(int p1, int p2, int limit){
-  auto product = p1 * p2;
-  int maxProduct = 1;
-  // for p1^1, p1^2, p1^3, ... find the maximum exponent for p2
+ll gen_max_prod(ll p1, ll p2, ll limit){
+  ll product = p1 * p2;
+  ll maxProduct = 1;
   do
   {
-  // increase exponent of p2 as much as possible
-  auto current = product;
+  ll current = product;
   while (current * p2 <= limit)
     current *= p2;
 
-  // better than before ?
   if (maxProduct < current)
     maxProduct = current;
 
-  // increment p1's exponent by one
   product *= p1;
   } while (product <= limit);
 
