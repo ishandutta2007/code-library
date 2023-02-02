@@ -94,8 +94,10 @@ vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
 int main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  auto start_time = clock();
   auto primes = sieve(1e9);
   cout << primes.size() << '\n';
+  cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s" << endl;  
   return 0;
 }
 // https://judge.yosupo.jp/problem/enumerate_primes
