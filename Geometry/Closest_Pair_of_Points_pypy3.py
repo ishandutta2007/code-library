@@ -27,38 +27,41 @@ from math import sqrt
 #                 h = d
 #     return f"{h:.9f}"
 
+
 def closest_pair_distance_v2(n=2000000):
     mod = 50515093
     sprev = 290797
     pts = []
     for _ in range(n):
-        s = sprev*sprev%mod
+        s = sprev * sprev % mod
         x, sprev = sprev, s
-        s = sprev*sprev%mod
+        s = sprev * sprev % mod
         y, sprev = sprev, s
-        pts.append(x*mod+y)
+        pts.append(x * mod + y)
     pts.sort()
-    xs, ys = [0]*n, [0]*n
+    xs, ys = [0] * n, [0] * n
     for i, pt in enumerate(pts):
-        xs[i] = pt//mod
-        ys[i] = pt%mod
+        xs[i] = pt // mod
+        ys[i] = pt % mod
     x0, y0 = xs[0], ys[0]
     x1, y1 = xs[1], ys[1]
-    h = sqrt((x1-x0)**2+(y1-y0)**2)
+    h = sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
     for i in range(2, n):
         x, y = xs[i], ys[i]
-        for j in range(i-1, -1, -1):
+        for j in range(i - 1, -1, -1):
             x0, y0 = xs[j], ys[j]
-            if x-x0 > h:
+            if x - x0 > h:
                 break
-            d = sqrt((x-x0)**2+(y-y0)**2)
+            d = sqrt((x - x0) ** 2 + (y - y0) ** 2)
             if d < h:
                 h = d
     return f"{h:.9f}"
 
+
 start_time = perf_counter()
 result = closest_pair_distance_v2(n=2000000)
-if result is not None: print(result)
+if result is not None:
+    print(result)
 end_time = perf_counter()
 print(f"Time: {end_time - start_time} secs")
 
@@ -91,5 +94,3 @@ print(f"Time: {end_time - start_time} secs")
 #         cProfile.run('main()', sort='cumtime')
 #     else:
 #         main()
-
-

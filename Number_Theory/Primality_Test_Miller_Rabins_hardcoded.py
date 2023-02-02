@@ -1,5 +1,7 @@
 import time
 import random
+
+
 def mr_pass(a, s, d, n):
     x = pow(a, d, n)
     if x == 1:
@@ -85,12 +87,11 @@ def is_prime_miller(n):
     return True
 
 
-print(17,is_prime_miller(17))
-print(100,is_prime_miller(100))
+print(17, is_prime_miller(17))
+print(100, is_prime_miller(100))
 
 st = time.time()
 for i in range(100000):
-    r = random.randint(10**18,2*10**18)
+    r = random.randint(10**18, 2 * 10**18)
     is_prime_miller(r)
 print(f"{time.time() - st} sec")
-

@@ -16,33 +16,33 @@ Primality testing
 # from sympy.external import import_module
 
 # __all__ = [
-    # GROUND_TYPES is either 'gmpy' or 'python' depending on which is used. If
-    # gmpy is installed then it will be used unless the environment variable
-    # SYMPY_GROUND_TYPES is set to something other than 'auto', 'gmpy', or
-    # 'gmpy2'.
-    # 'GROUND_TYPES',
+# GROUND_TYPES is either 'gmpy' or 'python' depending on which is used. If
+# gmpy is installed then it will be used unless the environment variable
+# SYMPY_GROUND_TYPES is set to something other than 'auto', 'gmpy', or
+# 'gmpy2'.
+# 'GROUND_TYPES',
 
-    # If HAS_GMPY is 0, no supported version of gmpy is available. Otherwise,
-    # HAS_GMPY will be 2 for gmpy2 if GROUND_TYPES is 'gmpy'. It used to be
-    # possible for HAS_GMPY to be 1 for gmpy but gmpy is no longer supported.
-    # 'HAS_GMPY',
+# If HAS_GMPY is 0, no supported version of gmpy is available. Otherwise,
+# HAS_GMPY will be 2 for gmpy2 if GROUND_TYPES is 'gmpy'. It used to be
+# possible for HAS_GMPY to be 1 for gmpy but gmpy is no longer supported.
+# 'HAS_GMPY',
 
-    # SYMPY_INTS is a tuple containing the base types for valid integer types.
-    # This is either (int,) or (int, type(mpz(0))) depending on GROUND_TYPES.
-    # 'SYMPY_INTS',
+# SYMPY_INTS is a tuple containing the base types for valid integer types.
+# This is either (int,) or (int, type(mpz(0))) depending on GROUND_TYPES.
+# 'SYMPY_INTS',
 
-    # MPQ is either gmpy.mpq or the Python equivalent from
-    # sympy.external.pythonmpq
-    # 'MPQ',
+# MPQ is either gmpy.mpq or the Python equivalent from
+# sympy.external.pythonmpq
+# 'MPQ',
 
-    # MPZ is either gmpy.mpz or int.
-    # 'MPZ',
+# MPZ is either gmpy.mpz or int.
+# 'MPZ',
 
-    # Either the gmpy or the mpmath function
-    # 'factorial',
+# Either the gmpy or the mpmath function
+# 'factorial',
 
-    # isqrt from gmpy or mpmath
-    # 'sqrt',
+# isqrt from gmpy or mpmath
+# 'sqrt',
 # ]
 
 
@@ -59,19 +59,19 @@ Primality testing
 #
 # if GROUND_TYPES in ('auto', 'gmpy', 'gmpy2'):
 
-    # Actually import gmpy2
+# Actually import gmpy2
 # gmpy = import_module('gmpy2', min_module_version='2.0.0',
 #             module_version_attr='version', module_version_attr_call_args=())
 
-    # Warn if user explicitly asked for gmpy but it isn't available.
-    # if gmpy is None and GROUND_TYPES in ('gmpy', 'gmpy2'):
-    #     from warnings import warn
-    #     warn("gmpy library is not installed, switching to 'python' ground types")
+# Warn if user explicitly asked for gmpy but it isn't available.
+# if gmpy is None and GROUND_TYPES in ('gmpy', 'gmpy2'):
+#     from warnings import warn
+#     warn("gmpy library is not installed, switching to 'python' ground types")
 
 # elif GROUND_TYPES == 'python':
 
-    # The user asked for Python so ignore gmpy2 module.
-    # gmpy = None
+# The user asked for Python so ignore gmpy2 module.
+# gmpy = None
 
 # else:
 
@@ -92,14 +92,14 @@ Primality testing
 
 # if gmpy is not None:
 
-    # HAS_GMPY = 2
-    # GROUND_TYPES = 'gmpy'
-    # SYMPY_INTS = (int, type(gmpy.mpz(0)))
-    # MPZ = gmpy.mpz
-    # MPQ = gmpy.mpq
+# HAS_GMPY = 2
+# GROUND_TYPES = 'gmpy'
+# SYMPY_INTS = (int, type(gmpy.mpz(0)))
+# MPZ = gmpy.mpz
+# MPQ = gmpy.mpq
 
-    # factorial = gmpy.fac
-    # sqrt = gmpy.isqrt
+# factorial = gmpy.fac
+# sqrt = gmpy.isqrt
 
 # else:
 #     from .pythonmpq import PythonMPQ
@@ -266,7 +266,8 @@ from bisect import bisect
 # from sympy.core.evalf import bitcount
 # from mpmath.libmp import bitcount as mpmath_bitcount
 
-powers = [1<<_ for _ in range(300)]
+powers = [1 << _ for _ in range(300)]
+
 
 def python_bitcount(n):
     """Calculate bit size of the nonnegative integer n."""
@@ -274,7 +275,8 @@ def python_bitcount(n):
     if bc != 300:
         return bc
     bc = int(math.log(n, 2)) - 4
-    return bc + bctable[n>>bc]
+    return bc + bctable[n >> bc]
+
 
 # def gmpy_bitcount(n):
 #     """Calculate bit size of the nonnegative integer n."""
@@ -299,10 +301,11 @@ def python_bitcount(n):
 mpmath_bitcount = python_bitcount
 # trailing = python_trailing
 
+
 def bitcount(n):
-    """Return smallest integer, b, such that |n|/2**b < 1.
-    """
+    """Return smallest integer, b, such that |n|/2**b < 1."""
     return mpmath_bitcount(abs(int(n)))
+
 
 # from sympy.core.expr import Expr
 # from sympy.core.function import Function
@@ -319,8 +322,10 @@ SYMPY_INTS = (int,)
 # from sympy.utilities.iterables import flatten
 # from sympy.utilities.misc import as_int
 
+
 def as_int(n):
     return int(n)
+
 
 # from sympy.utilities.misc import filldedent
 # from sympy.ntheory.ecm import _ecm_one_factor
@@ -360,8 +365,8 @@ def as_int(n):
 
 
 small_trailing = [0] * 256
-for j in range(1,8):
-    small_trailing[1<<j::1<<(j+1)] = [j] * (1<<(7-j))
+for j in range(1, 8):
+    small_trailing[1 << j :: 1 << (j + 1)] = [j] * (1 << (7 - j))
 
 
 # def smoothness(n):
@@ -513,7 +518,7 @@ def trailing(n):
     n = abs(int(n))
     if not n:
         return 0
-    low_byte = n & 0xff
+    low_byte = n & 0xFF
     if low_byte:
         return small_trailing[low_byte]
 
@@ -527,10 +532,10 @@ def trailing(n):
         # fixed 8-byte reduction
         t = 8
         n >>= 8
-        while not n & 0xff:
+        while not n & 0xFF:
             n >>= 8
             t += 8
-        return t + small_trailing[n & 0xff]
+        return t + small_trailing[n & 0xFF]
 
     # binary reduction important when there might be a large
     # number of trailing 0s
@@ -1817,7 +1822,6 @@ def trailing(n):
 #         return Mul(*args, evaluate=False)
 
 
-
 # def primefactors(n, limit=None, verbose=False):
 #     """Return a sorted list of n's prime factors, ignoring multiplicity
 #     and any composite factor that remains if the limit was set too low
@@ -2953,6 +2957,7 @@ def trailing(n):
 #         n = mul
 #     return n
 
+
 def mr(n, bases):
     """Perform a Miller-Rabin strong pseudoprime test on n using a
     given list of bases/witnesses.
@@ -3392,9 +3397,20 @@ def isprime(n):
         return False
     if n < 49:
         return True
-    if (n %  7) == 0 or (n % 11) == 0 or (n % 13) == 0 or (n % 17) == 0 or \
-       (n % 19) == 0 or (n % 23) == 0 or (n % 29) == 0 or (n % 31) == 0 or \
-       (n % 37) == 0 or (n % 41) == 0 or (n % 43) == 0 or (n % 47) == 0:
+    if (
+        (n % 7) == 0
+        or (n % 11) == 0
+        or (n % 13) == 0
+        or (n % 17) == 0
+        or (n % 19) == 0
+        or (n % 23) == 0
+        or (n % 29) == 0
+        or (n % 31) == 0
+        or (n % 37) == 0
+        or (n % 41) == 0
+        or (n % 43) == 0
+        or (n % 47) == 0
+    ):
         return False
     if n < 2809:
         return True
@@ -3414,7 +3430,6 @@ def isprime(n):
     #     from gmpy2 import is_strong_prp, is_strong_selfridge_prp
     #     return is_strong_prp(n, 2) and is_strong_selfridge_prp(n)
 
-
     # Step 2: deterministic Miller-Rabin testing for numbers < 2^64.  See:
     #    https://miller-rabin.appspot.com/
     # for lists.  We have made sure the M-R routine will successfully handle
@@ -3431,9 +3446,28 @@ def isprime(n):
     if n < 55245642489451:
         return mr(n, [2, 141889084524735, 1199124725622454117, 11096072698276303650])
     if n < 7999252175582851:
-        return mr(n, [2, 4130806001517, 149795463772692060, 186635894390467037, 3967304179347715805])
+        return mr(
+            n,
+            [
+                2,
+                4130806001517,
+                149795463772692060,
+                186635894390467037,
+                3967304179347715805,
+            ],
+        )
     if n < 585226005592931977:
-        return mr(n, [2, 123635709730000, 9233062284813009, 43835965440333360, 761179012939631437, 1263739024124850375])
+        return mr(
+            n,
+            [
+                2,
+                123635709730000,
+                9233062284813009,
+                43835965440333360,
+                761179012939631437,
+                1263739024124850375,
+            ],
+        )
     if n < 18446744073709551616:
         return mr(n, [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
     if n < 318665857834031151167461:
@@ -3442,28 +3476,28 @@ def isprime(n):
         return mr(n, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41])
 
     # We could do this instead at any point:
-    #if n < 18446744073709551616:
+    # if n < 18446744073709551616:
     #   return mr(n, [2]) and is_extra_strong_lucas_prp(n)
 
     # Here are tests that are safe for MR routines that don't understand
     # large bases.
-    #if n < 9080191:
+    # if n < 9080191:
     #    return mr(n, [31, 73])
-    #if n < 19471033:
+    # if n < 19471033:
     #    return mr(n, [2, 299417])
-    #if n < 38010307:
+    # if n < 38010307:
     #    return mr(n, [2, 9332593])
-    #if n < 316349281:
+    # if n < 316349281:
     #    return mr(n, [11000544, 31481107])
-    #if n < 4759123141:
+    # if n < 4759123141:
     #    return mr(n, [2, 7, 61])
-    #if n < 105936894253:
+    # if n < 105936894253:
     #    return mr(n, [2, 1005905886, 1340600841])
-    #if n < 31858317218647:
+    # if n < 31858317218647:
     #    return mr(n, [2, 642735, 553174392, 3046413974])
-    #if n < 3071837692357849:
+    # if n < 3071837692357849:
     #    return mr(n, [2, 75088, 642735, 203659041, 3613982119])
-    #if n < 18446744073709551616:
+    # if n < 18446744073709551616:
     #    return mr(n, [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
 
     # Step 3: BPSW.
@@ -3479,11 +3513,11 @@ def isprime(n):
     return mr(n, [2]) and is_strong_lucas_prp(n)
 
     # Using extra strong test, which is somewhat faster
-    #return mr(n, [2]) and is_extra_strong_lucas_prp(n)
+    # return mr(n, [2]) and is_extra_strong_lucas_prp(n)
 
     # Add a random M-R base
-    #import random
-    #return mr(n, [2, random.randint(3, n-1)]) and is_strong_lucas_prp(n)
+    # import random
+    # return mr(n, [2, random.randint(3, n-1)]) and is_strong_lucas_prp(n)
 
 
 # def is_gaussian_prime(num):
@@ -3514,10 +3548,9 @@ isprime(r)
 r = 10**18
 isprime(r)
 for i in range(10000):
-    r = random.randint(10**9, 2*10**9)
+    r = random.randint(10**9, 2 * 10**9)
     isprime(r)
 for i in range(100000):
-    r = random.randint(10**18, 2*10**18)
+    r = random.randint(10**18, 2 * 10**18)
     isprime(r)
 print(f"{time.time() - st} sec")
-

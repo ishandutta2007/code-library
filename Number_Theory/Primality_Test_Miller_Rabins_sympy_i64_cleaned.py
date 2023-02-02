@@ -7,6 +7,7 @@ import random
 import math
 from bisect import bisect
 
+
 def _test(n, base, s, t):
     """Miller-Rabin strong pseudoprime test for one base.
     Return False if n is definitely composite, True if n is
@@ -25,7 +26,9 @@ def _test(n, base, s, t):
                 return False
     return False
 
-powers = [1<<_ for _ in range(300)]
+
+powers = [1 << _ for _ in range(300)]
+
 
 def python_bitcount(n):
     """Calculate bit size of the nonnegative integer n."""
@@ -33,22 +36,28 @@ def python_bitcount(n):
     if bc != 300:
         return bc
     bc = int(math.log(n, 2)) - 4
-    return bc + bctable[n>>bc]
+    return bc + bctable[n >> bc]
+
 
 mpmath_bitcount = python_bitcount
+
+
 def bitcount(n):
-    """Return smallest integer, b, such that |n|/2**b < 1.
-    """
+    """Return smallest integer, b, such that |n|/2**b < 1."""
     return mpmath_bitcount(abs(int(n)))
 
+
 SYMPY_INTS = (int,)
+
 
 def as_int(n):
     return int(n)
 
+
 small_trailing = [0] * 256
-for j in range(1,8):
-    small_trailing[1<<j::1<<(j+1)] = [j] * (1<<(7-j))
+for j in range(1, 8):
+    small_trailing[1 << j :: 1 << (j + 1)] = [j] * (1 << (7 - j))
+
 
 def trailing(n):
     """Count the number of trailing zero digits in the binary
@@ -67,7 +76,7 @@ def trailing(n):
     n = abs(int(n))
     if not n:
         return 0
-    low_byte = n & 0xff
+    low_byte = n & 0xFF
     if low_byte:
         return small_trailing[low_byte]
 
@@ -79,10 +88,10 @@ def trailing(n):
     if z < 300:
         t = 8
         n >>= 8
-        while not n & 0xff:
+        while not n & 0xFF:
             n >>= 8
             t += 8
-        return t + small_trailing[n & 0xff]
+        return t + small_trailing[n & 0xFF]
     t = 0
     p = 8
     while not n & 1:
@@ -128,6 +137,7 @@ def mr(n, bases):
                 return False
     return True
 
+
 def isprime(n):
     """
     Test if n is a prime number (True) or not (False). For n < 2^64 the
@@ -150,7 +160,7 @@ def isprime(n):
     >>> from sympy.ntheory import isprime
     >>> isprime(13)
     True
-    >>> isprime(13.0)  
+    >>> isprime(13.0)
     False
     >>> isprime(15)
     False
@@ -176,7 +186,7 @@ def isprime(n):
     >>> near_int = 1 + S(1)/10**19
     >>> near_int == int(near_int)
     False
-    >>> n = Float(near_int, 10)  
+    >>> n = Float(near_int, 10)
     >>> n == int(n)
     True
     >>> n = Float(near_int, 20)
@@ -207,9 +217,20 @@ def isprime(n):
         return False
     if n < 49:
         return True
-    if (n %  7) == 0 or (n % 11) == 0 or (n % 13) == 0 or (n % 17) == 0 or \
-       (n % 19) == 0 or (n % 23) == 0 or (n % 29) == 0 or (n % 31) == 0 or \
-       (n % 37) == 0 or (n % 41) == 0 or (n % 43) == 0 or (n % 47) == 0:
+    if (
+        (n % 7) == 0
+        or (n % 11) == 0
+        or (n % 13) == 0
+        or (n % 17) == 0
+        or (n % 19) == 0
+        or (n % 23) == 0
+        or (n % 29) == 0
+        or (n % 31) == 0
+        or (n % 37) == 0
+        or (n % 41) == 0
+        or (n % 43) == 0
+        or (n % 47) == 0
+    ):
         return False
     if n < 2809:
         return True
@@ -224,9 +245,28 @@ def isprime(n):
     if n < 55245642489451:
         return mr(n, [2, 141889084524735, 1199124725622454117, 11096072698276303650])
     if n < 7999252175582851:
-        return mr(n, [2, 4130806001517, 149795463772692060, 186635894390467037, 3967304179347715805])
+        return mr(
+            n,
+            [
+                2,
+                4130806001517,
+                149795463772692060,
+                186635894390467037,
+                3967304179347715805,
+            ],
+        )
     if n < 585226005592931977:
-        return mr(n, [2, 123635709730000, 9233062284813009, 43835965440333360, 761179012939631437, 1263739024124850375])
+        return mr(
+            n,
+            [
+                2,
+                123635709730000,
+                9233062284813009,
+                43835965440333360,
+                761179012939631437,
+                1263739024124850375,
+            ],
+        )
     if n < 18446744073709551616:
         return mr(n, [2, 325, 9375, 28178, 450775, 9780504, 1795265022])
     if n < 318665857834031151167461:
@@ -236,15 +276,16 @@ def isprime(n):
 
     return mr(n, [2]) and is_strong_lucas_prp(n)
 
+
 st = time.time()
 r = 10**9
 isprime(r)
 r = 10**18
 isprime(r)
 for i in range(10000):
-    r = random.randint(10**9, 2*10**9)
+    r = random.randint(10**9, 2 * 10**9)
     isprime(r)
 for i in range(100000):
-    r = random.randint(10**18, 2*10**18)
+    r = random.randint(10**18, 2 * 10**18)
     isprime(r)
 print(f"{time.time() - st} sec")
