@@ -58,7 +58,11 @@ cbrt_N = icbrt(N)
 psum_smalls, psum_larges = tabulate_all_primes_sum(N) 
 print(psum_smalls)
 print(psum_larges)
+print("Small prime sums:")
 for i in range(1, sqrt_N+1):
-  print("Prime count till {} = {}".format(N//i,psum_larges[i]))
+  print("Prime sums till {} = {}".format(i,psum_smalls[i]))
+print("Large prime sums:")
+for i in range(1, sqrt_N+1):
+  print("Prime sums till {} = {}".format(N//i,psum_larges[i]))
 
 
