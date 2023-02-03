@@ -8,12 +8,12 @@ int primes[N], f[N];
 
 int test(int n, int p) {
   int ret = 0;
-  for (; n /= p; )
+  for (; n /= p;)
     ret += n;
   return ret;
 }
 
-void sieve(){
+void sieve() {
   for (int i = 2; i <= n; ++i) {
     if (!primes[i]) {
       primes[++primes[0]] = i;
@@ -47,6 +47,7 @@ int main() {
     ans += f[i];
   printf("%ld\n", ans);
 
-  std::cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s\n";
+  std::cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+            << "s\n";
   return 0;
 }

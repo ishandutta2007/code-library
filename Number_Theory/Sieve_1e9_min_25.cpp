@@ -97,7 +97,8 @@ int main() {
   auto start_time = clock();
   auto primes = sieve(1e9);
   cout << primes.size() << '\n';
-  cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s" << endl;  
+  cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s"
+       << endl;
   return 0;
 }
 // https://judge.yosupo.jp/problem/enumerate_primes

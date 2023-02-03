@@ -71,16 +71,17 @@ ll prime_pi(const ll N) {
   return larges[0] + 1;
 }
 
-ll count_k_smooth(ll k,ll n){
+ll count_k_smooth(ll k, ll n) {
   ll total = 0;
   for (int i = 1; i < k; i++)
-    total += (prime_pi(n/i) - prime_pi(i-1));
+    total += (prime_pi(n / i) - prime_pi(i - 1));
   return n - total;
 }
 
 int main() {
   auto start_time = clock();
   cout << count_k_smooth(1e5, 1e10) << endl;
-  cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s"<< endl;
+  cout << "time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s"
+       << endl;
   return 0;
 }

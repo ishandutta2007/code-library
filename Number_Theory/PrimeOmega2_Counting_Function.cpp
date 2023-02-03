@@ -219,22 +219,24 @@ int myprimepi(int n) {
     return prime_pi(n);
 }
 
-void prime_omega2(int n){
+void prime_omega2(int n) {
   int sqn = 1000;
-  primes = sieve(n/sqn);
-  cout << "sieve time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC  << endl;
+  primes = sieve(n / sqn);
+  cout << "sieve time: " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+       << endl;
 
   int s = 0;
   for (int p : primes) {
-    int upto = min(p, (int)n/p);
+    int upto = min(p, (int)n / p);
     s += myprimepi(upto);
   }
 
-  int pcnt_nbysqn = prime_pi(n/sqn);
+  int pcnt_nbysqn = prime_pi(n / sqn);
   s -= prime_pi(sqn) * pcnt_nbysqn;
   for (int p : primes) {
-    if (p > sqn) break;
-    s += (prime_pi(n/p));
+    if (p > sqn)
+      break;
+    s += (prime_pi(n / p));
   }
 }
 
@@ -249,4 +251,4 @@ int32_t main() {
   return 0;
 }
 
-//Projecteuler 187
+// Projecteuler 187

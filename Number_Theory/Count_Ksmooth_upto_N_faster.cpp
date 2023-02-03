@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
-// This is faster than other becuaase it reverse engineers prime counting function of legendre 
+// This is faster than other becuaase it reverse engineers prime counting
+// function of legendre
 // and constructs own counting function
 // Credits: ironman353 and min_25
 // n = 1e+10
@@ -11,8 +12,8 @@ typedef long long int lli;
 typedef long double ld;
 
 lli count_k_smooth(lli K, lli N) {
-  vector < int > s_cnt(K + 1);
-  vector < lli > l_cnt(K + 1);
+  vector<int> s_cnt(K + 1);
+  vector<lli> l_cnt(K + 1);
   for (int i = 1; i <= K; i++) {
     s_cnt[i] = i - 1;
     l_cnt[i] = N / i - 1;
@@ -51,5 +52,3 @@ int main() {
   cout << "Time elapsed : " << (1.0 * clock() / CLOCKS_PER_SEC) << " seconds\n";
   return 0;
 }
-
-
