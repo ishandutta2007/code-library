@@ -1,5 +1,6 @@
+import time
 import math
-
+start = time.time()
 
 def solvePell(n):
     x = int(math.sqrt(n))
@@ -21,6 +22,7 @@ def solvePell(n):
             return a, b
 
 
-for D in range(1, 100):
+for D in range(1, 1000):
     x, y = solvePell(D)
     print(x, y)
+print(time.time() - start)
