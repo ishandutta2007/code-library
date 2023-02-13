@@ -1,6 +1,8 @@
 import time
 import math
+
 start = time.time()
+
 
 def solvePell(n):
     x = int(math.sqrt(n))

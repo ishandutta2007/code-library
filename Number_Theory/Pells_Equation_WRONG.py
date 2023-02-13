@@ -1,6 +1,7 @@
 import sys
 from math import sqrt
 
+
 # continued fraction of sqrt(x)
 # there will always be a cycle of size <= 2 * sqrt(x) in the continued fraction
 def get_continued_fraction(ans, x):

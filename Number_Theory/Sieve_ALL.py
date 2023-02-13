@@ -49,7 +49,8 @@ def sieve_wheel_30(N):
 
     Copyright 2009 by zerovolt.com
     This code is free for non-commercial purposes, in which case you can just leave this comment as a credit for my work.
-    If you need this code for commercial purposes, please contact me by sending an email to: info [at] zerovolt [dot] com."""
+    If you need this code for commercial purposes, please contact me by sending an email to: info [at] zerovolt [dot] com.
+    """
     __smallp = (
         2,
         3,
@@ -257,6 +258,7 @@ def sieve_wheel_30(N):
     # another help dictionary: gives tkx calling tmptk[x]
     tmptk = {1: tk1, 7: tk7, 11: tk11, 13: tk13, 17: tk17, 19: tk19, 23: tk23, 29: tk29}
     pos, prime, lastadded, stop = 0, 0, 0, int(ceil(sqrt(N)))
+
     # inner functions definition
     def del_mult(tk, start, step):
         for k in range(start, len(tk), step):

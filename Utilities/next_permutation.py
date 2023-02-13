@@ -19,5 +19,5 @@ def next_permutation(a):
     a[i], a[j] = a[j], a[i]
 
     # Reverse sequence from a[i + 1] up to and including the final element a[n]
-    a[i + 1:] = reversed(a[i + 1:])
+    a[i + 1 :] = reversed(a[i + 1 :])
     return True
