@@ -15,6 +15,11 @@ using namespace std;
 // n = 1e+13
 // result: 346065536839
 // time: 0.8755s
+
+// n = 1e+14
+// result: 3204941750802
+// time: 4.41496s
+
 using ll = long long;
 
 int isqrt(ll n) { return sqrtl(n); }
