@@ -1,3 +1,9 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using int64 = long long;
+using uint64 = unsigned long long;
+
 
 inline int64 mulmod(int64 a, int64 b, int64 mod) {
   int64 res = (a * ((long double)b / (long double)mod));
