@@ -377,7 +377,7 @@ def siqs_trial_division(
     """
     sqrt_n = sqrt(float(n))
     limit = log2(m * sqrt_n) - SIQS_TRIAL_DIVISION_EPS
-    for (i, sa) in enumerate(sieve_array):
+    for i, sa in enumerate(sieve_array):
         if sa >= limit:
             x = i - m
             gx = g.eval(x)

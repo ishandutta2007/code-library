@@ -142,7 +142,7 @@ def sqfrgen(ps):  # copied from labmath (https://pypi.org/project/labmath/)
 def stormerfactory(data):  # derived from labmath (https://pypi.org/project/labmath/)
     sqfr, pl, bail, k = data
     ans = []
-    for (n, (x, y)) in enumerate(simplepell(sqfr, bail)):
+    for n, (x, y) in enumerate(simplepell(sqfr, bail)):
         if n >= k:
             break
         # We now check that we have found a smooth pair.  We don't outsource to factorint since we only need to divide
@@ -194,7 +194,7 @@ def stormer2(
     bail = 2 + 2 * abc[0] * prod(pl) ** abc[1] if abc else inf
     if procs == 1:
         for sqfr in sqfrgen(pl):
-            for (n, (x, y)) in enumerate(simplepell(sqfr, bail)):
+            for n, (x, y) in enumerate(simplepell(sqfr, bail)):
                 if n >= k:
                     break
                 # We now check that we have found a smooth pair.  We don't outsource to factorint since we only need to divide
@@ -266,7 +266,7 @@ print()
 #  and every even smooth pair (x, x+2) yields a smooth pair (x, x+1) upon halving.
 
 primes = []
-for (n, p) in enumerate(primegen(), start=1):
+for n, p in enumerate(primegen(), start=1):
     primes.append(p)
     oldtime = time()
     (
@@ -285,7 +285,7 @@ for (n, p) in enumerate(primegen(), start=1):
         total1sq,
         total1tri,
     ) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    for (x, y) in stormer2(primes, abc=abc, procs=pc):
+    for x, y in stormer2(primes, abc=abc, procs=pc):
         assert x + 2 == y, (x, y, primes, abc)
         assert issmooth(x, primes), (x, y, primes, abc)
         assert issmooth(y, primes), (x, y, primes, abc)

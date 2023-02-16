@@ -124,7 +124,7 @@ def stormer2(
     bail = 2 + 2 * abc[0] * prod(pl) ** abc[1] if abc else inf
     if procs == 1:
         for sqfr in sqfrgen(pl):
-            for (n, (x, y)) in enumerate(simplepell(sqfr, bail)):
+            for n, (x, y) in enumerate(simplepell(sqfr, bail)):
                 if n >= k:
                     break
                 # We now check that we have found a smooth pair.  We don't outsource to factorint since we only need to divide

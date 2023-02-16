@@ -117,7 +117,6 @@ def factorize(n):
 
 
 class Sieve:
-
     # should be derived from bitarray but ...
     # https://github.com/ilanschnell/bitarray/issues/69
     # TODO: simplify when solved
