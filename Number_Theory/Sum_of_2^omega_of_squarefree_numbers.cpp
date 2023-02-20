@@ -78,9 +78,20 @@ int64 sum_sigma_mu(int64 n) {
 }
 
 int main() {
-  prepare(10000);
-  for(int i=1;i<=10;i++)
-  cout << sum_sigma_mu(i) << ", "; 
-  cout << endl;
+  int T;
+  scanf("%d", &T);
+  std::vector<int64> tests(T);
+  for (int i = 0; i < T; ++i) {
+    scanf("%lld", &tests[i]);
+  }
+  m = *std::max_element(tests.begin(), tests.end());
+  m = cbrt(m);
+  m = m * m;
+  m = std::max<int64>(m, 10000);
+  prepare(m);
+  for(int i = 1;i <= 10; i++)
+  cout << sum_sigma_mu(i) << ", ";
+  cout<<endl;
+
   return 0;
 }
