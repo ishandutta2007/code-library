@@ -1,13 +1,7 @@
-#include <bits/stdc++.h>
-using namespace std;
 //https://oeis.org/A069201
 
-#include <cassert>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
 
 using int64 = unsigned long long;
 using pii = std::pair<int64, int64>;
