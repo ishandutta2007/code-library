@@ -11,7 +11,7 @@ using ll = long long;
  * Pre-condition: p is a factor of factorial(n)
  * @return the number of factor p in n!
  */
-inline static ll countOfAFactorInFactorial(ll n, ll p) {
+inline static ll countOfAPrimeFactorInFactorial(ll n, ll p) {
 
   ll result = 0;
   while (n != 0) {
@@ -25,7 +25,7 @@ int main() {
 
 #ifdef DEBUG
 
-  assert(countOfAFactorInFactorial(20, 2) == 18);
+  assert(countOfAPrimeFactorInFactorial(20, 2) == 18);
 
 #endif
 
