@@ -1,5 +1,5 @@
 //calcules till 10^7 in 0.1 sec
-//1000x faster than c++ version
+//calcules till 10^8 in 1.5 sec
 
 fn compute_mu(max: usize) -> Vec<isize> {
     let mut mu = vec![0; max + 1];
@@ -30,7 +30,7 @@ fn compute_mu(max: usize) -> Vec<isize> {
 }
 
 fn main() {
-    let n = 100_000_000_000_000usize;
+    let n = 10_000_000_000_000_000usize;
     let nsq = (n as f64).sqrt() as usize;
     let mu = compute_mu(nsq);
     let mut result = 0isize;
@@ -38,5 +38,4 @@ fn main() {
         println!("{}", mu[s]);
     }
 }
-
 
