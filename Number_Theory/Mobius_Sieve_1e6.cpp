@@ -3,7 +3,7 @@
 using namespace std;
 // http://oeis.org/A008683
 using int64 = long long;
-const int N = 100000 + 10;
+const int N = 1e6 + 10;
 std::vector<int> divs[N];
 std::vector<std::pair<int, int>> edges[N];
 int p[N], m;
@@ -31,8 +31,10 @@ void mobius_sieve() {
   }
 }
 int main() {
+  auto start_time = clock();
   mobius_sieve();
+  cout << "Time till prime and mobius combined sieve: " << (1.0 * (clock() - start_time) / CLOCKS_PER_SEC) << "s" << endl;
   for (int i = 0; i < 10; i++)
-    cout << mu[i] << endl;
+    cout << mu[i] << " ";
   return 0;
 }
