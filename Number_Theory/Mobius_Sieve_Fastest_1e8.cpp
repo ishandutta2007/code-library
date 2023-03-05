@@ -4,9 +4,12 @@
 #include<climits>
 #include<iostream>
 #include<algorithm>
+
+// Sieves till 1e8 in 2 sec
+
 using namespace std;
 typedef long long ll;
-const ll m=34000001;
+const ll m=100000001;
 bool flag[m];
 ll p[m],u[m],i,j,k,n,tot;
 void mobius_sieve(){
