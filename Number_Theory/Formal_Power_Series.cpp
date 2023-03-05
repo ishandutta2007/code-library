@@ -357,16 +357,14 @@ public:
 
   constexpr static_modint() : _v(0) {}
   template <class T, internal::is_signed_int_t<T> * = nullptr>
-  constexpr static_modint(T v)
-      : _v() {
+  constexpr static_modint(T v) : _v() {
     long long x = (long long)(v % (long long)(umod()));
     if (x < 0)
       x += umod();
     _v = (unsigned int)(x);
   }
   template <class T, internal::is_unsigned_int_t<T> * = nullptr>
-  constexpr static_modint(T v)
-      : _v() {
+  constexpr static_modint(T v) : _v() {
     _v = (unsigned int)(v % umod());
   }
 
@@ -623,7 +621,7 @@ using ll = long long;
 template <class T> auto ndvec(size_t n, T &&x) {
   return vector(n, forward<T>(x));
 }
-template <class... Ts> auto ndvec(size_t n, Ts &&... xs) {
+template <class... Ts> auto ndvec(size_t n, Ts &&...xs) {
   return vector(n, ndvec(forward<Ts>(xs)...));
 }
 #line 3 "lib/io.hpp"
@@ -635,13 +633,13 @@ public:
   template <class T> enable_if_t<is_integral_v<T>> read(T &x) {
     skip();
     [[maybe_unused]] bool neg = false;
-    if
-      constexpr(is_signed_v<T>)neg = *p == '-' ? (p++, true) : false;
+    if constexpr (is_signed_v<T>)
+      neg = *p == '-' ? (p++, true) : false;
     x = 0;
     while (*p > ' ')
       x = x * 10 + (*p++ & 0x0F);
-    if
-      constexpr(is_signed_v<T>)x = neg ? -x : x;
+    if constexpr (is_signed_v<T>)
+      x = neg ? -x : x;
   }
   template <class T> void_t<decltype(&T::val)> read(T &x) {
     x = T((unsigned)(*this));
@@ -653,7 +651,7 @@ public:
       p++;
     copy(p0, p, q);
   }
-  template <size_t N> void read(char(&s)[N]) { read(s); }
+  template <size_t N> void read(char (&s)[N]) { read(s); }
   void read(string &s) {
     skip();
     char *p0 = p;
@@ -667,7 +665,7 @@ public:
   template <class... Ts> void read(tuple<Ts...> &x) {
     read_tuple(x, make_index_sequence<sizeof...(Ts)>{});
   }
-  template <class T, size_t N> void read(T(&a)[N]) {
+  template <class T, size_t N> void read(T (&a)[N]) {
     for (auto &e : a)
       read(e);
   }
@@ -676,7 +674,7 @@ public:
     T x;
     return read(x), x;
   }
-  template <class... Ts> void operator()(Ts &... xs) { (read(xs), ...); }
+  template <class... Ts> void operator()(Ts &...xs) { (read(xs), ...); }
   int operator--() { return (int)*this - 1; }
   template <class T> void vec(vector<T> &v, int n) {
     v.resize(n);
@@ -709,8 +707,9 @@ public:
   template <class T> enable_if_t<is_integral_v<T>> write(T x) {
     if (!x)
       return write_char('0');
-    if
-      constexpr(is_signed_v<T>)if (x < 0) write_char('-'), x = -x;
+    if constexpr (is_signed_v<T>)
+      if (x < 0)
+        write_char('-'), x = -x;
     static char tmp[16];
     char *q = end(tmp);
     while (x >= 10000)
@@ -741,14 +740,14 @@ public:
   template <class... Ts> void write(const tuple<Ts...> &x) {
     write_tuple(x, make_index_sequence<sizeof...(Ts)>{});
   }
-  template <class... Ts> void write(const Ts &... xs) {
+  template <class... Ts> void write(const Ts &...xs) {
     ((write(xs), write_char(' ')), ...), --p;
   }
-  template <class... Ts> void writeln(const Ts &... xs) {
+  template <class... Ts> void writeln(const Ts &...xs) {
     write(xs...), write_char('\n');
   }
 
-  template <class... Ts> void operator()(const Ts &... xs) { writeln(xs...); }
+  template <class... Ts> void operator()(const Ts &...xs) { writeln(xs...); }
   template <class It> void iter(It first, It last, char sep = ' ') {
     if (first == last)
       write_char('\n');
@@ -809,20 +808,15 @@ template <class T> T inverse(int n) {
 template <class T> __attribute__((target("bmi"))) int ctz(T x) {
   if (!x)
     return sizeof(T) * 8;
-  if
-    constexpr(sizeof(T) <= sizeof(unsigned)) {
-      return __builtin_ctz((unsigned)x);
-    }
-  else if
-    constexpr(sizeof(T) <= sizeof(unsigned long long)) {
-      return __builtin_ctzll((unsigned long long)x);
-    }
-  else if
-    constexpr(sizeof(T) <= sizeof(unsigned long long) * 2) {
-      unsigned long long y = x;
-      return y ? ctz(y)
-               : sizeof(y) * 8 + ctz((unsigned long long)(x >> sizeof(y) * 8));
-    }
+  if constexpr (sizeof(T) <= sizeof(unsigned)) {
+    return __builtin_ctz((unsigned)x);
+  } else if constexpr (sizeof(T) <= sizeof(unsigned long long)) {
+    return __builtin_ctzll((unsigned long long)x);
+  } else if constexpr (sizeof(T) <= sizeof(unsigned long long) * 2) {
+    unsigned long long y = x;
+    return y ? ctz(y)
+             : sizeof(y) * 8 + ctz((unsigned long long)(x >> sizeof(y) * 8));
+  }
 }
 #line 3 "lib/util/seed.hpp"
 
@@ -1417,7 +1411,7 @@ public:
   formal_power_series(vector<T> v) : vector<T>(move(v)) {}
   formal_power_series(sparse p) : vector<T>() {
     resize(p.back().first + 1);
-    for (auto[k, c] : p)
+    for (auto [k, c] : p)
       (*this)[k] += c;
   }
   static fps one() { return fps({T(1)}); }
@@ -1594,7 +1588,7 @@ public:
       return zero();
     if (v.front().first == 0)
       v.front().second -= T(1);
-    repr(i, size()) for (auto[k, c] : v) {
+    repr(i, size()) for (auto [k, c] : v) {
       if (k > i)
         break;
       (*this)[i] += (*this)[i - k] * c;
@@ -1603,12 +1597,12 @@ public:
   }
   fps conv(sparse v) const & { return fps(*this).conv(move(v)); }
   fps div(sparse v) && {
-    auto[k0, r] = v.front();
+    auto [k0, r] = v.front();
     assert(k0 == 0 && r != T(0));
     T ir = r.inv();
     v.pop_front();
     rep(i, size()) {
-      for (auto[k, c] : v) {
+      for (auto [k, c] : v) {
         if (k > i)
           break;
         (*this)[i] -= (*this)[i - k] * c;

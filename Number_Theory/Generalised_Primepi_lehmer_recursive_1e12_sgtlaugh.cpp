@@ -1,7 +1,7 @@
 /***
  * Complexity: Roughly ~O(n^(2/3))
  * Credits: sgtlaugh
-***/
+ ***/
 // n = 1e+10 : 455055057(time: 0.83s)
 // n = 1e+11 : 4118094746(time: 0.85s)
 // n = 1e+12 : 37607404117(time: 1.05s)
@@ -91,9 +91,8 @@ void gen() {
     dp[0][i] = (uint64_t)accfunc(i, 1); // i * (i + 1) / 2;
   for (int i = 1; i < MAXN; i++) {
     for (int j = 1; j < MAXM; j++) {
-      dp[i][j] =
-          dp[i - 1][j] -
-          dp[i - 1][fast_div(j, primes[i])] * func(primes[i], 1); // primes[i];
+      dp[i][j] = dp[i - 1][j] - dp[i - 1][fast_div(j, primes[i])] *
+                                    func(primes[i], 1); // primes[i];
     }
   }
 }

@@ -7,7 +7,7 @@
  *
  * Complexity: Roughly ~O(n^(2/3))
  * Credits: sgtlaugh
-***/
+ ***/
 // n = 1e+10 : 455055057(time: 0.83s)
 // n = 1e+11 : 4118094746(time: 0.85s)
 // n = 1e+12 : 37607404117(time: 1.05s)

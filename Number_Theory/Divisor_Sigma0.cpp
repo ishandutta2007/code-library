@@ -18,5 +18,6 @@ int number_of_divisors(long long x) {
 int main() {
   int ans = 0;
   for (int n = 1; n <= 39; ++n)
-    cout<< "number_of_divisors(" << n << ") = " << number_of_divisors(n) << endl;
+    cout << "number_of_divisors(" << n << ") = " << number_of_divisors(n)
+         << endl;
 }

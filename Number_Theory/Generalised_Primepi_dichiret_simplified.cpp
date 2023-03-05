@@ -438,34 +438,34 @@ static void calcS3() {
 }
 
 /*	This is the most important function here. How it works:
-*	 first we allocate our n^1/3 ln n sized pools and other variables.
-*	 Then we go ahead and sieve to get our primes up to n^1/3
-*	 We also calculate, through one pass of sieving, values of d_k'(n) up to
-*n^1/3
-*	 Then we go ahead and calculate the loop S2 (check the description of
-*the algorithm), which only requires
-*	 values of d_k'(n) up to n^1/3, which we already have.
-*	 Now we're ready for the main loop.
-*	 We do the following roughly n^1/3 times.
-*	 First we clear our sieving variables.
-*	 Then we factor, entirely, all of the numbers in the current block sized
-*n^1/3 that we're looking at.
-*	 Using our factorization information, we calculate the values for
-*d_k'(n) for the entire range we're looking,
-*	 and then sum those together to have a rolling set of D_k'(n) values
-*	 Now we have values for D_k'(n) for this block sized n^1/3
-*	 First we see if any of the values of S1 that we need to compute are in
-*this block. We can do this by
-*	 (see the paper) walking through the two S1 loops backwards, which will
-*use the D_k'(n)
-*	 values in order from smallest to greatest
-*	 We then do the same thing will all of the S3 values
-*	 Once we have completed this loop, we will have calculated the prime
-*power function for n.
-*
-*	This loop is essentially calculating
-*	http://www.icecreambreakfast.com/primecount/primecounting.html#4_4
-*/
+ *	 first we allocate our n^1/3 ln n sized pools and other variables.
+ *	 Then we go ahead and sieve to get our primes up to n^1/3
+ *	 We also calculate, through one pass of sieving, values of d_k'(n) up to
+ *n^1/3
+ *	 Then we go ahead and calculate the loop S2 (check the description of
+ *the algorithm), which only requires
+ *	 values of d_k'(n) up to n^1/3, which we already have.
+ *	 Now we're ready for the main loop.
+ *	 We do the following roughly n^1/3 times.
+ *	 First we clear our sieving variables.
+ *	 Then we factor, entirely, all of the numbers in the current block sized
+ *n^1/3 that we're looking at.
+ *	 Using our factorization information, we calculate the values for
+ *d_k'(n) for the entire range we're looking,
+ *	 and then sum those together to have a rolling set of D_k'(n) values
+ *	 Now we have values for D_k'(n) for this block sized n^1/3
+ *	 First we see if any of the values of S1 that we need to compute are in
+ *this block. We can do this by
+ *	 (see the paper) walking through the two S1 loops backwards, which will
+ *use the D_k'(n)
+ *	 values in order from smallest to greatest
+ *	 We then do the same thing will all of the S3 values
+ *	 Once we have completed this loop, we will have calculated the prime
+ *power function for n.
+ *
+ *	This loop is essentially calculating
+ *	http://www.icecreambreakfast.com/primecount/primecounting.html#4_4
+ */
 
 static double calcPrimePowerCount(ll nVal, double curPow) {
   theCurPow = curPow;

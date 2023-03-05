@@ -236,11 +236,13 @@ vector<ll> TinyTotients() {
          c < (spn > TinyLength ? TinyLength : spn + 1); c += bp)
       arr[c] |= 1;
   }
-  arr.reduce((s, v, i) = > { // accumulate sums...
-    const ns = s + (v ^ 1);
-    arr[i] = ns;
-    return ns;
-  }, 0);
+  arr.reduce((s, v, i) = >
+                         { // accumulate sums...
+                           const ns = s + (v ^ 1);
+                           arr[i] = ns;
+                           return ns;
+                         },
+             0);
   return arr;
 }
 
@@ -448,7 +450,7 @@ ll *countPrimesTo(limit) {
           }
           for (let m = maxm; m > minm; --m) {
             const rt = specialroots[m];
-            if (rt != 0 && bpi<rt>>> 1) {
+            if (rt != 0 && bpi < rt >>> 1) {
               const stop = Math.trunc(limit / (bp * m) - low) >>> 1;
               const mu = ((rt & 1) << 1) - 1; // one bit means negative!
               s2acc -= mu * (phis[bpi] + countTo(stop));

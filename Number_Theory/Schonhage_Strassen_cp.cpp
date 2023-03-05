@@ -370,7 +370,7 @@ void test() {
     each(x, a) x = e, e += 1;
     // each(x, b) x = e, e += 1;
     b = a;
-    auto[c, d] = ss.multiply(a, b);
+    auto [c, d] = ss.multiply(a, b);
     mint inv = mint(1 << d).inverse();
     each(x, c) x *= inv;
     vector<mint> C(n + m - 1);
@@ -380,14 +380,14 @@ void test() {
 }
 
 void in() {}
-template <typename T, class... U> void in(T &t, U &... u) {
+template <typename T, class... U> void in(T &t, U &...u) {
   cin >> t;
   in(u...);
 }
 
 void out() { cout << "\n"; }
 template <typename T, class... U, char sep = ' '>
-void out(const T &t, const U &... u) {
+void out(const T &t, const U &...u) {
   cout << t;
   if (sizeof...(u))
     cout << sep;
@@ -405,7 +405,7 @@ int main() {
   ini(N, M);
   vector<mint> a(N), b(M);
   in(a, b);
-  auto[c, d] = ss.multiply(a, b);
+  auto [c, d] = ss.multiply(a, b);
   mint inv = mint(1 << d).inverse();
   each(x, c) x *= inv;
 

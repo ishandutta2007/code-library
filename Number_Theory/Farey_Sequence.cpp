@@ -59,8 +59,8 @@
     UVa - 10408
 */
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 

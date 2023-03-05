@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
     cout << "Factors of " << x << " = {";
     vector<ll> p = getFactorization(x);
     map<ll, int> facs = flat_to_map_format(p);
-    for (const auto & [ key, val ] : facs) {
+    for (const auto &[key, val] : facs) {
       cout << key << ":" << val << ", ";
     }
     cout << "}" << endl;

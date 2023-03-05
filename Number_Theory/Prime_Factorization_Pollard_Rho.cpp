@@ -103,7 +103,7 @@ vector<ll> factorize(ll n) {
   sort(v.begin(), v.end());
   return v;
 }
-} // namespace PollardRho ends
+} // namespace PollardRho
 
 namespace FactorHelper {
 auto flat_to_unique_flat(vector<ll> v) {
@@ -170,7 +170,7 @@ vector<ll> get_divisors(ll n) {
       two_arrays.first, two_arrays.second, 0, 1);
   return all_f;
 }
-} // namespace FactorHelper ends
+} // namespace FactorHelper
 
 int32_t main() {
   ios_base::sync_with_stdio(0);

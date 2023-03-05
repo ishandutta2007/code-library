@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <cstdint>
 #include <algorithm>
-#include <cmath>
 #include <cassert>
+#include <cmath>
+#include <cstdint>
+#include <iostream>
 #include <type_traits>
 
 namespace dirichlet_series {
@@ -779,4 +779,4 @@ public:
     return sparse_mul_at_most_one(x, -w);
   }
 };
-}
+} // namespace dirichlet_series

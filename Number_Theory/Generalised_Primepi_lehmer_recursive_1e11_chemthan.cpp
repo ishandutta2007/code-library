@@ -92,7 +92,7 @@ long long calc(long long m) {
     res -= (calc(m / pr[i]) - calc(pr[i] - 1)) * func(pr[i]);
   return res;
 }
-}
+} // namespace Lehmer
 
 // int main() {
 //     assert(Lehmer::calc(1e10) == 455052511LL);

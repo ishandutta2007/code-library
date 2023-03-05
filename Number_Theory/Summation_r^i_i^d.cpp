@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
-#include <stdint.h>
-#include <assert.h>
-#include <time.h>
 #include <algorithm>
+#include <assert.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
 using namespace std;
 typedef int i32;
 typedef unsigned u32;
@@ -94,7 +93,7 @@ void update_sieve(int base) {
         j += primes[i];
       j >>= 1;
     }
-    while (j<sieve_span>> 1) {
+    while (j < sieve_span >> 1) {
       mark(sieve, j);
       j += primes[i];
     }
@@ -157,7 +156,7 @@ void segmented_sieve(int lo, int hi) {
   while (base < hi)
     segment_sieve(base, hi), base += sieve_span;
 }
-}
+} // namespace prime_sieve
 
 const int mod = 998244353;
 inline int trim(i64 x) {
@@ -207,7 +206,7 @@ void init(int n) {
 inline int fac(int i) { return inv(invfac_[i]); }
 inline int finv(int i) { return invfac_[i]; }
 inline int inv(int i) { return mul(fac(i - 1), invfac_[i]); }
-}
+} // namespace Binomial
 // get rid of g, pd
 int f_sz;
 int f[maxn];

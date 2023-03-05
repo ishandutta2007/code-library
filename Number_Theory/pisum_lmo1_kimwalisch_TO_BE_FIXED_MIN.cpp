@@ -44,9 +44,7 @@ using namespace std;
 #endif
 
 #if __cplusplus >= 202002L && __has_cpp_attribute(unlikely)
-#define if_unlikely(x)                                                         \
-  if (x)                                                                       \
-  [[unlikely]]
+#define if_unlikely(x) if (x) [[unlikely]]
 #elif defined(__GNUC__) || __has_builtin(__builtin_expect)
 #define if_unlikely(x) if (__builtin_expect(!!(x), 0))
 #else
@@ -96,8 +94,8 @@ using namespace std;
 #ifndef INT128_T_HPP
 #define INT128_T_HPP
 
-#include <stdint.h>
 #include <limits>
+#include <stdint.h>
 #include <type_traits>
 
 /// The __int128_t type (GCC/Clang) is not well supported by
@@ -139,7 +137,7 @@ inline std::ostream &operator<<(std::ostream &stream, int128_t n) {
   return stream;
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -252,8 +250,9 @@ template <typename T> constexpr T ct_sqrt(T x) {
 
 /// C++11 compile time square root using binary search
 template <typename T> constexpr T sqrt_helper(T x, T lo, T hi) {
-  return lo == hi ? lo : ((x / MID < MID) ? sqrt_helper<T>(x, lo, MID - 1)
-                                          : sqrt_helper<T>(x, MID, hi));
+  return lo == hi ? lo
+                  : ((x / MID < MID) ? sqrt_helper<T>(x, lo, MID - 1)
+                                     : sqrt_helper<T>(x, MID, hi));
 }
 
 template <typename T> constexpr T ct_sqrt(T x) {
@@ -278,7 +277,7 @@ template <typename T> inline T isqrt(T x) {
   return r;
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -360,7 +359,7 @@ inline T2 pi_bsearch(const std::vector<T1> &primes, T2 x) {
   return (T2)(std::upper_bound(start, primes.end(), x) - start);
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -400,7 +399,7 @@ inline std::ostream &operator<<(std::ostream &stream, int128_t n) {
   return stream;
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -414,8 +413,7 @@ public:
 
   template <typename T, typename = typename std::enable_if<
                             prt::is_integral<T>::value>::type>
-  int256_t(T x)
-      : low(x), high((x < 0) ? -1 : 0) {}
+  int256_t(T x) : low(x), high((x < 0) ? -1 : 0) {}
 
   bool operator==(const int256_t &other) const {
     return low == other.low && high == other.high;
@@ -701,38 +699,33 @@ public:
   }
 
   operator std::int8_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int8_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int8_t>(low);
+    return (*this < 0) ? -static_cast<std::int8_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int8_t>(low);
   }
 
   operator std::int16_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int16_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int16_t>(low);
+    return (*this < 0) ? -static_cast<std::int16_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int16_t>(low);
   }
 
   operator std::int32_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int32_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int32_t>(low);
+    return (*this < 0) ? -static_cast<std::int32_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int32_t>(low);
   }
 
   operator std::int64_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int64_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int64_t>(low);
+    return (*this < 0) ? -static_cast<std::int64_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int64_t>(low);
   }
 
   operator int128_t() const {
-    return (*this < 0)
-               ? -static_cast<int128_t>((low - 1) ^
-                                        prt::numeric_limits<uint128_t>::max())
-               : static_cast<int128_t>(low);
+    return (*this < 0) ? -static_cast<int128_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<int128_t>(low);
   }
 
   operator std::uint8_t() const { return static_cast<std::uint8_t>(low); }
@@ -891,7 +884,7 @@ template <typename T> struct next_larger_type {
       type;
 };
 
-} // namespace
+} // namespace primesum
 
 #ifdef _OPENMP
 
@@ -900,7 +893,7 @@ namespace primesum {
 /// Requires OpenMP >= 4.0
 #pragma omp declare reduction(+ : int256_t : omp_out += omp_in)
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -992,7 +985,7 @@ private:
   uint64_t max_;
 };
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -1042,7 +1035,7 @@ template <typename T> T phi_tiny(T x, int64_t a) {
     return phiTiny.phi(x, a);
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -1088,7 +1081,7 @@ typename std::enable_if<(sizeof(X) > sizeof(Y)), X>::type fast_div(X x, Y y) {
   return x / y;
 }
 
-} // namespace
+} // namespace primesum
 
 #endif
 
@@ -1272,7 +1265,7 @@ void set_num_threads(int num_threads);
 
 /// Get the primesieve version number, in the form “i.j”.
 std::string primesieve_version();
-}
+} // namespace primesieve
 
 #endif
 
@@ -1322,7 +1315,7 @@ private:
   void initBuffer(uint64_t, uint64_t);
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -1420,7 +1413,7 @@ private:
   static void printStatus(double, double);
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -1461,7 +1454,7 @@ private:
   uint64_t align(uint64_t) const;
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -1535,8 +1528,9 @@ template <typename T> constexpr T ctSqrt(T x, T lo, T hi) {
 
 /// C++11 compile time square root using binary search
 template <typename T> constexpr T ctSqrt(T x, T lo, T hi) {
-  return lo == hi ? lo : ((x / MID < MID) ? ctSqrt<T>(x, lo, MID - 1)
-                                          : ctSqrt<T>(x, MID, hi));
+  return lo == hi ? lo
+                  : ((x / MID < MID) ? ctSqrt<T>(x, lo, MID - 1)
+                                     : ctSqrt<T>(x, MID, hi));
 }
 
 #endif
@@ -1748,7 +1742,7 @@ using Wheel30_t = Wheel<30, 8, wheel30, wheel30Init>;
 /// 4th wheel, skips multiples of 2, 3, 5 and 7
 using Wheel210_t = Wheel<210, 48, wheel210, wheel210Init>;
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -1942,7 +1936,7 @@ private:
 
 static_assert(isPow2(sizeof(Bucket)), "sizeof(Bucket) must be a power of 2!");
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -1973,7 +1967,7 @@ private:
   NOINLINE void crossOff(uint8_t *, uint8_t *);
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2010,7 +2004,7 @@ private:
   std::vector<std::unique_ptr<char[]>> memory_;
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2049,7 +2043,7 @@ private:
   NOINLINE void crossOff_31(uint8_t *, uint8_t *, Bucket *);
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2093,7 +2087,7 @@ private:
   NOINLINE void crossOff(uint8_t *, Bucket *);
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2241,7 +2235,7 @@ inline uint64_t Erat::getStop() const { return stop_; }
 /// Sieve size in KiB
 inline uint64_t Erat::getSieveSize() const { return sieveSize_ >> 10; }
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2279,7 +2273,7 @@ private:
   void printkTuplets() const;
 };
 
-} // namespace
+} // namespace primesieve
 
 #endif
 
@@ -2485,7 +2479,7 @@ void PrimeSieve::sieve() {
   setStatus(100);
 }
 
-} // namespace
+} // namespace primesieve
 
 // #include <isqrt.hpp>
 namespace primesum {
@@ -2591,7 +2585,7 @@ vector<int32_t> generate_lpf(int64_t max) {
   return lpf;
 }
 
-} // namespace
+} // namespace primesum
 
 // #include <primesum-internal.hpp>
 // #include <imath.hpp>
@@ -2720,7 +2714,7 @@ int64_t phi(int64_t x, int64_t a, int threads) {
   return sum;
 }
 
-} // namespace
+} // namespace primesum
 
 // #include <primesum-internal.hpp>
 // #include <imath.hpp>
@@ -2741,7 +2735,7 @@ int64_t pi_legendre(int64_t x, int threads) {
   return sum;
 }
 
-} // namespace
+} // namespace primesum
 namespace primesum {
 int256_t pi_lmo1(int128_t x) {
   if (x < 2)
@@ -2775,4 +2769,4 @@ int256_t pi_lmo1(int128_t x) {
   return sum;
 }
 
-} // namespace
+} // namespace primesum

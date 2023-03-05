@@ -5,7 +5,7 @@
  * The function lehmer(n) returns the number of primes not exceeding n
  * Complexity: Roughly ~O(n^(2/3))
  *
-***/
+ ***/
 
 // n = 1e+09 : 50847513(time: 0.28s)
 // n = 1e+10 : 455052511(time: 0.29s)

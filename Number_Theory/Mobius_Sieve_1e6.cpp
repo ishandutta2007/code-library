@@ -33,7 +33,8 @@ void mobius_sieve() {
 int main() {
   auto start_time = clock();
   mobius_sieve();
-  cout << "Time till prime and mobius combined sieve: " << (1.0 * (clock() - start_time) / CLOCKS_PER_SEC) << "s" << endl;
+  cout << "Time till prime and mobius combined sieve: "
+       << (1.0 * (clock() - start_time) / CLOCKS_PER_SEC) << "s" << endl;
   for (int i = 0; i < 10; i++)
     cout << mu[i] << " ";
   return 0;

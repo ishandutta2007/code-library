@@ -1,6 +1,6 @@
-#include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <cstdio>
 
 #include <algorithm>
 #include <vector>

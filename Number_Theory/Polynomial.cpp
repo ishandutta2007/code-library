@@ -311,7 +311,7 @@ template <int m> void mul(vector<modular<m>> &a, vector<modular<m>> b) {
     a = A * dft<m>(b, n);
   }
 }
-}
+} // namespace fft
 
 template <typename T> struct poly {
   vector<T> a;
@@ -468,15 +468,15 @@ template <typename T> struct poly {
     if (B.deg() < m) {
       return {{}, {T(1), T(0), T(0), T(1)}};
     }
-    auto[ar, Tr] = half_gcd(A.div_xk(m), B.div_xk(m));
+    auto [ar, Tr] = half_gcd(A.div_xk(m), B.div_xk(m));
     tie(A, B) = Tr.adj().apply(A, B);
     if (B.deg() < m) {
       return {ar, Tr};
     }
-    auto[ai, R] = A.divmod(B);
+    auto [ai, R] = A.divmod(B);
     tie(A, B) = make_pair(B, R);
     int k = 2 * m - B.deg();
-    auto[as, Ts] = half_gcd(A.div_xk(k), B.div_xk(k));
+    auto [as, Ts] = half_gcd(A.div_xk(k), B.div_xk(k));
     concat(ar, {ai});
     concat(ar, as);
     return {ar, Tr * transform(ai) * Ts};
@@ -488,12 +488,12 @@ template <typename T> struct poly {
     vector<transform> trs;
     while (!B.is_zero()) {
       if (2 * B.deg() > A.deg()) {
-        auto[a, Tr] = half_gcd(A, B);
+        auto [a, Tr] = half_gcd(A, B);
         concat(ak, a);
         trs.push_back(Tr);
         tie(A, B) = trs.back().adj().apply(A, B);
       } else {
-        auto[a, R] = A.divmod(B);
+        auto [a, R] = A.divmod(B);
         ak.push_back(a);
         trs.emplace_back(a);
         tie(A, B) = make_pair(B, R);
@@ -521,7 +521,7 @@ template <typename T> struct poly {
     auto R1 = mod_xk(d + 1).reverse(d + 1), R2 = xk(d + 1);
     auto Q1 = poly(T(1)), Q2 = poly(T(0));
     while (!R2.is_zero()) {
-      auto[a, nR] = R1.divmod(R2); // R1 = a*R2 + nR, deg nR < deg R2
+      auto [a, nR] = R1.divmod(R2); // R1 = a*R2 + nR, deg nR < deg R2
       tie(R1, R2) = make_tuple(R2, nR);
       tie(Q1, Q2) = make_tuple(Q2, Q1 + a * Q2);
       if (R2.deg() < Q2.deg()) {
@@ -558,7 +558,7 @@ template <typename T> struct poly {
     if (R2.is_zero()) {
       return poly(1);
     }
-    auto[a, Tr] = full_gcd(R1, R2);
+    auto [a, Tr] = full_gcd(R1, R2);
     int dr = (d + 1) - a[0].deg();
     int dp = 0;
     for (size_t i = 0; i + 1 < a.size(); i++) {
@@ -581,7 +581,7 @@ template <typename T> struct poly {
     int k = 0;
     while (!R2.is_zero()) {
       k ^= 1;
-      auto[a, nR] = R1.divmod(R2);
+      auto [a, nR] = R1.divmod(R2);
       tie(R1, R2) = make_tuple(R2, nR);
       tie(Q1, Q2) = make_tuple(Q2, Q1 + a * Q2);
     }
@@ -598,7 +598,7 @@ template <typename T> struct poly {
       return inv_mod_slow(t);
     }
     auto A = t, B = *this % t;
-    auto[a, Tr] = full_gcd(A, B);
+    auto [a, Tr] = full_gcd(A, B);
     auto g = Tr.d * A - Tr.b * B;
     if (g.deg() != 0) {
       return nullopt;
@@ -946,9 +946,9 @@ template <typename T> struct poly {
     }
   }
 
-  static auto inter(
-      vector<T> x,
-      vector<T> y) { // interpolates minimum polynomial from (xi, yi) pairs
+  static auto
+  inter(vector<T> x,
+        vector<T> y) { // interpolates minimum polynomial from (xi, yi) pairs
     int n = x.size();
     vector<poly> tree(4 * n);
     return build(tree, 1, begin(x), end(x))
@@ -1019,8 +1019,8 @@ template <typename T> struct poly {
   static T kth_rec(poly P, poly Q, int64_t k) {
     while (k > Q.deg()) {
       int n = Q.a.size();
-      auto[Q0, Q1] = Q.mulx(-1).bisect();
-      auto[P0, P1] = P.bisect();
+      auto [Q0, Q1] = Q.mulx(-1).bisect();
+      auto [P0, P1] = P.bisect();
 
       int N = fft::com_size((n + 1) / 2, (n + 1) / 2);
 
@@ -1046,7 +1046,7 @@ template <typename T> struct poly {
       return Q[0].inv();
     }
     // Q(-x) = P0(x^2) + xP1(x^2)
-    auto[P0, P1] = Q.mulx(-1).bisect();
+    auto [P0, P1] = Q.mulx(-1).bisect();
 
     int N = fft::com_size((n + 1) / 2, (n + 1) / 2);
 
@@ -1093,7 +1093,7 @@ template <typename T> struct poly {
     }
 
     int q = std::sqrt(n);
-    auto[B0, B1] = make_pair(B.mod_xk(q), B.div_xk(q));
+    auto [B0, B1] = make_pair(B.mod_xk(q), B.div_xk(q));
 
     B0 = B0.div_xk(1);
     vector<poly> pw(A.deg() + 1);
@@ -1107,8 +1107,8 @@ template <typename T> struct poly {
             return f;
           }
           int k = m / 2;
-          auto[f0, f1] = make_pair(f.mod_xk(k), f.div_xk(k));
-          auto[A, B] =
+          auto [f0, f1] = make_pair(f.mod_xk(k), f.div_xk(k));
+          auto [A, B] =
               make_pair(compose_dac(f0, k, N), compose_dac(f1, m - k, N - k));
           return (A + (B.mod_xk(N - k) * getpow(k).mod_xk(N - k)).mul_xk(k))
               .mod_xk(N);
@@ -1142,7 +1142,7 @@ template <typename T> struct poly {
 };
 
 static auto operator*(const auto &a, const poly<auto> &b) { return b * a; }
-};
+}; // namespace algebra
 
 using namespace algebra;
 

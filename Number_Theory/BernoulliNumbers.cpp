@@ -1,6 +1,6 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
 #define MAX 2510
 #define MOD 1000000007

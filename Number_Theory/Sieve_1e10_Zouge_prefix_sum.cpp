@@ -19,11 +19,11 @@
  *
  * the following program is an example of \sum_{i=1}^{n} \sigma_0(i^m)
  */
-#include <cmath>
+#include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
-#include <algorithm>
 
 using uint64 = unsigned long long;
 using uint32 = unsigned int;

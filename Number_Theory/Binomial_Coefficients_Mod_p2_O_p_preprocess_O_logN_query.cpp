@@ -12,7 +12,7 @@ class tracer_t {
   }
   inline void suffix() { std::cout << ") "; }
   template <class Arg, class... Args>
-  inline void suffix(const Arg &arg, const Args &... args) {
+  inline void suffix(const Arg &arg, const Args &...args) {
     if (std::cout << stringify(arg), sizeof...(Args) > 0)
       std::cout << ",";
     suffix(args...);
@@ -27,17 +27,17 @@ public:
     return std::is_same<Arg, std::string>::value ? "\"" + s + "\"" : s;
   }
   template <class... Args>
-  inline void begin(int line, const std::string &fun, const Args &... args) {
+  inline void begin(int line, const std::string &fun, const Args &...args) {
     prefix(++trace_depth, line, fun), suffix(args...), std::cout << "called",
         pause();
   }
   template <class... Args>
-  inline void trace(int line, const std::string &fun, const Args &... args) {
+  inline void trace(int line, const std::string &fun, const Args &...args) {
     prefix(trace_depth, line, fun), suffix(args...), pause();
   }
   template <class Ans, class... Args>
   inline Ans end(int line, const std::string &fun, const Ans &ans,
-                 const Args &... args) {
+                 const Args &...args) {
     prefix(trace_depth--, line, fun), suffix(args...),
         std::cout << "return value = " << ans, pause();
     return ans;

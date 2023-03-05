@@ -16,7 +16,8 @@ stormer(std::vector<unsigned int> primes) {
 
   // min-heap
   std::priority_queue<unsigned long long, std::vector<unsigned long long>,
-                      std::greater<unsigned long long>> next;
+                      std::greater<unsigned long long>>
+      next;
   // "seed" value
   next.push(1);
 

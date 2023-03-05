@@ -129,7 +129,7 @@ int32_t main() {
   while (!v.empty()) {
     bool found = false;
     for (int i = 0; i < v.size(); i++) {
-      auto[fac, x] = v[i];
+      auto [fac, x] = v[i];
       vector<int> cur = vector<int>(B.basis.size(), 0);
       for (int j = 0; j < v.size(); j++) {
         if (i == j)

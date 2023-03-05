@@ -153,7 +153,7 @@ vi128 multiply(vi128 &a, vi128 &b) {
   */
   return ans;
 }
-} // fft
+} // namespace fft
 
 namespace poly_chain {
 vi128 coeffs;
@@ -168,7 +168,7 @@ vi128 polynomial_chain_multiplication(int l, int r) {
   vi128 ans = fft::multiply(left, right);
   return ans;
 }
-} // poly_chain
+} // namespace poly_chain
 
 int32_t main() {
   ios_base::sync_with_stdio(0);

@@ -2,18 +2,18 @@
 // #pragma GCC target ("avx")
 #pragma GCC target("sse4.2") // SPOJ, codechef, CodeIQ
 
-#include <cstdio>
 #include <cassert>
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 
 #include <algorithm>
+#include <functional>
 #include <iostream>
-#include <vector>
 #include <map>
 #include <set>
-#include <functional>
 #include <tuple>
+#include <vector>
 
 #define _rep(_1, _2, _3, _4, name, ...) name
 #define rep2(i, n) rep3(i, 0, n)

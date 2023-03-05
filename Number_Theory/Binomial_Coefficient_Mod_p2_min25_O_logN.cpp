@@ -221,7 +221,7 @@ long long binomial_coefficient(long long n, long long k) {
          inv((__int128)factorial(k) * factorial(n - k) % pe) % pe *
          pstirling[binom_padic] % pe;
 }
-}
+} // namespace Binomial
 
 void test() {
   vector<vector<long long>> C(100, vector<long long>(100, 0));

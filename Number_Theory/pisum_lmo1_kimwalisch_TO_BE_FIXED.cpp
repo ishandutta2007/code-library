@@ -82,9 +82,7 @@ enum {
 };
 
 #if __cplusplus >= 202002L && __has_cpp_attribute(unlikely)
-#define if_unlikely(x)                                                         \
-  if (x)                                                                       \
-  [[unlikely]]
+#define if_unlikely(x) if (x) [[unlikely]]
 #elif defined(__GNUC__) || __has_builtin(__builtin_expect)
 #define if_unlikely(x) if (__builtin_expect(!!(x), 0))
 #else
@@ -206,8 +204,7 @@ public:
 
   template <typename T, typename = typename std::enable_if<
                             prt::is_integral<T>::value>::type>
-  int256_t(T x)
-      : low(x), high((x < 0) ? -1 : 0) {}
+  int256_t(T x) : low(x), high((x < 0) ? -1 : 0) {}
 
   bool operator==(const int256_t &other) const {
     return low == other.low && high == other.high;
@@ -493,38 +490,33 @@ public:
   }
 
   operator std::int8_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int8_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int8_t>(low);
+    return (*this < 0) ? -static_cast<std::int8_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int8_t>(low);
   }
 
   operator std::int16_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int16_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int16_t>(low);
+    return (*this < 0) ? -static_cast<std::int16_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int16_t>(low);
   }
 
   operator std::int32_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int32_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int32_t>(low);
+    return (*this < 0) ? -static_cast<std::int32_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int32_t>(low);
   }
 
   operator std::int64_t() const {
-    return (*this < 0)
-               ? -static_cast<std::int64_t>(
-                     (low - 1) ^ prt::numeric_limits<uint128_t>::max())
-               : static_cast<std::int64_t>(low);
+    return (*this < 0) ? -static_cast<std::int64_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<std::int64_t>(low);
   }
 
   operator int128_t() const {
-    return (*this < 0)
-               ? -static_cast<int128_t>((low - 1) ^
-                                        prt::numeric_limits<uint128_t>::max())
-               : static_cast<int128_t>(low);
+    return (*this < 0) ? -static_cast<int128_t>(
+                             (low - 1) ^ prt::numeric_limits<uint128_t>::max())
+                       : static_cast<int128_t>(low);
   }
 
   operator std::uint8_t() const { return static_cast<std::uint8_t>(low); }
@@ -833,8 +825,9 @@ template <typename T> constexpr T ct_sqrt(T x) {
 
 /// C++11 compile time square root using binary search
 template <typename T> constexpr T sqrt_helper(T x, T lo, T hi) {
-  return lo == hi ? lo : ((x / MID < MID) ? sqrt_helper<T>(x, lo, MID - 1)
-                                          : sqrt_helper<T>(x, MID, hi));
+  return lo == hi ? lo
+                  : ((x / MID < MID) ? sqrt_helper<T>(x, lo, MID - 1)
+                                     : sqrt_helper<T>(x, MID, hi));
 }
 
 template <typename T> constexpr T ct_sqrt(T x) {
@@ -1213,73 +1206,65 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 28 + 6] &= BIT5;
         }
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 0) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 0) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 6 + 1;
         FALLTHROUGH;
       case 1:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 1) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 1) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 4 + 1;
         FALLTHROUGH;
       case 2:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 2) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 2) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 2 + 0;
         FALLTHROUGH;
       case 3:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 3) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 3) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 4 + 1;
         FALLTHROUGH;
       case 4:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 4) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 4) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 5:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 5) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 5) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 4 + 1;
         FALLTHROUGH;
       case 6:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 6) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 6) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 6 + 1;
         FALLTHROUGH;
       case 7:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 7) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 7) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 2 + 1;
       }
@@ -1299,73 +1284,65 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 28 + 10] &= BIT4;
         }
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 8) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 8) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 6 + 2;
         FALLTHROUGH;
       case 9:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 9) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 9) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 4 + 1;
         FALLTHROUGH;
       case 10:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 10) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 10) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 11:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 11) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 11) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 12:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 12) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 12) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 2 + 0;
         FALLTHROUGH;
       case 13:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 13) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 13) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 14:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 14) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 14) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 6 + 2;
         FALLTHROUGH;
       case 15:
 
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 15) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 15) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 2 + 1;
       }
@@ -1384,66 +1361,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 9] &= BIT6;
           p[sievingPrime * 28 + 12] &= BIT3;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 16) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 16) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 6 + 2;
         FALLTHROUGH;
       case 17:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 17) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 17) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 18:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 18) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 18) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 19:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 19) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 19) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 20:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 20) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 20) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 21:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 21) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 21) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 4 + 1;
         FALLTHROUGH;
       case 22:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 22) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 22) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 6 + 3;
         FALLTHROUGH;
       case 23:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 23) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 23) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 2 + 1;
       }
@@ -1462,66 +1431,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 12] &= BIT7;
           p[sievingPrime * 28 + 16] &= BIT2;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 24) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 24) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 6 + 3;
         FALLTHROUGH;
       case 25:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 25) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 25) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 4 + 3;
         FALLTHROUGH;
       case 26:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 26) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 26) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 27:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 27) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 27) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 28:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 28) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 28) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 29:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 29) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 29) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 30:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 30) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 30) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 6 + 4;
         FALLTHROUGH;
       case 31:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 31) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 31) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 2 + 1;
       }
@@ -1540,66 +1501,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 14] &= BIT3;
           p[sievingPrime * 28 + 18] &= BIT1;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 32) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 32) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 6 + 4;
         FALLTHROUGH;
       case 33:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 33) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 33) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 34:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 34) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 34) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 2 + 2;
         FALLTHROUGH;
       case 35:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 35) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 35) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 4 + 2;
         FALLTHROUGH;
       case 36:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 36) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 36) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 37:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 37) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 37) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 4 + 3;
         FALLTHROUGH;
       case 38:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 38) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 38) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 6 + 4;
         FALLTHROUGH;
       case 39:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 39) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 39) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 2 + 1;
       }
@@ -1618,66 +1571,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 17] &= BIT4;
           p[sievingPrime * 28 + 22] &= BIT0;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 40) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 40) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 6 + 5;
         FALLTHROUGH;
       case 41:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 41) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 41) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 4 + 3;
         FALLTHROUGH;
       case 42:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 42) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 42) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 2 + 1;
         FALLTHROUGH;
       case 43:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 43) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 43) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 4 + 3;
         FALLTHROUGH;
       case 44:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 44) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 44) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 2 + 2;
         FALLTHROUGH;
       case 45:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 45) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 45) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 4 + 3;
         FALLTHROUGH;
       case 46:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 46) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 46) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 6 + 5;
         FALLTHROUGH;
       case 47:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 47) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 47) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 2 + 1;
       }
@@ -1696,66 +1641,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 22] &= BIT0;
           p[sievingPrime * 28 + 27] &= BIT7;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 48) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 48) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 6 + 6;
         FALLTHROUGH;
       case 49:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 49) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 49) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 4 + 4;
         FALLTHROUGH;
       case 50:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 50) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 50) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 2 + 2;
         FALLTHROUGH;
       case 51:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 51) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 51) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 4 + 4;
         FALLTHROUGH;
       case 52:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 52) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 52) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 2 + 2;
         FALLTHROUGH;
       case 53:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 53) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 53) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 4 + 4;
         FALLTHROUGH;
       case 54:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 54) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 54) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 6 + 5;
         FALLTHROUGH;
       case 55:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 55) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 55) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 2 + 2;
       }
@@ -1774,66 +1711,58 @@ void EratSmall::crossOff(uint8_t *sieve, uint8_t *sieveEnd) {
           p[sievingPrime * 22 + 1] &= BIT5;
           p[sievingPrime * 28 + 1] &= BIT6;
         }
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 56) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 56) {
+          break;
+        }
         *p &= BIT7;
         p += sievingPrime * 6 + 1;
         FALLTHROUGH;
       case 57:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 57) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 57) {
+          break;
+        }
         *p &= BIT0;
         p += sievingPrime * 4 + 0;
         FALLTHROUGH;
       case 58:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 58) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 58) {
+          break;
+        }
         *p &= BIT1;
         p += sievingPrime * 2 + 0;
         FALLTHROUGH;
       case 59:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 59) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 59) {
+          break;
+        }
         *p &= BIT2;
         p += sievingPrime * 4 + 0;
         FALLTHROUGH;
       case 60:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 60) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 60) {
+          break;
+        }
         *p &= BIT3;
         p += sievingPrime * 2 + 0;
         FALLTHROUGH;
       case 61:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 61) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 61) {
+          break;
+        }
         *p &= BIT4;
         p += sievingPrime * 4 + 0;
         FALLTHROUGH;
       case 62:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 62) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 62) {
+          break;
+        }
         *p &= BIT5;
         p += sievingPrime * 6 + 0;
         FALLTHROUGH;
       case 63:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 63) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 63) {
+          break;
+        }
         *p &= BIT6;
         p += sievingPrime * 2 + 0;
       }
@@ -2437,66 +2366,58 @@ void EratMedium::crossOff_11(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 8:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 8) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 8) {
+          break;
+        }
         *p &= BIT1;
         p += dist0;
         FALLTHROUGH;
       case 9:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 9) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 9) {
+          break;
+        }
         *p &= BIT3;
         p += dist1;
         FALLTHROUGH;
       case 10:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 10) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 10) {
+          break;
+        }
         *p &= BIT7;
         p += dist2;
         FALLTHROUGH;
       case 11:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 11) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 11) {
+          break;
+        }
         *p &= BIT5;
         p += dist3;
         FALLTHROUGH;
       case 12:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 12) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 12) {
+          break;
+        }
         *p &= BIT0;
         p += dist4;
         FALLTHROUGH;
       case 13:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 13) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 13) {
+          break;
+        }
         *p &= BIT6;
         p += dist3;
         FALLTHROUGH;
       case 14:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 14) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 14) {
+          break;
+        }
         *p &= BIT2;
         p += dist0;
         FALLTHROUGH;
       case 15:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 15) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 15) {
+          break;
+        }
         *p &= BIT4;
         p += dist2;
       }
@@ -2527,66 +2448,58 @@ void EratMedium::crossOff_13(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 16:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 16) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 16) {
+          break;
+        }
         *p &= BIT2;
         p += dist0;
         FALLTHROUGH;
       case 17:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 17) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 17) {
+          break;
+        }
         *p &= BIT7;
         p += dist1;
         FALLTHROUGH;
       case 18:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 18) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 18) {
+          break;
+        }
         *p &= BIT5;
         p += dist2;
         FALLTHROUGH;
       case 19:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 19) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 19) {
+          break;
+        }
         *p &= BIT4;
         p += dist1;
         FALLTHROUGH;
       case 20:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 20) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 20) {
+          break;
+        }
         *p &= BIT1;
         p += dist2;
         FALLTHROUGH;
       case 21:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 21) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 21) {
+          break;
+        }
         *p &= BIT0;
         p += dist5;
         FALLTHROUGH;
       case 22:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 22) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 22) {
+          break;
+        }
         *p &= BIT6;
         p += dist6;
         FALLTHROUGH;
       case 23:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 23) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 23) {
+          break;
+        }
         *p &= BIT3;
         p += dist2;
       }
@@ -2617,66 +2530,58 @@ void EratMedium::crossOff_17(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 24:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 24) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 24) {
+          break;
+        }
         *p &= BIT3;
         p += dist0;
         FALLTHROUGH;
       case 25:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 25) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 25) {
+          break;
+        }
         *p &= BIT6;
         p += dist1;
         FALLTHROUGH;
       case 26:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 26) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 26) {
+          break;
+        }
         *p &= BIT0;
         p += dist2;
         FALLTHROUGH;
       case 27:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 27) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 27) {
+          break;
+        }
         *p &= BIT1;
         p += dist3;
         FALLTHROUGH;
       case 28:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 28) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 28) {
+          break;
+        }
         *p &= BIT4;
         p += dist2;
         FALLTHROUGH;
       case 29:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 29) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 29) {
+          break;
+        }
         *p &= BIT5;
         p += dist3;
         FALLTHROUGH;
       case 30:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 30) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 30) {
+          break;
+        }
         *p &= BIT7;
         p += dist6;
         FALLTHROUGH;
       case 31:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 31) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 31) {
+          break;
+        }
         *p &= BIT2;
         p += dist2;
       }
@@ -2707,66 +2612,58 @@ void EratMedium::crossOff_19(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 32:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 32) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 32) {
+          break;
+        }
         *p &= BIT4;
         p += dist0;
         FALLTHROUGH;
       case 33:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 33) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 33) {
+          break;
+        }
         *p &= BIT2;
         p += dist1;
         FALLTHROUGH;
       case 34:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 34) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 34) {
+          break;
+        }
         *p &= BIT6;
         p += dist2;
         FALLTHROUGH;
       case 35:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 35) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 35) {
+          break;
+        }
         *p &= BIT0;
         p += dist1;
         FALLTHROUGH;
       case 36:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 36) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 36) {
+          break;
+        }
         *p &= BIT5;
         p += dist4;
         FALLTHROUGH;
       case 37:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 37) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 37) {
+          break;
+        }
         *p &= BIT7;
         p += dist5;
         FALLTHROUGH;
       case 38:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 38) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 38) {
+          break;
+        }
         *p &= BIT3;
         p += dist0;
         FALLTHROUGH;
       case 39:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 39) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 39) {
+          break;
+        }
         *p &= BIT1;
         p += dist4;
       }
@@ -2796,66 +2693,58 @@ void EratMedium::crossOff_23(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 40:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 40) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 40) {
+          break;
+        }
         *p &= BIT5;
         p += dist0;
         FALLTHROUGH;
       case 41:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 41) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 41) {
+          break;
+        }
         *p &= BIT1;
         p += dist1;
         FALLTHROUGH;
       case 42:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 42) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 42) {
+          break;
+        }
         *p &= BIT2;
         p += dist2;
         FALLTHROUGH;
       case 43:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 43) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 43) {
+          break;
+        }
         *p &= BIT6;
         p += dist1;
         FALLTHROUGH;
       case 44:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 44) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 44) {
+          break;
+        }
         *p &= BIT7;
         p += dist4;
         FALLTHROUGH;
       case 45:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 45) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 45) {
+          break;
+        }
         *p &= BIT3;
         p += dist1;
         FALLTHROUGH;
       case 46:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 46) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 46) {
+          break;
+        }
         *p &= BIT4;
         p += dist0;
         FALLTHROUGH;
       case 47:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 47) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 47) {
+          break;
+        }
         *p &= BIT0;
         p += dist2;
       }
@@ -2885,66 +2774,58 @@ void EratMedium::crossOff_29(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 48:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 48) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 48) {
+          break;
+        }
         *p &= BIT6;
         p += dist0;
         FALLTHROUGH;
       case 49:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 49) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 49) {
+          break;
+        }
         *p &= BIT5;
         p += dist1;
         FALLTHROUGH;
       case 50:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 50) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 50) {
+          break;
+        }
         *p &= BIT4;
         p += dist2;
         FALLTHROUGH;
       case 51:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 51) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 51) {
+          break;
+        }
         *p &= BIT3;
         p += dist1;
         FALLTHROUGH;
       case 52:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 52) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 52) {
+          break;
+        }
         *p &= BIT2;
         p += dist2;
         FALLTHROUGH;
       case 53:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 53) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 53) {
+          break;
+        }
         *p &= BIT1;
         p += dist1;
         FALLTHROUGH;
       case 54:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 54) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 54) {
+          break;
+        }
         *p &= BIT0;
         p += dist6;
         FALLTHROUGH;
       case 55:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 55) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 55) {
+          break;
+        }
         *p &= BIT7;
         p += dist2;
       }
@@ -2974,66 +2855,58 @@ void EratMedium::crossOff_31(uint8_t *sieve, uint8_t *sieveEnd,
 
       for (;;) {
       case 56:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 56) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 56) {
+          break;
+        }
         *p &= BIT7;
         p += dist0;
         FALLTHROUGH;
       case 57:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 57) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 57) {
+          break;
+        }
         *p &= BIT0;
         p += dist1;
         FALLTHROUGH;
       case 58:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 58) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 58) {
+          break;
+        }
         *p &= BIT1;
         p += dist2;
         FALLTHROUGH;
       case 59:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 59) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 59) {
+          break;
+        }
         *p &= BIT2;
         p += dist1;
         FALLTHROUGH;
       case 60:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 60) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 60) {
+          break;
+        }
         *p &= BIT3;
         p += dist2;
         FALLTHROUGH;
       case 61:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 61) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 61) {
+          break;
+        }
         *p &= BIT4;
         p += dist1;
         FALLTHROUGH;
       case 62:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 62) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 62) {
+          break;
+        }
         *p &= BIT5;
         p += dist6;
         FALLTHROUGH;
       case 63:
-        if
-          CHECK_FINISHED_SMALL(p, sieveEnd, &prime, &multipleIndex, 63) {
-            break;
-          }
+        if CHECK_FINISHED_SMALL (p, sieveEnd, &prime, &multipleIndex, 63) {
+          break;
+        }
         *p &= BIT6;
         p += dist2;
       }
@@ -3351,7 +3224,7 @@ const array<uint8_t, 720> primePi = {
     124, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 126, 126, 126, 126,
     126, 126, 126, 126, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 128};
 
-} // namespace
+} // namespace primesum
 
 namespace primesieve {
 
@@ -4214,7 +4087,7 @@ int256_t pi_lmo1(int128_t x) {
   return sum;
 }
 
-} // namespace
+} // namespace primesieve
 
 int main() {
   auto start_time = clock();

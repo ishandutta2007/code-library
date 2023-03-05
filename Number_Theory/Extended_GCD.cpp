@@ -22,7 +22,7 @@ template <typename T> std::tuple<T, T, T> extended_gcd(T a, T b) {
 }
 
 template <typename T> T modular_inverse(T a, T mod) {
-  auto[g, sa, sb] = extended_gcd(a, mod);
+  auto [g, sa, sb] = extended_gcd(a, mod);
   assert(g == 1);
   return sa < 0 ? mod + sa : sa;
 }
@@ -30,15 +30,15 @@ template <typename T> T modular_inverse(T a, T mod) {
 int main() {
   {
     auto a{314159}, b{265358};
-    auto [g, sa, sb] { extended_gcd(a, b) };
+    auto [g, sa, sb]{extended_gcd(a, b)};
     assert(sa * a + sb * b == g);
     std::cout << g << " " << sa << " " << sb << "\n";
   }
   {
     auto a{31415926535ll}, b{8979323846ll};
-    auto [g, sa, sb] { extended_gcd(a, b) };
+    auto [g, sa, sb]{extended_gcd(a, b)};
     assert(sa * a + sb * b == g);
     std::cout << g << " " << sa << " " << sb << "\n";
   }
   { std::cout << modular_inverse(9, 13) << "\n"; }
-return 0
+  return 0

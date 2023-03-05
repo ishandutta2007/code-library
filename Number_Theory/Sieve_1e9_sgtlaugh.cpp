@@ -17,7 +17,7 @@
  *under 1 seconds in a 4.00GHz core-i7 PC when compiled with -O2
  * Runtime in CodeForces - 1500 ms with GNU G++ 17
  *
-***/
+ ***/
 
 // takes 0.8s for n = 1e9
 
@@ -196,7 +196,7 @@ bool read_line(string &s) {
 
 int read() { return 0; }
 
-template <typename T, typename... Args> int read(T &x, Args &... args) {
+template <typename T, typename... Args> int read(T &x, Args &...args) {
   if (!read_one(x))
     return 0;
   return read(args...) + 1;
@@ -256,7 +256,7 @@ void write(const T x, const Args... args) {
   write_char(sizeof...(args) && is_trivial<T>::value ? ' ' : '\n');
   write(args...);
 }
-}
+} // namespace fio
 
 int main() {
   int n = 999999999;

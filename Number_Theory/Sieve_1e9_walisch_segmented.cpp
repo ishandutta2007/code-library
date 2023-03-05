@@ -7,12 +7,12 @@
 /// @license  Public domain.
 // takes 1.4s for n = 1e9
 
-#include <iostream>
 #include <algorithm>
 #include <cmath>
-#include <vector>
 #include <cstdlib>
+#include <iostream>
 #include <stdint.h>
+#include <vector>
 
 /// Set your CPU's L1 data cache size (in bytes) here
 const int64_t L1D_CACHE_SIZE = 32768;

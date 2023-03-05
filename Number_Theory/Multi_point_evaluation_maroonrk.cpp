@@ -70,7 +70,7 @@ struct Scanner {
     return true;
   }
   void read() {}
-  template <class H, class... T> void read(H &h, T &... t) {
+  template <class H, class... T> void read(H &h, T &...t) {
     bool f = read_single(h);
     assert(f);
     read(t...);
@@ -82,13 +82,13 @@ struct Printer {
 public:
   template <bool F = false> void write() {}
   template <bool F = false, class H, class... T>
-  void write(const H &h, const T &... t) {
+  void write(const H &h, const T &...t) {
     if (F)
       write_single(' ');
     write_single(h);
     write<true>(t...);
   }
-  template <class... T> void writeln(const T &... t) {
+  template <class... T> void writeln(const T &...t) {
     write(t...);
     write_single('\n');
   }
@@ -205,7 +205,7 @@ template <class t> ostream &operator<<(ostream &os, const vc<t> &v) {
 #ifdef LOCAL
 void dmpr(ostream &os) { os << endl; }
 template <class T, class... Args>
-void dmpr(ostream &os, const T &t, const Args &... args) {
+void dmpr(ostream &os, const T &t, const Args &...args) {
   os << t << " ";
   dmpr(os, args...);
 }
@@ -703,7 +703,7 @@ vc<mint> multiply(const vc<mint> &x, const vc<mint> &y, bool same = false) {
   }
   return res;
 }
-}
+} // namespace arbitrary_convolution
 // using arbitrary_convolution::multiply;
 
 template <class mint> struct Poly : public vc<mint> {

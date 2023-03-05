@@ -3,7 +3,7 @@
  * Prime counting function in sublinear time with the Meissel-Lehmer algorithm
  * The function lehmer(n) returns the number of primes not exceeding n
  * Complexity: Roughly ~O(n^(2/3))
-***/
+ ***/
 using ll = long long;
 
 #include <bits/stdc++.h>

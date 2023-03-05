@@ -182,8 +182,9 @@ ll prime_pi(const ll N) {
         if (skip[i])
           continue;
         ll d = (ll)i * p;
-        larges[ns] = larges[k] - (d <= v ? larges[smalls[d >> 1] - pc]
-                                         : smalls[half(divide(N, d))]) +
+        larges[ns] = larges[k] -
+                     (d <= v ? larges[smalls[d >> 1] - pc]
+                             : smalls[half(divide(N, d))]) +
                      pc;
         roughs[ns++] = i;
       }

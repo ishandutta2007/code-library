@@ -321,7 +321,7 @@ inline void idft_last_copy(u32 *coeff, u32 *res) {
     trans(coeff[j + 2], coeff[j + 6], 6);
     trans(coeff[j + 3], coeff[j + 7], 7);
   }
-  for (int mid = 8; mid<lim>> 2; mid <<= 1) {
+  for (int mid = 8; mid < lim >> 2; mid <<= 1) {
     for (int j = 0; j != lim; j += mid + mid) {
       for (int k = 0; k != mid; k += 4) {
         const u32 A0 = norm2_lazy(coeff[j + k + 0]),
@@ -675,7 +675,7 @@ std::vector<u32> multi_point_evaluation(u32 n, u32 m, u32 M) {
   }
   return ans;
 }
-} // MPE
+} // namespace MPE
 
 int main() {
   u32 n, m, M;

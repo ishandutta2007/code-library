@@ -84,8 +84,8 @@ struct _count_primes_struct_t_ {
     // the order in fenwick will be reversed, because prefix sum in a fenwick is
     // just one query
     fenwick fw(sz);
-    for (auto[na, sign] : queries) {
-      auto[n, a] = na;
+    for (auto [na, sign] : queries) {
+      auto [n, a] = na;
       while (ind <= n)
         fw.add(sz - 1 - mnprimes[ind++], 1);
       ans += (fw.ask(sz - a - 2) + 1) * sign;

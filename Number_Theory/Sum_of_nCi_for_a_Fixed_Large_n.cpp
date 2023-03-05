@@ -341,10 +341,9 @@ private:
     poly ret(end - beg);
     rep(i, ret.size()) {
       u64 r1 = f1[i + beg].get(), r2 = f2[i + beg].get();
-      ret[i] =
-          (r1 +
-           (m64_2(r2 + m64_2::modulus() - r1) * inv).get() % fast_mod * mod1) %
-          fast_mod;
+      ret[i] = (r1 + (m64_2(r2 + m64_2::modulus() - r1) * inv).get() %
+                         fast_mod * mod1) %
+               fast_mod;
     }
     return ret;
   }

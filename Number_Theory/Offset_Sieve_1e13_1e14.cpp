@@ -97,24 +97,28 @@ vector<int> sieve(const int N, const int Q = 17, const int L = 1 << 15) {
   return primes;
 }
 
-
-vector<ll> sieve_range(vector<int> primes, ll range_start, ll range_endin){
+vector<ll> sieve_range(vector<int> primes, ll range_start, ll range_endin) {
   int sqrt_range_start = (int)ceil(sqrt(range_start));
   int sqrt_range_endin = (int)sqrtl(range_endin);
 
   vector<ll> primes_range;
-  vector<bool> isp2(range_endin -  range_start + 1, true);
+  vector<bool> isp2(range_endin - range_start + 1, true);
 
-  for (int i = 0; primes[i] <= sqrt_range_endin/* and i < primes.size()*/;i++){
-      ll p = primes[i];
-      ll min_multiple = (p < sqrt_range_start) ? ((ll)(range_start/p + ((range_start%p==0)?0:1)) * p) : p*p;
-      ll max_multiple = (ll)(range_endin/p) * p;
-      for(ll p2 = min_multiple; p2 <= max_multiple;p2 += p){
-          isp2[p2 - range_start] = false;
-      }
+  for (int i = 0; primes[i] <= sqrt_range_endin /* and i < primes.size()*/;
+       i++) {
+    ll p = primes[i];
+    ll min_multiple =
+        (p < sqrt_range_start)
+            ? ((ll)(range_start / p + ((range_start % p == 0) ? 0 : 1)) * p)
+            : p * p;
+    ll max_multiple = (ll)(range_endin / p) * p;
+    for (ll p2 = min_multiple; p2 <= max_multiple; p2 += p) {
+      isp2[p2 - range_start] = false;
+    }
   }
   for (int i = 0; i < isp2.size(); i++) {
-      if (isp2[i]) primes_range.push_back((ll)i + range_start);
+    if (isp2[i])
+      primes_range.push_back((ll)i + range_start);
   }
   return primes_range;
 }
@@ -128,12 +132,15 @@ int main(int argc, char *argv[]) {
   ll range_endin = range_start + 10000000; // 31622776601683
 
   auto primes = sieve((int)sqrtl(range_endin) + 10000);
-  cout << "time(sieve): " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s" << endl;
+  cout << "time(sieve): " << (double)(clock() - start_time) / CLOCKS_PER_SEC
+       << "s" << endl;
 
   start_time = clock();
-  vector<ll>primes_range = sieve_range(primes, range_start, range_endin);
+  vector<ll> primes_range = sieve_range(primes, range_start, range_endin);
   cout << "primes_range.size() = " << primes_range.size() << endl;
   cout << "smallest prime in range = " << primes_range[0] << endl;
-  cout << "largest prime in range = " << primes_range[primes_range.size() - 1] << endl;
-  cout << "time(sieve_range): " << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s" << endl;
+  cout << "largest prime in range = " << primes_range[primes_range.size() - 1]
+       << endl;
+  cout << "time(sieve_range): "
+       << (double)(clock() - start_time) / CLOCKS_PER_SEC << "s" << endl;
 }

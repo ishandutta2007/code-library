@@ -40,7 +40,7 @@ int32_t main() {
     cout << x << ' ';
   cout << '\n';
   auto p = convergents(a);
-  for (auto[x, y] : p) {
+  for (auto [x, y] : p) {
     cout << x << ' ' << y << '\n';
   }
   return 0;

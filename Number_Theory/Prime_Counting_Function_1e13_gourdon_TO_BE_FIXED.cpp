@@ -25,15 +25,12 @@ typedef __int128_t maxint_t;
 
 inline uint64_t popcnt64(uint64_t x) {
 #if __cplusplus >= 201703L
-  if
-    constexpr(sizeof(int) >=
-              sizeof(uint64_t)) return (uint64_t)__builtin_popcount(x);
-  else if
-    constexpr(sizeof(long) >=
-              sizeof(uint64_t)) return (uint64_t)__builtin_popcountl(x);
-  else if
-    constexpr(sizeof(long long) >=
-              sizeof(uint64_t)) return (uint64_t)__builtin_popcountll(x);
+  if constexpr (sizeof(int) >= sizeof(uint64_t))
+    return (uint64_t)__builtin_popcount(x);
+  else if constexpr (sizeof(long) >= sizeof(uint64_t))
+    return (uint64_t)__builtin_popcountl(x);
+  else if constexpr (sizeof(long long) >= sizeof(uint64_t))
+    return (uint64_t)__builtin_popcountll(x);
 #else
   return (uint64_t)__builtin_popcountll(x);
 #endif
@@ -457,7 +454,7 @@ public:
     *end_++ = value;
   }
 
-  template <class... Args> void emplace_back(Args &&... args) {
+  template <class... Args> void emplace_back(Args &&...args) {
     if_unlikely(end_ == capacity_)
         reserve_unchecked(std::max((std::size_t)1, capacity() * 2));
     *end_++ = T(std::forward<Args>(args)...);
@@ -682,23 +679,15 @@ const pod_array<uint64_t, 240> BitSieve240::unset_bit_ = {
     ~0ull, ~0ull,         ~0ull, ~0ull, ~0ull, ~(1ull << 63)};
 
 constexpr int right_shift(int n) {
-  return (n % 30 >= 29)
-             ? 56 - (n / 30 * 8)
-             : (n % 30 >= 23)
-                   ? 57 - (n / 30 * 8)
-                   : (n % 30 >= 19)
-                         ? 58 - (n / 30 * 8)
-                         : (n % 30 >= 17)
-                               ? 59 - (n / 30 * 8)
-                               : (n % 30 >= 13)
-                                     ? 60 - (n / 30 * 8)
-                                     : (n % 30 >= 11)
-                                           ? 61 - (n / 30 * 8)
-                                           : (n % 30 >= 7)
-                                                 ? 62 - (n / 30 * 8)
-                                                 : (n % 30 >= 1)
-                                                       ? 63 - (n / 30 * 8)
-                                                       : 64 - (n / 30 * 8);
+  return (n % 30 >= 29)   ? 56 - (n / 30 * 8)
+         : (n % 30 >= 23) ? 57 - (n / 30 * 8)
+         : (n % 30 >= 19) ? 58 - (n / 30 * 8)
+         : (n % 30 >= 17) ? 59 - (n / 30 * 8)
+         : (n % 30 >= 13) ? 60 - (n / 30 * 8)
+         : (n % 30 >= 11) ? 61 - (n / 30 * 8)
+         : (n % 30 >= 7)  ? 62 - (n / 30 * 8)
+         : (n % 30 >= 1)  ? 63 - (n / 30 * 8)
+                          : 64 - (n / 30 * 8);
 }
 
 /// Bitmask to unset bits >= n
@@ -1267,7 +1256,7 @@ int128_t pi_gourdon_128(int128_t x, int threads, bool is_print) {
 
 #endif
 
-} // namespace
+} // namespace primecount
 
 int main() {
   //  freopen("input.txt", "r", stdin);
