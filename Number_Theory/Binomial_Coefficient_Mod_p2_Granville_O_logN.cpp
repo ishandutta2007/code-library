@@ -44,6 +44,14 @@ typedef vector<vll> vvll;
   }                                                                            \
   cerr << endl;
 
+struct timer
+{
+   clock_t t;
+   timer() { t = clock(); }
+   ~timer() { printf("runtime %.6f secs\n", getTime()); }
+   double getTime() { return ((double)clock()-(double)t)/(double)CLOCKS_PER_SEC; }
+};
+
 template <typename _Ty1, typename _Ty2>
 std::ostream &operator<<(std::ostream &_os, const std::pair<_Ty1, _Ty2> &_p) {
   _os << '(' << _p.first << ',' << _p.second << ')';
@@ -257,6 +265,7 @@ int main() {
   ios::sync_with_stdio(0);
   cin.tie(0);
   cout.tie(0);
+  timer t;
   preCompute();
 
   int t;

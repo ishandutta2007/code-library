@@ -28,6 +28,14 @@ using namespace std;
 #define RT                                                                     \
   printf("Run Time : %0.3lf seconds\n", clock() / (CLOCKS_PER_SEC * 1.0))
 
+struct timer
+{
+   clock_t t;
+   timer() { t = clock(); }
+   ~timer() { printf("runtime %.6f secs\n", getTime()); }
+   double getTime() { return ((double)clock()-(double)t)/(double)CLOCKS_PER_SEC; }
+};
+
 class Euclid {
 public:
   long long x, y, d;
@@ -93,6 +101,7 @@ LL BSGS(LL a, LL b, LL M) {
 
 int main() {
   FAST;
+  timer t;
   // Fout;
   LL a, b;
   cin >> a >> b;

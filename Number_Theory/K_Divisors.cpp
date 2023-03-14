@@ -2,6 +2,14 @@
 using namespace std;
 
 using ll = long long;
+struct timer
+{
+   clock_t t;
+   timer() { t = clock(); }
+   ~timer() { printf("runtime %.6f secs\n", getTime()); }
+   double getTime() { return ((double)clock()-(double)t)/(double)CLOCKS_PER_SEC; }
+};
+
 namespace pcf {
 // initialize once by calling init()
 #define MAXN 10000010      // initial sieve limit
@@ -155,6 +163,7 @@ ll backtrack(ll n, int k, int last = 0) {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
+  timer t;
   init();
   for (int i = 2; i < M; i++) {
     for (int j = i; j < M; j += i) {
