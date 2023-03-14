@@ -15,6 +15,7 @@ int isqrt(i64 N) {
 }
 
 // O(N^(2/3) + N^(2/3) + N^(1/2))
+// So to answer each query it takes O(N^(2/3))
 ll calc_etf_sum(ll N){
     const int v = isqrt(N);
     vector<int> primes;
