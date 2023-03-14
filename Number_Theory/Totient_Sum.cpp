@@ -68,7 +68,7 @@ int main() {
   cout << clock() / (double)CLOCKS_PER_SEC << endl;
 
   cout << "Now computing all, O(N) DP stores all , amortised O(N) for all query or O(1) per query" << endl;
-  for (int i=1;i<=n_sq;i++) etf_sum(n/i);
+  for (int i = 1;i <= n_sq; i++) etf_sum(n/i);
   ii = 3456;
   cout << "etf_sum(" << n/ii << ")=" << etf_sum(n/ii) << endl;
   cout << clock() / (double)CLOCKS_PER_SEC << endl;
