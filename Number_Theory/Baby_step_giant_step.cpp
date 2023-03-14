@@ -28,12 +28,13 @@ using namespace std;
 #define RT                                                                     \
   printf("Run Time : %0.3lf seconds\n", clock() / (CLOCKS_PER_SEC * 1.0))
 
-struct timer
-{
-   clock_t t;
-   timer() { t = clock(); }
-   ~timer() { printf("runtime %.6f secs\n", getTime()); }
-   double getTime() { return ((double)clock()-(double)t)/(double)CLOCKS_PER_SEC; }
+struct timer {
+  clock_t t;
+  timer() { t = clock(); }
+  ~timer() { printf("runtime %.6f secs\n", getTime()); }
+  double getTime() {
+    return ((double)clock() - (double)t) / (double)CLOCKS_PER_SEC;
+  }
 };
 
 class Euclid {
