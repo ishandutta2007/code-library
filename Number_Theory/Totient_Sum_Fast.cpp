@@ -2,6 +2,8 @@
 // phi. We use that sum of PHI(d) floor(N/d)^2 over 1 <= d <= N is the same as
 // what we need except it counts each pair where i != j twice (but we can easily
 // correct for this).
+
+// O(N^(2/3)) precompute O(1) per query
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;

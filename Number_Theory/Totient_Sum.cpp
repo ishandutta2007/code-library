@@ -2,6 +2,9 @@
 using namespace std;
 using ll = long long;
 
+// O(N) precompute O(1) per query 
+// or no precompute O(N) per query
+
 // https://oeis.org/A002088
 // rev_large_phi_sum[n/num] = sum of all etf till num
 
