@@ -1,13 +1,6 @@
-#include <cassert>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-
-#include <algorithm>
-#include <functional>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 using i64 = long long;
 using u32 = unsigned;
@@ -21,9 +14,8 @@ int isqrt(i64 N) {
   return x;
 }
 
-int main() {
-  i64 N;
-  while (~scanf("%lld", &N)) {
+// O(N^(2/3) + N^(2/3) + N^(1/2))
+ll calc_etf_sum(ll N){
     const int v = isqrt(N);
     vector<int> primes;
     vector<i64> s0(v + 1), s1(v + 1), l0(v + 1);
@@ -40,11 +32,12 @@ int main() {
     auto divide = [](i64 n, i64 d) { return double(n) / d; };
 
     // sum f(p)
+    // O(N^(1/3)*N^(1/3))
     for (int i = 1; i <= v; ++i)
       s0[i] = i - 1, s1[i] = i64(i) * (i + 1) / 2 - 1;
     for (int i = 1; i <= v; ++i)
       l0[i] = N / i - 1, l1[i] = i128(N / i) * (N / i + 1) / 2 - 1;
-    for (int p = 2; p <= v; ++p)
+    for (int p = 2; p <= v; ++p) {
       if (s0[p] > s0[p - 1]) {
         primes.push_back(p);
         i64 q = i64(p) * p, M = N / p, t0 = s0[p - 1], t1 = s1[p - 1];
@@ -58,12 +51,14 @@ int main() {
           s0[i] -= (s0[divide(i, p)] - t0),
               s1[i] -= (s1[divide(i, p)] - t1) * p;
       }
+    }
     for (int i = 1; i <= v; ++i)
       s1[i] -= s0[i];
     for (int i = 1; i <= v; ++i)
       l1[i] -= l0[i];
 
     // sum g(n) (g(p^e) := f(p)^e)
+    // O(N^(1/3)*N^(1/3))
     for (auto it = primes.rbegin(); it != primes.rend(); ++it) {
       int p = *it;
       i64 q = i64(p) * p, M = N / p, s = s1[p - 1];
@@ -81,7 +76,8 @@ int main() {
       l1[i] += 1;
 
     // sum f(n)
-    function<i128(i64, int, i128)> rec = [&](i64 n, size_t beg,
+    // O(2*N^(1/2))
+    function<i128(i64, int, i128)> etf_sum = [&](i64 n, size_t beg,
                                              i64 coeff) -> i128 {
       if (!coeff)
         return 0;
@@ -92,15 +88,27 @@ int main() {
           break;
         i64 nn = divide(n, q);
         for (int e = 2; nn > 0; nn = divide(nn, p), ++e) {
-          ret += rec(nn, i + 1, coeff * (f(p, e) - f(p, 1) * f(p, e - 1)));
+          ret += etf_sum(nn, i + 1, coeff * (f(p, e) - f(p, 1) * f(p, e - 1)));
         }
       }
       return ret;
     };
     const int mod = 998244353;
-    printf("%lld\n", i64(rec(N, 0, 1) % mod));
-  }
-  return 0;
+
+    ll final_ret = i64(etf_sum(N, 0, 1) % mod);
+    return final_ret;
+}
+
+int main() {
+    i64 N = 1e11;
+    calc_etf_sum(N);
+    cout << clock() / (double)CLOCKS_PER_SEC << endl;
+
+    N = 28935185;
+    ll final_etf_sum = calc_etf_sum(N);
+    printf("etf_sum(%lld)=%lld\n", N, final_etf_sum);
+    cout << clock() / (double)CLOCKS_PER_SEC << endl;
+    return 0;
 }
 // https://judge.yosupo.jp/problem/sum_of_totient_function
 // min_25
