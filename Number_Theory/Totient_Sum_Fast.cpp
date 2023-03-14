@@ -70,6 +70,7 @@ int main() {
 
   // Use recurrence phi_sum(N) = T(N) - sum_d >=2 phi_sum(N/d) to compute large_phi_sum_compressed
   // values.
+  cout << "Now computing all larges, amortised O(N^(2/3)) for all query or O(1) per query" << endl;
   for (ll i = I - 1; i > 0; --i) {
     const ll x_i = N / i;
     large_phi_sum_compressed[i] = T_mod(x_i);
