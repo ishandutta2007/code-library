@@ -3,7 +3,7 @@ using namespace std;
 using ll = long long;
 
 // O(N) precompute O(1) per query 
-// or no precompute O(N) per query
+// or no precompute O(sqN) per query
 
 // https://oeis.org/A002088
 // rev_large_phi_sum[n/num] = sum of all etf till num
@@ -60,5 +60,18 @@ int main() {
   reduced_N_SMALL_MAX = n;
   n_sq = (ll)(sqrtl(n));
   small_totient_sum(n_sq + 1);
-  cout << etf_sum(1234567890);
+
+  cout<<"Without computing all, just O(sqN) per query" << endl;
+  cout << "etf_sum(1234567890)=" << etf_sum(1234567890) << endl;
+  ll ii = 3456;
+  cout << "etf_sum(" << n/ii << ")=" << etf_sum(n/ii) << endl;
+  cout << clock() / (double)CLOCKS_PER_SEC << endl;
+
+  cout<<"Now computing all, O(N) DP stores all , amortised O(N) for all query or O(1) per query" << endl;
+  for (int i=1;i<=n_sq;i++) etf_sum(n/i);
+  ii = 3456;
+  cout << "etf_sum(" << n/ii << ")=" << etf_sum(n/ii) << endl;
+  cout << clock() / (double)CLOCKS_PER_SEC << endl;
+
 }
+

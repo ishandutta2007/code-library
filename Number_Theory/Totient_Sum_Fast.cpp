@@ -91,11 +91,7 @@ int main() {
   }
 
   ll ii = 3456;
-  if (ii < I)
-    ;
-  cout << "etf_sum(" << N << "/" << ii << "=" << N / ii << ")=" << S[ii]
-       << endl; // == etf(N/i)
-  else cout << "etf_sum(" << N << "/" << ii << "=" << N / ii
-            << ")=" << SUM_PHI[N / ii] << endl; // == etf(N/i)
+  if (ii < I) cout << "etf_sum(" << N << "/" << ii << "=" << N / ii << ")=" << S[ii]  << endl;
+  else cout << "etf_sum(" << N << "/" << ii << "=" << N / ii << ")=" << SUM_PHI[N / ii] << endl;
   cout << clock() / (double)CLOCKS_PER_SEC << endl;
 }
