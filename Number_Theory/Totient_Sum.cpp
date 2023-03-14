@@ -6,13 +6,13 @@ using ll = long long;
 // or no precompute O(sqN) per query
 
 // https://oeis.org/A002088
-// rev_large_phi_sum[n/num] = sum of all etf till num
+// large_phi_sum_compressed[n/num] = sum of all etf till num
 
 const ll MOD = 998244353;
 const int N_SMALL_MAX = 1e6 + 9;
 int phi[N_SMALL_MAX];
 ll phi_sum[N_SMALL_MAX];
-ll rev_large_phi_sum[N_SMALL_MAX];
+ll large_phi_sum_compressed[N_SMALL_MAX];
 
 ll n_sq;
 ll reduced_N_SMALL_MAX;
@@ -32,7 +32,7 @@ void small_totient_sum(int N_sq) {
 }
 
 ll C2(ll n) {
-  n = n % MOD;
+  // n = n % MOD;
   return n * (n + 1) % MOD * ((1 + MOD) / 2) % MOD;
 }
 
@@ -43,16 +43,16 @@ ll etf_sum(ll num) {
   if (num <= n_sq) {
     return phi_sum[num] % MOD;
   }
-  if (rev_large_phi_sum[reduced_N_SMALL_MAX / num] == 0) {
+  if (large_phi_sum_compressed[reduced_N_SMALL_MAX / num] == 0) {
     ll sum = C2(num);
     for (ll i = 2; i <= num;) {
       ll j = num / (num / i) + 1;
       sum -= ((j - i) % MOD) * etf_sum(num / i);
       i = j;
     }
-    rev_large_phi_sum[reduced_N_SMALL_MAX / num] = (MOD + sum % MOD) % MOD;
+    large_phi_sum_compressed[reduced_N_SMALL_MAX / num] = (MOD + sum % MOD) % MOD;
   }
-  return rev_large_phi_sum[reduced_N_SMALL_MAX / num];
+  return large_phi_sum_compressed[reduced_N_SMALL_MAX / num];
 }
 
 int main() {
@@ -72,6 +72,5 @@ int main() {
   ii = 3456;
   cout << "etf_sum(" << n/ii << ")=" << etf_sum(n/ii) << endl;
   cout << clock() / (double)CLOCKS_PER_SEC << endl;
-
 }
 
