@@ -16,7 +16,7 @@ int isqrt(i64 N) {
 
 // O(N^(2/3) + N^(2/3) + N^(1/2))
 // So to answer each query it takes O(N^(2/3))
-ll calc_etf_sum(ll N){
+ll sum_of_totient_function(ll N) {
     const int v = isqrt(N);
     vector<int> primes;
     vector<i64> s0(v + 1), s1(v + 1), l0(v + 1);
@@ -78,7 +78,7 @@ ll calc_etf_sum(ll N){
 
     // sum f(n)
     // O(2*N^(1/2))
-    function<i128(i64, int, i128)> etf_sum = [&](i64 n, size_t beg,
+    function<i128(i64, int, i128)> sum_of_totient_function_rec = [&](i64 n, size_t beg,
                                              i64 coeff) -> i128 {
       if (!coeff)
         return 0;
@@ -89,24 +89,24 @@ ll calc_etf_sum(ll N){
           break;
         i64 nn = divide(n, q);
         for (int e = 2; nn > 0; nn = divide(nn, p), ++e) {
-          ret += etf_sum(nn, i + 1, coeff * (f(p, e) - f(p, 1) * f(p, e - 1)));
+          ret += sum_of_totient_function_rec(nn, i + 1, coeff * (f(p, e) - f(p, 1) * f(p, e - 1)));
         }
       }
       return ret;
     };
     const int mod = 998244353;
 
-    ll final_ret = i64(etf_sum(N, 0, 1) % mod);
+    ll final_ret = i64(sum_of_totient_function_rec(N, 0, 1) % mod);
     return final_ret;
 }
 
 int main() {
     i64 N = 1e11;
-    calc_etf_sum(N);
+    sum_of_totient_function(N);
     cout << clock() / (double)CLOCKS_PER_SEC << endl;
 
     N = 28935185;
-    ll final_etf_sum = calc_etf_sum(N);
+    ll final_etf_sum = sum_of_totient_function(N);
     printf("etf_sum(%lld)=%lld\n", N, final_etf_sum);
     cout << clock() / (double)CLOCKS_PER_SEC << endl;
     return 0;
