@@ -31,7 +31,7 @@ def solve_pells_equation(D):
         c = (r / t).to_integral_exact(rounding=ROUND_FLOOR)
         r, t = t, r - t * c
         xn, yn = c * xn_1 + xn_2, c * yn_1 + yn_2
-        if xn**2 - D * yn**2 == 1:
+        if xn ** 2 - D * yn ** 2 == 1:
             if xn > 0 and yn > 0:
                 return xn, yn
             elif xn < 0 and yn < 0:

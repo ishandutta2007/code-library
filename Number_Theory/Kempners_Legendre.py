@@ -66,7 +66,7 @@ def tabulate_all_prime_sum(N):
     return smalls, larges
 
 
-N = 10**8
+N = 10 ** 8
 
 
 def rec(n, beg, s, primes):

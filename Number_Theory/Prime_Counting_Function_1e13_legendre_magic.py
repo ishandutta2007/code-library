@@ -8,7 +8,7 @@ def Prime_Pi(N):
 
     if N < 2:
         return 0
-    v = int(N**0.5) + 1
+    v = int(N ** 0.5) + 1
     smalls = [i // 2 for i in range(1, v + 1)]
     smalls[1] = 0
     s = v // 2

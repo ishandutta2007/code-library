@@ -3547,17 +3547,17 @@ def isprime(n):
 
 
 st = time.time()
-r = 10**9
+r = 10 ** 9
 isprime(r)
-r = 10**18
+r = 10 ** 18
 isprime(r)
-r = 10**37
+r = 10 ** 37
 isprime(r)
 for i in range(10000):
-    r = random.randint(10**9, 2 * 10**9)
+    r = random.randint(10 ** 9, 2 * 10 ** 9)
 for i in range(10000):
-    r = random.randint(10**18, 2 * 10**18)
+    r = random.randint(10 ** 18, 2 * 10 ** 18)
 for i in range(100000):
-    r = random.randint(10**37, 2 * 10**37)
+    r = random.randint(10 ** 37, 2 * 10 ** 37)
     isprime(r)
 print(f"{time.time() - st} sec")

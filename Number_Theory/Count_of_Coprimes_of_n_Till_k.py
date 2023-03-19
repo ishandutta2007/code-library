@@ -14,7 +14,6 @@ import math
 # basically 4*(sum of coprimes of 100/4 under 40/4 ie 1+2+3+4+6+7+8+9,(but not 5 and 10))
 
 
-
 def count_of_coprimes_of_n_till_k(n, k):
     primes = list(sympy.factorint(n, multiple=True))
     primes = list(set(primes))
@@ -91,19 +90,19 @@ def count_of_coprimes_of_n_till_k_brute(n, k):
 
 algo_ans = count_of_coprimes_of_n_till_k(50, 20)
 print(algo_ans)
-assert algo_ans == 8 # 1 , 3 , 7 , 9 , 11 , 13 , 17 , 19
+assert algo_ans == 8  # 1 , 3 , 7 , 9 , 11 , 13 , 17 , 19
 # (not 2,4,6,8,10,12,14,16,18,20 and not 5,10,15,20 note 10, 20 have been removed twice)
 
 
 algo_ans = count_of_coprimes_of_n_till_k(50, 30)
 print(algo_ans)
-assert algo_ans == 12 # 1 , 3 , 7 , 9 , 11 , 13 , 17 , 19 , 21 , 23 , 27 , 29
+assert algo_ans == 12  # 1 , 3 , 7 , 9 , 11 , 13 , 17 , 19 , 21 , 23 , 27 , 29
 # (not 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 and not 5,10,15,20,25,30 note 10, 20,30 have been removed twice)
 
 
 algo_ans = count_of_coprimes_of_n_till_k(60, 30)
 print(algo_ans)
-assert algo_ans == 8 # 1 , 7 , 11 , 13 , 17 , 19 , 23 , 29
+assert algo_ans == 8  # 1 , 7 , 11 , 13 , 17 , 19 , 23 , 29
 # not 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 and not 3,6,9,12,15,18,21,24,27,30 and not 5,10,15,20,25,30
 # note 6,12,18,24,30 have been removed twice and 10,20,30 has been removed twice and 15,30 removed twice
 # note 30 has been removed twice then added back thrice
@@ -111,17 +110,17 @@ assert algo_ans == 8 # 1 , 7 , 11 , 13 , 17 , 19 , 23 , 29
 
 algo_ans = count_of_coprimes_of_n_till_k(210, 20)
 print(algo_ans)
-assert algo_ans == 5 # 1 , 11 , 13 , 17 , 19
+assert algo_ans == 5  # 1 , 11 , 13 , 17 , 19
 
 
 algo_ans = count_of_coprimes_of_n_till_k(210 * 11, 20)
 print(algo_ans)
-assert algo_ans == 4 # 1 , 13 , 17 , 19
+assert algo_ans == 4  # 1 , 13 , 17 , 19
 
 
 algo_ans = count_of_coprimes_of_n_till_k(210 * 11 * 13, 20)
 print(algo_ans)
-assert algo_ans == 3 # 1 , 17 , 19
+assert algo_ans == 3  # 1 , 17 , 19
 
 
 print(count_of_coprimes_of_n_till_k(2 * 2 * 2 * 3 * 3 * 3 * 7 * 7 * 17, 10820))

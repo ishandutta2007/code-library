@@ -1,9 +1,10 @@
-// This can be achieved in time complexity O(N^(2/3)) by presieving values of
-// phi. We use that sum of PHI(d) floor(N/d)^2 over 1 <= d <= N is the same as
+// This can be achieved in Time complexity O(N^(2/3)) by presieving values of phi.
+// Space complexity is O(N^(2/3)) ie 4D + I.
+// We use that phi_sum(d) floor(N/d)^2 over 1 <= d <= N is the same as
 // what we need except it counts each pair where i != j twice (but we can easily
 // correct for this).
 
-// O(N^(2/3)) precompute O(1) per query
+// O(N^(2/3)) precompute O(1) per query but query can be only among N,floor(N/2),floor(N/3),floor(N/4),...,floor(N/D)
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;

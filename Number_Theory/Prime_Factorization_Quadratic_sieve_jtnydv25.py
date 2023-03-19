@@ -45,7 +45,7 @@ def get_factors(n):
     return primes
 
 
-MAXP = 3 * 10**5
+MAXP = 3 * 10 ** 5
 small_primes = get_factors(MAXP)
 
 
@@ -53,7 +53,7 @@ def ceil_kth_root(n, k):
     lo, hi = 1, int(10 * (n ** (1.0 / k)))
     while lo < hi:
         mid = (lo + hi) / 2
-        if (mid**k) >= n:
+        if (mid ** k) >= n:
             hi = mid
         else:
             lo = mid + 1
@@ -73,7 +73,7 @@ def inv(x, mod):
 
 
 def hensel_lift(pe, p, x, n):
-    k = (n - x**2) / pe
+    k = (n - x ** 2) / pe
     k = (k * inv((2 * x) % p, p)) % p
     if k < 0:
         k += p
@@ -85,7 +85,7 @@ def _try_composite(a, d, n, s):
     if pow(a, d, n) == 1:
         return False
     for i in xrange(s):
-        if pow(a, 2**i * d, n) == n - 1:
+        if pow(a, 2 ** i * d, n) == n - 1:
             return False
     return True  # n  is definitely composite
 
@@ -313,7 +313,7 @@ class Parallel_Factorizer:
                 primes.append(p)
                 if p == 2:
                     for e in xrange(1, 100):
-                        pe = p**e
+                        pe = p ** e
                         if pe > MAX:
                             break
                         for j in xrange(0, pe):
@@ -373,7 +373,7 @@ class Parallel_Factorizer:
                                 E[_p[pos][j]] += _e[pos][j]
                     for j in xrange(len(primes)):
                         Y = (Y * pow(primes[j], E[j] / 2, n)) % n
-                    assert (X**2 - Y**2) % n == 0
+                    assert (X ** 2 - Y ** 2) % n == 0
                     ret = gcd(X + Y, n)
                     if ret != 1 and ret != n:
                         print(
@@ -397,7 +397,7 @@ class Parallel_Factorizer:
 
 def factor(n):
     num_processes = 1
-    if n > 10**20 and len(sys.argv) > 2:
+    if n > 10 ** 20 and len(sys.argv) > 2:
         num_processes = int(sys.argv[2])
     return Parallel_Factorizer(num_processes).factor(n)
 
@@ -414,7 +414,7 @@ def factorize(n):
         return D
     for k in xrange(2, int(log(n) / log(2)) + 1):
         t = ceil_kth_root(n, k)
-        if t**k == n:
+        if t ** k == n:
             d = factorize(t)
             for i in d:
                 if i in D:

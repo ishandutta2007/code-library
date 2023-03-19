@@ -3,7 +3,7 @@
 
 
 def count_k_smooth(k, N):
-    assert k**2 <= N < (k + 1) ** 2
+    assert k ** 2 <= N < (k + 1) ** 2
 
     lo = [i - 1 for i in range(k + 1)]
     hi = [0] + [N // i - 1 for i in range(1, k + 1)]
@@ -34,4 +34,4 @@ def count_k_smooth(k, N):
     return tot
 
 
-print(count_k_smooth(10**5, 10**10))
+print(count_k_smooth(10 ** 5, 10 ** 10))
