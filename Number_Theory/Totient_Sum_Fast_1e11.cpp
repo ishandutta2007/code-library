@@ -4,6 +4,8 @@
 // what we need except it counts each pair where i != j twice (but we can easily
 // correct for this).
 
+// Note This is not Deleglise Rivat. Deleglise Rivat achives similar time complexity but space compleity would be O(N^(1/3))
+
 // O(N^(2/3)) precompute O(1) per query but query can be only among N,floor(N/2),floor(N/3),floor(N/4),...,floor(N/D)
 #include <bits/stdc++.h>
 using namespace std;

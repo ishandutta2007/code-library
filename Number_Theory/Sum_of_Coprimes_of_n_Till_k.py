@@ -2,8 +2,10 @@ import sympy
 import bisect
 import random
 import math
+import time
 
 # Supports till 10^7 (to be precise till 2*3*5*7*11*13*17*19)
+# Supports upto 10^4 queries in ~1 sec
 
 # Example scenario
 # n = 100
@@ -126,6 +128,18 @@ assert algo_ans == 1 + 17 + 19
 print(sum_of_coprimes_of_n_till_k(2 * 2 * 2 * 3 * 3 * 3 * 7 * 7 * 17, 10820))
 print(sum_of_coprimes_of_n_till_k_brute(2 * 2 * 2 * 3 * 3 * 3 * 7 * 7 * 17, 10820))
 
+start_time = time.time()
+print(
+    sum_of_coprimes_of_n_till_k(
+        2 * 3 * 5 * 7 * 11 * 13 * 17 * 19, 2 * 3 * 5 * 7 * 11 * 13
+    )
+)
+print((time.time() - start_time))
+print(
+    sum_of_coprimes_of_n_till_k_brute(
+        2 * 3 * 5 * 7 * 11 * 13 * 17 * 19, 2 * 3 * 5 * 7 * 11 * 13
+    )
+)
 
 for i in range(10 ** 6, 10 ** 7):
     r = random.randint(1, i)
