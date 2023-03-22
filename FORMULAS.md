@@ -10,6 +10,7 @@
 - 
 - If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x}f(x/i)=x(x+1)/2$ 
 
+- If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^2 \cdot f(x/i^2)=(x^3+3x^2+2x+3)/3$
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$
