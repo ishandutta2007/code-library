@@ -30,3 +30,6 @@
 - $\sum_{k\le n} k\cdot \varphi(k) \ \ = \ \sum_{d \le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  where $S(i)=\sum i^2$
 
 - 
+-  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j),  \ \sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $
+- 
+-  
