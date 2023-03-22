@@ -38,7 +38,7 @@ snu = [None] * MAX_NSQ
 snu_large_inv = [None] * MAX_NSQ
 
 
-def f(x):
+def sum_k_mu(x):
     if x == 1:
         snu[x] = 1
         return snu[x]
@@ -53,11 +53,11 @@ def f(x):
     ans = 1
 
     for d in range(2, x_sr + 1):
-        ans -= d * f(x // d)
+        ans -= d * sum_k_mu(x // d)
 
     st = x // x_sr - 1
     for m in range(st, 0, -1):
-        ans -= (T(x // m) - T(x // (m + 1))) * f(m)
+        ans -= (T(x // m) - T(x // (m + 1))) * sum_k_mu(m)
 
     if x <= N_SQ:
         snu[x] = ans
@@ -71,7 +71,7 @@ for i in range(1, 30 + 1):
     snu_large_inv = [None] * MAX_NSQ
     NN = i
     N_SQ = int(i ** 0.5)
-    print(i, " : ", f(i))
+    print(i, " : ", sum_k_mu(i))
 
 ns = [10 ** 4, 10 ** 5, 10 ** 6, 10 ** 7, 10 ** 8, 10 ** 9, 10 ** 10, 10 ** 11]
 for n in ns:
@@ -79,6 +79,6 @@ for n in ns:
     snu_large_inv = [None] * MAX_NSQ
     NN = n
     N_SQ = int(n ** 0.5)
-    ret = f(n)
+    ret = sum_k_mu(n)
     print("10^{}".format(math.log10(n)), " : ", ret)
     print("t:", time.time() - start_time)

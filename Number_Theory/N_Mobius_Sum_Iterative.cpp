@@ -18,7 +18,7 @@ ll T(ll n) {
 static ll snu[MAX_NSQ];
 static ll snu_large_inv[MAX_NSQ];
 
-ll f(ll n) {
+ll sum_k_mu(ll n) {
     if (n == 1) return 1;
     double n_sr_d = sqrt(n);
     ll n_sr = sqrtl(n);
@@ -100,14 +100,14 @@ int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     for (int i = 2; i <= 30; i++) {
-        ll ret = f(i);
+        ll ret = sum_k_mu(i);
         cout << i << " : " << ret << endl;
     }
 
     vector<ll> ns = {(ll)1e4, (ll)1e5, (ll)1e6, (ll)1e7, (ll)1e8, (ll)1e9, (ll)1e10, (ll)1e11};
     for (ll n : ns) {
         auto start_time = clock();
-        ll ret = f(n);
+        ll ret = sum_k_mu(n);
         cout << "10^" << 1.0*log(n)/log(10) << " : " << ret << endl;
         cout << "t: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << endl;
     }

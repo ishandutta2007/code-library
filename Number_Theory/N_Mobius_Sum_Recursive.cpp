@@ -3,6 +3,23 @@
 // O(n^{3/4}) Time and O(n^{1/2}) Space
 // It is to be noted recursive version is of same speed as iterative if not a tad faster as the recusion depth is 1 so doesn't make any difference
 
+// 10^4 : -209614
+// t: 0.000423
+// 10^5 : -4283169
+// t: 0.00097
+// 10^6 : 226244412
+// t: 0.004245
+// 10^7 : 10564681565
+// t: 0.022603
+// 10^8 : 180523857298
+// t: 0.145965
+// 10^9 : -732495361483
+// t: 0.760712
+// 10^10 : -332900112839490
+// t: 4.31799
+// 10^11 : -8439137382134677
+// t: 35.7828
+
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
@@ -46,7 +63,7 @@ std::ostream &operator<<(std::ostream &dest, __int128_t value) {
 static i128 snu[MAX_NSQ];
 static i128 snu_large_inv[MAX_NSQ];
 
-i128 f(ll x) {
+i128 sum_k_mu(ll x) {
     if (x == 1) return snu[x] = 1;
     if (x <= N_SQ) {
         if (snu[x] != 0) return snu[x];
@@ -58,12 +75,12 @@ i128 f(ll x) {
     i128 ans = 1;
 
     for (int d = 2; d <= x_sr; d++) {
-        ans = (ans - (i128)(d) * f(x/d) );
+        ans = (ans - (i128)(d) * sum_k_mu(x/d) );
     }
 
     int st = x/x_sr - 1;
     for (int m = st; m >= 1; m--) {
-        ans = (ans - (i128)(T(x/m) - T(x/(m+1))) * f(m));
+        ans = (ans - (i128)(T(x/m) - T(x/(m+1))) * sum_k_mu(m));
     }
 
     if (x <= N_SQ) {
@@ -81,7 +98,7 @@ int32_t main() {
         memset(snu_large_inv,0,sizeof(snu_large_inv));
         NN = i;
         N_SQ = sqrtl(i);
-        cout << i << " : " << f(i) << endl;
+        cout << i << " : " << sum_k_mu(i) << endl;
     }
     vector<ll> ns = {(ll)1e4, (ll)1e5, (ll)1e6, (ll)1e7, (ll)1e8, (ll)1e9, (ll)1e10, (ll)1e11};
     // vector<ll> ns = { (ll)1e11};
@@ -90,7 +107,7 @@ int32_t main() {
         memset(snu_large_inv,0,sizeof(snu_large_inv));
         NN = n;
         N_SQ = sqrtl(n);
-        i128 ret = f(n);
+        i128 ret = sum_k_mu(n);
         cout << "10^" << 1.0*log(n)/log(10) << " : " << ret << endl;
         cout << "t: " << (double)(clock() - start_time) / CLOCKS_PER_SEC << endl;
     }
