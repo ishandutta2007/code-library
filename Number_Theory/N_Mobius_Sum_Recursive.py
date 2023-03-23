@@ -1,4 +1,5 @@
 #  https://math.stackexchange.com/questions/4661944/calculate-sum-k-1n-k-cdot-muk/4662128#4662128
+#  https://oeis.org/A068340
 #  \sum k*phi(k)
 #  O(n^{3/4}) Time and O(n^{1/2}) Space
 #  It is to be noted recursive version is of same speed as iterative if not a tad faster as the recusion depth is 1 so doesn't make any difference

@@ -1,4 +1,5 @@
 // https://math.stackexchange.com/questions/4661944/calculate-sum-k-1n-k-cdot-muk/4662128#4662128
+// https://oeis.org/A068340
 // \sum k*phi(k)
 // The iterative version supports till 10^9 to support beyond me might need to change to int128(check recursive one)
 // O(n^{3/4}) Time and O(n^{1/2}) Space

@@ -5,7 +5,7 @@ using namespace std;
 
 const int N = 1e8 + 9;
 int phi[N];
-void totients() {
+void totients_sieve() {
   for (int i = 1; i < N; i++)
     phi[i] = i;
   for (int i = 2; i < N; i++) {
@@ -16,7 +16,7 @@ void totients() {
   }
 }
 
-void totients_faster() {
+void totients_sieve_faster() {
   for (int i = 1; i < N; i++)
     phi[i] = i;
   for (int j = 2; j < N; j += 2)
@@ -32,6 +32,6 @@ void totients_faster() {
 int32_t main() {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
-  totients_faster();
+  totients_sieve_faster();
   return 0;
 }

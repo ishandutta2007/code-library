@@ -1,4 +1,5 @@
 // https://math.stackexchange.com/questions/4661944/calculate-sum-k-1n-k-cdot-muk/4662128#4662128
+// https://oeis.org/A068340
 // \sum k*phi(k)
 // O(n^{3/4}) Time and O(n^{1/2}) Space
 // It is to be noted recursive version is of same speed as iterative if not a tad faster as the recusion depth is 1 so doesn't make any difference
@@ -94,14 +95,15 @@ i128 sum_k_mu(ll x) {
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    for (int i = 1 ; i <= 30; i++) {
-        memset(snu_large_inv,0,sizeof(snu_large_inv));
-        NN = i;
-        N_SQ = sqrtl(i);
-        cout << i << " : " << sum_k_mu(i) << endl;
-    }
-    vector<ll> ns = {(ll)1e4, (ll)1e5, (ll)1e6, (ll)1e7, (ll)1e8, (ll)1e9, (ll)1e10, (ll)1e11};
+    // for (int i = 1 ; i <= 30; i++) {
+    //     memset(snu_large_inv,0,sizeof(snu_large_inv));
+    //     NN = i;
+    //     N_SQ = sqrtl(i);
+    //     cout << i << " : " << sum_k_mu(i) << endl;
+    // }
+    // vector<ll> ns = {(ll)1e4, (ll)1e5, (ll)1e6, (ll)1e7, (ll)1e8, (ll)1e9, (ll)1e10, (ll)1e11};
     // vector<ll> ns = { (ll)1e11};
+    vector<ll> ns = { (ll)1e2};
     for (ll n : ns) {
         auto start_time = clock();
         memset(snu_large_inv,0,sizeof(snu_large_inv));

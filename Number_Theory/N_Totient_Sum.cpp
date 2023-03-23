@@ -1,4 +1,5 @@
 // https://math.stackexchange.com/questions/4661467/calculate-sum-k-1n-k-cdot-varphik?noredirect=1&lq=1
+// https://oeis.org/A011755
 // O(n^{3/4}) (for sum k * u(k)) + O(n^{1/2}) (for sum k * phi(k) using O(1) access to sum k * u(k))
 
 // # i*phi(i)
@@ -114,26 +115,27 @@ ll i_phi_i_good(ll n) {
     ll n_sr = sqrtl(n);
     ll s = 0;
     for(ll d = 1; d <= n_sr ; d++) {
-        s = (s + mu_siv::u[d] * d * (S(n / d) % MOD) % MOD + MOD) % MOD;
+        s = (s + mu_siv::u[d] * d * (ll)(i_mu::S(n / d) % MOD) % MOD + MOD) % MOD;
     }
     // cout << "s after 1st half = "<< s << endl;
 
     for(ll v = 1 ; v <= n / (n_sr + 1) ; v++ ) {
         ll l = n / (v + 1);
-        NN = l;
-        N_SQ = sqrtl(l);
-        memset(snu_large_inv, 0, sizeof(snu_large_inv));
+        i_mu::NN = l;
+        i_mu::N_SQ = sqrtl(l);
+        memset(i_mu::snu_large_inv, 0, sizeof(i_mu::snu_large_inv));
         ll s_l = i_mu::sum_k_mu(l) % MOD;
 
         ll r = n / v;
-        NN = r;
-        N_SQ = sqrtl(r);
-        memset(snu_large_inv, 0, sizeof(snu_large_inv));
+        i_mu::NN = r;
+        i_mu::N_SQ = sqrtl(r);
+        memset(i_mu::snu_large_inv, 0, sizeof(i_mu::snu_large_inv));
+        cout << "mupoint:" << r << endl;
         ll s_r = i_mu::sum_k_mu(r) % MOD;
 
         ll sum_k_mu_range = (s_r - s_l + MOD) % MOD;
         // cout << "S(" << v << ") =" << S(v) << "*" << "sum_k_mu(" << r << ")=" << s_r << "-" << "sum_k_mu(" << l << ")=" << s_l <<endl;
-        s = (s + (S(v) % MOD) * sum_k_mu_range % MOD + MOD) % MOD;
+        s = (s + (i_mu::S(v) % MOD) * sum_k_mu_range % MOD + MOD) % MOD;
     }
     return s;
 }
@@ -141,7 +143,7 @@ ll i_phi_i_good(ll n) {
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    ms::mobius_sieve();
+    mu_siv::mobius_sieve();
     // for (int i = 1 ; i <= 30; i++) {
     //     memset(snu_large_inv,0,sizeof(snu_large_inv));
     //     NN = i;
@@ -149,7 +151,8 @@ int32_t main() {
     //     cout << i << " : " << sum_k_mu(i) << endl;
     // }
     // vector<ll> ns = {(ll)1e4, (ll)1e5, (ll)1e6, (ll)1e7, (ll)1e8, /*(ll)1e9, (ll)1e10,*/ 99999999019};
-    vector<ll> ns = { (ll)99999999019};
+    // vector<ll> ns = { (ll)99999999019};
+    vector<ll> ns = { (ll)33};
     for (ll n : ns) {
         auto start_time = clock();
         i128 ret = i_phi_i_good(n);

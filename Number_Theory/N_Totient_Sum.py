@@ -1,4 +1,5 @@
 # https://math.stackexchange.com/questions/4661467/calculate-sum-k-1n-k-cdot-varphik?noredirect=1&lq=1
+# https://oeis.org/A011755
 # O(n^{3/4}) (for sum k * u(k)) + O(n^{1/2}) (for sum k * phi(k) using O(1) access to sum k * u(k))
 
 # i*phi(i)
