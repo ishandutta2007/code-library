@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
+using namespace std;
 
-void divcount_all_upto(int N) {
+vector<int> divcount_all_upto(int N) {
   int sqtN = (int)sqrt(N) + 1;
 
-  int *A, isprime[sqtN], d, n, e, p, k, sum;
-  A = (int *)(malloc)((N + 1) * sizeof(int));
+  int isprime[sqtN], d, n, e, p, k, sum;
+  vector <int> A(N + 1, 0);
 
   for (n = 1; n <= N; n++)
     A[n] = 0;
@@ -13,7 +14,7 @@ void divcount_all_upto(int N) {
 
   for (d = 2; d < sqtN; d++) {
     if (isprime[d]) {
-      for (n = d * d; n < 3163; n += d)
+      for (n = d * d; n < sqtN + 1; n += d)
         isprime[n] = 0;
       for (n = d * d; n <= N; n += d)
         A[n] = d;
@@ -31,11 +32,15 @@ void divcount_all_upto(int N) {
       A[n] = A[k] * e;
     }
   }
+  return A;
 }
 
 int main() {
   double dtime = clock();
-  divcount_all_upto(10000000)
-      l printf("time=%.3lf sec.\n", (double)(clock() - dtime) / CLOCKS_PER_SEC);
+  int N = 10000000;
+  vector<int> dc = divcount_all_upto(N);
+  for(int i = 1 ;i <= 10; i++) cout << i << ":" << dc[i] << endl;
+  printf("time=%.3lf sec.\n", (double)(clock() - dtime) / CLOCKS_PER_SEC);
   return 0;
 }
+
