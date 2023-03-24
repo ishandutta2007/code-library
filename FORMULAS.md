@@ -13,6 +13,8 @@
 - If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$[PE 625]
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$
 [PE 448]
+- $\sum_{m\le k\le n} lcm(k,n) = (n/2) \sum_{d|n, d > 1} d \cdot phi(d) + n - n \sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)} $[ADDLCM]
+- $\sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)} = \sum_{d|n, d > 1} f(\lfloor {n/d} \rfloor, \lfloor {(m-1)/d} \rfloor)$ where f=sum_of_coprimes_of_n_till_k[ADDLCM]
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^2 \cdot f(x/i^2)=(x^3+3x^2+2x+3)/3$
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$
