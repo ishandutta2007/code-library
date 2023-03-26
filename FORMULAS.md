@@ -39,7 +39,7 @@
 [PE 439]
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j),  \ \sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $
 
-- 
+- If $f(x, a)= \sum_{i\le x} |\sum_{\any j\le a} i \mod prime_{j} \ne 0|$ ,  $\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i$
 
 
 TODO
