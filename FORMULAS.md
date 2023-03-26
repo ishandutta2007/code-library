@@ -1,3 +1,4 @@
+- Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$
 - If $f(x)=\sum_{k\le x} \mu(k), \ \sum_{i\le x} f(x/i)=1$
 - If $f(x)=\sum_{k\le x} k \cdot \mu(k), \ \sum_{i\le x} i \cdot f(x/i)=1$
 - If $f(x)=\sum_{k\le x} k^2 \cdot \mu(k), \ \sum_{i\le x} i^2 \cdot f(x/i)=1$
