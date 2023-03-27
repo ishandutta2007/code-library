@@ -41,6 +41,8 @@
 
 - If $f(x, a)= \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0|$ ,  $\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i$
 
+- If $f(x, a)= \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0| , \sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{i \le x} spf(i) $
+
 
 TODO
 152
