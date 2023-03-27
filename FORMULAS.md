@@ -1,8 +1,8 @@
 - Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$
 - If $f(x)=\sum_{k\le x} \mu(k), \ \sum_{i\le x} f(x/i)=1$
-- If $f(x)=\sum_{k\le x} |\mu(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} omega(k)$
-- If $f(x)=\sum_{k\le x} |\mu(k)==-1|, \ \sum_{i\le x} f(x/i) = \sum_{k \le n} omega(k)$
-- If $f(x)=\sum_{k\le x} |\omega(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} omega(k)$
+- If $f(x)=\sum_{k\le x} |\mu(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \omega(k)$
+- If $f(x)=\sum_{k\le x} |\mu(k)==-1|, \ \sum_{i\le x} f(x/i) = \sum_{k \le n} \omega(k)$
+- If $f(x)=\sum_{k\le x} |\omega(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \omega(k)$
 - If $f(x)=\sum_{k\le x} k \cdot \mu(k), \ \sum_{i\le x} i \cdot f(x/i)=1$
 - If $f(x)=\sum_{k\le x} k^2 \cdot \mu(k), \ \sum_{i\le x} i^2 \cdot f(x/i)=1$
 - If $f(x)=\sum_{k\le x} k^t \cdot \mu(k), \ \sum_{i\le x} i^t \cdot f(x/i)=1$ ie it holds for any arbitary integer $t$
