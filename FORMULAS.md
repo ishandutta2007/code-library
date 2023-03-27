@@ -39,7 +39,7 @@
 [PE 439]
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j),  \ \sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $
 
-- If $f(x, a)= \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0|$ ,  $\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i$
+- If $f(x, a)= \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0|$ ,  $\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i$ [$f(x,a)$ is Legendre's prime counting formula(not to be confused with Legendre Symbol, $f(x,a)$ is commonly denote by $\phi(x,a)$]
 
 - If $f(x, a)= \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0| , \sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{i \le x} spf(i) $
 
