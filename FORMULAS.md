@@ -52,6 +52,9 @@
 
 - If $f(x, a)= \sum_{i\le x} i \cdot \prod_{j\le a} |i \mod prime_{j} \ne 0| , \sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{2 \le k \le x} k/spf(k)$
 
+
+-  If $f(x)=\sum_{i\le x} \sigma_2(i),  \ \sum_{i \le x} f(x/i) = \(tau<=)_4(n)	 $
+-  
 TODO
 152
 243
