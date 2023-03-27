@@ -34,7 +34,7 @@
 
 - $\sum_{k\le n} k\cdot \varphi(k) \ \ = \ \sum_{d \le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  where $S(i)=\sum i^2$
 
--  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j),  \ \sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 * \lfloor {n/k} \rfloor)^2 $
+-  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j),  \ \sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j),  \ \sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $
 [PE 439]
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j),  \ \sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $
