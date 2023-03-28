@@ -14,7 +14,7 @@
 - 
 - If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x}f(x/i)=x(x+1)/2$ 
 
-- If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$[PE 625]
+- If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$[PE 625][GCDEX2][PE351]
 - If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$
 [PE 448]
 - If $f(x)=\sum_{k^2\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^2 \cdot f(x/i)=(x(x+1)/2)^2$
@@ -65,7 +65,7 @@ TODO
 319
 338
 347
-351
+
 360
 370
 379
