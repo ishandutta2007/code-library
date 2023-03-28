@@ -31,7 +31,7 @@
 - 
 
 
-- $\sum_{i\le n}\sum_{j\le n} gcd(i,j) = \sum_{d\le n} \varphi(d)\lfloor n/d \rfloor ^2$[PE 625]
+- $\sum_{i\le n}\sum_{j\le n} gcd(i,j) = \sum_{d\le n} \varphi(d)\lfloor n/d \rfloor ^2$[PE 625][GCDEX2]
  
 
 
