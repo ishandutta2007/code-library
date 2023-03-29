@@ -42,8 +42,8 @@
 | $f(x)=\sum_{i\le x} \sigma_0(i)$[A006218](https://oeis.org/A006218)|$\sum_{i \le x} f(x/i) = \(tau<=)_3(n)$|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_0(i^2)$|$\sum_{i \le x} f(x/i) = \(tau<=)_4(n)$|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i)=$<br />$\small{\sum_{1 \le k \le floor(\sqrt(n))} (2.\sum_{1 \le j \le \lfloor(\sqrt{n/k^2})\rfloor} \lfloor{n/(j.k^2)}\rfloor - \lfloor(\sqrt{n/k^2})^2\rfloor)}$|--|--|--|--|--|
-| $f(x)=\sum_{i\le x} \sigma_1(i)$|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
-| $f(x)=\sum_{i\le x} \sigma_2(i)$|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
+| $f(x)=\sum_{i\le x} \sigma_1(i)$[A024916](https://oeis.org/A024916)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
+| $f(x)=\sum_{i\le x} \sigma_2(i)$[A064602](https://oeis.org/A064602)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
 -  
