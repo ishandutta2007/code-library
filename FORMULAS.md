@@ -10,7 +10,7 @@
 | $f(x)=\sum_{k\le x} [\mu(k)=1]$[A070548](https://oeis.org/A070548)|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \omega(k)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} [\mu(k)=-1]$[A070549](https://oeis.org/A070549)|$\sum_{i\le x} f(x/i) = \sum_{k \le n} \omega(k)$[A013939](https://oeis.org/A013939)|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} [\Omega(k)=1]$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \Omega(k)$|--|--|--|--|--|
-| $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i \cdot f(x/i)=1$|$O(n^{3/4})$|$O(1)$|--|--|--|
+| $f(x)=\sum_{k\le x} k \cdot \mu(k)$[A068340](https://oeis.org/A068340)|$\sum_{i\le x} i \cdot f(x/i)=1$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=1$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^t \cdot f(x/i)=1$|$O(n^{3/4})$|$O(1)$|--|--|holds for any arbitary integer $t$|
 | $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$|--|--|--|--|--|
@@ -19,7 +19,7 @@
 | $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$|--|--|--|--|holds for any arbitary integer $t$|
 | $f(x)=\sum_{k\le x} \varphi(k)$|$\sum_{i \le x}f(x/i)=x(x+1)/2$ |$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x)=\sum_{k\le x} \varphi(k)$|$\sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$|$O(n^{3/4})$|--|--|--|[PE 625][GCDEX2][PE351]|
-| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$ |$\sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$|$O(n^{3/4})$|$O(1)$|--|--|[PE 448]|
+| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$ [A011755](https://oeis.org/A011755)|$\sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$|$O(n^{3/4})$|$O(1)$|--|--|[PE 448]|
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^2 \cdot f(x/i)=(x(x+1)/2)^2$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | --|$\sum_{m\le k\le n} lcm(k,n) =$ <br /> $(n/2) \sum_{d\|n, d > 1} d \cdot phi(d)$ <br /> $+ n - n \sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)}$|--|--|--|--|[ADDLCM]|
 | f(n,k)=sum_of_coprimes_of_n_till_k|$\sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)} =$ <br /> $\sum_{d\|n, d > 1} f(\lfloor {n/d} \rfloor, \lfloor {(m-1)/d} \rfloor)$|--|--|--|--|[ADDLCM]|
