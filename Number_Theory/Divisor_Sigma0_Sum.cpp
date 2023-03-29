@@ -9,6 +9,8 @@
 // a[4] = d(1)+d(2)+d(3)+d(4)           = 1+2+2+3     =  8
 // a[3] = d(1)+d(2)+d(3)                = 1+2+2       =  5
 
+//Works till ~1e16 in 1 sec
+
 #include <bits/stdc++.h>
 using namespace std;
 

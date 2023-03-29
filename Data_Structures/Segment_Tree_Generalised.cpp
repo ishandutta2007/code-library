@@ -1,9 +1,6 @@
 // See codechef FLIPCOIN for an example
-#include <cstdio>
-#include <cstdlib>
-#include <cassert>
-#include <vector>
-
+#include <bits/stdc++.h>
+using namespace std;
 /*
 Output of segment tree range queries are modelled as elements of a monoid.
 Updates on the segment tree are functions on the monoid.
@@ -195,3 +192,32 @@ private:
 public:
   void update(int i, int j, const F &f) { update(0, 0, n - 1, i, j, f); }
 };
+
+
+typedef long long lli;
+
+int main()
+{
+    int n, q;
+    scanf("%d%d", &n, &q);
+    SegTree<CoinCount, FlipOp> segTree(n, CoinCount(0, 1));
+    FlipOp flip(true);
+    while(q-- > 0) {
+        char str[3];
+        int i, j;
+        scanf("%s%d%d", str, &i, &j);
+        if(str[0] == '0') {
+            segTree.update(i, j, flip);
+        }
+        else if(str[0] == '1') {
+            printf("%d\n", segTree.query(i, j).get_heads());
+        }
+        else {
+            fprintf(stderr, "main: Wrong query type %c\n", str[0]);
+            std::exit(4);
+        }
+    }
+    return 0;
+}
+
+// https://sharmaeklavya2.github.io/blog/generalizing-segment-trees.html

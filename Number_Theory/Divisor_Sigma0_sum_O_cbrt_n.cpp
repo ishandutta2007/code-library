@@ -1,6 +1,9 @@
+// https://oeis.org/A006218
+// Works till ~1e18 in 1 sec
+// takes ~100 ms for n = 1e18
+
 #include <bits/stdc++.h>
 using namespace std;
-
 using uint32 = unsigned int;
 using uint64 = unsigned long long;
 using uint128 = __uint128_t;
@@ -8,7 +11,6 @@ using uint128 = __uint128_t;
 // credit: zimpha
 // compute \sum_{i=1}^{n} sigma0(i) in ~O(n^{1/3}) time.
 // it is also equal to \sum_{i=1}^{n} floor(n / i)
-// takes ~100 ms for n = 1e18
 uint128 sum_sigma0(uint64 n) {
   auto out = [n](uint64 x, uint32 y) { return x * y > n; };
   auto cut = [n](uint64 x, uint32 dx, uint32 dy) {

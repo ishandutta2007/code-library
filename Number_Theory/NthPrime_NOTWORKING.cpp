@@ -31,4 +31,4 @@ int nthPrime(int n) {
 }
 
 // https://stackoverflow.com/questions/9625663/calculating-and-printing-the-nth-prime-number/9704912#9704912
-https: // euler.stephan-brumme.com/
+// https: // euler.stephan-brumme.com/
