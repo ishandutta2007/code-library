@@ -39,9 +39,7 @@
 | $f(x, a) = \sum_{i\le x} i \cdot \prod_{j\le a}[i \mod prime_{j} \ne 0]$|$\sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = x(x+3)/2$|--|--|--|--|--|
 | $f(x, a)= \sum_{i\le x} i \cdot \prod_{j\le a} [i \mod prime_{j} \ne 0]$|$\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{2 \le k \le x} k/spf(k)$|--|--|--|--|--|
 | --|--|--|--|--|--|--|
-
 | --|--|--|--|--|--|--|
-
 | --|--|--|--|--|--|--|
 
 
