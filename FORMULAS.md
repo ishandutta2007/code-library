@@ -5,7 +5,7 @@
 | --|--|--|--|--|--|--|
 | --|$\sum_{k\le n} \gcd(k,n) = \sum_{d\|n} d\cdot\phi(n/d)$|--|--|--|--|--|
 | --|Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$|--|--|--|--|--|
-| $f(x)=\sum_{k\le x} \omega(k)$|$\sum_{i\le x} f(x/i^2)=\sum_{i\le n}\sum_{d\|i}[d \le \sqrt i]=$</br>$(\Omega(i) \mod 2)\cdot \lfloor{n/i}\rlfloor$|$O(n^{3/4})$|$O(n^{1/2})$|--|--|--|
+| $f(x)=\sum_{k\le x} \omega(k)$|$\sum_{i\le x} f(x/i^2)=\sum_{i\le n}\sum_{d\|i}[d \le \sqrt i]=$</br>$(\Omega(i) \mod 2)\cdot \lfloor{n/i}\rfloor$|$O(n^{3/4})$|$O(n^{1/2})$|--|--|--|
 | $f(x)=\sum_{k\le x} \mu(k)$|$\sum_{i\le x} f(x/i)=1$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x)=\sum_{k\le x} [\mu(k)=1]$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \Omega(k)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} [\mu(k)=-1]$|$\sum_{i\le x} f(x/i) = \sum_{k \le n} \Omega(k)$|--|--|--|--|--|
