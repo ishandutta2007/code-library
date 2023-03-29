@@ -4,10 +4,11 @@
 | -------------    |:---------------------------:| ---------:| ---------:|-----------:|---------:|
 | --|--|--|--|--|--|
 | --|Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$|--|--|--|--|
+| If $f(x)=\sum_{k\le x} \mu(k)$|$\sum_{i\le x} f(x/i)=1$|--|--|--|--|
 
 - $\sum_{k\le n} \gcd(k,n) = \sum_{d|n} d\cdot\phi(n/d)$
 - 
-- If $f(x)=\sum_{k\le x} \mu(k), \ \sum_{i\le x} f(x/i)=1$
+- , \ 
 - If $f(x)=\sum_{k\le x} |\mu(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \omega(k)$
 - If $f(x)=\sum_{k\le x} |\mu(k)==-1|, \ \sum_{i\le x} f(x/i) = \sum_{k \le n} \omega(k)$
 - If $f(x)=\sum_{k\le x} |\omega(k)==1|, \ \sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \omega(k)$
