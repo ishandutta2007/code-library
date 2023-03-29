@@ -11,11 +11,11 @@
 | $f(x)=\sum_{k\le x} [\omega(k)==1]$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \omega(k)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i \cdot f(x/i)=1$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=1$|--|--|--|--|--|
-| $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^t \cdot f(x/i)=1$|--|--|--|--|ie it holds for any arbitary integer $t$|
-| --|--|--|--|--|--|
-| --|--|--|--|--|--|
-| --|--|--|--|--|--|
-| --|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^t \cdot f(x/i)=1$|--|--|--|--|holds for any arbitary integer $t$|
+| $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^3 \cdot f(x/i)=\sum_{k\le x} k^2\cdot\varphi(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^3 \cdot \mu(k)$|$\sum_{i\le x} i^4 \cdot f(x/i)=\sum_{k\le x} k^3\cdot\varphi(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$|--|--|--|holds for any arbitary integer $t$|
 
 - 
 - 
@@ -27,10 +27,10 @@
 - If 
 - If 
 -
-- If $f(x)=\sum_{k\le x} k \cdot \mu(k), \ \sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$
-- If $f(x)=\sum_{k\le x} k^2 \cdot \mu(k), \ \sum_{i\le x} i^3 \cdot f(x/i)=\sum_{k\le x} k^2\cdot\varphi(k)$
-- If $f(x)=\sum_{k\le x} k^3 \cdot \mu(k), \ \sum_{i\le x} i^4 \cdot f(x/i)=\sum_{k\le x} k^3\cdot\varphi(k)$
-- If $f(x)=\sum_{k\le x} k^t \cdot \mu(k), \ \sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$ ie it holds for any arbitary integer $t$
+- If , \ 
+- If , \ 
+- If , \ 
+- If , \  
 - 
 - If $f(x)=\sum_{k\le x} \varphi(k), \ \sum_{i \le x}f(x/i)=x(x+1)/2$ 
 
