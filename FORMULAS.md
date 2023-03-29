@@ -5,9 +5,9 @@
 | --|--|--|--|--|--|
 | --|Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$|--|--|--|--|
 | $f(x)=\sum_{k\le x} \mu(k)$|$\sum_{i\le x} f(x/i)=1$|--|--|--|--|
-| $f(x)=\sum_{k\le x} |\mu(k)==1|$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \omega(k)$|--|--|--|--|
-| $f(x)=\sum_{k\le x} |\mu(k)==-1|$|$\sum_{i\le x} f(x/i) = \sum_{k \le n} \omega(k)$|--|--|--|--|
-| $f(x)=\sum_{k\le x} |\omega(k)==1|$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \omega(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} [\mu(k)==1]$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n} \omega(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} [\mu(k)==-1]$|$\sum_{i\le x} f(x/i) = \sum_{k \le n} \omega(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} [\omega(k)==1]$|$\sum_{i\le x} f(x/i) = 1 + \sum_{k \le n-1} \omega(k)$|--|--|--|--|
 | --|--|--|--|--|--|
 | --|--|--|--|--|--|
 
