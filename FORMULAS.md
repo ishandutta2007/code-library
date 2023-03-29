@@ -30,33 +30,24 @@
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$|--|--|--|--|--|
 | --|$\sum_{i\le n}\sum_{j\le n} gcd(i,j) =$ <br /> $\sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|[PE 625][GCDEX2]|
+| --|$\sum_{k\le n} k\cdot \varphi(k) \ \ =$ <br /> $\sum_{d\le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  <br /> where $S(i)=\sum i^2$|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
 - 
 - 
-- , \ 
-- If , \ 
-- If , \ 
-- If , \ 
-- 
--  where 
 - If 
 - If 
 - If 
 - If 
-- 
-- If 
-- If 
-- If 
-- 
-
-
-- 
  
 
 
-- $\sum_{k\le n} k\cdot \varphi(k) \ \ = \ \sum_{d \le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  where $S(i)=\sum i^2$
+- 
 
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j),  \ \sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $
 -  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j),  \ \sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $
