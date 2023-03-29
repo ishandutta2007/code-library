@@ -44,28 +44,6 @@
 | $f(x)=\sum_{i\le x} \sigma_1(i)$|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_2(i)$|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-
-
-- 
-- 
-- If
-- If
-- If
-- If
-- If
-- If
-- If
-- If
-- If
-- If
--  If 
--  If 
--  If 
--  If 
--  If 
 
 -  
 TODO
