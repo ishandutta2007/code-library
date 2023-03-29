@@ -39,10 +39,10 @@
 | $f(x, a) = \sum_{i\le x} \prod_{j\le a} [i \mod prime_{j} \ne 0]$|$\sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{i \le x} spf(i)$<br/>where spf = smallest prime factor|$O(n^{3/4})$|--|--|--|--|
 | $f(x, a) = \sum_{i\le x} i \cdot \prod_{j\le a}[i \mod prime_{j} \ne 0]$|$\sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = x(x+3)/2$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x, a)= \sum_{i\le x} i \cdot \prod_{j\le a} [i \mod prime_{j} \ne 0]$|$\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{2 \le k \le x} k/spf(k)$|--|--|--|--|--|
-| $f(x)=\sum_{i\le x} \sigma_0(i)$[A006218](https://oeis.org/A006218)|$\sum_{i \le x} f(x/i) = \(tau<=)_3(n)$|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
+| $f(x)=\sum_{i\le x} \sigma_0(i)$[A006218](https://oeis.org/A006218)|$\sum_{i \le x} f(x/i) = \(tau<=)_3(n)$[A061201](https://oeis.org/A061201)|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i) = \sum_{k \le n} \lfloor{n/k}\rfloor =$</br>$\sum_{k \le \sqrt n} \lfloor{n/k}\rfloor + \sum_{v \le \sqrt n} v\cdot(\lfloor{n/v}\rfloor-\lfloor{n/(v+1)}\rfloor)$|--|$O(n^{1/2})$|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i) = hyperbolic\ method$|--|$O(n^{1/3})$|--|--|--|
-| $f(x)=\sum_{i\le x} \sigma_0(i^2)$|$\sum_{i \le x} f(x/i) = \(tau<=)_4(n)$|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
+| $f(x)=\sum_{i\le x} \sigma_0(i^2)$|$\sum_{i \le x} f(x/i) = \sum_{k \le n} sigma_0(k)^2$[A061502](https://oeis.org/A061502)|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i)=$<br />$\small{\sum_{1 \le k \le \lfloor \sqrt n \rfloor} (2.\sum_{1 \le j \le \lfloor(\sqrt{n/k^2})\rfloor} \lfloor{n/(j.k^2)}\rfloor - \lfloor(\sqrt{n/k^2})^2\rfloor)}$|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_1(i)$[A024916](https://oeis.org/A024916)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_2(i)$[A064602](https://oeis.org/A064602)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
