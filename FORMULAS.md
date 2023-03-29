@@ -29,7 +29,7 @@
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$|--|--|--|--|--|
-| $\sum_{i\le n}\sum_{j\le n} gcd(i,j) = \sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|--|[PE 625][GCDEX2]|
+| --|$\sum_{i\le n}\sum_{j\le n} gcd(i,j) =$ <br /> $\sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|[PE 625][GCDEX2]|
 | --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
