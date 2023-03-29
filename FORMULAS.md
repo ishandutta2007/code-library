@@ -31,10 +31,10 @@
 | $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$|--|--|--|--|--|
 | --|$\sum_{i\le n}\sum_{j\le n} gcd(i,j) =$ <br /> $\sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|[PE 625][GCDEX2]|
 | --|$\sum_{k\le n} k\cdot \varphi(k) \ \ =$ <br /> $\sum_{d\le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  <br /> where $S(i)=\sum i^2$|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
+| $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j)$|$\sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|
+| $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j)$|$\sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|[PE 439]|
+| $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j)$|$\sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|--|
+| $f(x, a) = \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0|$|$\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i $|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
@@ -46,15 +46,11 @@
 - If 
  
 
+-  If 
 
-- 
+-  If 
 
--  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j),  \ \sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $
--  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j),  \ \sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $
-[PE 439]
--  If $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j),  \ \sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $
-
-- If $f(x, a) = \sum_{i\le x} \prod_{j\le a} |i \mod prime_{j} \ne 0| , \ \sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i $ 
+- If  
 
 [f(x,a) is Legendre's prime counting formula(not to be confused with Legendre Symbol), f(x,a) is commonly denote by $\phi(x,a)$]
 
