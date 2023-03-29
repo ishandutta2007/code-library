@@ -2,7 +2,7 @@
 
 | Assumption       | Formula                     | LHS Time  | RHS Time  | LHS Space  | RHS Space|Remarks|
 | -------------    |:---------------------------:| ---------:| ---------:|-----------:|---------:|------:|
-| --|--|--|--|--|--|
+| --|--|--|--|--|--|--|
 | --|$\sum_{k\le n} \gcd(k,n) = \sum_{d\|n} d\cdot\phi(n/d)$|--|--|--|--|--|
 | --|Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} \mu(k)$|$\sum_{i\le x} f(x/i)=1$|--|--|--|--|--|
@@ -12,9 +12,9 @@
 | $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i \cdot f(x/i)=1$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=1$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^t \cdot f(x/i)=1$|--|--|--|--|holds for any arbitary integer $t$|
-| $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$|--|--|--|--|
-| $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^3 \cdot f(x/i)=\sum_{k\le x} k^2\cdot\varphi(k)$|--|--|--|--|
-| $f(x)=\sum_{k\le x} k^3 \cdot \mu(k)$|$\sum_{i\le x} i^4 \cdot f(x/i)=\sum_{k\le x} k^3\cdot\varphi(k)$|--|--|--|--|
+| $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^3 \cdot f(x/i)=\sum_{k\le x} k^2\cdot\varphi(k)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^3 \cdot \mu(k)$|$\sum_{i\le x} i^4 \cdot f(x/i)=\sum_{k\le x} k^3\cdot\varphi(k)$|--|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$|--|--|--|--|holds for any arbitary integer $t$|
 | $f(x)=\sum_{k\le x} \varphi(k)$|$\sum_{i \le x}f(x/i)=x(x+1)/2$ |--|--|--|--|--|
 | $f(x)=\sum_{k\le x} \varphi(k)$|$\sum_{i \le x} i \cdot f(x/i)=\sum_{i\le n}\sum_{j\le n} gcd(i,j)$|--|--|--|--|[PE 625][GCDEX2][PE351]|
