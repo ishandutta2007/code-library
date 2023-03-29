@@ -44,7 +44,7 @@
 | --|$\sum_{i\le x} \sigma_0(i) = hyperbolic\ method$|--|$O(n^{1/3})$|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_0(i^2)$[A061503](https://oeis.org/A061503)|$\sum_{i \le x} f(x/i) = \sum_{k \le n} \sigma_0(k)^2$[A061502](https://oeis.org/A061502)|$O(n^{3/4})$|--|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i)=$<br />$\small{\sum_{1 \le k \le \lfloor \sqrt n \rfloor} (2.\sum_{1 \le j \le \lfloor(\sqrt{n/k^2})\rfloor} \lfloor{n/(j.k^2)}\rfloor - \lfloor(\sqrt{n/k^2})^2\rfloor)}$|--|--|--|--|--|
-| $f(x)=\sum_{i\le x} \sigma_1(i)$[A024916](https://oeis.org/A024916)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
+| $f(x)=\sum_{i\le x} \sigma_1(i)$[A024916](https://oeis.org/A024916)|$\sum_{i\le x} f(x/i)= \sum_{d\|n} \sigma_1(d) = \sum_{k\le x}\sigma_1(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sigma_2(i)$[A064602](https://oeis.org/A064602)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{n/k}\rfloor$|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
