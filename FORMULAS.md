@@ -32,7 +32,7 @@
 | --|$\sum_{i\le n}\sum_{j\le n} gcd(i,j) =$ <br /> $\sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|[PE 625][GCDEX2]|
 | --|$\sum_{k\le n} k\cdot \varphi(k) \ \ =$ <br /> $\sum_{d\le n}{\mu(d)\cdot d \cdot S\left(\left[\frac{n}{d}\right]\right)}, \tag{1}$  <br /> where $S(i)=\sum i^2$|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j)$|$\sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|
-| $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j)$|$\sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|[PE 439]|
+| $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j)$|$\sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $|$O(n^{3/4})$|$O(n^{1/2})$|--|--|[PE 439]|
 | $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j)$|$\sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|--|
 | $\phi(x, a)=\sum_{i\le x} \prod_{j\le a} \[i \mod prime_{j} \ne 0]$<br/>$\phi(x,a)=$ Legendre's prime counting formula|$\sum_{i \le x}\phi(\lfloor {x/prime_{i}} \rfloor, i-1) = i$|$O(n^{3/4})$|$O(1)$|--|--|--|
 | $f(x, a) = \sum_{i\le x} \prod_{j\le a} [i \mod prime_{j} \ne 0]$|$\sum_{i \le x}  prime_{i} \cdot f(\lfloor {x/prime_{i}} \rfloor, i-1) = \sum_{i \le x} spf(i)$<br/>where spf = smallest prime factor|$O(n^{3/4})$|--|--|--|--|
