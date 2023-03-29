@@ -21,11 +21,15 @@
 | $f(x)=\sum_{k\le x} k\cdot\varphi(k)$ |$\sum_{i \le x} i \cdot f(x/i)=x(x+1)(2x+1)/6$|--|--|--|--|[PE 448]|
 | $f(x)=\sum_{k^2\le x} k\cdot\varphi(k)$|$\sum_{i \le x} i^2 \cdot f(x/i)=(x(x+1)/2)^2$|--|--|--|--|--|
 | --|$\sum_{m\le k\le n} lcm(k,n) =$ <br /> $(n/2) \sum_{d\|n, d > 1} d \cdot phi(d)$ <br /> $+ n - n \sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)}$|--|--|--|--|[ADDLCM]|
-| f=sum_of_coprimes_of_n_till_k|$\sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)} =$ <br /> $\sum_{d\|n, d > 1} f(\lfloor {n/d} \rfloor, \lfloor {(m-1)/d} \rfloor)$|--|--|--|--|[ADDLCM]|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
-| --|--|--|--|--|--|--|
+| f(n,k)=sum_of_coprimes_of_n_till_k|$\sum_{1\le i \le{m-1}} \frac{i}{gcd(i,n)} =$ <br /> $\sum_{d\|n, d > 1} f(\lfloor {n/d} \rfloor, \lfloor {(m-1)/d} \rfloor)$|--|--|--|--|[ADDLCM]|
+| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$|$\sum_{i \le x} i^2 \cdot f(x/i^2)=(x^3+3x^2+2x+3)/3$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$|$\sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$|$\sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k\cdot\varphi(k)$|$\sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$|--|--|--|--|--|
+| $f(x)=\sum_{k\le x} k^2\cdot\varphi(k)$|$\sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$|--|--|--|--|--|
+| $\sum_{i\le n}\sum_{j\le n} gcd(i,j) = \sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$|--|--|--|--|--|[PE 625][GCDEX2]|
 | --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
@@ -37,18 +41,18 @@
 - If , \ 
 - 
 -  where 
-- If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^2 \cdot f(x/i^2)=(x^3+3x^2+2x+3)/3$
-- If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$
-- If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$
-- If $f(x)=\sum_{k\le x} k\cdot\varphi(k), \ \sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$
+- If 
+- If 
+- If 
+- If 
 - 
-- If $f(x)=\sum_{k\le x} k^2\cdot\varphi(k), \ \sum_{i \le x} i^3 \cdot f(x/i^3)=f(x)$
-- If $f(x)=\sum_{k\le x} k^2\cdot\varphi(k), \ \sum_{i \le x} i^4 \cdot f(x/i^4)=f(x)$
-- If $f(x)=\sum_{k\le x} k^2\cdot\varphi(k), \ \sum_{i \le x} i^t \cdot f(x/i^t)=f(x)$
+- If 
+- If 
+- If 
 - 
 
 
-- $\sum_{i\le n}\sum_{j\le n} gcd(i,j) = \sum_{d\le n} \mu(d)\lfloor n/d \rfloor ^2$[PE 625][GCDEX2]
+- 
  
 
 
