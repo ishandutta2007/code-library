@@ -34,7 +34,7 @@
 | $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_2(i\cdot j)$|$\sum_{i \le x} i^2 \cdot f(x/i) = (\sum_{k \le n} k^2 \cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|
 | $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_1(i\cdot j)$|$\sum_{i \le x} i \cdot f(x/i) = (\sum_{k\le n} k\cdot \lfloor {n/k} \rfloor)^2 $|--|--|--|--|[PE 439]|
 | $f(x)=\sum_{i\le x} \sum_{j\le x} \sigma_0(i\cdot j)$|$\sum_{i \le x} f(x/i) = (\sum_{k\le n} \lfloor {n/k} \rfloor)^2 $|--|--|--|--|--|--|
-| $f(x, a) = \sum_{i\le x} \prod_{j\le a} \|i \mod prime_{j} \ne 0\|$|$\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i $|--|--|--|--|--|
+| $f(x, a) = \sum_{i\le x} \prod_{j\le a} \[i \mod prime_{j} \ne 0]$|$\sum_{i \le x} f(\lfloor {x/prime_{i}} \rfloor, i-1) = i $|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 | --|--|--|--|--|--|--|
 
