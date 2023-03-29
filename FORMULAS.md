@@ -15,7 +15,19 @@
 | $f(x)=\sum_{k\le x} k \cdot \mu(k)$|$\sum_{i\le x} i^2 \cdot f(x/i)=\sum_{k\le x} k\cdot\varphi(k)$|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^2 \cdot \mu(k)$|$\sum_{i\le x} i^3 \cdot f(x/i)=\sum_{k\le x} k^2\cdot\varphi(k)$|--|--|--|--|
 | $f(x)=\sum_{k\le x} k^3 \cdot \mu(k)$|$\sum_{i\le x} i^4 \cdot f(x/i)=\sum_{k\le x} k^3\cdot\varphi(k)$|--|--|--|--|
-| $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$|--|--|--|holds for any arbitary integer $t$|
+| $f(x)=\sum_{k\le x} k^t \cdot \mu(k)$|$\sum_{i\le x} i^{t+1} \cdot f(x/i)=\sum_{k\le x} k^t\cdot\varphi(k)$|--|--|--|--|holds for any arbitary integer $t$|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
+| --|--|--|--|--|--|--|
 
 - 
 - 
