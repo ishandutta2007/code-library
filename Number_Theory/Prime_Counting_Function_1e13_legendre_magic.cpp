@@ -20,6 +20,20 @@ using namespace std;
 // result: 3204941750802
 // time: 4.41496s
 
+//  Time Complexity Calculation:
+//  the loop for p is upto n^{1/4} and for each p we see the k is n^{1/2}/2, n^{1/2}/2 - primepi(n^{1/2}), n^{1/2}/4, n^{1/2}5,......times
+//  \sqrt{\sqrt{n}}$ + \sqrt{\sqrt{n/(2)}}$ + ...... + \sqrt{\sqrt{n/(n-2)}}$ + \sqrt{\sqrt{n/(n-1)}}$ = 
+//  \int\limits_{1}^{n^{1/4}} \sqrt {n/t} dt
+//  O(n^{1/2}.(t)^{1/2})
+//  O(n^{1/2}.(n^{1/4})^{1/2})
+//  O(n^{1/2 + 1/8})
+//  O(n^{5/8})
+//  Note that number of terms is not ncessarily n^{1/4} but primepi(n^{1/4}), so the component n^{1/8} is actually very relaxed upper bound
+
+//  More accurate estimate might be this https://math.stackexchange.com/questions/4668989/how-many-iterations-does-it-take-to-converge-to-1-or-lesser
+//  $\int\limits_{u=1}^{N^{1/4}}u(N/u-(N/u)log (N/u))du$
+//  O(n^{3/4}/(log(n))^2)
+
 using ll = long long;
 
 int isqrt(ll n) { return sqrtl(n); }
