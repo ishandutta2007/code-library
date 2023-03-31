@@ -1,7 +1,7 @@
 
 
 | # | Assumption       | Formula                     | LHS Time  | RHS Time  | LHS Space  | RHS Space|Remarks|
-|:--|:-------------    |:---------------------------:| ---------:| ---------:|-----------:|---------:|------:|
+|:-|:-------------    |:---------------------------:| ---------:| ---------:|-----------:|---------:|------:|
 | --|--|--|--|--|--|--|--|
 | 1 | --|$\sum_{k\le n} \gcd(k,n) = \sum_{d\|n} d\cdot\phi(n/d)$|--|--|--|--|--|
 | 1 | --|Number of  squarfree nos = $\sum_{i\le \sqrt x} \mu(i)f(x/i^2)$[A057627](https://oeis.org/A057627)|--|--|--|--|--|
@@ -50,7 +50,7 @@
 | 1 | --|$\sum_{i\le x} \sigma_0(i)=$<br />$\small{\sum_{1 \le k \le \lfloor \sqrt n \rfloor} (2.\sum_{1 \le j \le \lfloor(\sqrt{n/k^2})\rfloor} \lfloor{n/(j.k^2)}\rfloor - \lfloor(\sqrt{n/k^2})^2\rfloor)}$|--|--|--|--|--|
 | 1 | $f(x)=\sum_{i\le x} \sigma_1(i)$[A024916](https://oeis.org/A024916)|$\sum_{i\le x} f(x/i)= \sum_{d\|x} \sigma_1(d)$[A280077](https://oeis.org/A280077)</br>$= \sum_{k\le x}\sigma_1(k)\lfloor{x/k}\rfloor$|$O(n^{3/4})$|$O(n^{1/4})$|--|--|--|
 | 1 | $f(x)=\sum_{i\le x} \sigma_2(i)$[A064602](https://oeis.org/A064602)|$\sum_{i\le x} f(x/i)= \sum_{k\le x}\sigma_2(k)\lfloor{x/k}\rfloor$|--|--|--|--|--|
-| --|--|--|--|--|--|--|--|
+| -|--|--|--|--|--|--|--|
 
 -  
 TODO
