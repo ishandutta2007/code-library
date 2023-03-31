@@ -31,8 +31,21 @@ using namespace std;
 //  Note that number of terms is not ncessarily n^{1/4} but primepi(n^{1/4}), so the component n^{1/8} is actually very relaxed upper bound
 
 //  More accurate estimate might be this https://math.stackexchange.com/questions/4668989/how-many-iterations-does-it-take-to-converge-to-1-or-lesser
-//  $\int\limits_{u=1}^{N^{1/4}}u(N/u-(N/u)log (N/u))du$
+
+// $\int\limits_{u=1}^{N^{1/4}}u(N^{1/2}/u-(N^{1/2}/u)log (N^{1/2}/u))du$
+
+// $N^{1/2}\int\limits_{u=1}^{N^{1/4}}du -N^{1/2}\int\limits_{u=1}^{N^{1/4}} (0.5log N - log u)/u \ du$
+
+// $N^{1/2}\int\limits_{u=1}^{N^{1/4}}du -N^{1/2}(0.5log N)\int\limits_{u=1}^{N^{1/4}} du/u +
+// N^{1/2}\int\limits_{u=1}^{N^{1/4}} (log u)/u \ du$
+
+
+// $N^{3/4} - (1/8)N^{1/2}(log N)^2 +(2 + (1/4)log N)/N^{1/4} $
+
 //  O(n^{3/4}/(log(n))^2)
+
+// https://math.stackexchange.com/questions/4669811/what-will-be-the-sum-for-n1-4-iterations
+// https://ideone.com/eKenZC
 
 using ll = long long;
 
