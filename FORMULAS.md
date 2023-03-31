@@ -43,7 +43,7 @@
 | --|$\sum_{i\le x} \sigma_0(i) = \sum_{k \le n} \lfloor{n/k}\rfloor =$</br>$\sum_{k \le \sqrt n} \lfloor{n/k}\rfloor + \sum_{v \le \sqrt n} v\cdot(\lfloor{n/v}\rfloor-\lfloor{n/(v+1)}\rfloor)$|--|$O(n^{1/2})$|--|--|--|
 | --|$\sum_{i\le x} \sigma_0(i) = hyperbolic\ method$|--|$O(n^{1/3})$|--|--|[DIVCNT1]|
 | $f(x)=\sum_{i\le x} \sigma_0(i^2)$[A061503](https://oeis.org/A061503)|$\sum_{i \le x} f(x/i) = \sum_{k \le n} \sigma_0(k)^2$[A061502](https://oeis.org/A061502)|$O(n^{3/4})$|--|--|--|--|
-| --|$\sum_{i\le x} \sigma_0(i^2) = \sum_{i\le x} (\mu^2 * \sigma_0)(i) = \sum_{i\le x}\sum_{d\| i} (\mu^2(d) * \sigma_0)(i/d) = \sum_{d\le x} (\mu^2(d) \sum_{id\le x} \sigma_0)(i) = $|--|$O(n^{2/3})$|--|--|[DIVCNT2]|
+| --|$\sum_{i\le x} \sigma_0(i^2) = \sum_{i\le x} (\mu^2 * \sigma_0)(i) = \sum_{i\le x}\sum_{d\| i} (\mu^2(d) * \sigma_0)(i/d) =$</br>$\sum_{d\le x} (\mu^2(d) \sum_{id\le x} \sigma_0)(i) = $|--|$O(n^{2/3})$|--|--|[DIVCNT2]|
 | --|$\sum_{i\le x} \sigma_0(i^3) = hyperbolic\ method$|--|$O(n^{2/3})$|--|--|[DIVCNT3]|
 | --|$\sum_{i\le x} \sigma_0(i^k) = hyperbolic\ method$|--|$O(n^{2/3})$|--|--|[DIVCNTK]|
 | $f(x)=\sum_{i\le x} \sigma_0(i^2)$[A061503](https://oeis.org/A061503)|$f(x)=\sum_{i \le \sqrt x} aa + \sum_{p \le \sqrt x}\sum_{i \le min(\sqrt x,{\lfloor {x/p^2} \rfloor})}bb $|--|--|--|--|--|
