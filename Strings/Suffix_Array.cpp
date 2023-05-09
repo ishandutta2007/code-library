@@ -79,6 +79,7 @@ vector<int> SA_IS(const vector<int> &vec, int val_range) {
   induced_sort(vec, val_range, SA, sl, new_lms_idx);
   return SA;
 }
+
 vector<int> suffix_array(const string &s, const int LIM = 128) {
   vector<int> vec(s.size() + 1);
   copy(begin(s), end(s), begin(vec));
@@ -87,6 +88,7 @@ vector<int> suffix_array(const string &s, const int LIM = 128) {
   ret.erase(ret.begin());
   return ret;
 }
+
 struct SuffixArray {
   int n;
   string s;
